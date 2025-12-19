@@ -1,0 +1,7 @@
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Always use Conventional Commits format (e.g., feat: ..., fix: ...). Use lowercase for the subject line."
+    }
+  ]
+}

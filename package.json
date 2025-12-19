@@ -1,0 +1,15 @@
+{
+  "name": "backlog-cli",
+  "scripts": {
+    "start": "bun ./src/index.ts",
+    "compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name"
+  },
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
