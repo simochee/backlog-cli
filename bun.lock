@@ -11,16 +11,24 @@
         "turbo": "^2.7.0",
       },
     },
+    "packages/backlog-api": {
+      "name": "@repo/backlog-api",
+      "version": "1.0.0",
+      "devDependencies": {
+        "@repo/tsconfigs": "workspace:*",
+      },
+    },
     "packages/backlog-cli": {
       "name": "backlog-cli",
       "dependencies": {
+        "@repo/backlog-api": "workspace:*",
         "citty": "^0.1.6",
       },
       "devDependencies": {
+        "@repo/tsconfigs": "workspace:*",
         "@types/bun": "latest",
       },
       "peerDependencies": {
-        "@repo/tsconfigs": "workspace:*",
         "typescript": "^5",
       },
     },
@@ -50,6 +58,8 @@
     "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@2.3.10", "", { "os": "win32", "cpu": "arm64" }, "sha512-o7lYc9n+CfRbHvkjPhm8s9FgbKdYZu5HCcGVMItLjz93EhgJ8AM44W+QckDqLA9MKDNFrR8nPbO4b73VC5kGGQ=="],
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.3.10", "", { "os": "win32", "cpu": "x64" }, "sha512-pHEFgq7dUEsKnqG9mx9bXihxGI49X+ar+UBrEIj3Wqj3UCZp1rNgV+OoyjFgcXsjCWpuEAF4VJdkZr3TrWdCbQ=="],
+
+    "@repo/backlog-api": ["@repo/backlog-api@workspace:packages/backlog-api"],
 
     "@repo/tsconfigs": ["@repo/tsconfigs@workspace:packages/tsconfigs"],
 

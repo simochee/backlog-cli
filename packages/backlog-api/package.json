@@ -1,0 +1,13 @@
+{
+	"name": "@repo/backlog-api",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*"
+	},
+	"exports": "./src/index.ts",
+	"imports": {
+		"#*": "./src/*"
+	}
+}

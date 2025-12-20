@@ -10,13 +10,14 @@
 		"dev": "bun ./src/index.ts"
 	},
 	"dependencies": {
-		"citty": "^0.1.6"
+		"citty": "^0.1.6",
+		"@repo/backlog-api": "workspace:*"
 	},
 	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*",
 		"@types/bun": "latest"
 	},
 	"peerDependencies": {
-		"@repo/tsconfigs": "workspace:*",
 		"typescript": "^5"
 	}
 }
