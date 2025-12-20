@@ -9,7 +9,13 @@
   "devDependencies": {
     "@types/bun": "latest"
   },
+  "imports": {
+    "#*": "./src/*"
+  },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "citty": "^0.1.6"
   }
 }
