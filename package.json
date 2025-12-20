@@ -1,21 +1,15 @@
 {
-  "name": "backlog-cli",
-  "scripts": {
-    "start": "bun ./src/index.ts",
-    "compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name"
-  },
-  "type": "module",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "type-checks": "turbo type-checks"
+  },
+  "packageManager": "bun@1.3.5",
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "imports": {
-    "#*": "./src/*"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "citty": "^0.1.6"
+    "turbo": "^2.7.0"
   }
 }
