@@ -1,0 +1,14 @@
+{
+	"name": "@repo/config",
+	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*"
+	},
+	"exports": "./src/index.ts",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"arkregex": "^0.0.5",
+		"arktype": "^2.1.29",
+		"rc9": "^2.1.2"
+	}
+}
