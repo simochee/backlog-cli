@@ -1,22 +1,22 @@
 {
-  "name": "backlog-cli",
-  "scripts": {
-    "dev": "bun ./src/index.ts",
-    "build": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name"
-  },
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "imports": {
-    "#*": "./src/*"
-  },
-  "peerDependencies": {
-    "typescript": "^5",
-    "@repo/tsconfigs": "workspace:*"
-  },
-  "dependencies": {
-    "citty": "^0.1.6"
-  }
+	"name": "backlog-cli",
+	"private": true,
+	"type": "module",
+	"imports": {
+		"#*": "./src/*"
+	},
+	"scripts": {
+		"build": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
+		"dev": "bun ./src/index.ts"
+	},
+	"dependencies": {
+		"citty": "^0.1.6"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"@repo/tsconfigs": "workspace:*",
+		"typescript": "^5"
+	}
 }

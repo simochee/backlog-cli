@@ -1,8 +1,8 @@
 {
-  "name": "@repo/tsconfigs",
-  "version": "1.0.0",
-  "private": true,
-  "devDependencies": {
-    "@tsconfig/bun": "^1.0.10"
-  }
+	"name": "@repo/tsconfigs",
+	"version": "1.0.0",
+	"private": true,
+	"devDependencies": {
+		"@tsconfig/bun": "^1.0.10"
+	}
 }
