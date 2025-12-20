@@ -4,6 +4,9 @@
 		"@repo/tsconfigs": "workspace:*"
 	},
 	"exports": "./src/index.ts",
+	"imports": {
+		"#*": "./src/*"
+	},
 	"private": true,
 	"type": "module",
 	"dependencies": {
