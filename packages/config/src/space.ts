@@ -1,6 +1,12 @@
 import { loadConfig, writeConfig } from "#config.ts";
 import type { RcSpace } from "#types.ts";
 
+/**
+ * Adds a new Backlog space to the configuration.
+ *
+ * @param space - The space configuration to add.
+ * @throws {Error} If a space with the same host already exists.
+ */
 export const addSpace = async (space: typeof RcSpace.infer): Promise<void> => {
 	const config = await loadConfig();
 	const exists = config.spaces.some((s) => s.host === space.host);
@@ -17,6 +23,13 @@ export const addSpace = async (space: typeof RcSpace.infer): Promise<void> => {
 	});
 };
 
+/**
+ * Updates the access token for an existing space.
+ *
+ * @param host - The host identifier of the space to update.
+ * @param accessToken - The new access token to set.
+ * @throws {Error} If no space with the specified host exists.
+ */
 export const patchSpaceAccessToken = async (
 	host: string,
 	accessToken: string,

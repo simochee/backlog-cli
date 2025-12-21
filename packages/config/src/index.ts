@@ -1,6 +1,7 @@
 import type { Rc } from "#types.ts";
 import { loadConfig } from "./config";
 
+/** Pre-loaded application configuration. */
 export const config = await loadConfig();
 
 export type Config = typeof Rc.infer;
