@@ -1,5 +1,5 @@
 {
-	"name": "backlog-cli",
+	"name": "@simochee/backlog-cli",
 	"private": true,
 	"type": "module",
 	"imports": {
@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"citty": "^0.1.6",
-		"@repo/backlog-api": "workspace:*"
+		"@repo/api": "workspace:*"
 	},
 	"devDependencies": {
 		"@repo/tsconfigs": "workspace:*"

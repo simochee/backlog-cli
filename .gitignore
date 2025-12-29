@@ -1,6 +1,9 @@
 # monorepo
 .turbo
 
+# Astro
+.astro
+
 # dependencies (bun install)
 node_modules
 
