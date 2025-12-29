@@ -14,8 +14,7 @@
 		"@repo/backlog-api": "workspace:*"
 	},
 	"devDependencies": {
-		"@repo/tsconfigs": "workspace:*",
-		"@types/bun": "latest"
+		"@repo/tsconfigs": "workspace:*"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
