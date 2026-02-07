@@ -1,4 +1,14 @@
+import type { BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
+import consola from "consola";
+import { getClient } from "#utils/client.ts";
+import {
+	extractProjectKey,
+	resolveIssueTypeId,
+	resolvePriorityId,
+	resolveStatusId,
+	resolveUserId,
+} from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -47,7 +57,66 @@ export default defineCommand({
 			description: "Update comment",
 		},
 	},
-	run() {
-		throw new Error("Not implemented");
+	async run({ args }) {
+		const { client } = await getClient();
+		const projectKey = extractProjectKey(args.issueKey);
+
+		const body: Record<string, unknown> = {};
+
+		if (args.title) {
+			body.summary = args.title;
+		}
+		if (args.description) {
+			body.description = args.description;
+		}
+		if (args.comment) {
+			body.comment = args.comment;
+		}
+
+		// Resolve names to IDs in parallel where possible
+		const resolutions: Promise<void>[] = [];
+
+		if (args.status) {
+			resolutions.push(
+				resolveStatusId(client, projectKey, args.status).then((id) => {
+					body.statusId = id;
+				}),
+			);
+		}
+		if (args.type) {
+			resolutions.push(
+				resolveIssueTypeId(client, projectKey, args.type).then((id) => {
+					body.issueTypeId = id;
+				}),
+			);
+		}
+		if (args.priority) {
+			resolutions.push(
+				resolvePriorityId(client, args.priority).then((id) => {
+					body.priorityId = id;
+				}),
+			);
+		}
+		if (args.assignee) {
+			resolutions.push(
+				resolveUserId(client, args.assignee).then((id) => {
+					body.assigneeId = id;
+				}),
+			);
+		}
+
+		await Promise.all(resolutions);
+
+		if (Object.keys(body).length === 0) {
+			consola.warn("No changes specified.");
+			return;
+		}
+
+		const issue = await client<BacklogIssue>(`/issues/${args.issueKey}`, {
+			method: "PATCH",
+			body,
+		});
+
+		consola.success(`Updated ${issue.issueKey}: ${issue.summary}`);
 	},
 });
