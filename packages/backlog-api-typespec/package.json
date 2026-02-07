@@ -1,0 +1,23 @@
+{
+	"name": "@repo/backlog-api-typespec",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "Backlog API v2 TypeSpec definitions",
+	"scripts": {
+		"build": "tsp compile .",
+		"clean": "rm -rf tsp-output"
+	},
+	"peerDependencies": {
+		"@typespec/compiler": "~1.6.0",
+		"@typespec/http": "~1.6.0",
+		"@typespec/openapi": "~1.3.0",
+		"@typespec/openapi3": "~1.7.0"
+	},
+	"devDependencies": {
+		"@typespec/compiler": "~1.6.0",
+		"@typespec/http": "~1.6.0",
+		"@typespec/openapi": "~1.3.0",
+		"@typespec/openapi3": "~1.7.0"
+	}
+}
