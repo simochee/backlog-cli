@@ -1,0 +1,38 @@
+---
+title: backlog config set
+description: 設定値を変更する
+---
+
+```
+backlog config set <key> <value> [flags]
+```
+
+指定したキーの設定値を変更します。
+
+## 引数
+
+| 引数 | 型 | 必須 | 説明 |
+|------|------|------|------|
+| `<key>` | string | Yes | 設定キー |
+| `<value>` | string | Yes | 設定値 |
+
+## オプション
+
+| フラグ | 型 | 説明 |
+|--------|------|------|
+| `--hostname` | string | スペース固有の設定を変更 |
+
+## 使用例
+
+```bash
+# デフォルトスペースを設定
+backlog config set default_space your-space.backlog.com
+
+# スペース固有の設定を変更
+backlog config set pager less --hostname your-space.backlog.com
+```
+
+## 関連コマンド
+
+- [config get](/backlog-cli/commands/config/get/)
+- [config list](/backlog-cli/commands/config/list/)
