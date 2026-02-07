@@ -4,8 +4,10 @@ Backlog API を操作する CLI ツール。gh CLI のインターフェース�
 
 ## プロジェクト構成
 
-- `packages/cli` — CLI 本体（citty ベース）
-- `packages/api` — Backlog API クライアント
+Turborepo ベースのモノレポ。ライブラリは unjs エコシステムを優先して選定。
+
+- `packages/cli` — CLI 本体（citty ベース、コマンドは遅延読み込み）
+- `packages/api` — Backlog API クライアント（ofetch + ufo）
 - `packages/config` — 設定管理（rc9 + arktype）
 - `packages/tsconfigs` — 共有 TypeScript 設定
 - `docs` — ドキュメントサイト（Astro + Starlight）
@@ -14,18 +16,58 @@ Backlog API を操作する CLI ツール。gh CLI のインターフェース�
 
 - ランタイム: Bun
 - 言語: TypeScript
-- CLI フレームワーク: citty
+- CLI フレームワーク: citty (unjs)
+- HTTP クライアント: ofetch (unjs)
+- URL ユーティリティ: ufo (unjs)
+- 設定ファイル: rc9 (unjs)
+- ロギング: consola (unjs)
 - 型バリデーション: arktype
 - コード品質: Biome
 - タスク実行: Turbo
 - Git フック: Lefthook
+
+## CLI コマンド構造
+
+コマンドは `packages/cli/src/commands/` 以下にドメインごとのディレクトリで管理する。
+各コマンドグループは `index.ts` でサブコマンドを遅延読み込み（`() => import(...)`）で登録する。
+
+```
+src/commands/
+  auth/       — 認証管理（login, logout, status, token）
+  config/     — CLI 設定（get, set, list）
+  issue/      — 課題管理（list, view, create, edit, close, reopen, comment, status）
+  project/    — プロジェクト管理（list, view, activities）
+  api.ts      — 汎用 API リクエスト
+```
+
+新しいコマンドを追加する手順:
+1. `commands/<group>/` にコマンドファイルを作成（`defineCommand` を使用）
+2. グループの `index.ts` の `subCommands` に遅延 import を追加
+3. 新しいグループの場合は `src/index.ts` にも追加
+
+## API クライアント
+
+`@repo/api` は `createClient()` で認証済み ofetch インスタンスを生成する。
+API Key（クエリパラメータ）と OAuth 2.0（Bearer トークン）の両方に対応。
+
+## 設定管理
+
+`@repo/config` は `~/.backlogrc` ファイルでスペース情報と認証情報を管理する。
+認証方式は `api-key` と `oauth` の判別型ユニオンで定義。
+
+スペース解決の優先順位:
+1. `--space` フラグ
+2. `BACKLOG_SPACE` 環境変数
+3. 設定ファイルの `defaultSpace`
 
 ## 開発ルール
 
 - `bun install` で依存インストール
 - `bun run dev` で開発モード
 - `bun run build` でビルド
-- `turbo type-checks` で型チェック
+- `bun run type-check` で型チェック
+- `bun run lint` でリント
+- `bun run test` でテスト
 - Conventional Commits 形式でコミットメッセージを書く
 - JSDoc は `.github/instructions/jsdoc.instructions.md` に従う
 - Bun の利用は `.github/instructions/bun.instructions.md` に従う

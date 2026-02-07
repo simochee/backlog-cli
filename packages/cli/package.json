@@ -10,8 +10,10 @@
 		"dev": "bun ./src/index.ts"
 	},
 	"dependencies": {
+		"@repo/api": "workspace:*",
+		"@repo/config": "workspace:*",
 		"citty": "^0.1.6",
-		"@repo/api": "workspace:*"
+		"consola": "^3.4.2"
 	},
 	"devDependencies": {
 		"@repo/tsconfigs": "workspace:*"
