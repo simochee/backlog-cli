@@ -3,24 +3,32 @@ title: インストール
 description: Backlog CLI のインストール方法
 ---
 
-## 前提条件
-
-Backlog CLI の実行には [Bun](https://bun.sh/) ランタイムが必要です。
+## npm
 
 ```bash
-curl -fsSL https://bun.sh/install | bash
+npm install -g @simochee/backlog-cli
 ```
 
-## インストール
+### パッケージマネージャーごとのインストール
 
 ```bash
+# npm
+npm install -g @simochee/backlog-cli
+
+# yarn
+yarn global add @simochee/backlog-cli
+
+# pnpm
+pnpm add -g @simochee/backlog-cli
+
+# bun
 bun install -g @simochee/backlog-cli
 ```
 
 ## アップデート
 
 ```bash
-bun install -g @simochee/backlog-cli@latest
+npm install -g @simochee/backlog-cli@latest
 ```
 
 ## バージョン確認
