@@ -51,6 +51,7 @@
     "packages/cli": {
       "name": "@simochee/backlog-cli",
       "dependencies": {
+        "@repo/api": "workspace:*",
         "@repo/config": "workspace:*",
         "@repo/openapi-client": "workspace:*",
         "citty": "^0.1.6",

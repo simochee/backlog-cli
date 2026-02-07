@@ -10,7 +10,7 @@
 
 | Phase | 対象 | サブコマンド数 | 状態 |
 |-------|------|----------------|------|
-| Phase 1 | MVP（auth, config, issue, project, api） | 19 | 未着手 |
+| Phase 1 | MVP（auth, config, issue, project, api） | 19 | 進行中 |
 | Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 未着手 |
 | Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 未着手 |
 | Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 未着手 |
@@ -81,7 +81,7 @@ Backlog の課題キーは `PROJECT-123` 形式でプロジェクトキーを含
 | `--with-token` | | boolean | No | false | 標準入力からトークンを読み込む |
 
 - **対応 API**: OAuth 2.0 フロー / ローカル設定への書き込み
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog auth logout`
 
@@ -92,7 +92,7 @@ Backlog の課題キーは `PROJECT-123` 形式でプロジェクトキーを含
 | `--hostname` | `-h` | string | No | アクティブスペース | 対象スペースホスト名 |
 
 - **対応 API**: ローカル設定の削除
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog auth status`
 
@@ -104,7 +104,7 @@ Backlog の課題キーは `PROJECT-123` 形式でプロジェクトキーを含
 | `--show-token` | | boolean | No | false | トークンを表示する |
 
 - **対応 API**: `GET /api/v2/users/myself`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog auth token`
 
@@ -115,7 +115,7 @@ Backlog の課題キーは `PROJECT-123` 形式でプロジェクトキーを含
 | `--hostname` | `-h` | string | No | アクティブスペース | 対象スペースホスト名 |
 
 - **対応 API**: ローカル設定の読み取り
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
