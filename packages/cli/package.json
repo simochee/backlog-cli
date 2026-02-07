@@ -10,6 +10,7 @@
 		"dev": "bun ./src/index.ts"
 	},
 	"dependencies": {
+		"@repo/api": "workspace:*",
 		"@repo/openapi-client": "workspace:*",
 		"@repo/config": "workspace:*",
 		"citty": "^0.1.6",
