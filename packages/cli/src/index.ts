@@ -10,6 +10,12 @@ const main = defineCommand({
 		config: () => import("#commands/config/index.ts").then((m) => m.default),
 		issue: () => import("#commands/issue/index.ts").then((m) => m.default),
 		project: () => import("#commands/project/index.ts").then((m) => m.default),
+		pr: () => import("#commands/pr/index.ts").then((m) => m.default),
+		repo: () => import("#commands/repo/index.ts").then((m) => m.default),
+		notification: () =>
+			import("#commands/notification/index.ts").then((m) => m.default),
+		status: () => import("#commands/status.ts").then((m) => m.default),
+		browse: () => import("#commands/browse.ts").then((m) => m.default),
 		api: () => import("#commands/api.ts").then((m) => m.default),
 	},
 });
