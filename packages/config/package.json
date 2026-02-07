@@ -8,6 +8,9 @@
 		"#*": "./src/*"
 	},
 	"private": true,
+	"scripts": {
+		"test": "vitest run"
+	},
 	"type": "module",
 	"dependencies": {
 		"arkregex": "^0.0.5",

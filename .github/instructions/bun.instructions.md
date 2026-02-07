@@ -7,7 +7,7 @@ applyTo: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
 Default to using Bun instead of Node.js.
 
 - Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
+- Use `vitest` for testing (configured as `bun run test` via Turborepo)
 - Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
 - Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
 - Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
@@ -26,13 +26,19 @@ Default to using Bun instead of Node.js.
 
 ## Testing
 
-Use `bun test` to run tests.
+Use `vitest` to run tests. Tests are executed via Turborepo:
+
+```sh
+bun run test          # 全パッケージのテスト実行
+```
 
 ```ts#index.test.ts
-import { test, expect } from "bun:test";
+import { describe, expect, it } from "vitest";
 
-test("hello world", () => {
-  expect(1).toBe(1);
+describe("example", () => {
+  it("hello world", () => {
+    expect(1).toBe(1);
+  });
 });
 ```
 
