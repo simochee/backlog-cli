@@ -1,13 +1,39 @@
 {
 	"name": "@simochee/backlog-cli",
-	"private": true,
+	"version": "0.0.0",
+	"description": "Backlog CLI — manage Backlog from the command line",
 	"type": "module",
+	"license": "MIT",
+	"author": "simochee",
+	"homepage": "https://simochee.github.io/backlog-cli",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/simochee/backlog-cli.git",
+		"directory": "packages/cli"
+	},
+	"bugs": {
+		"url": "https://github.com/simochee/backlog-cli/issues"
+	},
+	"keywords": [
+		"backlog",
+		"cli",
+		"nulab",
+		"project-management"
+	],
+	"bin": {
+		"backlog": "./bin/backlog.mjs"
+	},
+	"files": [
+		"bin"
+	],
 	"imports": {
 		"#*": "./src/*"
 	},
 	"scripts": {
-		"build": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
+		"build": "bun build ./src/index.ts --outfile ./bin/backlog.mjs --target=node",
+		"build:compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
 		"dev": "bun ./src/index.ts",
+		"prepublishOnly": "bun run build",
 		"test": "vitest run"
 	},
 	"dependencies": {
