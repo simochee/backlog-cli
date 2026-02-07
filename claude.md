@@ -79,6 +79,60 @@ API Key（クエリパラメータ）と OAuth 2.0（Bearer トークン）の�
 2. `BACKLOG_SPACE` 環境変数
 3. 設定ファイルの `defaultSpace`
 
+## 設計原則
+
+### 名前解決
+
+CLI ではユーザーフレンドリーな名前を使い、API リクエスト時に内部で ID に変換する。
+
+| CLI での入力 | API での送信 | 変換元 API |
+|--------------|-------------|-----------|
+| ステータス名（例: `処理中`） | `statusId` | `GET /api/v2/projects/:key/statuses` |
+| 課題種別名（例: `バグ`） | `issueTypeId` | `GET /api/v2/projects/:key/issueTypes` |
+| 優先度名（例: `高`） | `priorityId` | `GET /api/v2/priorities` |
+| カテゴリ名 | `categoryId` | `GET /api/v2/projects/:key/categories` |
+| マイルストーン名 | `milestoneId` | `GET /api/v2/projects/:key/versions` |
+| ユーザー名 / `@me` | `userId` / `assigneeId` | `GET /api/v2/users` / `GET /api/v2/users/myself` |
+| 完了理由名 | `resolutionId` | `GET /api/v2/resolutions` |
+
+### 出力形式
+
+| フラグ | 出力形式 | 用途 |
+|--------|----------|------|
+| （なし） | テーブル形式 | 人間が読む用 |
+| `--json` | JSON | プログラム連携 |
+| `--json field1,field2` | フィルタ済み JSON | 特定フィールドのみ |
+| `--jq '.[]'` | jq 変換済み出力 | 高度なフィルタ |
+| `--template '{{.Key}}'` | Go template | カスタムフォーマット |
+
+### インタラクティブモード
+
+必須引数が省略された場合、対話的にプロンプトを表示してユーザーに入力を求める。
+
+- TTY 接続時のみ有効
+- `--no-input` フラグで無効化
+- 選択式のフィールドはリスト選択 UI を提供
+
+### プロジェクトコンテキスト
+
+グローバルな `--project` フラグは持たない。Backlog の課題キーは `PROJECT-123` 形式で
+プロジェクトキーを含むため、課題キーを受け取るコマンドではプロジェクト指定が不要。
+
+プロジェクト指定が必要なコマンド（`issue list`, `issue create`, `category list` 等）は
+各コマンドのローカルオプション `--project` / `-p` で受け取る。
+
+プロジェクトが必要だが指定されていない場合の解決順:
+
+1. コマンドローカルの `--project` / `-p` フラグ
+2. Git リモート URL からの推測（Backlog Git のリモートが設定されている場合）
+3. インタラクティブ選択（TTY 接続時）
+
+### エラーハンドリング
+
+- HTTP 4xx/5xx エラーは Backlog API のエラーメッセージをそのまま表示
+- 認証エラーは `backlog auth login` を案内
+- レートリミットは自動リトライ（`Retry-After` ヘッダーを尊重）
+
 ## 開発ルール
 
 - `bun install` で依存インストール
