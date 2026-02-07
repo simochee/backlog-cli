@@ -19,7 +19,7 @@ backlog pr comment <number> [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--repo` | `-R` | string | リポジトリ名 |
 | `--body` | `-b` | string | コメント本文（`-` で標準入力） |
 

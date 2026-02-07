@@ -3,7 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatPullRequestLine, padEnd } from "#utils/format.ts";
-import { resolveUserId } from "#utils/resolve.ts";
+import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -14,8 +14,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		repo: {
 			type: "string",
@@ -54,6 +53,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const query: Record<string, unknown> = {
@@ -98,7 +99,7 @@ export default defineCommand({
 		}
 
 		const prs = await client<BacklogPullRequest[]>(
-			`/projects/${args.project}/git/repositories/${args.repo}/pullRequests`,
+			`/projects/${project}/git/repositories/${args.repo}/pullRequests`,
 			{ query },
 		);
 

@@ -11,7 +11,7 @@ backlog milestone list [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 
 ## 使用例
 

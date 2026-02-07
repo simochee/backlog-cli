@@ -51,3 +51,19 @@ backlog config list --hostname your-space.backlog.com
 | 環境変数 | 説明 |
 |----------|------|
 | `BACKLOG_SPACE` | 使用するスペースのホスト名（`--space` フラグと同等） |
+| `BACKLOG_PROJECT` | デフォルトのプロジェクトキー（`--project` フラグと同等） |
+
+### `BACKLOG_PROJECT`
+
+`BACKLOG_PROJECT` 環境変数を設定すると、`--project` フラグを省略できます。
+
+```bash
+export BACKLOG_PROJECT=MY_PROJECT
+
+# --project を省略可能
+backlog issue list
+backlog milestone list
+backlog pr list --repo my-repo
+```
+
+`--project` フラグが明示的に指定された場合は、環境変数より優先されます。

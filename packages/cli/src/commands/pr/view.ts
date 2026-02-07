@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 import { pullRequestUrl } from "#utils/url.ts";
 
 export default defineCommand({
@@ -19,8 +20,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		repo: {
 			type: "string",
@@ -38,13 +38,15 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client, host } = await getClient();
 
-		const basePath = `/projects/${args.project}/git/repositories/${args.repo}/pullRequests`;
+		const basePath = `/projects/${project}/git/repositories/${args.repo}/pullRequests`;
 		const pr = await client<BacklogPullRequest>(`${basePath}/${args.number}`);
 
 		if (args.web) {
-			const url = pullRequestUrl(host, args.project, args.repo, pr.number);
+			const url = pullRequestUrl(host, project, args.repo, pr.number);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 			return;

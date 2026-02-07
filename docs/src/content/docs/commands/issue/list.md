@@ -13,7 +13,7 @@ backlog issue list [flags]
 
 | フラグ | 短縮 | 型 | デフォルト | 説明 |
 |--------|------|------|------------|------|
-| `--project` | `-p` | string | — | プロジェクトキー（カンマ区切りで複数可） |
+| `--project` | `-p` | string | — | プロジェクトキー（カンマ区切りで複数可）（env: `BACKLOG_PROJECT`） |
 | `--assignee` | `-a` | string | — | 担当者（ユーザー名 or `@me`） |
 | `--status` | `-S` | string | — | ステータス名（カンマ区切りで複数可） |
 | `--type` | `-T` | string | — | 課題種別名（カンマ区切りで複数可） |

@@ -17,7 +17,7 @@ backlog milestone edit <id> [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | マイルストーン名 |
 | `--description` | `-d` | string | 説明 |
 | `--start-date` | | string | 開始日（`yyyy-MM-dd`） |

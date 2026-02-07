@@ -2,6 +2,7 @@ import type { BacklogMilestone } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -17,8 +18,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		name: {
 			type: "string",
@@ -44,6 +44,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const body: Record<string, unknown> = {};
@@ -65,7 +67,7 @@ export default defineCommand({
 		}
 
 		const milestone = await client<BacklogMilestone>(
-			`/projects/${args.project}/versions/${args.id}`,
+			`/projects/${project}/versions/${args.id}`,
 			{
 				method: "PATCH",
 				body,

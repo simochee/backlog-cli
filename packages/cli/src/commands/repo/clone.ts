@@ -2,6 +2,7 @@ import type { BacklogRepository } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -17,8 +18,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		directory: {
 			type: "string",
@@ -27,10 +27,12 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const repo = await client<BacklogRepository>(
-			`/projects/${args.project}/git/repositories/${args.repoName}`,
+			`/projects/${project}/git/repositories/${args.repoName}`,
 		);
 
 		const cloneArgs = ["git", "clone", repo.httpUrl];

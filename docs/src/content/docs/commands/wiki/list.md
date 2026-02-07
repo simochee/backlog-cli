@@ -13,7 +13,7 @@ Wiki ページの一覧を取得します。
 
 | フラグ | 短縮 | 型 | デフォルト | 説明 |
 |--------|------|------|------------|------|
-| `--project` | `-p` | string | — | プロジェクトキー |
+| `--project` | `-p` | string | — | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--keyword` | `-k` | string | — | キーワード検索 |
 | `--sort` | | string | `updated` | ソートキー |
 | `--order` | | string | `desc` | 並び順（`asc` / `desc`） |

@@ -17,7 +17,7 @@ backlog category edit <id> [flags]
 
 | フラグ | 短縮 | 型 | 必須 | 説明 |
 |--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー |
+| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Yes | カテゴリ名 |
 
 ## 使用例

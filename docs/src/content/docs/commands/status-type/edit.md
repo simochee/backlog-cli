@@ -17,7 +17,7 @@ backlog status-type edit <id> [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | ステータス名 |
 | `--color` | | string | 表示色（`#hex` 形式） |
 

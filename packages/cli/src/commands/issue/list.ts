@@ -18,7 +18,8 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key (multiple allowed, comma-separated)",
+			description:
+				"Project key (multiple allowed, comma-separated) (env: BACKLOG_PROJECT)",
 		},
 		assignee: {
 			type: "string",
@@ -108,8 +109,9 @@ export default defineCommand({
 		}
 
 		// Resolve project keys to IDs
-		if (args.project) {
-			const keys = args.project.split(",").map((k) => k.trim());
+		const projectArg = args.project || process.env.BACKLOG_PROJECT;
+		if (projectArg) {
+			const keys = projectArg.split(",").map((k) => k.trim());
 			const ids = await Promise.all(
 				keys.map((key) => resolveProjectId(client, key)),
 			);

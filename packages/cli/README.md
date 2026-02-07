@@ -74,6 +74,21 @@ backlog status
 | `backlog api` | Backlog API の直接呼び出し |
 | `backlog completion` | シェル補完スクリプトの生成 |
 
+## 環境変数
+
+| 環境変数 | 説明 |
+|----------|------|
+| `BACKLOG_SPACE` | 使用するスペースのホスト名（`--space` フラグと同等） |
+| `BACKLOG_PROJECT` | デフォルトのプロジェクトキー（`--project` フラグと同等） |
+
+```bash
+export BACKLOG_PROJECT=YOUR_PROJECT
+
+# --project を省略可能
+backlog issue list
+backlog milestone list
+```
+
 ## 出力形式
 
 デフォルトではテーブル形式で出力されます。JSON 形式で取得する場合は `--json` フラグを使用します。

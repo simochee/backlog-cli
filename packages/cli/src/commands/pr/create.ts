@@ -3,7 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
-import { resolveUserId } from "#utils/resolve.ts";
+import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 import { pullRequestUrl } from "#utils/url.ts";
 
 export default defineCommand({
@@ -15,8 +15,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		repo: {
 			type: "string",
@@ -58,6 +57,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client, host } = await getClient();
 
 		// Prompt for required fields if not provided
@@ -82,7 +83,7 @@ export default defineCommand({
 		}
 
 		const pr = await client<BacklogPullRequest>(
-			`/projects/${args.project}/git/repositories/${args.repo}/pullRequests`,
+			`/projects/${project}/git/repositories/${args.repo}/pullRequests`,
 			{
 				method: "POST",
 				body,
@@ -92,7 +93,7 @@ export default defineCommand({
 		consola.success(`Created PR #${pr.number}: ${pr.summary}`);
 
 		if (args.web) {
-			const url = pullRequestUrl(host, args.project, args.repo, pr.number);
+			const url = pullRequestUrl(host, project, args.repo, pr.number);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 		}

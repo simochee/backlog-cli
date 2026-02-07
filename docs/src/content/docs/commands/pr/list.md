@@ -13,7 +13,7 @@ backlog pr list [flags]
 
 | フラグ | 短縮 | 型 | デフォルト | 説明 |
 |--------|------|------|------------|------|
-| `--project` | `-p` | string | — | プロジェクトキー |
+| `--project` | `-p` | string | — | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--repo` | `-R` | string | — | リポジトリ名 |
 | `--status` | `-S` | string | `open` | ステータス（`open` / `closed` / `merged`、カンマ区切り） |
 | `--assignee` | `-a` | string | — | 担当者（ユーザー名 or `@me`） |
