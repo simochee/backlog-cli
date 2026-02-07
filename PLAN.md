@@ -23,14 +23,44 @@
 
 | フラグ | 短縮 | 型 | デフォルト | 説明 |
 |--------|------|------|------------|------|
-| `--space` | `-s` | string | 設定ファイルのデフォルト | 対象のBacklogスペース（`xxx.backlog.com`） |
-| `--project` | `-p` | string | カレントディレクトリの `.backlog` 設定 | プロジェクトキー（例: `PROJECT_KEY`） |
+| `--space` | `-s` | string | デフォルトスペース | 対象の Backlog スペース（AWS CLI の `--profile` 相当） |
 | `--json` | | string[] | — | JSON出力。フィールド名を指定可 |
 | `--jq` | `-q` | string | — | jq式でJSON出力をフィルタ |
 | `--template` | `-t` | string | — | Go template形式の出力フォーマット |
 | `--no-pager` | | boolean | false | ページャーを無効化 |
 | `--help` | `-h` | boolean | — | ヘルプ表示 |
 | `--version` | `-V` | boolean | — | バージョン表示 |
+
+### スペース解決（認証コンテキスト）
+
+AWS CLI のプロファイルと同様に、`--space` でスペースを切り替える。
+スペースが決まれば認証情報（API Key / OAuth トークン）も一意に決まる。
+
+**解決優先順:**
+
+1. `--space` フラグ（例: `--space mycompany.backlog.com`）
+2. 環境変数 `BACKLOG_SPACE`
+3. 設定ファイルの `default_space`
+
+```sh
+# デフォルトスペースを使用
+backlog issue list
+
+# 明示的にスペースを指定
+backlog issue list --space partner.backlog.jp
+
+# 環境変数で指定
+BACKLOG_SPACE=partner.backlog.jp backlog issue list
+```
+
+### `--project` を持たない理由
+
+Backlog の課題キーは `PROJECT-123` 形式でプロジェクトキーを含むため、
+課題キーを受け取るコマンド（`view`, `edit`, `close`, `reopen`, `comment` 等）は
+プロジェクトの明示指定が不要。
+
+プロジェクト指定が必要なコマンド（`issue list`, `issue create`, `category list` 等）は
+グローバルフラグではなく、各コマンドのローカルオプション `--project` / `-p` で受け取る。
 
 ---
 
@@ -141,6 +171,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 
 | 引数/オプション | 短縮 | 型 | 必須 | デフォルト | 説明 | API パラメータ |
 |------------------|------|------|------|------------|------|----------------|
+| `--project` | `-p` | string[] | No | — | プロジェクトキー（複数可） | `projectId[]` |
 | `--assignee` | `-a` | string | No | — | 担当者（ユーザー名 or `@me`） | `assigneeId[]` |
 | `--status` | `-S` | string[] | No | — | ステータス名（複数可） | `statusId[]` |
 | `--type` | `-T` | string[] | No | — | 課題種別名（複数可） | `issueTypeId[]` |
@@ -186,6 +217,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 
 | 引数/オプション | 短縮 | 型 | 必須 | デフォルト | 説明 | API パラメータ |
 |------------------|------|------|------|------------|------|----------------|
+| `--project` | `-p` | string | Yes* | — | プロジェクトキー | `projectId` |
 | `--title` | `-t` | string | Yes* | — | 課題の件名 | `summary` |
 | `--description` | `-d` | string | No | — | 課題の詳細（`-` で stdin） | `description` |
 | `--type` | `-T` | string | Yes* | — | 課題種別名 | `issueTypeId` |
@@ -646,6 +678,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | デフォルト | 説明 | API パラメータ |
 |------------------|------|------|------|------------|------|----------------|
+| `--project` | `-p` | string | Yes* | — | プロジェクトキー | `projectIdOrKey` |
 | `--keyword` | `-k` | string | No | — | キーワード検索 | `keyword` |
 | `--sort` | | string | No | `updated` | ソートキー | `sort` |
 | `--order` | | string | No | `desc` | 並び順 | `order` |
@@ -669,6 +702,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `projectId` |
 | `--name` | `-n` | string | Yes* | ページ名 | `name` |
 | `--body` | `-b` | string | Yes* | 本文 | `content` |
 | `--notify` | | boolean | No | メール通知 | `mailNotify` |
@@ -893,6 +927,10 @@ Git リポジトリをクローンする。
 
 #### `backlog category list`
 
+| 引数/オプション | 短縮 | 型 | 必須 | 説明 |
+|------------------|------|------|------|------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー |
+
 - **対応 API**: `GET /api/v2/projects/:key/categories`
 - **状態**: 未着手
 
@@ -900,6 +938,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `:key` (URL) |
 | `--name` | `-n` | string | Yes | カテゴリ名 | `name` |
 
 - **対応 API**: `POST /api/v2/projects/:key/categories`
@@ -931,6 +970,10 @@ Git リポジトリをクローンする。
 
 #### `backlog milestone list`
 
+| 引数/オプション | 短縮 | 型 | 必須 | 説明 |
+|------------------|------|------|------|------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー |
+
 - **対応 API**: `GET /api/v2/projects/:key/versions`
 - **状態**: 未着手
 
@@ -938,6 +981,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `:key` (URL) |
 | `--name` | `-n` | string | Yes | マイルストーン名 | `name` |
 | `--description` | `-d` | string | No | 説明 | `description` |
 | `--start-date` | | string | No | 開始日（yyyy-MM-dd） | `startDate` |
@@ -976,6 +1020,10 @@ Git リポジトリをクローンする。
 
 #### `backlog issue-type list`
 
+| 引数/オプション | 短縮 | 型 | 必須 | 説明 |
+|------------------|------|------|------|------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー |
+
 - **対応 API**: `GET /api/v2/projects/:key/issueTypes`
 - **状態**: 未着手
 
@@ -983,6 +1031,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `:key` (URL) |
 | `--name` | `-n` | string | Yes | 種別名 | `name` |
 | `--color` | | string | Yes | 表示色（`#hex`） | `color` |
 
@@ -1017,6 +1066,10 @@ Git リポジトリをクローンする。
 
 #### `backlog status-type list`
 
+| 引数/オプション | 短縮 | 型 | 必須 | 説明 |
+|------------------|------|------|------|------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー |
+
 - **対応 API**: `GET /api/v2/projects/:key/statuses`
 - **状態**: 未着手
 
@@ -1024,6 +1077,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `:key` (URL) |
 | `--name` | `-n` | string | Yes | ステータス名 | `name` |
 | `--color` | | string | Yes | 表示色（`#hex`） | `color` |
 
@@ -1089,6 +1143,10 @@ Git リポジトリをクローンする。
 
 #### `backlog webhook list`
 
+| 引数/オプション | 短縮 | 型 | 必須 | 説明 |
+|------------------|------|------|------|------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー |
+
 - **対応 API**: `GET /api/v2/projects/:key/webhooks`
 - **状態**: 未着手
 
@@ -1105,6 +1163,7 @@ Git リポジトリをクローンする。
 
 | 引数/オプション | 短縮 | 型 | 必須 | 説明 | API パラメータ |
 |------------------|------|------|------|------|----------------|
+| `--project` | `-p` | string | Yes* | プロジェクトキー | `:key` (URL) |
 | `--name` | `-n` | string | Yes | Webhook 名 | `name` |
 | `--hook-url` | | string | Yes | 通知先 URL | `hookUrl` |
 | `--description` | `-d` | string | No | 説明 | `description` |
@@ -1336,12 +1395,17 @@ CLI ではユーザーフレンドリーな名前を使い、API リクエスト
 
 ### 4. プロジェクトコンテキスト
 
-プロジェクトは以下の優先順で解決する:
+グローバルな `--project` フラグは持たない。Backlog の課題キーは `PROJECT-123` 形式で
+プロジェクトキーを含むため、課題キーを受け取るコマンドではプロジェクト指定が不要。
 
-1. `--project` フラグ
-2. カレントディレクトリの `.backlog` 設定ファイル
-3. Git リモート URL からの推測
-4. インタラクティブ選択
+プロジェクト指定が必要なコマンド（`issue list`, `issue create`, `category list` 等）は
+各コマンドのローカルオプション `--project` / `-p` で受け取る。
+
+プロジェクトが必要だが指定されていない場合の解決順:
+
+1. コマンドローカルの `--project` / `-p` フラグ
+2. Git リモート URL からの推測（Backlog Git のリモートが設定されている場合）
+3. インタラクティブ選択（TTY 接続時）
 
 ### 5. エラーハンドリング
 
