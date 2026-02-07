@@ -199,3 +199,80 @@ export interface BacklogNotification {
 export interface BacklogNotificationCount {
 	count: number;
 }
+
+/** Backlog wiki page object. */
+export interface BacklogWiki {
+	id: number;
+	projectId: number;
+	name: string;
+	content: string;
+	tags: { id: number; name: string }[];
+	attachments: BacklogWikiAttachment[];
+	sharedFiles: unknown[];
+	stars: unknown[];
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog wiki attachment. */
+export interface BacklogWikiAttachment {
+	id: number;
+	name: string;
+	size: number;
+	createdUser: BacklogUser;
+	created: string;
+}
+
+/** Backlog wiki tag. */
+export interface BacklogWikiTag {
+	id: number;
+	name: string;
+}
+
+/** Backlog wiki history entry. */
+export interface BacklogWikiHistory {
+	pageId: number;
+	version: number;
+	name: string;
+	content: string;
+	createdUser: BacklogUser;
+	created: string;
+}
+
+/** Backlog wiki count response. */
+export interface BacklogWikiCount {
+	count: number;
+}
+
+/** Backlog team object. */
+export interface BacklogTeam {
+	id: number;
+	name: string;
+	members: BacklogUser[];
+	displayOrder: number | null;
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog category object. */
+export interface BacklogCategory {
+	id: number;
+	name: string;
+	displayOrder: number;
+}
+
+/** Backlog milestone (version) object. */
+export interface BacklogMilestone {
+	id: number;
+	projectId: number;
+	name: string;
+	description: string;
+	startDate: string | null;
+	releaseDueDate: string | null;
+	archived: boolean;
+	displayOrder: number;
+}
