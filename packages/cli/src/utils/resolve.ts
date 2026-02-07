@@ -36,20 +36,21 @@ export function resolveProjectArg(argValue?: string): string {
  * and returns the item's `id`. Throws a descriptive error listing available names
  * when no match is found.
  */
-export async function resolveByName<T extends { id: number }>(
+export async function resolveByName<
+	K extends string,
+	T extends { id: number } & Record<K, string>,
+>(
 	client: BacklogClient,
 	endpoint: string,
-	nameField: keyof T & string,
+	nameField: K,
 	value: string,
 	label: string,
 ): Promise<number> {
 	const items = await client<T[]>(endpoint);
-	const item = items.find((i) => (i[nameField] as unknown as string) === value);
+	const item = items.find((i) => i[nameField] === value);
 
 	if (!item) {
-		const names = items
-			.map((i) => i[nameField] as unknown as string)
-			.join(", ");
+		const names = items.map((i) => i[nameField]).join(", ");
 		throw new Error(`${label} "${value}" not found. Available: ${names}`);
 	}
 

@@ -1,4 +1,5 @@
 import { type } from "arktype";
+import consola from "consola";
 import { readUser, writeUser } from "rc9";
 import { Rc } from "#types.ts";
 
@@ -15,8 +16,8 @@ export const loadConfig = async (): Promise<typeof Rc.infer> => {
 	const result = Rc(rc);
 
 	if (result instanceof type.errors) {
-		console.error("Configuration Error:");
-		console.error(result.summary);
+		consola.error("Configuration Error:");
+		consola.error(result.summary);
 
 		process.exit(1);
 	}

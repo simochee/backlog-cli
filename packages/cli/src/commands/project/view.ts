@@ -2,7 +2,7 @@ import type { BacklogProject } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
-import { projectUrl } from "#utils/url.ts";
+import { openUrl, projectUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -30,7 +30,7 @@ export default defineCommand({
 		if (args.web) {
 			const url = projectUrl(host, project.projectKey);
 			consola.info(`Opening ${url}`);
-			Bun.spawn(["open", url]);
+			await openUrl(url);
 			return;
 		}
 

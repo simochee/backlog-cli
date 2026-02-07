@@ -80,16 +80,48 @@ export interface BacklogIssue {
 	updated: string;
 }
 
+/** Backlog change log entry in a comment. */
+export interface BacklogChangeLog {
+	field: string;
+	newValue: string | null;
+	originalValue: string | null;
+	attachmentInfo: { id: number; name: string } | null;
+	attributeInfo: { id: number; typeId: string } | null;
+	notificationInfo: { type: string } | null;
+}
+
+/** Backlog comment notification. */
+export interface BacklogCommentNotification {
+	id: number;
+	alreadyRead: boolean;
+	reason: number;
+	user: BacklogUser;
+	resourceAlreadyRead: boolean;
+}
+
+/** Backlog shared file object. */
+export interface BacklogSharedFile {
+	id: number;
+	type: string;
+	dir: string;
+	name: string;
+	size: number;
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
 /** Backlog issue comment object. */
 export interface BacklogComment {
 	id: number;
 	content: string;
-	changeLog: unknown[];
+	changeLog: BacklogChangeLog[];
 	createdUser: BacklogUser;
 	created: string;
 	updated: string;
-	stars: unknown[];
-	notifications: unknown[];
+	stars: BacklogStar[];
+	notifications: BacklogCommentNotification[];
 }
 
 /** Backlog resolution (completion reason). */
@@ -104,7 +136,7 @@ export interface BacklogActivity {
 	project: BacklogProject;
 	type: number;
 	content: Record<string, unknown>;
-	notifications: unknown[];
+	notifications: BacklogCommentNotification[];
 	createdUser: BacklogUser;
 	created: string;
 }
@@ -169,16 +201,23 @@ export interface BacklogPullRequestStatus {
 	name: string;
 }
 
+/** Fixed status IDs for pull requests defined by Backlog API. */
+export const PR_STATUS = {
+	Open: 1,
+	Closed: 2,
+	Merged: 3,
+} as const;
+
 /** Backlog pull request comment. */
 export interface BacklogPullRequestComment {
 	id: number;
 	content: string;
-	changeLog: unknown[];
+	changeLog: BacklogChangeLog[];
 	createdUser: BacklogUser;
 	created: string;
 	updated: string;
-	stars: unknown[];
-	notifications: unknown[];
+	stars: BacklogStar[];
+	notifications: BacklogCommentNotification[];
 }
 
 /** Backlog notification object. */
@@ -208,8 +247,8 @@ export interface BacklogWiki {
 	content: string;
 	tags: { id: number; name: string }[];
 	attachments: BacklogWikiAttachment[];
-	sharedFiles: unknown[];
-	stars: unknown[];
+	sharedFiles: BacklogSharedFile[];
+	stars: BacklogStar[];
 	createdUser: BacklogUser;
 	created: string;
 	updatedUser: BacklogUser;

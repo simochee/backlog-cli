@@ -1,3 +1,17 @@
+import consola from "consola";
+
+/**
+ * Opens a URL in the default browser with proper error handling.
+ */
+export async function openUrl(url: string): Promise<void> {
+	const proc = Bun.spawn(["open", url]);
+	const exitCode = await proc.exited;
+	if (exitCode !== 0) {
+		consola.error(`Failed to open browser (exit code ${exitCode})`);
+		process.exit(exitCode);
+	}
+}
+
 /**
  * Builds a full Backlog web URL for the given resource path.
  *

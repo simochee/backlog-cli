@@ -2,7 +2,9 @@ export { type BacklogClientConfig, createClient } from "#client.ts";
 export type {
 	BacklogActivity,
 	BacklogCategory,
+	BacklogChangeLog,
 	BacklogComment,
+	BacklogCommentNotification,
 	BacklogIssue,
 	BacklogIssueType,
 	BacklogMilestone,
@@ -15,6 +17,7 @@ export type {
 	BacklogPullRequestStatus,
 	BacklogRepository,
 	BacklogResolution,
+	BacklogSharedFile,
 	BacklogSpace,
 	BacklogSpaceDiskUsage,
 	BacklogSpaceNotification,
@@ -32,3 +35,4 @@ export type {
 	BacklogWikiHistory,
 	BacklogWikiTag,
 } from "#types.ts";
+export { PR_STATUS } from "#types.ts";

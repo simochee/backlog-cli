@@ -52,8 +52,8 @@ export default defineCommand({
 						: { host: space.host, accessToken: space.auth.accessToken };
 				const client = createClient(clientConfig);
 				user = await client<BacklogUser>("/users/myself");
-			} catch {
-				// Token may be invalid
+			} catch (_error) {
+				consola.debug("Token verification failed:", _error);
 			}
 
 			consola.log("");
