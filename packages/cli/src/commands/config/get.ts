@@ -7,7 +7,7 @@ const KEY_ALIASES: Record<string, string> = {
 	default_space: "defaultSpace",
 };
 
-const resolveKey = (key: string): string => KEY_ALIASES[key] ?? key;
+export const resolveKey = (key: string): string => KEY_ALIASES[key] ?? key;
 
 export default defineCommand({
 	meta: {
@@ -57,7 +57,10 @@ export default defineCommand({
 	},
 });
 
-function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
+export function getNestedValue(
+	obj: Record<string, unknown>,
+	path: string,
+): unknown {
 	return path.split(".").reduce<unknown>((current, key) => {
 		if (current != null && typeof current === "object" && key in current) {
 			return (current as Record<string, unknown>)[key];

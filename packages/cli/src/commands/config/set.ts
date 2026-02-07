@@ -8,9 +8,9 @@ const KEY_ALIASES: Record<string, string> = {
 };
 
 /** Keys that can be modified via `config set`. */
-const WRITABLE_KEYS = new Set(["defaultSpace"]);
+export const WRITABLE_KEYS = new Set(["defaultSpace"]);
 
-const resolveKey = (key: string): string => KEY_ALIASES[key] ?? key;
+export const resolveKey = (key: string): string => KEY_ALIASES[key] ?? key;
 
 export default defineCommand({
 	meta: {
