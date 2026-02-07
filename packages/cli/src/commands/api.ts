@@ -8,7 +8,7 @@ import { getClient } from "#utils/client.ts";
  * - Numeric strings become numbers
  * - Everything else stays as a string
  */
-function parseField(field: string): [string, unknown] {
+export function parseField(field: string): [string, unknown] {
 	const eqIndex = field.indexOf("=");
 	if (eqIndex === -1) {
 		return [field, true];

@@ -1,4 +1,5 @@
 import type { BacklogWebhook } from "@repo/api";
+import type { WebhooksCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -47,7 +48,10 @@ export default defineCommand({
 		const name = await promptRequired("Webhook name:", args.name);
 		const hookUrl = await promptRequired("Hook URL:", args["hook-url"]);
 
-		const body: Record<string, unknown> = { name, hookUrl };
+		const body: WebhooksCreateData["body"] & Record<string, unknown> = {
+			name,
+			hookUrl,
+		};
 
 		if (args.description) {
 			body.description = args.description;

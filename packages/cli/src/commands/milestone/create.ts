@@ -1,4 +1,5 @@
 import type { BacklogMilestone } from "@repo/api";
+import type { VersionsCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -42,7 +43,7 @@ export default defineCommand({
 
 		const name = await promptRequired("Milestone name:", args.name);
 
-		const body: Record<string, unknown> = { name };
+		const body: VersionsCreateData["body"] = { name };
 
 		if (args.description) {
 			body.description = args.description;

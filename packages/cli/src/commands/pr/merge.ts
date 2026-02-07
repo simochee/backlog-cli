@@ -1,4 +1,5 @@
 import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
+import type { PullRequestsUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -37,7 +38,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {
+		const body: PullRequestsUpdateData["body"] & { statusId: number } = {
 			statusId: PR_STATUS.Merged,
 		};
 

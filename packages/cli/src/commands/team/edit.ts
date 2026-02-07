@@ -1,4 +1,5 @@
 import type { BacklogTeam } from "@repo/api";
+import type { TeamsUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -27,7 +28,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {};
+		const body: TeamsUpdateData["body"] & Record<string, unknown> = {};
 
 		if (args.name) {
 			body.name = args.name;

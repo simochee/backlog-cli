@@ -1,4 +1,5 @@
 import type { BacklogTeam } from "@repo/api";
+import type { TeamsListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -29,8 +30,8 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
-			order: args.order,
+		const query: NonNullable<TeamsListData["query"]> = {
+			order: args.order as NonNullable<TeamsListData["query"]>["order"],
 			count: Number.parseInt(args.limit, 10),
 		};
 

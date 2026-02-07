@@ -1,4 +1,5 @@
 import type { BacklogPullRequestComment } from "@repo/api";
+import type { PullRequestCommentsListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -39,7 +40,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<PullRequestCommentsListData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
 		};
 

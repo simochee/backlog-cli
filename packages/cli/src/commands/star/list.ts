@@ -1,4 +1,5 @@
 import type { BacklogStar, BacklogUser } from "@repo/api";
+import type { UsersGetStarsData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -35,9 +36,9 @@ export default defineCommand({
 			userId = `${me.id}`;
 		}
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<UsersGetStarsData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
-			order: args.order,
+			order: args.order as NonNullable<UsersGetStarsData["query"]>["order"],
 		};
 
 		const stars = await client<BacklogStar[]>(`/users/${userId}/stars`, {

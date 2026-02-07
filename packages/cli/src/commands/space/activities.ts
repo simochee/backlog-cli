@@ -1,4 +1,5 @@
 import type { BacklogActivity } from "@repo/api";
+import type { SpacesGetActivitiesData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -24,7 +25,8 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<SpacesGetActivitiesData["query"]> &
+			Record<string, unknown> = {
 			count: Number.parseInt(args.limit, 10),
 		};
 

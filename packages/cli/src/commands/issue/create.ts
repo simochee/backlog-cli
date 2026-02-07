@@ -1,4 +1,5 @@
 import type { BacklogIssue } from "@repo/api";
+import type { IssuesCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -91,7 +92,7 @@ export default defineCommand({
 			resolvePriorityId(client, priorityName),
 		]);
 
-		const body: Record<string, unknown> = {
+		const body: IssuesCreateData["body"] = {
 			projectId,
 			summary: title,
 			issueTypeId,

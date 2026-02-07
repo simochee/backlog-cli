@@ -1,4 +1,5 @@
 import type { BacklogProject } from "@repo/api";
+import type { ProjectsCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -43,14 +44,15 @@ export default defineCommand({
 		const name = await promptRequired("Project name:", args.name);
 		const key = await promptRequired("Project key:", args.key);
 
-		const body: Record<string, unknown> = {
+		const body: ProjectsCreateData["body"] = {
 			name,
 			key,
 			chartEnabled: args["chart-enabled"] ?? false,
 			subtaskingEnabled: args["subtasking-enabled"] ?? false,
 			projectLeaderCanEditProjectLeader:
 				args["project-leader-can-edit-project-leader"] ?? false,
-			textFormattingRule: args["text-formatting-rule"] ?? "markdown",
+			textFormattingRule: (args["text-formatting-rule"] ??
+				"markdown") as ProjectsCreateData["body"]["textFormattingRule"],
 		};
 
 		const project = await client<BacklogProject>("/projects", {

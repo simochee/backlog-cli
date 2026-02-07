@@ -1,4 +1,5 @@
 import type { BacklogStarCount, BacklogUser } from "@repo/api";
+import type { UsersGetStarsCountData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -31,7 +32,7 @@ export default defineCommand({
 			userId = `${me.id}`;
 		}
 
-		const query: Record<string, unknown> = {};
+		const query: NonNullable<UsersGetStarsCountData["query"]> = {};
 
 		if (args.since) {
 			query.since = args.since;
