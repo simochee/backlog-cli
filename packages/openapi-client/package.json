@@ -1,0 +1,18 @@
+{
+	"name": "@repo/openapi-client",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"build": "openapi-ts",
+		"clean": "rm -rf src/generated"
+	},
+	"dependencies": {
+		"@repo/backlog-api-typespec": "workspace:*"
+	},
+	"devDependencies": {
+		"@hey-api/openapi-ts": "0.92.3",
+		"@repo/tsconfigs": "workspace:*"
+	}
+}

@@ -6,7 +6,8 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["**", "!packages/openapi-client/src/generated"]
 	},
 	"formatter": {
 		"enabled": true

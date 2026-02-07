@@ -1,0 +1,6 @@
+{
+	"extends": "@repo/tsconfigs/bun.json",
+	"compilerOptions": {
+		"types": ["bun-types"]
+	}
+}

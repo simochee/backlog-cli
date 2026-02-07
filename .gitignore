@@ -12,6 +12,9 @@ out
 dist
 *.tgz
 
+# generated code
+tsp-output
+
 # code coverage
 coverage
 *.lcov
