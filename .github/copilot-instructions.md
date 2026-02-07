@@ -27,10 +27,10 @@
 import { describe, expect, it } from "vitest";
 
 describe("関数名", () => {
-  it("期待する振る舞いの説明", () => {
-    const result = targetFunction(input);
-    expect(result).toBe(expected);
-  });
+	it("期待する振る舞いの説明", () => {
+		const result = targetFunction(input);
+		expect(result).toBe(expected);
+	});
 });
 ```
 
@@ -40,25 +40,28 @@ describe("関数名", () => {
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#config.ts", () => ({
-  loadConfig: vi.fn(),
-  writeConfig: vi.fn(),
+	loadConfig: vi.fn(),
+	writeConfig: vi.fn(),
 }));
 
 import { loadConfig, writeConfig } from "#config.ts";
 
 describe("addSpace", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-  it("新しいスペースを追加する", async () => {
-    vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
-    await addSpace({ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } });
-    expect(writeConfig).toHaveBeenCalledWith(
-      expect.objectContaining({
-        spaces: [expect.objectContaining({ host: "example.backlog.com" })],
-      }),
-    );
-  });
+	it("新しいスペースを追加する", async () => {
+		vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
+		await addSpace({
+			host: "example.backlog.com",
+			auth: { method: "api-key", apiKey: "key" },
+		});
+		expect(writeConfig).toHaveBeenCalledWith(
+			expect.objectContaining({
+				spaces: [expect.objectContaining({ host: "example.backlog.com" })],
+			}),
+		);
+	});
 });
 ```

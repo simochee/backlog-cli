@@ -107,13 +107,13 @@ bun install
 bun run dev
 ```
 
-| コマンド | 内容 |
-|---|---|
-| `bun run dev` | 開発モードで実行 |
-| `bun run build` | ビルド |
-| `bun run test` | テスト実行 |
-| `bun run lint` | Biome によるリント |
-| `bun run type-check` | 型チェック |
+| コマンド             | 内容               |
+| -------------------- | ------------------ |
+| `bun run dev`        | 開発モードで実行   |
+| `bun run build`      | ビルド             |
+| `bun run test`       | テスト実行         |
+| `bun run lint`       | Biome によるリント |
+| `bun run type-check` | 型チェック         |
 
 ## ライセンス
 

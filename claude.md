@@ -69,6 +69,7 @@ src/utils/
 ```
 
 新しいコマンドを追加する手順:
+
 1. `commands/<group>/` にコマンドファイルを作成（`defineCommand` を使用）
 2. グループの `index.ts` の `subCommands` に遅延 import を追加
 3. 新しいグループの場合は `src/index.ts` にも追加
@@ -85,11 +86,13 @@ API Key（クエリパラメータ）と OAuth 2.0（Bearer トークン）の�
 認証方式は `api-key` と `oauth` の判別型ユニオンで定義。
 
 スペース解決の優先順位:
+
 1. `--space` フラグ
 2. `BACKLOG_SPACE` 環境変数
 3. 設定ファイルの `defaultSpace`
 
 プロジェクト解決の優先順位:
+
 1. コマンドローカルの `--project` / `-p` フラグ
 2. `BACKLOG_PROJECT` 環境変数
 3. インタラクティブプロンプト（`issue create` 等の一部コマンド）
@@ -105,35 +108,43 @@ CLI ではユーザーフレンドリーな名前を使い、API リクエスト
 
 ```ts
 // 汎用: エンドポイントからリストを取得し、nameField で検索して id を返す
-resolveByName<T>(client, endpoint, nameField, value, label)
+resolveByName<T>(client, endpoint, nameField, value, label);
 
 // 特殊ケース（ユーザー、ステータス等）は専用関数を用意
-resolveUserId(client, username)       // @me 対応、userId/name 両方で検索
-resolveStatusId(client, projectKey, name) // プロジェクト固有ステータス
+resolveUserId(client, username); // @me 対応、userId/name 両方で検索
+resolveStatusId(client, projectKey, name); // プロジェクト固有ステータス
 ```
 
-| CLI での入力 | API での送信 | 解決関数 |
-|--------------|-------------|-----------|
-| ステータス名（例: `処理中`） | `statusId` | `resolveStatusId` |
-| 課題種別名（例: `バグ`） | `issueTypeId` | `resolveIssueTypeId` |
-| 優先度名（例: `高`） | `priorityId` | `resolvePriorityId`（`resolveByName` 使用） |
-| ユーザー名 / `@me` | `userId` / `assigneeId` | `resolveUserId` |
-| 完了理由名 | `resolutionId` | `resolveResolutionId`（`resolveByName` 使用） |
+| CLI での入力                 | API での送信            | 解決関数                                      |
+| ---------------------------- | ----------------------- | --------------------------------------------- |
+| ステータス名（例: `処理中`） | `statusId`              | `resolveStatusId`                             |
+| 課題種別名（例: `バグ`）     | `issueTypeId`           | `resolveIssueTypeId`                          |
+| 優先度名（例: `高`）         | `priorityId`            | `resolvePriorityId`（`resolveByName` 使用）   |
+| ユーザー名 / `@me`           | `userId` / `assigneeId` | `resolveUserId`                               |
+| 完了理由名                   | `resolutionId`          | `resolveResolutionId`（`resolveByName` 使用） |
 
 ### URL 構築
 
 Backlog の Web URL 構築は `src/utils/url.ts` に集約。コマンドファイルでは直接テンプレートリテラルで URL を組み立てず、専用関数を使用する:
 
 ```ts
-import { issueUrl, projectUrl, pullRequestUrl, repositoryUrl, wikiUrl, dashboardUrl, buildBacklogUrl } from "#utils/url.ts";
+import {
+	issueUrl,
+	projectUrl,
+	pullRequestUrl,
+	repositoryUrl,
+	wikiUrl,
+	dashboardUrl,
+	buildBacklogUrl,
+} from "#utils/url.ts";
 
-issueUrl(host, "PROJ-123")                          // → https://host/view/PROJ-123
-projectUrl(host, "PROJ")                             // → https://host/projects/PROJ
-pullRequestUrl(host, "PROJ", "repo", 42)             // → https://host/git/PROJ/repo/pullRequests/42
-wikiUrl(host, 999)                                   // → https://host/alias/wiki/999
-repositoryUrl(host, "PROJ", "repo")                  // → https://host/git/PROJ/repo
-dashboardUrl(host)                                   // → https://host/dashboard
-buildBacklogUrl(host, "/custom/path")                // → https://host/custom/path
+issueUrl(host, "PROJ-123"); // → https://host/view/PROJ-123
+projectUrl(host, "PROJ"); // → https://host/projects/PROJ
+pullRequestUrl(host, "PROJ", "repo", 42); // → https://host/git/PROJ/repo/pullRequests/42
+wikiUrl(host, 999); // → https://host/alias/wiki/999
+repositoryUrl(host, "PROJ", "repo"); // → https://host/git/PROJ/repo
+dashboardUrl(host); // → https://host/dashboard
+buildBacklogUrl(host, "/custom/path"); // → https://host/custom/path
 ```
 
 ### インタラクティブプロンプト
@@ -154,13 +165,13 @@ const name = await promptRequired("Project name:", args.name);
 
 ### 出力形式
 
-| フラグ | 出力形式 | 用途 |
-|--------|----------|------|
-| （なし） | テーブル形式 | 人間が読む用 |
-| `--json` | JSON | プログラム連携 |
-| `--json field1,field2` | フィルタ済み JSON | 特定フィールドのみ |
-| `--jq '.[]'` | jq 変換済み出力 | 高度なフィルタ |
-| `--template '{{.Key}}'` | Go template | カスタムフォーマット |
+| フラグ                  | 出力形式          | 用途                 |
+| ----------------------- | ----------------- | -------------------- |
+| （なし）                | テーブル形式      | 人間が読む用         |
+| `--json`                | JSON              | プログラム連携       |
+| `--json field1,field2`  | フィルタ済み JSON | 特定フィールドのみ   |
+| `--jq '.[]'`            | jq 変換済み出力   | 高度なフィルタ       |
+| `--template '{{.Key}}'` | Go template       | カスタムフォーマット |
 
 ### プロジェクトコンテキスト
 
@@ -228,23 +239,23 @@ bun run test --filter=@repo/config      # 特定パッケージ
 
 **`src/types.ts`** — arktype スキーマの入力バリデーション（モック不要）
 
-| テスト観点 | 具体例 |
-|---|---|
-| `RcAuth` の有効な api-key 入力 | `{ method: "api-key", apiKey: "xxx" }` → 成功 |
-| `RcAuth` の有効な oauth 入力 | `{ method: "oauth", accessToken: "...", refreshToken: "..." }` → 成功 |
-| `RcAuth` の無効な method | `{ method: "unknown" }` → エラー |
-| `RcAuth` の必須フィールド欠落 | `{ method: "api-key" }` (apiKey なし) → エラー |
-| `RcSpace` のホスト名正規表現 | `example.backlog.com` → 成功、`invalid-host` → エラー |
-| `Rc` の spaces デフォルト値 | `{}` → `{ spaces: [] }` に正規化 |
+| テスト観点                     | 具体例                                                                |
+| ------------------------------ | --------------------------------------------------------------------- |
+| `RcAuth` の有効な api-key 入力 | `{ method: "api-key", apiKey: "xxx" }` → 成功                         |
+| `RcAuth` の有効な oauth 入力   | `{ method: "oauth", accessToken: "...", refreshToken: "..." }` → 成功 |
+| `RcAuth` の無効な method       | `{ method: "unknown" }` → エラー                                      |
+| `RcAuth` の必須フィールド欠落  | `{ method: "api-key" }` (apiKey なし) → エラー                        |
+| `RcSpace` のホスト名正規表現   | `example.backlog.com` → 成功、`invalid-host` → エラー                 |
+| `Rc` の spaces デフォルト値    | `{}` → `{ spaces: [] }` に正規化                                      |
 
 **`src/space.ts`** — `loadConfig` / `writeConfig` を `vi.mock` でモック化
 
-| 関数 | テスト観点 |
-|---|---|
-| `addSpace` | 新規スペース追加、重複ホストでエラー |
-| `removeSpace` | 既存スペース削除、存在しないホストでエラー、デフォルト解除 |
-| `updateSpaceAuth` | 認証情報更新、存在しないホストでエラー |
-| `resolveSpace` | 明示ホスト → 環境変数 → defaultSpace の優先順位 |
+| 関数              | テスト観点                                                 |
+| ----------------- | ---------------------------------------------------------- |
+| `addSpace`        | 新規スペース追加、重複ホストでエラー                       |
+| `removeSpace`     | 既存スペース削除、存在しないホストでエラー、デフォルト解除 |
+| `updateSpaceAuth` | 認証情報更新、存在しないホストでエラー                     |
+| `resolveSpace`    | 明示ホスト → 環境変数 → defaultSpace の優先順位            |
 
 **`src/config.ts`** — rc9 の `readUser` / `writeUser` をモック化してバリデーション分岐を検証
 
@@ -252,47 +263,47 @@ bun run test --filter=@repo/config      # 特定パッケージ
 
 **`src/client.ts`** — ofetch のモックで `createClient` の設定値を検証
 
-| テスト観点 | 具体例 |
-|---|---|
-| API Key 認証 | `query.apiKey` にキーが設定される |
-| OAuth 認証 | `Authorization: Bearer ...` ヘッダーが設定される |
-| ベース URL 構築 | `https://{host}/api/v2` 形式になる |
+| テスト観点      | 具体例                                           |
+| --------------- | ------------------------------------------------ |
+| API Key 認証    | `query.apiKey` にキーが設定される                |
+| OAuth 認証      | `Authorization: Bearer ...` ヘッダーが設定される |
+| ベース URL 構築 | `https://{host}/api/v2` 形式になる               |
 
 #### 3. `packages/cli`（優先度: 中）
 
 **`src/utils/resolve.ts`** — 名前→ID 解決ロジック
 
-| テスト観点 | 具体例 |
-|---|---|
-| `resolveByName` 汎用検索 | リスト内の名前一致で ID を返す |
+| テスト観点                       | 具体例                         |
+| -------------------------------- | ------------------------------ |
+| `resolveByName` 汎用検索         | リスト内の名前一致で ID を返す |
 | `resolveByName` 見つからない場合 | 利用可能な名前一覧を含むエラー |
-| `resolveUserId` の `@me` 対応 | `/users/myself` から ID を取得 |
-| `extractProjectKey` | `PROJECT-123` → `PROJECT` |
+| `resolveUserId` の `@me` 対応    | `/users/myself` から ID を取得 |
+| `extractProjectKey`              | `PROJECT-123` → `PROJECT`      |
 
 **`src/utils/url.ts`** — Backlog Web URL 構築
 
-| テスト観点 | 具体例 |
-|---|---|
-| `issueUrl` | `issueUrl("host", "PROJ-1")` → `https://host/view/PROJ-1` |
-| `pullRequestUrl` | プロジェクト・リポジトリ・PR番号から URL を構築 |
-| `dashboardUrl` | ダッシュボード URL の生成 |
+| テスト観点       | 具体例                                                    |
+| ---------------- | --------------------------------------------------------- |
+| `issueUrl`       | `issueUrl("host", "PROJ-1")` → `https://host/view/PROJ-1` |
+| `pullRequestUrl` | プロジェクト・リポジトリ・PR番号から URL を構築           |
+| `dashboardUrl`   | ダッシュボード URL の生成                                 |
 
 **`src/utils/prompt.ts`** — インタラクティブプロンプト
 
-| テスト観点 | 具体例 |
-|---|---|
-| 既存値あり | プロンプト表示せずそのまま返す |
-| 既存値なし | `consola.prompt` でユーザー入力を取得 |
-| 空入力 | エラーメッセージ表示 + `process.exit(1)` |
+| テスト観点 | 具体例                                   |
+| ---------- | ---------------------------------------- |
+| 既存値あり | プロンプト表示せずそのまま返す           |
+| 既存値なし | `consola.prompt` でユーザー入力を取得    |
+| 空入力     | エラーメッセージ表示 + `process.exit(1)` |
 
 **`src/commands/config/get.ts`** — `getNestedValue` ヘルパー
 
-| テスト観点 | 具体例 |
-|---|---|
-| 浅いキー | `getNestedValue({ a: 1 }, "a")` → `1` |
-| ネストキー | `getNestedValue({ a: { b: 2 } }, "a.b")` → `2` |
-| 存在しないキー | `getNestedValue({ a: 1 }, "x")` → `undefined` |
-| null 中間値 | `getNestedValue({ a: null }, "a.b")` → `undefined` |
+| テスト観点     | 具体例                                             |
+| -------------- | -------------------------------------------------- |
+| 浅いキー       | `getNestedValue({ a: 1 }, "a")` → `1`              |
+| ネストキー     | `getNestedValue({ a: { b: 2 } }, "a.b")` → `2`     |
+| 存在しないキー | `getNestedValue({ a: 1 }, "x")` → `undefined`      |
+| null 中間値    | `getNestedValue({ a: null }, "a.b")` → `undefined` |
 
 **`src/commands/config/set.ts`** — `resolveKey` の snake_case → camelCase エイリアス解決
 
@@ -336,10 +347,10 @@ packages/cli/src/utils/
 import { describe, expect, it } from "vitest";
 
 describe("関数名", () => {
-  it("期待する振る舞いの説明", () => {
-    const result = targetFunction(input);
-    expect(result).toBe(expected);
-  });
+	it("期待する振る舞いの説明", () => {
+		const result = targetFunction(input);
+		expect(result).toBe(expected);
+	});
 });
 ```
 
@@ -349,26 +360,29 @@ describe("関数名", () => {
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#config.ts", () => ({
-  loadConfig: vi.fn(),
-  writeConfig: vi.fn(),
+	loadConfig: vi.fn(),
+	writeConfig: vi.fn(),
 }));
 
 import { loadConfig, writeConfig } from "#config.ts";
 
 describe("addSpace", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-  it("新しいスペースを追加する", async () => {
-    vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
-    await addSpace({ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } });
-    expect(writeConfig).toHaveBeenCalledWith(
-      expect.objectContaining({
-        spaces: [expect.objectContaining({ host: "example.backlog.com" })],
-      }),
-    );
-  });
+	it("新しいスペースを追加する", async () => {
+		vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
+		await addSpace({
+			host: "example.backlog.com",
+			auth: { method: "api-key", apiKey: "key" },
+		});
+		expect(writeConfig).toHaveBeenCalledWith(
+			expect.objectContaining({
+				spaces: [expect.objectContaining({ host: "example.backlog.com" })],
+			}),
+		);
+	});
 });
 ```
 

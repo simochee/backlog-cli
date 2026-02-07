@@ -11,17 +11,17 @@ backlog issue-type delete <id> [flags]
 
 ## 引数
 
-| 引数 | 型 | 必須 | 説明 |
-|------|------|------|------|
-| `<id>` | number | Yes | 種別 ID |
+| 引数   | 型     | 必須 | 説明    |
+| ------ | ------ | ---- | ------- |
+| `<id>` | number | Yes  | 種別 ID |
 
 ## オプション
 
-| フラグ | 短縮 | 型 | 必須 | 説明 |
-|--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--substitute-issue-type-id` | | number | Yes | 代替種別 ID |
-| `--confirm` | | boolean | No | 確認プロンプトをスキップ |
+| フラグ                       | 短縮 | 型      | 必須 | 説明                                       |
+| ---------------------------- | ---- | ------- | ---- | ------------------------------------------ |
+| `--project`                  | `-p` | string  | Yes  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
+| `--substitute-issue-type-id` |      | number  | Yes  | 代替種別 ID                                |
+| `--confirm`                  |      | boolean | No   | 確認プロンプトをスキップ                   |
 
 ## 使用例
 
