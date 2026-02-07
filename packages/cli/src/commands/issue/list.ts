@@ -57,7 +57,7 @@ export default defineCommand({
 			description: "Offset for pagination",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

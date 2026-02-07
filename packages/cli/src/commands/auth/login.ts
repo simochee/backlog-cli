@@ -22,7 +22,7 @@ export default defineCommand({
 			description: "Read token from stdin",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

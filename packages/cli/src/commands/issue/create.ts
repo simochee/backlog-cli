@@ -49,7 +49,7 @@ export default defineCommand({
 			description: "Open in browser after creation",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

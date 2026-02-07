@@ -6,7 +6,7 @@ export default defineCommand({
 		description: "Show issue status summary for yourself",
 	},
 	args: {},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

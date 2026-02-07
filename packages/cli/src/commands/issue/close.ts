@@ -23,7 +23,7 @@ export default defineCommand({
 			default: "完了",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

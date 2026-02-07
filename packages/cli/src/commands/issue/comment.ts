@@ -17,7 +17,7 @@ export default defineCommand({
 			description: 'Comment body (use "-" for stdin)',
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

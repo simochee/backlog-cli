@@ -21,7 +21,7 @@ export default defineCommand({
 			description: "Set space-specific config",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

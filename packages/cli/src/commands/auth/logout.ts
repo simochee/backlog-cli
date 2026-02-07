@@ -12,7 +12,7 @@ export default defineCommand({
 			description: "Space hostname to log out from",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

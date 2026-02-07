@@ -17,7 +17,7 @@ export default defineCommand({
 			description: "Reopen comment",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

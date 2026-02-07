@@ -21,7 +21,7 @@ export default defineCommand({
 			default: "20",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

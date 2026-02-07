@@ -47,7 +47,7 @@ export default defineCommand({
 			description: "Update comment",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

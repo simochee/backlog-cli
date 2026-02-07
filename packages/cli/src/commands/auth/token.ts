@@ -12,7 +12,7 @@ export default defineCommand({
 			description: "Space hostname",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

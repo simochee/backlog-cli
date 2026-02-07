@@ -41,7 +41,7 @@ export default defineCommand({
 			description: "Suppress output",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

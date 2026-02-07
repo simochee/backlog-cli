@@ -15,7 +15,7 @@ export default defineCommand({
 			description: "Open in browser",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

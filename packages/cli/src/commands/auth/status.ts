@@ -16,7 +16,7 @@ export default defineCommand({
 			description: "Display the auth token",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });

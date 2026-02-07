@@ -11,7 +11,7 @@ export default defineCommand({
 			description: "Filter by space hostname",
 		},
 	},
-	run({ args }) {
+	run() {
 		throw new Error("Not implemented");
 	},
 });
