@@ -13,7 +13,7 @@
 | Phase 1 | MVP（auth, config, issue, project, api） | 19 | 完了 |
 | Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 完了 |
 | Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 完了 |
-| Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 未着手 |
+| Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 完了 |
 
 ---
 
@@ -1115,7 +1115,7 @@ Git リポジトリをクローンする。
 #### `backlog space info`
 
 - **対応 API**: `GET /api/v2/space`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog space activities`
 
@@ -1125,17 +1125,17 @@ Git リポジトリをクローンする。
 | `--activity-type` | | number[] | No | タイプフィルタ | `activityTypeId[]` |
 
 - **対応 API**: `GET /api/v2/space/activities`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog space disk-usage`
 
 - **対応 API**: `GET /api/v2/space/diskUsage`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog space notification`
 
 - **対応 API**: `GET /api/v2/space/notification`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1148,7 +1148,7 @@ Git リポジトリをクローンする。
 | `--project` | `-p` | string | Yes* | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/webhooks`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog webhook view <id>`
 
@@ -1157,7 +1157,7 @@ Git リポジトリをクローンする。
 | `<id>` | number | Yes | Webhook ID |
 
 - **対応 API**: `GET /api/v2/projects/:key/webhooks/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog webhook create`
 
@@ -1171,7 +1171,7 @@ Git リポジトリをクローンする。
 | `--activity-type-ids` | | number[] | No | 対象イベントタイプ | `activityTypeIds[]` |
 
 - **対応 API**: `POST /api/v2/projects/:key/webhooks`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog webhook edit <id>`
 
@@ -1185,7 +1185,7 @@ Git リポジトリをクローンする。
 | `--activity-type-ids` | | number[] | No | イベントタイプ | `activityTypeIds[]` |
 
 - **対応 API**: `PATCH /api/v2/projects/:key/webhooks/:webhookId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog webhook delete <id>`
 
@@ -1195,7 +1195,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/webhooks/:webhookId`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1211,7 +1211,7 @@ Git リポジトリをクローンする。
 | `--pr-comment` | number | No | PR コメント ID | `pullRequestCommentId` |
 
 - **対応 API**: `POST /api/v2/stars`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog star list [user-id]`
 
@@ -1222,7 +1222,7 @@ Git リポジトリをクローンする。
 | `--order` | | string | No | 並び順 | `order` |
 
 - **対応 API**: `GET /api/v2/users/:userId/stars`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog star count [user-id]`
 
@@ -1233,7 +1233,7 @@ Git リポジトリをクローンする。
 | `--until` | string | No | 終了日 | `until` |
 
 - **対応 API**: `GET /api/v2/users/:userId/stars/count`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1249,7 +1249,7 @@ Git リポジトリをクローンする。
 | `--sort` | | string | No | ソートキー | `sort` |
 
 - **対応 API**: `GET /api/v2/users/:userId/watchings`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog watching add`
 
@@ -1259,7 +1259,7 @@ Git リポジトリをクローンする。
 | `--note` | string | No | メモ | `note` |
 
 - **対応 API**: `POST /api/v2/watchings`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog watching view <watching-id>`
 
@@ -1268,7 +1268,7 @@ Git リポジトリをクローンする。
 | `<watching-id>` | number | Yes | ウォッチ ID |
 
 - **対応 API**: `GET /api/v2/watchings/:watchingId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog watching delete <watching-id>`
 
@@ -1278,7 +1278,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/watchings/:watchingId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog watching read <watching-id>`
 
@@ -1287,7 +1287,7 @@ Git リポジトリをクローンする。
 | `<watching-id>` | number | Yes | ウォッチ ID |
 
 - **対応 API**: `POST /api/v2/watchings/:watchingId/markAsRead`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1302,12 +1302,12 @@ Git リポジトリをクローンする。
 | `--shell` | boolean | No | シェルコマンドとして登録 |
 
 - **対応 API**: ローカル設定
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog alias list`
 
 - **対応 API**: ローカル設定
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog alias delete <name>`
 
@@ -1316,7 +1316,7 @@ Git リポジトリをクローンする。
 | `<name>` | string | Yes | エイリアス名 |
 
 - **対応 API**: ローカル設定
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1331,7 +1331,7 @@ OAuth トークンをリフレッシュする。
 | `--hostname` | string | No | 対象スペース |
 
 - **対応 API**: OAuth 2.0 Token Refresh
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog auth switch`
 
@@ -1342,7 +1342,7 @@ OAuth トークンをリフレッシュする。
 | `--hostname` | string | No | 切り替え先スペース |
 
 - **対応 API**: ローカル設定
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1355,7 +1355,7 @@ OAuth トークンをリフレッシュする。
 | `<shell>` | string | Yes | シェル種別（`bash`/`zsh`/`fish`） |
 
 - **対応 API**: ローカル処理
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 

@@ -10,5 +10,7 @@ export default defineCommand({
 		logout: () => import("./logout.ts").then((m) => m.default),
 		status: () => import("./status.ts").then((m) => m.default),
 		token: () => import("./token.ts").then((m) => m.default),
+		refresh: () => import("./refresh.ts").then((m) => m.default),
+		switch: () => import("./switch.ts").then((m) => m.default),
 	},
 });
