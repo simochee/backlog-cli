@@ -17,14 +17,14 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		let hostname = args.hostname;
+		let { hostname } = args;
 		if (!hostname) {
 			if (config.spaces.length === 0) {
 				consola.info("No spaces are currently authenticated.");
 				return;
 			}
 
-			const firstSpace = config.spaces[0];
+			const [firstSpace] = config.spaces;
 			if (config.spaces.length === 1 && firstSpace) {
 				hostname = firstSpace.host;
 			} else {

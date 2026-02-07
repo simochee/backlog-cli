@@ -17,7 +17,7 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		let hostname = args.hostname;
+		let { hostname } = args;
 
 		if (!hostname) {
 			if (config.spaces.length === 0) {

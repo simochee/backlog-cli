@@ -1,0 +1,64 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["import", "vitest"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"pedantic": "warn",
+		"perf": "warn",
+		"style": "warn"
+	},
+	"rules": {
+		// -- style: disable overly noisy rules --
+		"sort-keys": "off",
+		"sort-imports": "off",
+		"no-magic-numbers": "off",
+		"id-length": "off",
+		"max-statements": "off",
+		"max-lines-per-function": "off",
+		"no-ternary": "off",
+		"func-style": "off",
+		"new-cap": "off",
+		"no-continue": "off",
+		"max-lines": "off",
+		"init-declarations": "off",
+		"max-params": "off",
+		"no-await-in-loop": "off",
+
+		// -- import plugin: disable restrictive rules --
+		"import/no-named-export": "off",
+		"import/group-exports": "off",
+		"import/no-named-as-default": "off",
+		"import/exports-last": "off",
+		"import/max-dependencies": "off",
+		"import/prefer-default-export": "off",
+
+		// -- vitest/jest: disable overly strict test rules --
+		"jest/no-hooks": "off",
+		"jest/prefer-lowercase-title": "off",
+		"jest/max-expects": "off",
+		"jest/prefer-called-with": "off",
+		"vitest/prefer-describe-function-title": "off",
+
+		// -- import: vi.mock() hoisting causes false positives --
+		"import/first": "off",
+
+		// -- import: prefer inline type specifiers for merged imports --
+		"import/consistent-type-specifier-style": ["warn", "prefer-inline"],
+
+		// -- custom overrides --
+		"eqeqeq": ["warn", "smart"],
+		"no-unused-vars": [
+			"warn",
+			{
+				"argsIgnorePattern": "^_",
+				"varsIgnorePattern": "^_"
+			}
+		]
+	},
+	"env": {
+		"builtin": true
+	},
+	"globals": {},
+	"ignorePatterns": ["packages/openapi-client/src/generated"]
+}

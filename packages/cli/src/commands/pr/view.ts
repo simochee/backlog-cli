@@ -1,4 +1,7 @@
-import type { BacklogPullRequest, BacklogPullRequestComment } from "@repo/api";
+import {
+	type BacklogPullRequest,
+	type BacklogPullRequestComment,
+} from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -92,7 +95,9 @@ export default defineCommand({
 				consola.log("");
 				consola.log("  Comments:");
 				for (const comment of comments) {
-					if (!comment.content) continue;
+					if (!comment.content) {
+						continue;
+					}
 					consola.log("");
 					consola.log(
 						`    ${comment.createdUser.name} (${formatDate(comment.created)}):`,

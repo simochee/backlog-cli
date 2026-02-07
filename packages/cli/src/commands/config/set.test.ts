@@ -17,10 +17,10 @@ describe("resolveKey", () => {
 
 describe("WRITABLE_KEYS", () => {
 	it("defaultSpace が書き込み可能キーに含まれる", () => {
-		expect(WRITABLE_KEYS.has("defaultSpace")).toBe(true);
+		expect(WRITABLE_KEYS.has("defaultSpace")).toBeTruthy();
 	});
 
 	it("未知のキーは書き込み可能キーに含まれない", () => {
-		expect(WRITABLE_KEYS.has("unknownKey")).toBe(false);
+		expect(WRITABLE_KEYS.has("unknownKey")).toBeFalsy();
 	});
 });

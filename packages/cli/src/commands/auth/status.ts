@@ -1,5 +1,4 @@
-import type { BacklogUser } from "@repo/api";
-import { createClient } from "@repo/api";
+import { type BacklogUser, createClient } from "@repo/api";
 import { loadConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -23,7 +22,7 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		let spaces = config.spaces;
+		let { spaces } = config;
 		if (args.hostname) {
 			spaces = spaces.filter((s) => s.host === args.hostname);
 		}

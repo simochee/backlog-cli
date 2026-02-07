@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@repo/config", () => ({
+vi.mock<typeof import("@repo/config")>("@repo/config", () => ({
 	resolveSpace: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
+vi.mock<typeof import("consola")>("consola", () => ({
 	default: { error: vi.fn() },
 }));
 

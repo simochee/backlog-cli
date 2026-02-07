@@ -1,5 +1,4 @@
-import type { BacklogUser } from "@repo/api";
-import { createClient } from "@repo/api";
+import { type BacklogUser, createClient } from "@repo/api";
 import {
 	addSpace,
 	loadConfig,
@@ -41,7 +40,7 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
-		const method = args.method;
+		const { method } = args;
 
 		if (method !== "api-key") {
 			consola.error("Only api-key authentication is currently supported.");
@@ -49,7 +48,7 @@ export default defineCommand({
 		}
 
 		// Resolve hostname
-		let hostname = args.hostname;
+		let { hostname } = args;
 		if (!hostname) {
 			hostname = await consola.prompt("Backlog space hostname:", {
 				type: "text",

@@ -5,7 +5,7 @@ import { Rc, RcAuth, RcSpace } from "#types.ts";
 describe("RcAuth", () => {
 	it("accepts valid api-key auth", () => {
 		const result = RcAuth({ method: "api-key", apiKey: "abc123" });
-		expect(result).toEqual({ method: "api-key", apiKey: "abc123" });
+		expect(result).toStrictEqual({ method: "api-key", apiKey: "abc123" });
 	});
 
 	it("accepts valid oauth auth", () => {
@@ -14,7 +14,7 @@ describe("RcAuth", () => {
 			accessToken: "access",
 			refreshToken: "refresh",
 		});
-		expect(result).toEqual({
+		expect(result).toStrictEqual({
 			method: "oauth",
 			accessToken: "access",
 			refreshToken: "refresh",
@@ -84,18 +84,16 @@ describe("Rc", () => {
 	it("accepts empty config with defaults", () => {
 		const result = Rc({});
 		expect(result).not.toBeInstanceOf(type.errors);
-		if (!(result instanceof type.errors)) {
-			expect(result.spaces).toEqual([]);
-			expect(result.defaultSpace).toBeUndefined();
-		}
+		const config = result as typeof Rc.infer;
+		expect(config.spaces).toStrictEqual([]);
+		expect(config.defaultSpace).toBeUndefined();
 	});
 
 	it("accepts config with defaultSpace", () => {
 		const result = Rc({ defaultSpace: "example.backlog.com" });
 		expect(result).not.toBeInstanceOf(type.errors);
-		if (!(result instanceof type.errors)) {
-			expect(result.defaultSpace).toBe("example.backlog.com");
-		}
+		const config = result as typeof Rc.infer;
+		expect(config.defaultSpace).toBe("example.backlog.com");
 	});
 
 	it("accepts config with spaces", () => {
@@ -108,9 +106,8 @@ describe("Rc", () => {
 			],
 		});
 		expect(result).not.toBeInstanceOf(type.errors);
-		if (!(result instanceof type.errors)) {
-			expect(result.spaces).toHaveLength(1);
-		}
+		const config = result as typeof Rc.infer;
+		expect(config.spaces).toHaveLength(1);
 	});
 
 	it("rejects invalid space in spaces array", () => {

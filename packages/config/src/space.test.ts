@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("#config.ts", () => ({
+vi.mock<typeof import("#config.ts")>("#config.ts", () => ({
 	loadConfig: vi.fn(),
 	writeConfig: vi.fn(),
 }));
@@ -162,7 +162,7 @@ describe("resolveSpace", () => {
 
 		const result = await resolveSpace("explicit.backlog.com");
 
-		expect(result).toEqual(space);
+		expect(result).toStrictEqual(space);
 	});
 
 	it("returns space matching BACKLOG_SPACE env var", async () => {
@@ -172,7 +172,7 @@ describe("resolveSpace", () => {
 
 		const result = await resolveSpace();
 
-		expect(result).toEqual(space);
+		expect(result).toStrictEqual(space);
 	});
 
 	it("returns space matching defaultSpace config", async () => {
@@ -183,7 +183,7 @@ describe("resolveSpace", () => {
 
 		const result = await resolveSpace();
 
-		expect(result).toEqual(space);
+		expect(result).toStrictEqual(space);
 	});
 
 	it("prioritizes explicit host over env and default", async () => {
@@ -196,7 +196,7 @@ describe("resolveSpace", () => {
 
 		const result = await resolveSpace("explicit.backlog.com");
 
-		expect(result).toEqual(explicit);
+		expect(result).toStrictEqual(explicit);
 	});
 
 	it("returns null when no host is resolvable", async () => {

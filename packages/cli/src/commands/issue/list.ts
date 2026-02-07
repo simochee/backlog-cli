@@ -1,4 +1,4 @@
-import type { BacklogIssue } from "@repo/api";
+import { type BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -131,12 +131,24 @@ export default defineCommand({
 		}
 
 		// Date filters
-		if (args["created-since"]) query.createdSince = args["created-since"];
-		if (args["created-until"]) query.createdUntil = args["created-until"];
-		if (args["updated-since"]) query.updatedSince = args["updated-since"];
-		if (args["updated-until"]) query.updatedUntil = args["updated-until"];
-		if (args["due-since"]) query.dueDateSince = args["due-since"];
-		if (args["due-until"]) query.dueDateUntil = args["due-until"];
+		if (args["created-since"]) {
+			query.createdSince = args["created-since"];
+		}
+		if (args["created-until"]) {
+			query.createdUntil = args["created-until"];
+		}
+		if (args["updated-since"]) {
+			query.updatedSince = args["updated-since"];
+		}
+		if (args["updated-until"]) {
+			query.updatedUntil = args["updated-until"];
+		}
+		if (args["due-since"]) {
+			query.dueDateSince = args["due-since"];
+		}
+		if (args["due-until"]) {
+			query.dueDateUntil = args["due-until"];
+		}
 
 		const issues = await client<BacklogIssue[]>("/issues", { query });
 

@@ -1,4 +1,4 @@
-import type { BacklogIssue } from "@repo/api";
+import { type BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -73,7 +73,7 @@ export default defineCommand({
 		const priorityName = await promptRequired("Priority:", args.priority);
 
 		// Resolve description from stdin if "-"
-		let description = args.description;
+		let { description } = args;
 		if (description === "-") {
 			const chunks: Uint8Array[] = [];
 			for await (const chunk of process.stdin) {

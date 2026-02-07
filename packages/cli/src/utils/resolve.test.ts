@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { BacklogClient } from "#utils/client.ts";
+import { type BacklogClient } from "#utils/client.ts";
 import {
 	extractProjectKey,
 	resolveByName,
@@ -210,8 +210,8 @@ describe("resolvePriorityId", () => {
 	});
 
 	it("returns priority ID by name", async () => {
-		expect(await resolvePriorityId(client, "High")).toBe(2);
-		expect(await resolvePriorityId(client, "Normal")).toBe(3);
+		await expect(resolvePriorityId(client, "High")).resolves.toBe(2);
+		await expect(resolvePriorityId(client, "Normal")).resolves.toBe(3);
 	});
 
 	it("throws when priority not found", async () => {
@@ -231,7 +231,7 @@ describe("resolveStatusId", () => {
 	});
 
 	it("returns status ID by name", async () => {
-		expect(await resolveStatusId(client, "PROJ", "Open")).toBe(1);
+		await expect(resolveStatusId(client, "PROJ", "Open")).resolves.toBe(1);
 	});
 
 	it("throws when status not found", async () => {
@@ -250,7 +250,7 @@ describe("resolveClosedStatusId", () => {
 			],
 		});
 
-		expect(await resolveClosedStatusId(client, "PROJ")).toBe(4);
+		await expect(resolveClosedStatusId(client, "PROJ")).resolves.toBe(4);
 	});
 
 	it("falls back to last status if id 4 not found", async () => {
@@ -261,7 +261,7 @@ describe("resolveClosedStatusId", () => {
 			],
 		});
 
-		expect(await resolveClosedStatusId(client, "PROJ")).toBe(5);
+		await expect(resolveClosedStatusId(client, "PROJ")).resolves.toBe(5);
 	});
 
 	it("throws when no statuses exist", async () => {
@@ -284,7 +284,7 @@ describe("resolveOpenStatusId", () => {
 			],
 		});
 
-		expect(await resolveOpenStatusId(client, "PROJ")).toBe(1);
+		await expect(resolveOpenStatusId(client, "PROJ")).resolves.toBe(1);
 	});
 
 	it("falls back to first status if id 1 not found", async () => {
@@ -295,7 +295,7 @@ describe("resolveOpenStatusId", () => {
 			],
 		});
 
-		expect(await resolveOpenStatusId(client, "PROJ")).toBe(2);
+		await expect(resolveOpenStatusId(client, "PROJ")).resolves.toBe(2);
 	});
 
 	it("throws when no statuses exist", async () => {
@@ -318,7 +318,7 @@ describe("resolveIssueTypeId", () => {
 	});
 
 	it("returns issue type ID by name", async () => {
-		expect(await resolveIssueTypeId(client, "PROJ", "Bug")).toBe(100);
+		await expect(resolveIssueTypeId(client, "PROJ", "Bug")).resolves.toBe(100);
 	});
 
 	it("throws when issue type not found", async () => {
@@ -338,7 +338,7 @@ describe("resolveResolutionId", () => {
 	});
 
 	it("returns resolution ID by name", async () => {
-		expect(await resolveResolutionId(client, "Fixed")).toBe(0);
+		await expect(resolveResolutionId(client, "Fixed")).resolves.toBe(0);
 	});
 
 	it("throws when resolution not found", async () => {

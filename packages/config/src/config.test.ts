@@ -3,7 +3,7 @@ import { readUser, writeUser } from "rc9";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import { loadConfig, writeConfig } from "#config.ts";
 
-vi.mock("rc9", () => ({
+vi.mock<typeof import("rc9")>("rc9", () => ({
 	readUser: vi.fn(),
 	writeUser: vi.fn(),
 }));
@@ -36,7 +36,7 @@ describe("loadConfig", () => {
 
 		const config = await loadConfig();
 
-		expect(config.spaces).toEqual([]);
+		expect(config.spaces).toStrictEqual([]);
 		expect(config.defaultSpace).toBeUndefined();
 	});
 

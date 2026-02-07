@@ -1,7 +1,7 @@
-import type {
-	BacklogIssue,
-	BacklogNotificationCount,
-	BacklogUser,
+import {
+	type BacklogIssue,
+	type BacklogNotificationCount,
+	type BacklogUser,
 } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -43,7 +43,7 @@ export default defineCommand({
 		if (issues.length > 0) {
 			const grouped = new Map<string, BacklogIssue[]>();
 			for (const issue of issues) {
-				const name = issue.status.name;
+				const { name } = issue.status;
 				const list = grouped.get(name) ?? [];
 				list.push(issue);
 				grouped.set(name, list);

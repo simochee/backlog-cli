@@ -1,4 +1,4 @@
-import type { BacklogStarCount, BacklogUser } from "@repo/api";
+import { type BacklogStarCount, type BacklogUser } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";

@@ -17,9 +17,15 @@ function parseField(field: string): [string, unknown] {
 	const key = field.slice(0, eqIndex);
 	const raw = field.slice(eqIndex + 1);
 
-	if (raw === "true") return [key, true];
-	if (raw === "false") return [key, false];
-	if (raw !== "" && !Number.isNaN(Number(raw))) return [key, Number(raw)];
+	if (raw === "true") {
+		return [key, true];
+	}
+	if (raw === "false") {
+		return [key, false];
+	}
+	if (raw !== "" && !Number.isNaN(Number(raw))) {
+		return [key, Number(raw)];
+	}
 
 	return [key, raw];
 }
@@ -69,7 +75,7 @@ export default defineCommand({
 		const { client } = await getClient();
 
 		// Normalize endpoint — strip /api/v2 prefix if provided
-		let endpoint = args.endpoint;
+		let { endpoint } = args;
 		if (endpoint.startsWith("/api/v2")) {
 			endpoint = endpoint.slice("/api/v2".length);
 		}
@@ -136,7 +142,9 @@ export default defineCommand({
 
 				if (Array.isArray(result)) {
 					allResults.push(...result);
-					if (result.length < count) break;
+					if (result.length < count) {
+						break;
+					}
 					offset += count;
 				} else {
 					allResults.push(result);

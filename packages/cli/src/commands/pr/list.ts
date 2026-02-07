@@ -84,10 +84,11 @@ export default defineCommand({
 			const statuses = args.status.split(",").map((s) => s.trim());
 			query["statusId[]"] = statuses.map((s) => {
 				const id = statusMap[s.toLowerCase()];
-				if (!id)
+				if (!id) {
 					throw new Error(
 						`Invalid PR status "${s}". Available: open, closed, merged`,
 					);
+				}
 				return id;
 			});
 		}

@@ -1,5 +1,5 @@
 import { loadConfig, writeConfig } from "#config.ts";
-import type { RcSpace } from "#types.ts";
+import { type RcSpace } from "#types.ts";
 
 /**
  * Adds a new Backlog space to the configuration.
@@ -84,7 +84,9 @@ export const resolveSpace = async (
 	const config = await loadConfig();
 	const host = explicitHost ?? process.env.BACKLOG_SPACE ?? config.defaultSpace;
 
-	if (!host) return null;
+	if (!host) {
+		return null;
+	}
 
 	return config.spaces.find((s) => s.host === host) ?? null;
 };

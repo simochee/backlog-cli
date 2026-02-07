@@ -1,9 +1,9 @@
-import type {
-	BacklogIssue,
-	BacklogNotification,
-	BacklogProject,
-	BacklogPullRequest,
-	BacklogRepository,
+import {
+	type BacklogIssue,
+	type BacklogNotification,
+	type BacklogProject,
+	type BacklogPullRequest,
+	type BacklogRepository,
 } from "@repo/api";
 import { describe, expect, it } from "vitest";
 import {

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("consola", () => ({
+vi.mock<typeof import("consola")>("consola", () => ({
 	default: {
 		prompt: vi.fn(),
 		error: vi.fn(),

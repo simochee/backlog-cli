@@ -1,4 +1,4 @@
-import type { BacklogPullRequest, BacklogUser } from "@repo/api";
+import { type BacklogPullRequest, type BacklogUser } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -47,7 +47,7 @@ export default defineCommand({
 		// Group by status
 		const grouped = new Map<string, BacklogPullRequest[]>();
 		for (const pr of prs) {
-			const name = pr.status.name;
+			const { name } = pr.status;
 			const list = grouped.get(name) ?? [];
 			list.push(pr);
 			grouped.set(name, list);

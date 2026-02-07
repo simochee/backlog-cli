@@ -1,16 +1,18 @@
-import type {
-	BacklogIssue,
-	BacklogNotification,
-	BacklogProject,
-	BacklogPullRequest,
-	BacklogRepository,
+import {
+	type BacklogIssue,
+	type BacklogNotification,
+	type BacklogProject,
+	type BacklogPullRequest,
+	type BacklogRepository,
 } from "@repo/api";
 
 /**
  * Formats a date string to a short local representation (yyyy-MM-dd).
  */
 export function formatDate(dateStr: string | null): string {
-	if (!dateStr) return "";
+	if (!dateStr) {
+		return "";
+	}
 	return dateStr.slice(0, 10);
 }
 

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("consola", () => ({
+vi.mock<typeof import("consola")>("consola", () => ({
 	default: { error: vi.fn() },
 }));
 

@@ -1,13 +1,13 @@
-import type {
-	BacklogIssueType,
-	BacklogPriority,
-	BacklogProject,
-	BacklogResolution,
-	BacklogStatus,
-	BacklogUser,
+import {
+	type BacklogIssueType,
+	type BacklogPriority,
+	type BacklogProject,
+	type BacklogResolution,
+	type BacklogStatus,
+	type BacklogUser,
 } from "@repo/api";
 import consola from "consola";
-import type { BacklogClient } from "#utils/client.ts";
+import { type BacklogClient } from "#utils/client.ts";
 
 /**
  * Resolves the project key from the provided argument or `BACKLOG_PROJECT` environment variable.
@@ -95,7 +95,7 @@ export async function resolveUserId(
 /**
  * Resolves a priority name to its ID.
  */
-export async function resolvePriorityId(
+export function resolvePriorityId(
 	client: BacklogClient,
 	name: string,
 ): Promise<number> {
@@ -196,7 +196,7 @@ export async function resolveIssueTypeId(
 /**
  * Resolves a resolution name to its ID.
  */
-export async function resolveResolutionId(
+export function resolveResolutionId(
 	client: BacklogClient,
 	name: string,
 ): Promise<number> {
