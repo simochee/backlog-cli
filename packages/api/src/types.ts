@@ -121,3 +121,81 @@ export interface BacklogSpace {
 	created: string;
 	updated: string;
 }
+
+/** Backlog Git repository object. */
+export interface BacklogRepository {
+	id: number;
+	projectId: number;
+	name: string;
+	description: string | null;
+	hookUrl: string | null;
+	httpUrl: string;
+	sshUrl: string;
+	displayOrder: number;
+	pushedAt: string | null;
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog pull request object. */
+export interface BacklogPullRequest {
+	id: number;
+	projectId: number;
+	repositoryId: number;
+	number: number;
+	summary: string;
+	description: string;
+	base: string;
+	branch: string;
+	status: BacklogPullRequestStatus;
+	assignee: BacklogUser | null;
+	issue: BacklogIssue | null;
+	baseCommit: string | null;
+	branchCommit: string | null;
+	mergeCommit: string | null;
+	closeAt: string | null;
+	mergeAt: string | null;
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog pull request status. */
+export interface BacklogPullRequestStatus {
+	id: number;
+	name: string;
+}
+
+/** Backlog pull request comment. */
+export interface BacklogPullRequestComment {
+	id: number;
+	content: string;
+	changeLog: unknown[];
+	createdUser: BacklogUser;
+	created: string;
+	updated: string;
+	stars: unknown[];
+	notifications: unknown[];
+}
+
+/** Backlog notification object. */
+export interface BacklogNotification {
+	id: number;
+	alreadyRead: boolean;
+	reason: number;
+	resourceAlreadyRead: boolean;
+	project: BacklogProject;
+	issue?: BacklogIssue;
+	comment?: BacklogComment;
+	pullRequest?: BacklogPullRequest;
+	sender: BacklogUser;
+	created: string;
+}
+
+/** Backlog notification count response. */
+export interface BacklogNotificationCount {
+	count: number;
+}

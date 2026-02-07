@@ -34,11 +34,16 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 
 ```
 src/commands/
-  auth/       — 認証管理（login, logout, status, token）
-  config/     — CLI 設定（get, set, list）
-  issue/      — 課題管理（list, view, create, edit, close, reopen, comment, status）
-  project/    — プロジェクト管理（list, view, activities）
-  api.ts      — 汎用 API リクエスト
+  auth/           — 認証管理（login, logout, status, token）
+  config/         — CLI 設定（get, set, list）
+  issue/          — 課題管理（list, view, create, edit, close, reopen, comment, status）
+  project/        — プロジェクト管理（list, view, activities）
+  pr/             — プルリクエスト管理（list, view, create, edit, close, merge, reopen, comment, comments, status）
+  repo/           — Git リポジトリ管理（list, view, clone）
+  notification/   — 通知管理（list, count, read, read-all）
+  status.ts       — ダッシュボード（自分の課題・通知・最近の更新サマリー）
+  browse.ts       — ブラウザで開く
+  api.ts          — 汎用 API リクエスト
 ```
 
 新しいコマンドを追加する手順:

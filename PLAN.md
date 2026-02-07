@@ -11,7 +11,7 @@
 | Phase | 対象 | サブコマンド数 | 状態 |
 |-------|------|----------------|------|
 | Phase 1 | MVP（auth, config, issue, project, api） | 19 | 完了 |
-| Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 未着手 |
+| Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 完了 |
 | Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 未着手 |
 | Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 未着手 |
 
@@ -416,7 +416,7 @@ PR 一覧を取得する。
 | `--offset` | | number | No | 0 | オフセット | `offset` |
 
 - **対応 API**: `GET /api/v2/projects/:key/git/repositories/:repo/pullRequests`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr view <number>`
 
@@ -430,7 +430,7 @@ PR の詳細を表示する。
 | `--web` | boolean | No | ブラウザで開く |
 
 - **対応 API**: `GET .../pullRequests/:number`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr create`
 
@@ -449,7 +449,7 @@ PR の詳細を表示する。
 | `--web` | | boolean | No | false | 作成後ブラウザで開く | — |
 
 - **対応 API**: `POST .../pullRequests`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr edit <number>`
 
@@ -465,7 +465,7 @@ PR の詳細を表示する。
 | `--issue` | | string | No | — | 関連課題キー | `issueId` |
 
 - **対応 API**: `PATCH .../pullRequests/:number`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr close <number>`
 
@@ -478,7 +478,7 @@ PR をクローズする。
 | `--comment` | string | No | クローズコメント |
 
 - **対応 API**: `PATCH .../pullRequests/:number` (status を Close に変更)
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr merge <number>`
 
@@ -491,7 +491,7 @@ PR をマージする。
 | `--comment` | string | No | マージコメント |
 
 - **対応 API**: `PATCH .../pullRequests/:number` (status を Merged に変更)
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr reopen <number>`
 
@@ -503,7 +503,7 @@ PR をマージする。
 | `--repo` | string | No | リポジトリ名 |
 
 - **対応 API**: `PATCH .../pullRequests/:number` (status を Open に変更)
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr comment <number>`
 
@@ -517,7 +517,7 @@ PR にコメントを追加する。
 | `--notify` | `-n` | string[] | No | 通知先 | `notifiedUserId[]` |
 
 - **対応 API**: `POST .../pullRequests/:number/comments`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr comments <number>`
 
@@ -530,7 +530,7 @@ PR のコメント一覧を表示する。
 | `--limit` | number | No | 取得件数 |
 
 - **対応 API**: `GET .../pullRequests/:number/comments`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog pr status`
 
@@ -541,7 +541,7 @@ PR のコメント一覧を表示する。
 | `--repo` | string | No | リポジトリ名 |
 
 - **対応 API**: `GET .../pullRequests` (assigneeId=自分でフィルタ)
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -556,7 +556,7 @@ Git リポジトリ一覧を取得する。
 | `[project-key]` | string | No | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/git/repositories`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog repo view [repo-name]`
 
@@ -568,7 +568,7 @@ Git リポジトリの詳細を表示する。
 | `--web` | boolean | No | ブラウザで開く |
 
 - **対応 API**: `GET /api/v2/projects/:key/git/repositories/:repoIdOrName`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog repo clone <repo-name>`
 
@@ -580,7 +580,7 @@ Git リポジトリをクローンする。
 | `--directory` | string | No | クローン先ディレクトリ |
 
 - **対応 API**: ローカル `git clone` を実行
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -598,7 +598,7 @@ Git リポジトリをクローンする。
 | `--order` | | string | No | `desc` | 並び順 | `order` |
 
 - **対応 API**: `GET /api/v2/notifications`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog notification count`
 
@@ -610,7 +610,7 @@ Git リポジトリをクローンする。
 | `--resource-already-read` | | boolean | No | — | リソース既読を含める | `resourceAlreadyRead` |
 
 - **対応 API**: `GET /api/v2/notifications/count`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog notification read <id>`
 
@@ -621,14 +621,14 @@ Git リポジトリをクローンする。
 | `<id>` | number | Yes | 通知 ID |
 
 - **対応 API**: `POST /api/v2/notifications/:id/markAsRead`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog notification read-all`
 
 全通知を既読にする。
 
 - **対応 API**: `POST /api/v2/notifications/markAsRead`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -647,7 +647,7 @@ Git リポジトリをクローンする。
   - `GET /api/v2/notifications`
   - `GET /api/v2/users/myself/recentlyViewedIssues`
   - `GET /api/v2/issues` (assigneeId=自分)
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -666,7 +666,7 @@ Git リポジトリをクローンする。
 | `--settings` | boolean | No | false | プロジェクト設定を開く |
 
 - **対応 API**: ローカルで URL を構築しブラウザで開く
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
