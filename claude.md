@@ -84,25 +84,125 @@ bun run test --filter=@repo/config      # 特定パッケージ
 
 ### テスト対象と優先度
 
-| 優先度 | パッケージ | 対象モジュール | テスト観点 |
-|---|---|---|---|
-| 高 | `packages/config` | `types.ts` | arktype スキーマのバリデーション（有効/無効入力） |
-| 高 | `packages/config` | `space.ts` | スペース管理ロジック（追加・削除・更新・解決） |
-| 高 | `packages/config` | `config.ts` | 設定ファイル読み書きのバリデーション分岐 |
-| 中 | `packages/api` | `client.ts` | 認証方式による ofetch 設定の検証 |
-| 中 | `packages/cli` | `commands/config/get.ts` | `getNestedValue` のドット記法アクセス |
-| 中 | `packages/cli` | `commands/config/set.ts` | `resolveKey` のエイリアス解決 |
+#### 1. `packages/config`（優先度: 高）
+
+設定管理のコアロジック。副作用を `vi.mock` でモック化し、ビジネスロジックを検証する。
+
+**`src/types.ts`** — arktype スキーマの入力バリデーション（モック不要）
+
+| テスト観点 | 具体例 |
+|---|---|
+| `RcAuth` の有効な api-key 入力 | `{ method: "api-key", apiKey: "xxx" }` → 成功 |
+| `RcAuth` の有効な oauth 入力 | `{ method: "oauth", accessToken: "...", refreshToken: "..." }` → 成功 |
+| `RcAuth` の無効な method | `{ method: "unknown" }` → エラー |
+| `RcAuth` の必須フィールド欠落 | `{ method: "api-key" }` (apiKey なし) → エラー |
+| `RcSpace` のホスト名正規表現 | `example.backlog.com` → 成功、`invalid-host` → エラー |
+| `Rc` の spaces デフォルト値 | `{}` → `{ spaces: [] }` に正規化 |
+
+**`src/space.ts`** — `loadConfig` / `writeConfig` を `vi.mock` でモック化
+
+| 関数 | テスト観点 |
+|---|---|
+| `addSpace` | 新規スペース追加、重複ホストでエラー |
+| `removeSpace` | 既存スペース削除、存在しないホストでエラー、デフォルト解除 |
+| `updateSpaceAuth` | 認証情報更新、存在しないホストでエラー |
+| `resolveSpace` | 明示ホスト → 環境変数 → defaultSpace の優先順位 |
+
+**`src/config.ts`** — rc9 の `readUser` / `writeUser` をモック化してバリデーション分岐を検証
+
+#### 2. `packages/api`（優先度: 中）
+
+**`src/client.ts`** — ofetch のモックで `createClient` の設定値を検証
+
+| テスト観点 | 具体例 |
+|---|---|
+| API Key 認証 | `query.apiKey` にキーが設定される |
+| OAuth 認証 | `Authorization: Bearer ...` ヘッダーが設定される |
+| ベース URL 構築 | `https://{host}/api/v2` 形式になる |
+
+#### 3. `packages/cli`（優先度: 中）
+
+**`src/commands/config/get.ts`** — `getNestedValue` ヘルパー
+
+| テスト観点 | 具体例 |
+|---|---|
+| 浅いキー | `getNestedValue({ a: 1 }, "a")` → `1` |
+| ネストキー | `getNestedValue({ a: { b: 2 } }, "a.b")` → `2` |
+| 存在しないキー | `getNestedValue({ a: 1 }, "x")` → `undefined` |
+| null 中間値 | `getNestedValue({ a: null }, "a.b")` → `undefined` |
+
+**`src/commands/config/set.ts`** — `resolveKey` の snake_case → camelCase エイリアス解決
+
+### テストを書かない箇所
+
+- `packages/openapi-client` — 自動生成コード
+- `packages/backlog-api-typespec` — TypeSpec 定義（コンパイル時に検証済み）
+- `packages/tsconfigs` — 設定ファイルのみ
+- CLI のインタラクティブプロンプト（consola.prompt）— 統合テストの範囲
+- 外部 API への実際のリクエスト — モックで代替
 
 ### テストファイルの配置
 
 ソースファイルと同ディレクトリにコロケーション方式で配置: `{source}.test.ts`
 
+```
+packages/config/src/
+  types.ts
+  types.test.ts
+  space.ts
+  space.test.ts
+  config.ts
+  config.test.ts
+```
+
+### テストの書き方
+
+```ts
+import { describe, expect, it } from "vitest";
+
+describe("関数名", () => {
+  it("期待する振る舞いの説明", () => {
+    const result = targetFunction(input);
+    expect(result).toBe(expected);
+  });
+});
+```
+
+副作用を持つ依存は `vi.mock` でモック化する:
+
+```ts
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("#config.ts", () => ({
+  loadConfig: vi.fn(),
+  writeConfig: vi.fn(),
+}));
+
+import { loadConfig, writeConfig } from "#config.ts";
+
+describe("addSpace", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("新しいスペースを追加する", async () => {
+    vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
+    await addSpace({ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } });
+    expect(writeConfig).toHaveBeenCalledWith(
+      expect.objectContaining({
+        spaces: [expect.objectContaining({ host: "example.backlog.com" })],
+      }),
+    );
+  });
+});
+```
+
 ### テストの規約
 
 - `describe` は関数名またはモジュール名
 - `it` は日本語で期待する振る舞いを記述
+- テストファイル名: `{source}.test.ts`
 - 副作用（ファイル I/O、環境変数）は `vi.mock` でモック化
-- 詳細は `.github/instructions/testing.instructions.md` を参照
 
 ## PLAN.md の運用
 
