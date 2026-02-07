@@ -1,4 +1,7 @@
+import type { BacklogComment } from "@repo/api";
 import { defineCommand } from "citty";
+import consola from "consola";
+import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -17,7 +20,39 @@ export default defineCommand({
 			description: 'Comment body (use "-" for stdin)',
 		},
 	},
-	run() {
-		throw new Error("Not implemented");
+	async run({ args }) {
+		const { client } = await getClient();
+
+		let content = args.body;
+
+		// Read from stdin if "-"
+		if (content === "-") {
+			const chunks: Uint8Array[] = [];
+			for await (const chunk of process.stdin) {
+				chunks.push(chunk);
+			}
+			content = Buffer.concat(chunks).toString("utf-8").trim();
+		}
+
+		// Prompt for body if not provided
+		if (!content) {
+			content = await consola.prompt("Comment body:", { type: "text" });
+			if (typeof content !== "string" || !content) {
+				consola.error("Comment body is required.");
+				return process.exit(1);
+			}
+		}
+
+		const comment = await client<BacklogComment>(
+			`/issues/${args.issueKey}/comments`,
+			{
+				method: "POST",
+				body: { content },
+			},
+		);
+
+		consola.success(
+			`Added comment to ${args.issueKey} by ${comment.createdUser.name}`,
+		);
 	},
 });

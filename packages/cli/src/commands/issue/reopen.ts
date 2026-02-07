@@ -1,4 +1,8 @@
+import type { BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
+import consola from "consola";
+import { getClient } from "#utils/client.ts";
+import { extractProjectKey, resolveOpenStatusId } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -17,7 +21,23 @@ export default defineCommand({
 			description: "Reopen comment",
 		},
 	},
-	run() {
-		throw new Error("Not implemented");
+	async run({ args }) {
+		const { client } = await getClient();
+		const projectKey = extractProjectKey(args.issueKey);
+
+		const statusId = await resolveOpenStatusId(client, projectKey);
+
+		const body: Record<string, unknown> = { statusId };
+
+		if (args.comment) {
+			body.comment = args.comment;
+		}
+
+		const issue = await client<BacklogIssue>(`/issues/${args.issueKey}`, {
+			method: "PATCH",
+			body,
+		});
+
+		consola.success(`Reopened ${issue.issueKey}: ${issue.summary}`);
 	},
 });

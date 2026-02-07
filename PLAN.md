@@ -10,7 +10,7 @@
 
 | Phase | 対象 | サブコマンド数 | 状態 |
 |-------|------|----------------|------|
-| Phase 1 | MVP（auth, config, issue, project, api） | 19 | 進行中 |
+| Phase 1 | MVP（auth, config, issue, project, api） | 19 | 完了 |
 | Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 未着手 |
 | Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 未着手 |
 | Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 未着手 |
@@ -195,7 +195,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 | `--offset` | | number | No | 0 | オフセット | `offset` |
 
 - **対応 API**: `GET /api/v2/issues`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue view <issue-key>`
 
@@ -209,7 +209,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 
 - **対応 API**: `GET /api/v2/issues/:issueIdOrKey`
 - **補助 API**: `GET /api/v2/issues/:key/comments`（`--comments` 使用時）
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue create`
 
@@ -243,7 +243,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
   - `GET /api/v2/projects/:key/users`
   - `GET /api/v2/projects/:key/categories`
   - `GET /api/v2/projects/:key/versions`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue edit <issue-key>`
 
@@ -270,7 +270,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 | `--notify` | `-n` | string[] | No | — | 通知先ユーザー | `notifiedUserId[]` |
 
 - **対応 API**: `PATCH /api/v2/issues/:issueIdOrKey`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue close <issue-key>`
 
@@ -286,7 +286,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 - **補助 API**:
   - `GET /api/v2/projects/:key/statuses` — 「完了」ステータスのID取得
   - `GET /api/v2/resolutions` — 完了理由のID取得
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue reopen <issue-key>`
 
@@ -299,7 +299,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 
 - **対応 API**: `PATCH /api/v2/issues/:issueIdOrKey` (statusId を「未対応」に設定)
 - **補助 API**: `GET /api/v2/projects/:key/statuses`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue comment <issue-key>`
 
@@ -314,7 +314,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 > *: 省略時はエディタが起動する
 
 - **対応 API**: `POST /api/v2/issues/:issueIdOrKey/comments`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue status`
 
@@ -326,7 +326,7 @@ Backlog の最重要機能。課題の CRUD とコメント操作を提供する
 
 - **対応 API**: `GET /api/v2/issues` (assigneeId=自分, ステータス別に集計)
 - **補助 API**: `GET /api/v2/users/myself`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -345,7 +345,7 @@ Backlog のプロジェクト操作。gh CLI の `repo` に相当。
 | `--limit` | `-L` | number | No | 20 | 表示件数 | — (クライアントフィルタ) |
 
 - **対応 API**: `GET /api/v2/projects`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project view [project-key]`
 
@@ -357,7 +357,7 @@ Backlog のプロジェクト操作。gh CLI の `repo` に相当。
 | `--web` | boolean | No | false | ブラウザで開く |
 
 - **対応 API**: `GET /api/v2/projects/:projectIdOrKey`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project activities [project-key]`
 
@@ -370,7 +370,7 @@ Backlog のプロジェクト操作。gh CLI の `repo` に相当。
 | `--activity-type` | | number[] | No | — | アクティビティタイプID | `activityTypeId[]` |
 
 - **対応 API**: `GET /api/v2/projects/:key/activities`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -393,7 +393,7 @@ Backlog のプロジェクト操作。gh CLI の `repo` に相当。
 | `--silent` | | boolean | No | false | 出力を抑制 |
 
 - **対応 API**: 任意のエンドポイント
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 

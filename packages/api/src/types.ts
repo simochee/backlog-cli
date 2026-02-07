@@ -92,6 +92,23 @@ export interface BacklogComment {
 	notifications: unknown[];
 }
 
+/** Backlog resolution (completion reason). */
+export interface BacklogResolution {
+	id: number;
+	name: string;
+}
+
+/** Backlog project activity. */
+export interface BacklogActivity {
+	id: number;
+	project: BacklogProject;
+	type: number;
+	content: Record<string, unknown>;
+	notifications: unknown[];
+	createdUser: BacklogUser;
+	created: string;
+}
+
 /** Backlog space object. */
 export interface BacklogSpace {
 	spaceKey: string;
