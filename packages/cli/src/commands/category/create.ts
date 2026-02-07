@@ -2,6 +2,7 @@ import type { BacklogCategory } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 
 export default defineCommand({
 	meta: {
@@ -24,15 +25,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		let name = args.name;
-
-		if (!name) {
-			name = await consola.prompt("Category name:", { type: "text" });
-			if (typeof name !== "string" || !name) {
-				consola.error("Category name is required.");
-				return process.exit(1);
-			}
-		}
+		const name = await promptRequired("Category name:", args.name);
 
 		const category = await client<BacklogCategory>(
 			`/projects/${args.project}/categories`,

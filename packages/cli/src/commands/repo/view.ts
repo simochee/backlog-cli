@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { repositoryUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -34,7 +35,7 @@ export default defineCommand({
 		);
 
 		if (args.web) {
-			const url = `https://${host}/git/${args.project}/${repo.name}`;
+			const url = repositoryUrl(host, args.project, repo.name);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 			return;

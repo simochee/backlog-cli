@@ -1,6 +1,12 @@
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import {
+	buildBacklogUrl,
+	dashboardUrl,
+	issueUrl,
+	projectUrl,
+} from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -42,25 +48,28 @@ export default defineCommand({
 		if (args.target) {
 			// If target looks like an issue key (e.g., PROJECT-123), open the issue
 			if (/^[A-Z][A-Z0-9_]+-\d+$/.test(args.target)) {
-				url = `https://${host}/view/${args.target}`;
+				url = issueUrl(host, args.target);
 			} else {
 				// Treat as a path
-				url = `https://${host}/${args.target}`;
+				url = buildBacklogUrl(host, `/${args.target}`);
 			}
 		} else if (args.project) {
 			if (args.issues) {
-				url = `https://${host}/find/${args.project}`;
+				url = buildBacklogUrl(host, `/find/${args.project}`);
 			} else if (args.wiki) {
-				url = `https://${host}/wiki/${args.project}`;
+				url = buildBacklogUrl(host, `/wiki/${args.project}`);
 			} else if (args.git) {
-				url = `https://${host}/git/${args.project}`;
+				url = buildBacklogUrl(host, `/git/${args.project}`);
 			} else if (args.settings) {
-				url = `https://${host}/EditProject.action?project.key=${args.project}`;
+				url = buildBacklogUrl(
+					host,
+					`/EditProject.action?project.key=${args.project}`,
+				);
 			} else {
-				url = `https://${host}/projects/${args.project}`;
+				url = projectUrl(host, args.project);
 			}
 		} else {
-			url = `https://${host}/dashboard`;
+			url = dashboardUrl(host);
 		}
 
 		consola.info(`Opening ${url}`);

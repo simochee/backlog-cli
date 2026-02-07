@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { BacklogClient } from "#utils/client.ts";
 import {
 	extractProjectKey,
+	resolveByName,
 	resolveClosedStatusId,
 	resolveIssueTypeId,
 	resolveOpenStatusId,
@@ -20,6 +21,59 @@ function createMockClient(responses: Record<string, unknown>): BacklogClient {
 		return Promise.reject(new Error(`Unexpected URL: ${url}`));
 	}) as unknown as BacklogClient;
 }
+
+describe("resolveByName", () => {
+	it("名前でアイテムを検索してIDを返す", async () => {
+		const client = createMockClient({
+			"/items": [
+				{ id: 1, name: "Alpha" },
+				{ id: 2, name: "Beta" },
+			],
+		});
+
+		const id = await resolveByName<{ id: number; name: string }>(
+			client,
+			"/items",
+			"name",
+			"Beta",
+			"Item",
+		);
+		expect(id).toBe(2);
+	});
+
+	it("見つからない場合は利用可能な名前一覧を含むエラーを投げる", async () => {
+		const client = createMockClient({
+			"/items": [
+				{ id: 1, name: "Alpha" },
+				{ id: 2, name: "Beta" },
+			],
+		});
+
+		await expect(
+			resolveByName<{ id: number; name: string }>(
+				client,
+				"/items",
+				"name",
+				"Gamma",
+				"Item",
+			),
+		).rejects.toThrow('Item "Gamma" not found. Available: Alpha, Beta');
+	});
+
+	it("空リストの場合は空の Available を含むエラーを投げる", async () => {
+		const client = createMockClient({ "/items": [] });
+
+		await expect(
+			resolveByName<{ id: number; name: string }>(
+				client,
+				"/items",
+				"name",
+				"X",
+				"Item",
+			),
+		).rejects.toThrow('Item "X" not found. Available: ');
+	});
+});
 
 describe("extractProjectKey", () => {
 	it("extracts project key from issue key", () => {

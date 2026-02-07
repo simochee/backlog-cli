@@ -2,12 +2,14 @@ import type { BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 import {
 	resolveIssueTypeId,
 	resolvePriorityId,
 	resolveProjectId,
 	resolveUserId,
 } from "#utils/resolve.ts";
+import { issueUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -62,41 +64,10 @@ export default defineCommand({
 		const { client, host } = await getClient();
 
 		// Resolve required fields — prompt interactively if missing
-		let projectKey = args.project;
-		if (!projectKey) {
-			projectKey = await consola.prompt("Project key:", { type: "text" });
-			if (typeof projectKey !== "string" || !projectKey) {
-				consola.error("Project key is required.");
-				return process.exit(1);
-			}
-		}
-
-		let title = args.title;
-		if (!title) {
-			title = await consola.prompt("Issue title:", { type: "text" });
-			if (typeof title !== "string" || !title) {
-				consola.error("Issue title is required.");
-				return process.exit(1);
-			}
-		}
-
-		let typeName = args.type;
-		if (!typeName) {
-			typeName = await consola.prompt("Issue type:", { type: "text" });
-			if (typeof typeName !== "string" || !typeName) {
-				consola.error("Issue type is required.");
-				return process.exit(1);
-			}
-		}
-
-		let priorityName = args.priority;
-		if (!priorityName) {
-			priorityName = await consola.prompt("Priority:", { type: "text" });
-			if (typeof priorityName !== "string" || !priorityName) {
-				consola.error("Priority is required.");
-				return process.exit(1);
-			}
-		}
+		const projectKey = await promptRequired("Project key:", args.project);
+		const title = await promptRequired("Issue title:", args.title);
+		const typeName = await promptRequired("Issue type:", args.type);
+		const priorityName = await promptRequired("Priority:", args.priority);
 
 		// Resolve description from stdin if "-"
 		let description = args.description;
@@ -145,7 +116,7 @@ export default defineCommand({
 		consola.success(`Created ${issue.issueKey}: ${issue.summary}`);
 
 		if (args.web) {
-			const url = `https://${host}/view/${issue.issueKey}`;
+			const url = issueUrl(host, issue.issueKey);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 		}

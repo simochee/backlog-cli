@@ -2,6 +2,7 @@ import type { BacklogMilestone } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 
 export default defineCommand({
 	meta: {
@@ -37,15 +38,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		let name = args.name;
-
-		if (!name) {
-			name = await consola.prompt("Milestone name:", { type: "text" });
-			if (typeof name !== "string" || !name) {
-				consola.error("Milestone name is required.");
-				return process.exit(1);
-			}
-		}
+		const name = await promptRequired("Milestone name:", args.name);
 
 		const body: Record<string, unknown> = { name };
 

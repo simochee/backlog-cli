@@ -2,6 +2,7 @@ import type { BacklogPullRequestComment } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 
 export default defineCommand({
 	meta: {
@@ -48,11 +49,7 @@ export default defineCommand({
 
 		// Prompt for body if not provided
 		if (!content) {
-			content = await consola.prompt("Comment body:", { type: "text" });
-			if (typeof content !== "string" || !content) {
-				consola.error("Comment body is required.");
-				return process.exit(1);
-			}
+			content = await promptRequired("Comment body:");
 		}
 
 		const comment = await client<BacklogPullRequestComment>(
