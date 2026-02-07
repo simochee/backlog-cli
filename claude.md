@@ -89,6 +89,11 @@ API Key（クエリパラメータ）と OAuth 2.0（Bearer トークン）の�
 2. `BACKLOG_SPACE` 環境変数
 3. 設定ファイルの `defaultSpace`
 
+プロジェクト解決の優先順位:
+1. コマンドローカルの `--project` / `-p` フラグ
+2. `BACKLOG_PROJECT` 環境変数
+3. インタラクティブプロンプト（`issue create` 等の一部コマンド）
+
 ## 設計原則
 
 ### 名前解決
@@ -168,8 +173,15 @@ const name = await promptRequired("Project name:", args.name);
 プロジェクトが必要だが指定されていない場合の解決順:
 
 1. コマンドローカルの `--project` / `-p` フラグ
-2. Git リモート URL からの推測（Backlog Git のリモートが設定されている場合）
-3. インタラクティブ選択（TTY 接続時）
+2. `BACKLOG_PROJECT` 環境変数
+3. インタラクティブ選択（`issue create` 等の一部コマンド、TTY 接続時）
+
+プロジェクト解決のユーティリティ:
+
+- `resolveProjectArg(argValue?)` — 必須プロジェクトの解決（引数 → 環境変数 → エラー終了）
+  - 37 の必須プロジェクトコマンドで使用
+- 任意プロジェクトのコマンド（`issue list`, `issue create`, `browse`）では
+  `args.project || process.env.BACKLOG_PROJECT` で個別にフォールバック
 
 ### エラーハンドリング
 

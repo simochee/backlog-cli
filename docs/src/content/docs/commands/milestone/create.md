@@ -11,7 +11,7 @@ backlog milestone create [flags]
 
 | フラグ | 短縮 | 型 | 必須 | 説明 |
 |--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー |
+| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Yes | マイルストーン名 |
 | `--description` | `-d` | string | No | 説明 |
 | `--start-date` | | string | No | 開始日（`yyyy-MM-dd`） |

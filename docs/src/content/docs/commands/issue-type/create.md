@@ -11,7 +11,7 @@ backlog issue-type create [flags]
 
 | フラグ | 短縮 | 型 | 必須 | 説明 |
 |--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー |
+| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Yes | 種別名 |
 | `--color` | | string | Yes | 表示色（`#hex` 形式） |
 

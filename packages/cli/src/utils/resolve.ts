@@ -6,7 +6,28 @@ import type {
 	BacklogStatus,
 	BacklogUser,
 } from "@repo/api";
+import consola from "consola";
 import type { BacklogClient } from "#utils/client.ts";
+
+/**
+ * Resolves the project key from the provided argument or `BACKLOG_PROJECT` environment variable.
+ *
+ * @param argValue - The value provided via `--project` flag.
+ * @returns The resolved project key.
+ * @throws Exits with code 1 if neither the argument nor the environment variable is set.
+ */
+export function resolveProjectArg(argValue?: string): string {
+	const project = argValue || process.env.BACKLOG_PROJECT;
+
+	if (!project) {
+		consola.error(
+			"Project key is required. Specify --project (-p) or set BACKLOG_PROJECT environment variable.",
+		);
+		return process.exit(1);
+	}
+
+	return project;
+}
 
 /**
  * Generic name-to-ID resolver factory.

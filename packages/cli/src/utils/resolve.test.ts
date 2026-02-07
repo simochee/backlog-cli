@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { BacklogClient } from "#utils/client.ts";
 import {
 	extractProjectKey,
@@ -7,6 +7,7 @@ import {
 	resolveIssueTypeId,
 	resolveOpenStatusId,
 	resolvePriorityId,
+	resolveProjectArg,
 	resolveProjectId,
 	resolveResolutionId,
 	resolveStatusId,
@@ -21,6 +22,47 @@ function createMockClient(responses: Record<string, unknown>): BacklogClient {
 		return Promise.reject(new Error(`Unexpected URL: ${url}`));
 	}) as unknown as BacklogClient;
 }
+
+describe("resolveProjectArg", () => {
+	const originalEnv = process.env.BACKLOG_PROJECT;
+
+	afterEach(() => {
+		if (originalEnv === undefined) {
+			delete process.env.BACKLOG_PROJECT;
+		} else {
+			process.env.BACKLOG_PROJECT = originalEnv;
+		}
+	});
+
+	it("引数が指定されていればそのまま返す", () => {
+		expect(resolveProjectArg("MY_PROJECT")).toBe("MY_PROJECT");
+	});
+
+	it("引数が指定されていれば環境変数より優先する", () => {
+		process.env.BACKLOG_PROJECT = "ENV_PROJECT";
+		expect(resolveProjectArg("ARG_PROJECT")).toBe("ARG_PROJECT");
+	});
+
+	it("引数が未指定の場合は BACKLOG_PROJECT 環境変数を使う", () => {
+		process.env.BACKLOG_PROJECT = "ENV_PROJECT";
+		expect(resolveProjectArg(undefined)).toBe("ENV_PROJECT");
+	});
+
+	it("引数も環境変数も未指定の場合は process.exit(1) を呼ぶ", () => {
+		delete process.env.BACKLOG_PROJECT;
+		const exitSpy = vi
+			.spyOn(process, "exit")
+			.mockImplementation(() => undefined as never);
+		resolveProjectArg(undefined);
+		expect(exitSpy).toHaveBeenCalledWith(1);
+		exitSpy.mockRestore();
+	});
+
+	it("引数が空文字の場合は環境変数にフォールバックする", () => {
+		process.env.BACKLOG_PROJECT = "ENV_PROJECT";
+		expect(resolveProjectArg("")).toBe("ENV_PROJECT");
+	});
+});
 
 describe("resolveByName", () => {
 	it("名前でアイテムを検索してIDを返す", async () => {

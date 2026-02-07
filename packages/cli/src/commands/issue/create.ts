@@ -20,7 +20,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		title: {
 			type: "string",
@@ -64,7 +64,10 @@ export default defineCommand({
 		const { client, host } = await getClient();
 
 		// Resolve required fields — prompt interactively if missing
-		const projectKey = await promptRequired("Project key:", args.project);
+		const projectKey = await promptRequired(
+			"Project key:",
+			args.project || process.env.BACKLOG_PROJECT,
+		);
 		const title = await promptRequired("Issue title:", args.title);
 		const typeName = await promptRequired("Issue type:", args.type);
 		const priorityName = await promptRequired("Priority:", args.priority);

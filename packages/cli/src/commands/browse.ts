@@ -21,7 +21,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		issues: {
 			type: "boolean",
@@ -42,6 +42,7 @@ export default defineCommand({
 	},
 	async run({ args }) {
 		const { host } = await getClient();
+		const projectKey = args.project || process.env.BACKLOG_PROJECT;
 
 		let url: string;
 
@@ -53,20 +54,20 @@ export default defineCommand({
 				// Treat as a path
 				url = buildBacklogUrl(host, `/${args.target}`);
 			}
-		} else if (args.project) {
+		} else if (projectKey) {
 			if (args.issues) {
-				url = buildBacklogUrl(host, `/find/${args.project}`);
+				url = buildBacklogUrl(host, `/find/${projectKey}`);
 			} else if (args.wiki) {
-				url = buildBacklogUrl(host, `/wiki/${args.project}`);
+				url = buildBacklogUrl(host, `/wiki/${projectKey}`);
 			} else if (args.git) {
-				url = buildBacklogUrl(host, `/git/${args.project}`);
+				url = buildBacklogUrl(host, `/git/${projectKey}`);
 			} else if (args.settings) {
 				url = buildBacklogUrl(
 					host,
-					`/EditProject.action?project.key=${args.project}`,
+					`/EditProject.action?project.key=${projectKey}`,
 				);
 			} else {
-				url = projectUrl(host, args.project);
+				url = projectUrl(host, projectKey);
 			}
 		} else {
 			url = dashboardUrl(host);

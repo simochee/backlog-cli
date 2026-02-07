@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -13,8 +14,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		name: {
 			type: "string",
@@ -27,13 +27,15 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const name = await promptRequired("Status name:", args.name);
 		const color = await promptRequired("Display color (#hex):", args.color);
 
 		const status = await client<BacklogStatus>(
-			`/projects/${args.project}/statuses`,
+			`/projects/${project}/statuses`,
 			{
 				method: "POST",
 				body: { name, color },

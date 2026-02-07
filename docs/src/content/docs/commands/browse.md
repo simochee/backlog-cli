@@ -19,7 +19,7 @@ Backlog のページをデフォルトブラウザで開きます。
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--issues` | | boolean | 課題一覧を開く |
 | `--wiki` | | boolean | Wiki を開く |
 | `--git` | | boolean | Git リポジトリページを開く |

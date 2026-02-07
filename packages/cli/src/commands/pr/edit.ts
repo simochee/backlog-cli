@@ -2,7 +2,7 @@ import type { BacklogPullRequest } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
-import { resolveUserId } from "#utils/resolve.ts";
+import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -18,8 +18,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		repo: {
 			type: "string",
@@ -48,6 +47,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const body: Record<string, unknown> = {};
@@ -67,7 +68,7 @@ export default defineCommand({
 		}
 
 		const pr = await client<BacklogPullRequest>(
-			`/projects/${args.project}/git/repositories/${args.repo}/pullRequests/${args.number}`,
+			`/projects/${project}/git/repositories/${args.repo}/pullRequests/${args.number}`,
 			{
 				method: "PATCH",
 				body,

@@ -17,7 +17,7 @@ backlog webhook edit <id> [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Webhook 名 |
 | `--hook-url` | | string | 通知先 URL |
 | `--description` | `-d` | string | 説明 |

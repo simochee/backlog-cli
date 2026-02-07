@@ -11,7 +11,7 @@ backlog webhook create [flags]
 
 | フラグ | 短縮 | 型 | 必須 | 説明 |
 |--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー |
+| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Yes | Webhook 名 |
 | `--hook-url` | | string | Yes | 通知先 URL |
 | `--description` | `-d` | string | No | 説明 |

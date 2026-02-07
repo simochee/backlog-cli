@@ -19,7 +19,7 @@ backlog pr view <number> [flags]
 
 | フラグ | 短縮 | 型 | 説明 |
 |--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー |
+| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--repo` | `-R` | string | リポジトリ名 |
 | `--comments` | | boolean | コメントも表示する |
 | `--web` | | boolean | ブラウザで開く |

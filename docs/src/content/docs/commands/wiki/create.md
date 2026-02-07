@@ -11,7 +11,7 @@ backlog wiki create [flags]
 
 | フラグ | 短縮 | 型 | 必須 | 説明 |
 |--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー |
+| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--name` | `-n` | string | Yes* | ページ名 |
 | `--body` | `-b` | string | Yes* | 本文 |
 | `--notify` | | boolean | No | メール通知 |

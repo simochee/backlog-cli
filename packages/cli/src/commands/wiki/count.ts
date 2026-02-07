@@ -2,6 +2,7 @@ import type { BacklogWikiCount } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -12,15 +13,16 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const result = await client<BacklogWikiCount>("/wikis/count", {
-			query: { projectIdOrKey: args.project },
+			query: { projectIdOrKey: project },
 		});
 
 		consola.log(`${result.count} wiki page(s)`);

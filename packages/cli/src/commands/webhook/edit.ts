@@ -2,6 +2,7 @@ import type { BacklogWebhook } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -17,8 +18,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		name: {
 			type: "string",
@@ -44,6 +44,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		const body: Record<string, unknown> = {};
@@ -71,7 +73,7 @@ export default defineCommand({
 		}
 
 		const webhook = await client<BacklogWebhook>(
-			`/projects/${args.project}/webhooks/${args.id}`,
+			`/projects/${project}/webhooks/${args.id}`,
 			{
 				method: "PATCH",
 				body,

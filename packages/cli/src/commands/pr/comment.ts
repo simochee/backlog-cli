@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
+import { resolveProjectArg } from "#utils/resolve.ts";
 
 export default defineCommand({
 	meta: {
@@ -18,8 +19,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description: "Project key",
-			required: true,
+			description: "Project key (env: BACKLOG_PROJECT)",
 		},
 		repo: {
 			type: "string",
@@ -34,6 +34,8 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
+		const project = resolveProjectArg(args.project);
+
 		const { client } = await getClient();
 
 		let content = args.body;
@@ -53,7 +55,7 @@ export default defineCommand({
 		}
 
 		const comment = await client<BacklogPullRequestComment>(
-			`/projects/${args.project}/git/repositories/${args.repo}/pullRequests/${args.number}/comments`,
+			`/projects/${project}/git/repositories/${args.repo}/pullRequests/${args.number}/comments`,
 			{
 				method: "POST",
 				body: { content },

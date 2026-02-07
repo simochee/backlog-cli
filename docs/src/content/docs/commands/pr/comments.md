@@ -19,7 +19,7 @@ backlog pr comments <number> [flags]
 
 | フラグ | 短縮 | 型 | デフォルト | 説明 |
 |--------|------|------|------------|------|
-| `--project` | `-p` | string | — | プロジェクトキー |
+| `--project` | `-p` | string | — | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--repo` | `-R` | string | — | リポジトリ名 |
 | `--limit` | `-L` | number | `20` | 取得件数 |
 

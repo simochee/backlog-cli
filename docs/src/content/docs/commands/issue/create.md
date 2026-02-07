@@ -13,7 +13,7 @@ backlog issue create [flags]
 
 | フラグ | 短縮 | 型 | 必須 | デフォルト | 説明 |
 |--------|------|------|------|------------|------|
-| `--project` | `-p` | string | Yes* | — | プロジェクトキー |
+| `--project` | `-p` | string | Yes* | — | プロジェクトキー（env: `BACKLOG_PROJECT`） |
 | `--title` | `-t` | string | Yes* | — | 課題の件名 |
 | `--type` | `-T` | string | Yes* | — | 課題種別名 |
 | `--priority` | `-P` | string | Yes* | — | 優先度名 |
