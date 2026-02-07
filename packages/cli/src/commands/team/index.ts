@@ -2,8 +2,8 @@ import { defineCommand } from "citty";
 
 export default defineCommand({
 	meta: {
-		name: "project",
-		description: "Manage projects",
+		name: "team",
+		description: "Manage teams",
 	},
 	subCommands: {
 		list: () => import("./list.ts").then((m) => m.default),
@@ -11,9 +11,5 @@ export default defineCommand({
 		create: () => import("./create.ts").then((m) => m.default),
 		edit: () => import("./edit.ts").then((m) => m.default),
 		delete: () => import("./delete.ts").then((m) => m.default),
-		activities: () => import("./activities.ts").then((m) => m.default),
-		users: () => import("./users.ts").then((m) => m.default),
-		"add-user": () => import("./add-user.ts").then((m) => m.default),
-		"remove-user": () => import("./remove-user.ts").then((m) => m.default),
 	},
 });

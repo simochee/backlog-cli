@@ -1,9 +1,11 @@
 export { type BacklogClientConfig, createClient } from "#client.ts";
 export type {
 	BacklogActivity,
+	BacklogCategory,
 	BacklogComment,
 	BacklogIssue,
 	BacklogIssueType,
+	BacklogMilestone,
 	BacklogNotification,
 	BacklogNotificationCount,
 	BacklogPriority,
@@ -15,5 +17,11 @@ export type {
 	BacklogResolution,
 	BacklogSpace,
 	BacklogStatus,
+	BacklogTeam,
 	BacklogUser,
+	BacklogWiki,
+	BacklogWikiAttachment,
+	BacklogWikiCount,
+	BacklogWikiHistory,
+	BacklogWikiTag,
 } from "#types.ts";

@@ -1,0 +1,75 @@
+import type { BacklogWiki } from "@repo/api";
+import { defineCommand } from "citty";
+import consola from "consola";
+import { getClient } from "#utils/client.ts";
+import { resolveProjectId } from "#utils/resolve.ts";
+
+export default defineCommand({
+	meta: {
+		name: "create",
+		description: "Create a wiki page",
+	},
+	args: {
+		project: {
+			type: "string",
+			alias: "p",
+			description: "Project key",
+			required: true,
+		},
+		name: {
+			type: "string",
+			alias: "n",
+			description: "Page name",
+		},
+		body: {
+			type: "string",
+			alias: "b",
+			description: "Page content",
+		},
+		notify: {
+			type: "boolean",
+			description: "Send email notification",
+		},
+	},
+	async run({ args }) {
+		const { client } = await getClient();
+
+		let name = args.name;
+		let body = args.body;
+
+		if (!name) {
+			name = await consola.prompt("Page name:", { type: "text" });
+			if (typeof name !== "string" || !name) {
+				consola.error("Page name is required.");
+				return process.exit(1);
+			}
+		}
+
+		if (!body) {
+			body = await consola.prompt("Page content:", { type: "text" });
+			if (typeof body !== "string" || !body) {
+				consola.error("Page content is required.");
+				return process.exit(1);
+			}
+		}
+
+		const projectId = await resolveProjectId(client, args.project);
+
+		const requestBody: Record<string, unknown> = {
+			projectId,
+			name,
+			content: body,
+		};
+
+		if (args.notify) {
+			requestBody.mailNotify = true;
+		}
+
+		const wiki = await client<BacklogWiki>("/wikis", {
+			method: "POST",
+			body: requestBody,
+		});
+
+		consola.success(`Created wiki page #${wiki.id}: ${wiki.name}`);
+	},
+});

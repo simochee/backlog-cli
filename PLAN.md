@@ -12,7 +12,7 @@
 |-------|------|----------------|------|
 | Phase 1 | MVP（auth, config, issue, project, api） | 19 | 完了 |
 | Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 完了 |
-| Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 未着手 |
+| Phase 3 | 管理機能（wiki, user, team, category, milestone 等） | 38 | 完了 |
 | Phase 4 | 拡張機能（space, webhook, star, watching, alias 等） | 23 | 未着手 |
 
 ---
@@ -686,7 +686,7 @@ Git リポジトリをクローンする。
 | `--limit` | `-L` | number | No | 20 | 取得件数 | `count` |
 
 - **対応 API**: `GET /api/v2/wikis`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki view <wiki-id>`
 
@@ -696,7 +696,7 @@ Git リポジトリをクローンする。
 | `--web` | boolean | No | ブラウザで開く |
 
 - **対応 API**: `GET /api/v2/wikis/:wikiId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki create`
 
@@ -708,7 +708,7 @@ Git リポジトリをクローンする。
 | `--notify` | | boolean | No | メール通知 | `mailNotify` |
 
 - **対応 API**: `POST /api/v2/wikis`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki edit <wiki-id>`
 
@@ -720,7 +720,7 @@ Git リポジトリをクローンする。
 | `--notify` | | boolean | No | メール通知 | `mailNotify` |
 
 - **対応 API**: `PATCH /api/v2/wikis/:wikiId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki delete <wiki-id>`
 
@@ -730,17 +730,17 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認プロンプトをスキップ |
 
 - **対応 API**: `DELETE /api/v2/wikis/:wikiId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki count`
 
 - **対応 API**: `GET /api/v2/wikis/count`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki tags`
 
 - **対応 API**: `GET /api/v2/wikis/tags`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki history <wiki-id>`
 
@@ -751,7 +751,7 @@ Git リポジトリをクローンする。
 | `--offset` | | number | No | オフセット | `offset` |
 
 - **対応 API**: `GET /api/v2/wikis/:wikiId/history`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog wiki attachments <wiki-id>`
 
@@ -760,7 +760,7 @@ Git リポジトリをクローンする。
 | `<wiki-id>` | number | Yes | ページ ID |
 
 - **対応 API**: `GET /api/v2/wikis/:wikiId/attachments`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -778,7 +778,7 @@ Git リポジトリをクローンする。
 | `--text-formatting-rule` | | string | No | 書式ルール（`markdown`/`backlog`） | `textFormattingRule` |
 
 - **対応 API**: `POST /api/v2/projects`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project edit <project-key>`
 
@@ -791,7 +791,7 @@ Git リポジトリをクローンする。
 | `--archived` | | boolean | No | アーカイブ | `archived` |
 
 - **対応 API**: `PATCH /api/v2/projects/:projectIdOrKey`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project delete <project-key>`
 
@@ -801,7 +801,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/projects/:projectIdOrKey`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project users <project-key>`
 
@@ -810,7 +810,7 @@ Git リポジトリをクローンする。
 | `<project-key>` | string | Yes | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/users`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project add-user <project-key>`
 
@@ -820,7 +820,7 @@ Git リポジトリをクローンする。
 | `--user-id` | number | Yes | ユーザー ID | `userId` |
 
 - **対応 API**: `POST /api/v2/projects/:key/users`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog project remove-user <project-key>`
 
@@ -830,7 +830,7 @@ Git リポジトリをクローンする。
 | `--user-id` | number | Yes | ユーザー ID | `userId` |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/users`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -839,7 +839,7 @@ Git リポジトリをクローンする。
 #### `backlog user list`
 
 - **対応 API**: `GET /api/v2/users`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog user view <user-id>`
 
@@ -848,12 +848,12 @@ Git リポジトリをクローンする。
 | `<user-id>` | number | Yes | ユーザー ID |
 
 - **対応 API**: `GET /api/v2/users/:userId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog user me`
 
 - **対応 API**: `GET /api/v2/users/myself`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog user activities <user-id>`
 
@@ -864,7 +864,7 @@ Git リポジトリをクローンする。
 | `--activity-type` | | number[] | No | タイプフィルタ | `activityTypeId[]` |
 
 - **対応 API**: `GET /api/v2/users/:userId/activities`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -879,7 +879,7 @@ Git リポジトリをクローンする。
 | `--limit` | `-L` | number | No | 取得件数 | `count` |
 
 - **対応 API**: `GET /api/v2/teams`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog team view <team-id>`
 
@@ -888,7 +888,7 @@ Git リポジトリをクローンする。
 | `<team-id>` | number | Yes | チーム ID |
 
 - **対応 API**: `GET /api/v2/teams/:teamId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog team create`
 
@@ -898,7 +898,7 @@ Git リポジトリをクローンする。
 | `--members` | | number[] | No | メンバー ID | `members[]` |
 
 - **対応 API**: `POST /api/v2/teams`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog team edit <team-id>`
 
@@ -909,7 +909,7 @@ Git リポジトリをクローンする。
 | `--members` | | number[] | No | メンバー ID | `members[]` |
 
 - **対応 API**: `PATCH /api/v2/teams/:teamId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog team delete <team-id>`
 
@@ -919,7 +919,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/teams/:teamId`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -932,7 +932,7 @@ Git リポジトリをクローンする。
 | `--project` | `-p` | string | Yes* | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/categories`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog category create`
 
@@ -942,7 +942,7 @@ Git リポジトリをクローンする。
 | `--name` | `-n` | string | Yes | カテゴリ名 | `name` |
 
 - **対応 API**: `POST /api/v2/projects/:key/categories`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog category edit <id>`
 
@@ -952,7 +952,7 @@ Git リポジトリをクローンする。
 | `--name` | `-n` | string | Yes | カテゴリ名 | `name` |
 
 - **対応 API**: `PATCH /api/v2/projects/:key/categories/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog category delete <id>`
 
@@ -962,7 +962,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/categories/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -975,7 +975,7 @@ Git リポジトリをクローンする。
 | `--project` | `-p` | string | Yes* | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/versions`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog milestone create`
 
@@ -988,7 +988,7 @@ Git リポジトリをクローンする。
 | `--release-due-date` | | string | No | リリース予定日 | `releaseDueDate` |
 
 - **対応 API**: `POST /api/v2/projects/:key/versions`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog milestone edit <id>`
 
@@ -1002,7 +1002,7 @@ Git リポジトリをクローンする。
 | `--archived` | | boolean | No | アーカイブ | `archived` |
 
 - **対応 API**: `PATCH /api/v2/projects/:key/versions/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog milestone delete <id>`
 
@@ -1012,7 +1012,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/versions/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1025,7 +1025,7 @@ Git リポジトリをクローンする。
 | `--project` | `-p` | string | Yes* | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/issueTypes`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue-type create`
 
@@ -1036,7 +1036,7 @@ Git リポジトリをクローンする。
 | `--color` | | string | Yes | 表示色（`#hex`） | `color` |
 
 - **対応 API**: `POST /api/v2/projects/:key/issueTypes`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue-type edit <id>`
 
@@ -1047,7 +1047,7 @@ Git リポジトリをクローンする。
 | `--color` | | string | No | 表示色 | `color` |
 
 - **対応 API**: `PATCH /api/v2/projects/:key/issueTypes/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog issue-type delete <id>`
 
@@ -1058,7 +1058,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ | — |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/issueTypes/:id`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
@@ -1071,7 +1071,7 @@ Git リポジトリをクローンする。
 | `--project` | `-p` | string | Yes* | プロジェクトキー |
 
 - **対応 API**: `GET /api/v2/projects/:key/statuses`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog status-type create`
 
@@ -1082,7 +1082,7 @@ Git リポジトリをクローンする。
 | `--color` | | string | Yes | 表示色（`#hex`） | `color` |
 
 - **対応 API**: `POST /api/v2/projects/:key/statuses`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog status-type edit <id>`
 
@@ -1093,7 +1093,7 @@ Git リポジトリをクローンする。
 | `--color` | | string | No | 表示色 | `color` |
 
 - **対応 API**: `PATCH /api/v2/projects/:key/statuses/:statusId`
-- **状態**: 未着手
+- **状態**: 完了
 
 #### `backlog status-type delete <id>`
 
@@ -1104,7 +1104,7 @@ Git リポジトリをクローンする。
 | `--confirm` | boolean | No | 確認スキップ | — |
 
 - **対応 API**: `DELETE /api/v2/projects/:key/statuses/:statusId`
-- **状態**: 未着手
+- **状態**: 完了
 
 ---
 
