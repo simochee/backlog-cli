@@ -1,9 +1,18 @@
-import type { BacklogIssue, BacklogProject } from "@repo/api";
+import type {
+	BacklogIssue,
+	BacklogNotification,
+	BacklogProject,
+	BacklogPullRequest,
+	BacklogRepository,
+} from "@repo/api";
 import { describe, expect, it } from "vitest";
 import {
 	formatDate,
 	formatIssueLine,
+	formatNotificationLine,
 	formatProjectLine,
+	formatPullRequestLine,
+	formatRepositoryLine,
 	getActivityLabel,
 	padEnd,
 } from "#utils/format.ts";
@@ -114,5 +123,112 @@ describe("getActivityLabel", () => {
 
 	it("returns fallback for unknown activity type", () => {
 		expect(getActivityLabel(999)).toBe("Activity (999)");
+	});
+});
+
+describe("formatPullRequestLine", () => {
+	const basePR = {
+		number: 42,
+		status: { name: "Open" },
+		assignee: { name: "Taro" },
+		branch: "feature/add-tests",
+		base: "main",
+		summary: "Add unit tests",
+	} as BacklogPullRequest;
+
+	it("プルリクエストをフォーマットする", () => {
+		const line = formatPullRequestLine(basePR);
+		expect(line).toContain("#42");
+		expect(line).toContain("Open");
+		expect(line).toContain("Taro");
+		expect(line).toContain("feature/add-tests");
+		expect(line).toContain("main");
+		expect(line).toContain("Add unit tests");
+	});
+
+	it("担当者が null の場合も正しくフォーマットする", () => {
+		const pr = { ...basePR, assignee: null } as BacklogPullRequest;
+		const line = formatPullRequestLine(pr);
+		expect(line).toContain("#42");
+		expect(line).toContain("Add unit tests");
+	});
+});
+
+describe("formatRepositoryLine", () => {
+	it("説明付きのリポジトリをフォーマットする", () => {
+		const repo = {
+			name: "my-repo",
+			description: "A test repository",
+		} as BacklogRepository;
+		const line = formatRepositoryLine(repo);
+		expect(line).toContain("my-repo");
+		expect(line).toContain("A test repository");
+	});
+
+	it("説明が null のリポジトリをフォーマットする", () => {
+		const repo = {
+			name: "my-repo",
+			description: null,
+		} as BacklogRepository;
+		const line = formatRepositoryLine(repo);
+		expect(line).toContain("my-repo");
+	});
+});
+
+describe("formatNotificationLine", () => {
+	const baseNotification = {
+		id: 12345,
+		alreadyRead: false,
+		reason: 1,
+		sender: { name: "Taro" },
+		issue: { summary: "Fix the bug" },
+	} as BacklogNotification;
+
+	it("未読通知をフォーマットする", () => {
+		const line = formatNotificationLine(baseNotification);
+		expect(line).toContain("* ");
+		expect(line).toContain("12345");
+		expect(line).toContain("Assigned");
+		expect(line).toContain("Taro");
+		expect(line).toContain("Fix the bug");
+	});
+
+	it("既読通知をフォーマットする", () => {
+		const notification = {
+			...baseNotification,
+			alreadyRead: true,
+		} as BacklogNotification;
+		const line = formatNotificationLine(notification);
+		expect(line).toContain("  ");
+		expect(line).not.toMatch(/^\* /);
+	});
+
+	it("プルリクエスト通知をフォーマットする", () => {
+		const notification = {
+			...baseNotification,
+			issue: undefined,
+			pullRequest: { summary: "Add feature" },
+		} as unknown as BacklogNotification;
+		const line = formatNotificationLine(notification);
+		expect(line).toContain("Add feature");
+	});
+
+	it("コメント通知をフォーマットする", () => {
+		const notification = {
+			...baseNotification,
+			issue: undefined,
+			comment: { content: "This is a comment" },
+		} as unknown as BacklogNotification;
+		const line = formatNotificationLine(notification);
+		expect(line).toContain("This is a comment");
+	});
+
+	it("未知の理由コードを Other として表示する", () => {
+		const notification = {
+			...baseNotification,
+			reason: 999,
+		} as BacklogNotification;
+		const line = formatNotificationLine(notification);
+		expect(line).toContain("Other");
 	});
 });
