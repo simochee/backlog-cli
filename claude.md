@@ -34,16 +34,29 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 
 ```
 src/commands/
-  auth/           — 認証管理（login, logout, status, token）
+  auth/           — 認証管理（login, logout, status, token, refresh, switch）
   config/         — CLI 設定（get, set, list）
   issue/          — 課題管理（list, view, create, edit, close, reopen, comment, status）
-  project/        — プロジェクト管理（list, view, activities）
+  project/        — プロジェクト管理（list, view, create, edit, delete, users, add-user, remove-user, activities）
   pr/             — プルリクエスト管理（list, view, create, edit, close, merge, reopen, comment, comments, status）
   repo/           — Git リポジトリ管理（list, view, clone）
   notification/   — 通知管理（list, count, read, read-all）
+  wiki/           — Wiki 管理（list, view, create, edit, delete, count, tags, history, attachments）
+  user/           — ユーザー管理（list, view, me, activities）
+  team/           — チーム管理（list, view, create, edit, delete）
+  category/       — カテゴリ管理（list, create, edit, delete）
+  milestone/      — マイルストーン管理（list, create, edit, delete）
+  issue-type/     — 課題種別管理（list, create, edit, delete）
+  status-type/    — ステータス管理（list, create, edit, delete）
+  space/          — スペース管理（info, activities, disk-usage, notification）
+  webhook/        — Webhook 管理（list, view, create, edit, delete）
+  star/           — スター管理（add, list, count）
+  watching/       — ウォッチ管理（list, add, view, delete, read）
+  alias/          — エイリアス管理（set, list, delete）
   status.ts       — ダッシュボード（自分の課題・通知・最近の更新サマリー）
   browse.ts       — ブラウザで開く
   api.ts          — 汎用 API リクエスト
+  completion.ts   — シェル補完スクリプト生成
 ```
 
 新しいコマンドを追加する手順:

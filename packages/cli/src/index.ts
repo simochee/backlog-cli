@@ -28,6 +28,13 @@ const main = defineCommand({
 			import("#commands/issue-type/index.ts").then((m) => m.default),
 		"status-type": () =>
 			import("#commands/status-type/index.ts").then((m) => m.default),
+		space: () => import("#commands/space/index.ts").then((m) => m.default),
+		webhook: () => import("#commands/webhook/index.ts").then((m) => m.default),
+		star: () => import("#commands/star/index.ts").then((m) => m.default),
+		watching: () =>
+			import("#commands/watching/index.ts").then((m) => m.default),
+		alias: () => import("#commands/alias/index.ts").then((m) => m.default),
+		completion: () => import("#commands/completion.ts").then((m) => m.default),
 	},
 });
 

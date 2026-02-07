@@ -276,3 +276,77 @@ export interface BacklogMilestone {
 	archived: boolean;
 	displayOrder: number;
 }
+
+/** Backlog space disk usage response. */
+export interface BacklogSpaceDiskUsage {
+	capacity: number;
+	issue: number;
+	wiki: number;
+	file: number;
+	subversion: number;
+	git: number;
+	gitLFS: number;
+	pullRequest: number;
+	details: {
+		projectId: number;
+		issue: number;
+		wiki: number;
+		file: number;
+		subversion: number;
+		git: number;
+		gitLFS: number;
+		pullRequest: number;
+	}[];
+}
+
+/** Backlog space notification response. */
+export interface BacklogSpaceNotification {
+	content: string;
+	updated: string;
+}
+
+/** Backlog webhook object. */
+export interface BacklogWebhook {
+	id: number;
+	name: string;
+	description: string;
+	hookUrl: string;
+	allEvent: boolean;
+	activityTypeIds: number[];
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog star object. */
+export interface BacklogStar {
+	id: number;
+	comment: string | null;
+	url: string;
+	title: string;
+	presenter: BacklogUser;
+	created: string;
+}
+
+/** Backlog star count response. */
+export interface BacklogStarCount {
+	count: number;
+}
+
+/** Backlog watching object. */
+export interface BacklogWatching {
+	id: number;
+	resourceAlreadyRead: boolean;
+	note: string;
+	type: string;
+	issue?: BacklogIssue;
+	lastContentUpdated: string | null;
+	created: string;
+	updated: string;
+}
+
+/** Backlog watching count response. */
+export interface BacklogWatchingCount {
+	count: number;
+}
