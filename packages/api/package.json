@@ -3,11 +3,15 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
-	"devDependencies": {
-		"@repo/tsconfigs": "workspace:*"
-	},
 	"exports": "./src/index.ts",
 	"imports": {
 		"#*": "./src/*"
+	},
+	"dependencies": {
+		"ofetch": "^1.4.1",
+		"ufo": "^1.5.4"
+	},
+	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*"
 	}
 }

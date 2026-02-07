@@ -2,14 +2,17 @@
 	"$schema": "node_modules/turbo/schema.json",
 	"tasks": {
 		"build": {
+			"dependsOn": ["^build"],
 			"outputs": ["dist/**", "out/**"]
-		},
-		"check-types": {
-			"dependsOn": ["^type-checks"]
 		},
 		"dev": {
 			"persistent": true,
 			"cache": false
+		},
+		"lint": {},
+		"test": {},
+		"type-check": {
+			"dependsOn": ["^type-check"]
 		}
 	}
 }

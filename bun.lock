@@ -24,6 +24,10 @@
     "packages/api": {
       "name": "@repo/api",
       "version": "1.0.0",
+      "dependencies": {
+        "ofetch": "^1.4.1",
+        "ufo": "^1.5.4",
+      },
       "devDependencies": {
         "@repo/tsconfigs": "workspace:*",
       },
@@ -32,7 +36,9 @@
       "name": "@simochee/backlog-cli",
       "dependencies": {
         "@repo/api": "workspace:*",
+        "@repo/config": "workspace:*",
         "citty": "^0.1.6",
+        "consola": "^3.4.2",
       },
       "devDependencies": {
         "@repo/tsconfigs": "workspace:*",
