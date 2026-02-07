@@ -2,6 +2,7 @@ import type { BacklogIssueType } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 
 export default defineCommand({
 	meta: {
@@ -28,26 +29,8 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		let name = args.name;
-		let color = args.color;
-
-		if (!name) {
-			name = await consola.prompt("Issue type name:", { type: "text" });
-			if (typeof name !== "string" || !name) {
-				consola.error("Issue type name is required.");
-				return process.exit(1);
-			}
-		}
-
-		if (!color) {
-			color = await consola.prompt("Display color (#hex):", {
-				type: "text",
-			});
-			if (typeof color !== "string" || !color) {
-				consola.error("Display color is required.");
-				return process.exit(1);
-			}
-		}
+		const name = await promptRequired("Issue type name:", args.name);
+		const color = await promptRequired("Display color (#hex):", args.color);
 
 		const issueType = await client<BacklogIssueType>(
 			`/projects/${args.project}/issueTypes`,

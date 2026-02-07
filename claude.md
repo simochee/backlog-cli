@@ -59,10 +59,20 @@ src/commands/
   completion.ts   — シェル補完スクリプト生成
 ```
 
+```
+src/utils/
+  client.ts       — API クライアント生成（getClient）
+  resolve.ts      — 名前→ID 解決（resolveByName ファクトリ + 個別関数）
+  format.ts       — 表示フォーマット（テーブル行・日付・パディング）
+  url.ts          — Backlog Web URL 構築（issueUrl, projectUrl 等）
+  prompt.ts       — インタラクティブプロンプト（promptRequired）
+```
+
 新しいコマンドを追加する手順:
 1. `commands/<group>/` にコマンドファイルを作成（`defineCommand` を使用）
 2. グループの `index.ts` の `subCommands` に遅延 import を追加
 3. 新しいグループの場合は `src/index.ts` にも追加
+4. URL 構築は `#utils/url.ts`、プロンプトは `#utils/prompt.ts`、名前解決は `#utils/resolve.ts` を使用
 
 ## API クライアント
 
@@ -84,16 +94,58 @@ API Key（クエリパラメータ）と OAuth 2.0（Bearer トークン）の�
 ### 名前解決
 
 CLI ではユーザーフレンドリーな名前を使い、API リクエスト時に内部で ID に変換する。
+名前解決ロジックは `src/utils/resolve.ts` に集約。
 
-| CLI での入力 | API での送信 | 変換元 API |
+共通パターンは `resolveByName<T>()` ジェネリックファクトリで実装し、重複を排除している:
+
+```ts
+// 汎用: エンドポイントからリストを取得し、nameField で検索して id を返す
+resolveByName<T>(client, endpoint, nameField, value, label)
+
+// 特殊ケース（ユーザー、ステータス等）は専用関数を用意
+resolveUserId(client, username)       // @me 対応、userId/name 両方で検索
+resolveStatusId(client, projectKey, name) // プロジェクト固有ステータス
+```
+
+| CLI での入力 | API での送信 | 解決関数 |
 |--------------|-------------|-----------|
-| ステータス名（例: `処理中`） | `statusId` | `GET /api/v2/projects/:key/statuses` |
-| 課題種別名（例: `バグ`） | `issueTypeId` | `GET /api/v2/projects/:key/issueTypes` |
-| 優先度名（例: `高`） | `priorityId` | `GET /api/v2/priorities` |
-| カテゴリ名 | `categoryId` | `GET /api/v2/projects/:key/categories` |
-| マイルストーン名 | `milestoneId` | `GET /api/v2/projects/:key/versions` |
-| ユーザー名 / `@me` | `userId` / `assigneeId` | `GET /api/v2/users` / `GET /api/v2/users/myself` |
-| 完了理由名 | `resolutionId` | `GET /api/v2/resolutions` |
+| ステータス名（例: `処理中`） | `statusId` | `resolveStatusId` |
+| 課題種別名（例: `バグ`） | `issueTypeId` | `resolveIssueTypeId` |
+| 優先度名（例: `高`） | `priorityId` | `resolvePriorityId`（`resolveByName` 使用） |
+| ユーザー名 / `@me` | `userId` / `assigneeId` | `resolveUserId` |
+| 完了理由名 | `resolutionId` | `resolveResolutionId`（`resolveByName` 使用） |
+
+### URL 構築
+
+Backlog の Web URL 構築は `src/utils/url.ts` に集約。コマンドファイルでは直接テンプレートリテラルで URL を組み立てず、専用関数を使用する:
+
+```ts
+import { issueUrl, projectUrl, pullRequestUrl, repositoryUrl, wikiUrl, dashboardUrl, buildBacklogUrl } from "#utils/url.ts";
+
+issueUrl(host, "PROJ-123")                          // → https://host/view/PROJ-123
+projectUrl(host, "PROJ")                             // → https://host/projects/PROJ
+pullRequestUrl(host, "PROJ", "repo", 42)             // → https://host/git/PROJ/repo/pullRequests/42
+wikiUrl(host, 999)                                   // → https://host/alias/wiki/999
+repositoryUrl(host, "PROJ", "repo")                  // → https://host/git/PROJ/repo
+dashboardUrl(host)                                   // → https://host/dashboard
+buildBacklogUrl(host, "/custom/path")                // → https://host/custom/path
+```
+
+### インタラクティブプロンプト
+
+必須引数が省略された場合、対話的にプロンプトを表示してユーザーに入力を求める。
+共通パターンは `src/utils/prompt.ts` の `promptRequired` で実装:
+
+```ts
+import { promptRequired } from "#utils/prompt.ts";
+
+// 既存の値があればそのまま返し、なければプロンプト表示。空入力時は process.exit(1)
+const name = await promptRequired("Project name:", args.name);
+```
+
+- TTY 接続時のみ有効
+- `--no-input` フラグで無効化
+- 選択式のフィールドはリスト選択 UI を提供
 
 ### 出力形式
 
@@ -104,14 +156,6 @@ CLI ではユーザーフレンドリーな名前を使い、API リクエスト
 | `--json field1,field2` | フィルタ済み JSON | 特定フィールドのみ |
 | `--jq '.[]'` | jq 変換済み出力 | 高度なフィルタ |
 | `--template '{{.Key}}'` | Go template | カスタムフォーマット |
-
-### インタラクティブモード
-
-必須引数が省略された場合、対話的にプロンプトを表示してユーザーに入力を求める。
-
-- TTY 接続時のみ有効
-- `--no-input` フラグで無効化
-- 選択式のフィールドはリスト選択 UI を提供
 
 ### プロジェクトコンテキスト
 
@@ -204,6 +248,31 @@ bun run test --filter=@repo/config      # 特定パッケージ
 
 #### 3. `packages/cli`（優先度: 中）
 
+**`src/utils/resolve.ts`** — 名前→ID 解決ロジック
+
+| テスト観点 | 具体例 |
+|---|---|
+| `resolveByName` 汎用検索 | リスト内の名前一致で ID を返す |
+| `resolveByName` 見つからない場合 | 利用可能な名前一覧を含むエラー |
+| `resolveUserId` の `@me` 対応 | `/users/myself` から ID を取得 |
+| `extractProjectKey` | `PROJECT-123` → `PROJECT` |
+
+**`src/utils/url.ts`** — Backlog Web URL 構築
+
+| テスト観点 | 具体例 |
+|---|---|
+| `issueUrl` | `issueUrl("host", "PROJ-1")` → `https://host/view/PROJ-1` |
+| `pullRequestUrl` | プロジェクト・リポジトリ・PR番号から URL を構築 |
+| `dashboardUrl` | ダッシュボード URL の生成 |
+
+**`src/utils/prompt.ts`** — インタラクティブプロンプト
+
+| テスト観点 | 具体例 |
+|---|---|
+| 既存値あり | プロンプト表示せずそのまま返す |
+| 既存値なし | `consola.prompt` でユーザー入力を取得 |
+| 空入力 | エラーメッセージ表示 + `process.exit(1)` |
+
 **`src/commands/config/get.ts`** — `getNestedValue` ヘルパー
 
 | テスト観点 | 具体例 |
@@ -235,6 +304,18 @@ packages/config/src/
   space.test.ts
   config.ts
   config.test.ts
+
+packages/cli/src/utils/
+  resolve.ts
+  resolve.test.ts
+  format.ts
+  format.test.ts
+  client.ts
+  client.test.ts
+  url.ts
+  url.test.ts
+  prompt.ts
+  prompt.test.ts
 ```
 
 ### テストの書き方

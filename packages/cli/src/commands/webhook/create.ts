@@ -2,6 +2,7 @@ import type { BacklogWebhook } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 
 export default defineCommand({
 	meta: {
@@ -41,24 +42,8 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		let name = args.name;
-		let hookUrl = args["hook-url"];
-
-		if (!name) {
-			name = await consola.prompt("Webhook name:", { type: "text" });
-			if (typeof name !== "string" || !name) {
-				consola.error("Webhook name is required.");
-				return process.exit(1);
-			}
-		}
-
-		if (!hookUrl) {
-			hookUrl = await consola.prompt("Hook URL:", { type: "text" });
-			if (typeof hookUrl !== "string" || !hookUrl) {
-				consola.error("Hook URL is required.");
-				return process.exit(1);
-			}
-		}
+		const name = await promptRequired("Webhook name:", args.name);
+		const hookUrl = await promptRequired("Hook URL:", args["hook-url"]);
 
 		const body: Record<string, unknown> = { name, hookUrl };
 

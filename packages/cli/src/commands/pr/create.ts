@@ -2,7 +2,9 @@ import type { BacklogPullRequest } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 import { resolveUserId } from "#utils/resolve.ts";
+import { pullRequestUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -58,34 +60,10 @@ export default defineCommand({
 	async run({ args }) {
 		const { client, host } = await getClient();
 
-		let title = args.title;
-		let base = args.base;
-		let branch = args.branch;
-
 		// Prompt for required fields if not provided
-		if (!title) {
-			title = await consola.prompt("PR title:", { type: "text" });
-			if (typeof title !== "string" || !title) {
-				consola.error("Title is required.");
-				return process.exit(1);
-			}
-		}
-
-		if (!base) {
-			base = await consola.prompt("Base branch:", { type: "text" });
-			if (typeof base !== "string" || !base) {
-				consola.error("Base branch is required.");
-				return process.exit(1);
-			}
-		}
-
-		if (!branch) {
-			branch = await consola.prompt("Source branch:", { type: "text" });
-			if (typeof branch !== "string" || !branch) {
-				consola.error("Source branch is required.");
-				return process.exit(1);
-			}
-		}
+		const title = await promptRequired("PR title:", args.title);
+		const base = await promptRequired("Base branch:", args.base);
+		const branch = await promptRequired("Source branch:", args.branch);
 
 		const body: Record<string, unknown> = {
 			summary: title,
@@ -114,7 +92,7 @@ export default defineCommand({
 		consola.success(`Created PR #${pr.number}: ${pr.summary}`);
 
 		if (args.web) {
-			const url = `https://${host}/git/${args.project}/${args.repo}/pullRequests/${pr.number}`;
+			const url = pullRequestUrl(host, args.project, args.repo, pr.number);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 		}

@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { issueUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -30,7 +31,7 @@ export default defineCommand({
 		const issue = await client<BacklogIssue>(`/issues/${args.issueKey}`);
 
 		if (args.web) {
-			const url = `https://${host}/view/${issue.issueKey}`;
+			const url = issueUrl(host, issue.issueKey);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 			return;

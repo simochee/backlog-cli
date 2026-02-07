@@ -9,6 +9,33 @@ import type {
 import type { BacklogClient } from "#utils/client.ts";
 
 /**
+ * Generic name-to-ID resolver factory.
+ *
+ * Fetches a list from the given endpoint, finds an item by matching `nameField`,
+ * and returns the item's `id`. Throws a descriptive error listing available names
+ * when no match is found.
+ */
+export async function resolveByName<T extends { id: number }>(
+	client: BacklogClient,
+	endpoint: string,
+	nameField: keyof T & string,
+	value: string,
+	label: string,
+): Promise<number> {
+	const items = await client<T[]>(endpoint);
+	const item = items.find((i) => (i[nameField] as unknown as string) === value);
+
+	if (!item) {
+		const names = items
+			.map((i) => i[nameField] as unknown as string)
+			.join(", ");
+		throw new Error(`${label} "${value}" not found. Available: ${names}`);
+	}
+
+	return item.id;
+}
+
+/**
  * Resolves a project key to a project ID.
  */
 export async function resolveProjectId(
@@ -50,15 +77,13 @@ export async function resolvePriorityId(
 	client: BacklogClient,
 	name: string,
 ): Promise<number> {
-	const priorities = await client<BacklogPriority[]>("/priorities");
-	const priority = priorities.find((p: BacklogPriority) => p.name === name);
-
-	if (!priority) {
-		const names = priorities.map((p: BacklogPriority) => p.name).join(", ");
-		throw new Error(`Priority "${name}" not found. Available: ${names}`);
-	}
-
-	return priority.id;
+	return resolveByName<BacklogPriority>(
+		client,
+		"/priorities",
+		"name",
+		name,
+		"Priority",
+	);
 }
 
 /**
@@ -69,19 +94,19 @@ export async function resolveStatusId(
 	projectKey: string,
 	name: string,
 ): Promise<number> {
-	const statuses = await client<BacklogStatus[]>(
+	const items = await client<BacklogStatus[]>(
 		`/projects/${projectKey}/statuses`,
 	);
-	const status = statuses.find((s: BacklogStatus) => s.name === name);
+	const item = items.find((s) => s.name === name);
 
-	if (!status) {
-		const names = statuses.map((s: BacklogStatus) => s.name).join(", ");
+	if (!item) {
+		const names = items.map((s) => s.name).join(", ");
 		throw new Error(
 			`Status "${name}" not found in project ${projectKey}. Available: ${names}`,
 		);
 	}
 
-	return status.id;
+	return item.id;
 }
 
 /**
@@ -131,19 +156,19 @@ export async function resolveIssueTypeId(
 	projectKey: string,
 	name: string,
 ): Promise<number> {
-	const types = await client<BacklogIssueType[]>(
+	const items = await client<BacklogIssueType[]>(
 		`/projects/${projectKey}/issueTypes`,
 	);
-	const issueType = types.find((t: BacklogIssueType) => t.name === name);
+	const item = items.find((t) => t.name === name);
 
-	if (!issueType) {
-		const names = types.map((t: BacklogIssueType) => t.name).join(", ");
+	if (!item) {
+		const names = items.map((t) => t.name).join(", ");
 		throw new Error(
 			`Issue type "${name}" not found in project ${projectKey}. Available: ${names}`,
 		);
 	}
 
-	return issueType.id;
+	return item.id;
 }
 
 /**
@@ -153,17 +178,13 @@ export async function resolveResolutionId(
 	client: BacklogClient,
 	name: string,
 ): Promise<number> {
-	const resolutions = await client<BacklogResolution[]>("/resolutions");
-	const resolution = resolutions.find(
-		(r: BacklogResolution) => r.name === name,
+	return resolveByName<BacklogResolution>(
+		client,
+		"/resolutions",
+		"name",
+		name,
+		"Resolution",
 	);
-
-	if (!resolution) {
-		const names = resolutions.map((r: BacklogResolution) => r.name).join(", ");
-		throw new Error(`Resolution "${name}" not found. Available: ${names}`);
-	}
-
-	return resolution.id;
 }
 
 /**

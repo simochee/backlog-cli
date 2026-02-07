@@ -3,6 +3,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { pullRequestUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -43,7 +44,7 @@ export default defineCommand({
 		const pr = await client<BacklogPullRequest>(`${basePath}/${args.number}`);
 
 		if (args.web) {
-			const url = `https://${host}/git/${args.project}/${args.repo}/pullRequests/${pr.number}`;
+			const url = pullRequestUrl(host, args.project, args.repo, pr.number);
 			consola.info(`Opening ${url}`);
 			Bun.spawn(["open", url]);
 			return;

@@ -2,6 +2,7 @@ import type { BacklogWiki } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
+import { promptRequired } from "#utils/prompt.ts";
 import { resolveProjectId } from "#utils/resolve.ts";
 
 export default defineCommand({
@@ -34,24 +35,8 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		let name = args.name;
-		let body = args.body;
-
-		if (!name) {
-			name = await consola.prompt("Page name:", { type: "text" });
-			if (typeof name !== "string" || !name) {
-				consola.error("Page name is required.");
-				return process.exit(1);
-			}
-		}
-
-		if (!body) {
-			body = await consola.prompt("Page content:", { type: "text" });
-			if (typeof body !== "string" || !body) {
-				consola.error("Page content is required.");
-				return process.exit(1);
-			}
-		}
+		const name = await promptRequired("Page name:", args.name);
+		const body = await promptRequired("Page content:", args.body);
 
 		const projectId = await resolveProjectId(client, args.project);
 
