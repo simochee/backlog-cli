@@ -51,6 +51,7 @@
     },
     "packages/cli": {
       "name": "@simochee/backlog-cli",
+      "version": "0.0.0",
       "dependencies": {
         "@repo/api": "workspace:*",
         "@repo/config": "workspace:*",
@@ -70,6 +71,7 @@
       "dependencies": {
         "arkregex": "^0.0.5",
         "arktype": "^2.1.29",
+        "consola": "^3.4.0",
         "rc9": "^2.1.2",
       },
       "devDependencies": {

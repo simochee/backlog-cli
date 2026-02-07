@@ -1,4 +1,4 @@
-import type { BacklogPullRequest } from "@repo/api";
+import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -38,7 +38,7 @@ export default defineCommand({
 		const { client } = await getClient();
 
 		const body: Record<string, unknown> = {
-			statusId: 2, // Closed
+			statusId: PR_STATUS.Closed,
 		};
 
 		if (args.comment) {

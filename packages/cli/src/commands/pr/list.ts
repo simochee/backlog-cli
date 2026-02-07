@@ -1,4 +1,4 @@
-import type { BacklogPullRequest } from "@repo/api";
+import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -57,20 +57,29 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
-			count: Number.parseInt(args.limit, 10),
-		};
+		const count = Number.parseInt(args.limit, 10);
+		if (Number.isNaN(count) || count < 1 || count > 100) {
+			consola.error("--limit must be a number between 1 and 100.");
+			return process.exit(1);
+		}
+
+		const query: Record<string, unknown> = { count };
 
 		if (args.offset) {
-			query.offset = Number.parseInt(args.offset, 10);
+			const offset = Number.parseInt(args.offset, 10);
+			if (Number.isNaN(offset) || offset < 0) {
+				consola.error("--offset must be a non-negative number.");
+				return process.exit(1);
+			}
+			query.offset = offset;
 		}
 
 		// Resolve status names to IDs
 		if (args.status) {
 			const statusMap: Record<string, number> = {
-				open: 1,
-				closed: 2,
-				merged: 3,
+				open: PR_STATUS.Open,
+				closed: PR_STATUS.Closed,
+				merged: PR_STATUS.Merged,
 			};
 			const statuses = args.status.split(",").map((s) => s.trim());
 			query["statusId[]"] = statuses.map((s) => {

@@ -23,12 +23,18 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
+		const userId = Number.parseInt(args["user-id"], 10);
+		if (Number.isNaN(userId)) {
+			consola.error(`Invalid user ID: "${args["user-id"]}"`);
+			return process.exit(1);
+		}
+
 		const user = await client<BacklogUser>(
 			`/projects/${args["project-key"]}/users`,
 			{
 				method: "POST",
 				body: {
-					userId: Number.parseInt(args["user-id"], 10),
+					userId,
 				},
 			},
 		);

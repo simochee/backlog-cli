@@ -107,6 +107,6 @@ export default defineCommand({
 		}
 
 		// Output the completion script to stdout for eval
-		console.log(completion);
+		process.stdout.write(`${completion}\n`);
 	},
 });

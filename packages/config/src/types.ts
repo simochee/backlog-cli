@@ -25,4 +25,5 @@ export const Rc = type({
 		.scope({ RcSpace })
 		.type("RcSpace[]")
 		.default(() => []),
+	aliases: type("Record<string, string>").default(() => ({})),
 });

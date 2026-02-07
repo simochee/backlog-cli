@@ -17,9 +17,7 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		const aliases: Record<string, string> =
-			((config as Record<string, unknown>).aliases as Record<string, string>) ??
-			{};
+		const aliases = { ...config.aliases };
 
 		if (!(args.name in aliases)) {
 			consola.error(`Alias "${args.name}" not found.`);
@@ -28,7 +26,7 @@ export default defineCommand({
 
 		delete aliases[args.name];
 
-		await writeConfig({ ...config, aliases } as typeof config);
+		await writeConfig({ ...config, aliases });
 
 		consola.success(`Alias "${args.name}" deleted.`);
 	},

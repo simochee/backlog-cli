@@ -12,9 +12,7 @@ export default defineCommand({
 	async run() {
 		const config = await loadConfig();
 
-		const aliases: Record<string, string> =
-			((config as Record<string, unknown>).aliases as Record<string, string>) ??
-			{};
+		const aliases = config.aliases;
 
 		const entries = Object.entries(aliases);
 

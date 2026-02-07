@@ -26,14 +26,12 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		const aliases: Record<string, string> =
-			((config as Record<string, unknown>).aliases as Record<string, string>) ??
-			{};
+		const aliases = { ...config.aliases };
 
 		const value = args.shell ? `!${args.expansion}` : args.expansion;
 		aliases[args.name] = value;
 
-		await writeConfig({ ...config, aliases } as typeof config);
+		await writeConfig({ ...config, aliases });
 
 		consola.success(`Alias "${args.name}" set to "${args.expansion}".`);
 	},

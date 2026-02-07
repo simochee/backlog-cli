@@ -4,7 +4,7 @@ import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
-import { pullRequestUrl } from "#utils/url.ts";
+import { openUrl, pullRequestUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -95,7 +95,7 @@ export default defineCommand({
 		if (args.web) {
 			const url = pullRequestUrl(host, project, args.repo, pr.number);
 			consola.info(`Opening ${url}`);
-			Bun.spawn(["open", url]);
+			await openUrl(url);
 		}
 	},
 });

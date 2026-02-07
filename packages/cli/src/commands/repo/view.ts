@@ -4,7 +4,7 @@ import consola from "consola";
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
-import { repositoryUrl } from "#utils/url.ts";
+import { openUrl, repositoryUrl } from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -39,7 +39,7 @@ export default defineCommand({
 		if (args.web) {
 			const url = repositoryUrl(host, project, repo.name);
 			consola.info(`Opening ${url}`);
-			Bun.spawn(["open", url]);
+			await openUrl(url);
 			return;
 		}
 

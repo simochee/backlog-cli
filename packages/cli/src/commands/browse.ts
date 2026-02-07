@@ -5,6 +5,7 @@ import {
 	buildBacklogUrl,
 	dashboardUrl,
 	issueUrl,
+	openUrl,
 	projectUrl,
 } from "#utils/url.ts";
 
@@ -74,6 +75,6 @@ export default defineCommand({
 		}
 
 		consola.info(`Opening ${url}`);
-		Bun.spawn(["open", url]);
+		await openUrl(url);
 	},
 });

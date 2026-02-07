@@ -31,16 +31,34 @@ export default defineCommand({
 		const body: Record<string, unknown> = {};
 
 		if (args.issue) {
-			body.issueId = args.issue;
+			const issue = await client<{ id: number }>(`/issues/${args.issue}`);
+			body.issueId = issue.id;
 		}
 		if (args.comment) {
-			body.commentId = Number.parseInt(args.comment, 10);
+			const commentId = Number.parseInt(args.comment, 10);
+			if (Number.isNaN(commentId)) {
+				consola.error(`Invalid comment ID: "${args.comment}"`);
+				return process.exit(1);
+			}
+			body.commentId = commentId;
 		}
 		if (args.wiki) {
-			body.wikiId = Number.parseInt(args.wiki, 10);
+			const wikiId = Number.parseInt(args.wiki, 10);
+			if (Number.isNaN(wikiId)) {
+				consola.error(`Invalid wiki ID: "${args.wiki}"`);
+				return process.exit(1);
+			}
+			body.wikiId = wikiId;
 		}
 		if (args["pr-comment"]) {
-			body.pullRequestCommentId = Number.parseInt(args["pr-comment"], 10);
+			const prCommentId = Number.parseInt(args["pr-comment"], 10);
+			if (Number.isNaN(prCommentId)) {
+				consola.error(
+					`Invalid pull request comment ID: "${args["pr-comment"]}"`,
+				);
+				return process.exit(1);
+			}
+			body.pullRequestCommentId = prCommentId;
 		}
 
 		if (Object.keys(body).length === 0) {

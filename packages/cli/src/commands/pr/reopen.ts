@@ -1,4 +1,4 @@
-import type { BacklogPullRequest } from "@repo/api";
+import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -37,7 +37,7 @@ export default defineCommand({
 			{
 				method: "PATCH",
 				body: {
-					statusId: 1, // Open
+					statusId: PR_STATUS.Open,
 				},
 			},
 		);
