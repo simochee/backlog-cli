@@ -1,3 +1,4 @@
+import { DEFAULT_PRIORITY_ID } from "@repo/api";
 import { setupMockClient } from "@repo/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -56,6 +57,30 @@ describe("issue create", () => {
 			}),
 		);
 		expect(consola.success).toHaveBeenCalledWith("Created PROJ-1: New Issue");
+	});
+
+	it("--priority 省略時は DEFAULT_PRIORITY_ID を使う", async () => {
+		const mockClient = setupMockClient(getClient);
+		mockClient.mockResolvedValue(mockCreatedIssue);
+
+		const mod = await import("#commands/issue/create.ts");
+		await mod.default.run?.({
+			args: { project: "PROJ", title: "New Issue", type: "Bug" },
+		} as never);
+
+		expect(resolvePriorityId).not.toHaveBeenCalled();
+		expect(mockClient).toHaveBeenCalledWith(
+			"/issues",
+			expect.objectContaining({
+				method: "POST",
+				body: expect.objectContaining({
+					projectId: 1,
+					summary: "New Issue",
+					issueTypeId: 100,
+					priorityId: DEFAULT_PRIORITY_ID,
+				}),
+			}),
+		);
 	});
 
 	it("オプション引数を含めて課題を作成する", async () => {

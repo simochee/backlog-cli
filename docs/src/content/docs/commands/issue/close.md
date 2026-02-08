@@ -20,7 +20,7 @@ backlog issue close <issue-key> [flags]
 | フラグ         | 短縮 | 型     | デフォルト | 説明         |
 | -------------- | ---- | ------ | ---------- | ------------ |
 | `--comment`    | `-c` | string | —          | 完了コメント |
-| `--resolution` | `-r` | string | `完了`     | 完了理由名   |
+| `--resolution` | `-r` | string | —          | 完了理由名   |
 
 ## 使用例
 

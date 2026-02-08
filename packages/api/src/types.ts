@@ -201,6 +201,25 @@ export interface BacklogPullRequestStatus {
 	name: string;
 }
 
+/** Fixed priority IDs defined by Backlog API. */
+export const PRIORITY = {
+	High: 2,
+	Normal: 3,
+	Low: 4,
+} as const;
+
+/** Default priority ID used when not specified. */
+export const DEFAULT_PRIORITY_ID = PRIORITY.Normal;
+
+/** Fixed resolution IDs defined by Backlog API. */
+export const RESOLUTION = {
+	Fixed: 0,
+	WontFix: 1,
+	Invalid: 2,
+	Duplicate: 3,
+	CannotReproduce: 4,
+} as const;
+
 /** Fixed status IDs for pull requests defined by Backlog API. */
 export const PR_STATUS = {
 	Open: 1,
