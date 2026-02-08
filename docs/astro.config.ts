@@ -23,6 +23,10 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
+					label: "API リファレンス",
+					link: "/api/",
+				},
+				{
 					label: "はじめに",
 					items: [
 						{ label: "インストール", link: "/getting-started/installation/" },
