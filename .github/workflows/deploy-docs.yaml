@@ -46,9 +46,10 @@ jobs:
         run: bun run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: backlog-cli-docs
-          directory: docs/dist
+          command: pages deploy --project-name=backlog-cli-docs
+          workingDirectory: docs
+          packageManager: bun
