@@ -16,16 +16,26 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid, LinkCard, Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+import { Card, CardGrid, LinkCard, Steps } from "@astrojs/starlight/components";
 
 ## インストール
 
-<Tabs>
-	<TabItem label="npm">```bash npm install -g @simochee/backlog-cli ```</TabItem>
-	<TabItem label="yarn">```bash yarn global add @simochee/backlog-cli ```</TabItem>
-	<TabItem label="pnpm">```bash pnpm add -g @simochee/backlog-cli ```</TabItem>
-	<TabItem label="bun">```bash bun install -g @simochee/backlog-cli ```</TabItem>
-</Tabs>
+```bash
+# nypm (auto-detect)
+npx nypm install -g @simochee/backlog-cli
+
+# npm
+npm install -g @simochee/backlog-cli
+
+# yarn
+yarn global add @simochee/backlog-cli
+
+# pnpm
+pnpm add -g @simochee/backlog-cli
+
+# bun
+bun install -g @simochee/backlog-cli
+```
 
 ## できること
 
