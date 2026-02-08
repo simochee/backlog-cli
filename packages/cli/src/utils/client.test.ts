@@ -1,5 +1,5 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	resolveSpace: vi.fn(),
@@ -16,6 +16,12 @@ import { createClient } from "@repo/api";
 import { resolveSpace } from "@repo/config";
 
 describe("getClient", () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		delete process.env["BACKLOG_API_KEY"];
+		delete process.env["BACKLOG_SPACE"];
+	});
+
 	it("API Key 認証でクライアントを作成する", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue({
 			host: "example.backlog.com",
@@ -61,8 +67,63 @@ describe("getClient", () => {
 		expect(resolveSpace).toHaveBeenCalledWith("custom.backlog.com");
 	});
 
-	it("スペースが未設定の場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(undefined as never);
+	it("設定ファイルのスペースが BACKLOG_API_KEY より優先される", async () => {
+		vi.mocked(resolveSpace).mockResolvedValue({
+			host: "configured.backlog.com",
+			auth: { method: "api-key" as const, apiKey: "configured-key" },
+		});
+		process.env["BACKLOG_API_KEY"] = "env-key";
+		process.env["BACKLOG_SPACE"] = "configured.backlog.com";
+
+		const result = await getClient();
+
+		expect(createClient).toHaveBeenCalledWith({
+			host: "configured.backlog.com",
+			apiKey: "configured-key",
+		});
+		expect(result.host).toBe("configured.backlog.com");
+	});
+
+	it("BACKLOG_API_KEY と BACKLOG_SPACE でフォールバック認証する", async () => {
+		vi.mocked(resolveSpace).mockResolvedValue(null);
+		process.env["BACKLOG_API_KEY"] = "env-api-key";
+		process.env["BACKLOG_SPACE"] = "env.backlog.com";
+
+		const result = await getClient();
+
+		expect(createClient).toHaveBeenCalledWith({
+			host: "env.backlog.com",
+			apiKey: "env-api-key",
+		});
+		expect(result.host).toBe("env.backlog.com");
+	});
+
+	it("BACKLOG_API_KEY と明示的ホスト名でフォールバック認証する", async () => {
+		vi.mocked(resolveSpace).mockResolvedValue(null);
+		process.env["BACKLOG_API_KEY"] = "env-api-key";
+
+		const result = await getClient("explicit.backlog.com");
+
+		expect(createClient).toHaveBeenCalledWith({
+			host: "explicit.backlog.com",
+			apiKey: "env-api-key",
+		});
+		expect(result.host).toBe("explicit.backlog.com");
+	});
+
+	it("BACKLOG_API_KEY のみで BACKLOG_SPACE がない場合 process.exit(1) を呼ぶ", async () => {
+		vi.mocked(resolveSpace).mockResolvedValue(null);
+		process.env["BACKLOG_API_KEY"] = "env-api-key";
+		const mockExit = spyOnProcessExit();
+
+		await getClient();
+
+		expect(mockExit).toHaveBeenCalledWith(1);
+		mockExit.mockRestore();
+	});
+
+	it("スペースが未設定で環境変数もない場合 process.exit(1) を呼ぶ", async () => {
+		vi.mocked(resolveSpace).mockResolvedValue(null);
 		const mockExit = spyOnProcessExit();
 
 		await getClient();

@@ -138,10 +138,11 @@ Run `backlog <command> --help` for details, or visit the [command reference](htt
 
 ## Environment Variables
 
-| Variable          | Description                                               |
-| ----------------- | --------------------------------------------------------- |
-| `BACKLOG_SPACE`   | Default space hostname (equivalent to the `--space` flag) |
-| `BACKLOG_PROJECT` | Default project key (equivalent to the `--project` flag)  |
+| Variable          | Description                                                                                |
+| ----------------- | ------------------------------------------------------------------------------------------ |
+| `BACKLOG_SPACE`   | Default space hostname (equivalent to the `--space` flag)                                  |
+| `BACKLOG_PROJECT` | Default project key (equivalent to the `--project` flag)                                   |
+| `BACKLOG_API_KEY` | API key for authentication. Used as a fallback when no space is configured via config file |
 
 ```bash
 export BACKLOG_PROJECT=YOUR_PROJECT
@@ -150,6 +151,20 @@ export BACKLOG_PROJECT=YOUR_PROJECT
 backlog issue list
 backlog milestone list
 ```
+
+### Using `BACKLOG_API_KEY` (for CI/AI workflows)
+
+When no space is configured in `~/.backlogrc`, the CLI falls back to `BACKLOG_API_KEY` combined with `BACKLOG_SPACE`:
+
+```bash
+export BACKLOG_SPACE=your-space.backlog.com
+export BACKLOG_API_KEY=your-api-key
+
+# No `backlog auth login` needed
+backlog issue list --project YOUR_PROJECT
+```
+
+This is useful for CI pipelines, AI agent workflows, and other non-interactive environments where running `backlog auth login` is not practical.
 
 ## Output Formats
 
