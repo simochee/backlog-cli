@@ -22,10 +22,12 @@ using TypeSpec.OpenAPI;
 @doc("""
   Backlog API — Project management tool by Nulab.
 
-  This is an unofficial OpenAPI specification and is not provided or endorsed by Nulab.
-  Complete compatibility with the actual Backlog API is not guaranteed.
+  > **This is an unofficial OpenAPI specification** and is not provided or endorsed by Nulab.
+  > Complete compatibility with the actual Backlog API is not guaranteed.
+
+  This definition is maintained for [backlog-cli](https://github.com/simochee/backlog-cli).
   """)
-@service(#{ title: "Backlog API" })
+@service(#{ title: "Backlog API (UNOFFICIAL)" })
 @info(#{
   version: "2.0.0",
   contact: #{ name: "Nulab", url: "https://nulab.com" },
