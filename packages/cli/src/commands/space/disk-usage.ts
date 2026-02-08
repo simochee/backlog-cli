@@ -1,6 +1,7 @@
 import type { BacklogSpaceDiskUsage } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -20,28 +21,31 @@ export default defineCommand({
 		name: "disk-usage",
 		description: "Show space disk usage",
 	},
-	args: {},
-	async run() {
+	args: {
+		...outputArgs,
+	},
+	async run({ args }) {
 		const { client } = await getClient();
 
 		const usage = await client<BacklogSpaceDiskUsage>("/space/diskUsage");
 
-		const total =
-			usage.issue + usage.wiki + usage.file + usage.subversion + usage.git + usage.gitLFS + usage.pullRequest;
+		outputResult(usage, args, (data) => {
+			const total = data.issue + data.wiki + data.file + data.subversion + data.git + data.gitLFS + data.pullRequest;
 
-		consola.log("");
-		consola.log("  Disk Usage");
-		consola.log("");
-		consola.log(`    Capacity:       ${formatBytes(usage.capacity)}`);
-		consola.log(`    Used:           ${formatBytes(total)}`);
-		consola.log("");
-		consola.log(`    Issue:          ${formatBytes(usage.issue)}`);
-		consola.log(`    Wiki:           ${formatBytes(usage.wiki)}`);
-		consola.log(`    File:           ${formatBytes(usage.file)}`);
-		consola.log(`    Subversion:     ${formatBytes(usage.subversion)}`);
-		consola.log(`    Git:            ${formatBytes(usage.git)}`);
-		consola.log(`    Git LFS:        ${formatBytes(usage.gitLFS)}`);
-		consola.log(`    Pull Request:   ${formatBytes(usage.pullRequest)}`);
-		consola.log("");
+			consola.log("");
+			consola.log("  Disk Usage");
+			consola.log("");
+			consola.log(`    Capacity:       ${formatBytes(data.capacity)}`);
+			consola.log(`    Used:           ${formatBytes(total)}`);
+			consola.log("");
+			consola.log(`    Issue:          ${formatBytes(data.issue)}`);
+			consola.log(`    Wiki:           ${formatBytes(data.wiki)}`);
+			consola.log(`    File:           ${formatBytes(data.file)}`);
+			consola.log(`    Subversion:     ${formatBytes(data.subversion)}`);
+			consola.log(`    Git:            ${formatBytes(data.git)}`);
+			consola.log(`    Git LFS:        ${formatBytes(data.gitLFS)}`);
+			consola.log(`    Pull Request:   ${formatBytes(data.pullRequest)}`);
+			consola.log("");
+		});
 	},
 });

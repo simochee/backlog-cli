@@ -3,6 +3,7 @@ import type { WikisListData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "List wiki pages",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -65,19 +67,21 @@ export default defineCommand({
 
 		const wikis = await client<BacklogWiki[]>("/wikis", { query });
 
-		if (wikis.length === 0) {
-			consola.info("No wiki pages found.");
-			return;
-		}
+		outputResult(wikis, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No wiki pages found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("NAME", 40)}${padEnd("UPDATED", 12)}CREATED BY`;
-		consola.log(header);
-		for (const wiki of wikis) {
-			const id = padEnd(`${wiki.id}`, 10);
-			const name = padEnd(wiki.name, 40);
-			const updated = padEnd(formatDate(wiki.updated), 12);
-			const createdBy = wiki.createdUser.name;
-			consola.log(`${id}${name}${updated}${createdBy}`);
-		}
+			const header = `${padEnd("ID", 10)}${padEnd("NAME", 40)}${padEnd("UPDATED", 12)}CREATED BY`;
+			consola.log(header);
+			for (const wiki of data) {
+				const id = padEnd(`${wiki.id}`, 10);
+				const name = padEnd(wiki.name, 40);
+				const updated = padEnd(formatDate(wiki.updated), 12);
+				const createdBy = wiki.createdUser.name;
+				consola.log(`${id}${name}${updated}${createdBy}`);
+			}
+		});
 	},
 });

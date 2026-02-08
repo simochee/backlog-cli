@@ -3,6 +3,7 @@ import type { IssuesListData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatIssueLine, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "List issues",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -135,15 +137,17 @@ export default defineCommand({
 
 		const issues = await client<BacklogIssue[]>("/issues", { query });
 
-		if (issues.length === 0) {
-			consola.info("No issues found.");
-			return;
-		}
+		outputResult(issues, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No issues found.");
+				return;
+			}
 
-		const header = `${padEnd("KEY", 16)}${padEnd("STATUS", 12)}${padEnd("TYPE", 12)}${padEnd("PRIORITY", 8)}${padEnd("ASSIGNEE", 14)}SUMMARY`;
-		consola.log(header);
-		for (const issue of issues) {
-			consola.log(formatIssueLine(issue));
-		}
+			const header = `${padEnd("KEY", 16)}${padEnd("STATUS", 12)}${padEnd("TYPE", 12)}${padEnd("PRIORITY", 8)}${padEnd("ASSIGNEE", 14)}SUMMARY`;
+			consola.log(header);
+			for (const issue of data) {
+				consola.log(formatIssueLine(issue));
+			}
+		});
 	},
 });

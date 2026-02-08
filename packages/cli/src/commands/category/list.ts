@@ -2,6 +2,7 @@ import type { BacklogCategory } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List categories",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -25,15 +27,17 @@ export default defineCommand({
 
 		const categories = await client<BacklogCategory[]>(`/projects/${project}/categories`);
 
-		if (categories.length === 0) {
-			consola.info("No categories found.");
-			return;
-		}
+		outputResult(categories, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No categories found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}NAME`;
-		consola.log(header);
-		for (const category of categories) {
-			consola.log(`${padEnd(`${category.id}`, 10)}${category.name}`);
-		}
+			const header = `${padEnd("ID", 10)}NAME`;
+			consola.log(header);
+			for (const category of data) {
+				consola.log(`${padEnd(`${category.id}`, 10)}${category.name}`);
+			}
+		});
 	},
 });

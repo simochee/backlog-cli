@@ -1,6 +1,7 @@
 import type { BacklogProject } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { openUrl, projectUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "View project details",
 	},
 	args: {
+		...outputArgs,
 		projectKey: {
 			type: "positional",
 			description: "Project key",
@@ -33,16 +35,18 @@ export default defineCommand({
 			return;
 		}
 
-		consola.log("");
-		consola.log(`  ${project.name} (${project.projectKey})`);
-		consola.log("");
-		consola.log(`    Status:              ${project.archived ? "Archived" : "Active"}`);
-		consola.log(`    Text Formatting:     ${project.textFormattingRule}`);
-		consola.log(`    Chart Enabled:       ${project.chartEnabled ? "Yes" : "No"}`);
-		consola.log(`    Subtasking Enabled:  ${project.subtaskingEnabled ? "Yes" : "No"}`);
-		consola.log(`    Wiki:                ${project.useWiki ? "Yes" : "No"}`);
-		consola.log(`    File Sharing:        ${project.useFileSharing ? "Yes" : "No"}`);
-		consola.log(`    Dev Attributes:      ${project.useDevAttributes ? "Yes" : "No"}`);
-		consola.log("");
+		outputResult(project, args, (data) => {
+			consola.log("");
+			consola.log(`  ${data.name} (${data.projectKey})`);
+			consola.log("");
+			consola.log(`    Status:              ${data.archived ? "Archived" : "Active"}`);
+			consola.log(`    Text Formatting:     ${data.textFormattingRule}`);
+			consola.log(`    Chart Enabled:       ${data.chartEnabled ? "Yes" : "No"}`);
+			consola.log(`    Subtasking Enabled:  ${data.subtaskingEnabled ? "Yes" : "No"}`);
+			consola.log(`    Wiki:                ${data.useWiki ? "Yes" : "No"}`);
+			consola.log(`    File Sharing:        ${data.useFileSharing ? "Yes" : "No"}`);
+			consola.log(`    Dev Attributes:      ${data.useDevAttributes ? "Yes" : "No"}`);
+			consola.log("");
+		});
 	},
 });

@@ -2,6 +2,7 @@ import type { BacklogRepository } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { openUrl, repositoryUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "View Git repository details",
 	},
 	args: {
+		...outputArgs,
 		repoName: {
 			type: "positional",
 			description: "Repository name",
@@ -42,20 +44,22 @@ export default defineCommand({
 			return;
 		}
 
-		consola.log("");
-		consola.log(`  ${repo.name}`);
-		consola.log("");
-		if (repo.description) {
-			consola.log(`    Description: ${repo.description}`);
-		}
-		consola.log(`    HTTP URL:    ${repo.httpUrl}`);
-		consola.log(`    SSH URL:     ${repo.sshUrl}`);
-		consola.log(`    Created by:  ${repo.createdUser.name}`);
-		consola.log(`    Created:     ${formatDate(repo.created)}`);
-		consola.log(`    Updated:     ${formatDate(repo.updated)}`);
-		if (repo.pushedAt) {
-			consola.log(`    Last Push:   ${formatDate(repo.pushedAt)}`);
-		}
-		consola.log("");
+		outputResult(repo, args, (data) => {
+			consola.log("");
+			consola.log(`  ${data.name}`);
+			consola.log("");
+			if (data.description) {
+				consola.log(`    Description: ${data.description}`);
+			}
+			consola.log(`    HTTP URL:    ${data.httpUrl}`);
+			consola.log(`    SSH URL:     ${data.sshUrl}`);
+			consola.log(`    Created by:  ${data.createdUser.name}`);
+			consola.log(`    Created:     ${formatDate(data.created)}`);
+			consola.log(`    Updated:     ${formatDate(data.updated)}`);
+			if (data.pushedAt) {
+				consola.log(`    Last Push:   ${formatDate(data.pushedAt)}`);
+			}
+			consola.log("");
+		});
 	},
 });

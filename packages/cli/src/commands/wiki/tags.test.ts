@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
@@ -39,5 +39,33 @@ describe("wiki tags", () => {
 		await mod.default.run?.({ args: { project: "PROJ" } } as never);
 
 		expect(consola.info).toHaveBeenCalledWith("No wiki tags found.");
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			const data = [
+				{ id: 1, name: "Tag A" },
+				{ id: 2, name: "Tag B" },
+			];
+			mockClient.mockResolvedValue(data);
+
+			const mod = await import("#commands/wiki/tags.ts");
+			await mod.default.run?.({ args: { project: "PROJ", json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output).toEqual(data);
+		});
 	});
 });

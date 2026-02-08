@@ -170,8 +170,6 @@ const name = await promptRequired("Project name:", args.name);
 | （なし）                | テーブル形式      | 人間が読む用         |
 | `--json`                | JSON              | プログラム連携       |
 | `--json field1,field2`  | フィルタ済み JSON | 特定フィールドのみ   |
-| `--jq '.[]'`            | jq 変換済み出力   | 高度なフィルタ       |
-| `--template '{{.Key}}'` | Go template       | カスタムフォーマット |
 
 ### プロジェクトコンテキスト
 

@@ -2,6 +2,7 @@ import type { BacklogWatching } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "View a watching",
 	},
 	args: {
+		...outputArgs,
 		"watching-id": {
 			type: "positional",
 			description: "Watching ID",
@@ -22,22 +24,24 @@ export default defineCommand({
 
 		const watching = await client<BacklogWatching>(`/watchings/${args["watching-id"]}`);
 
-		consola.log("");
-		consola.log(`  Watching #${watching.id}`);
-		consola.log("");
-		consola.log(`    Type:           ${watching.type}`);
-		consola.log(`    Read:           ${watching.resourceAlreadyRead ? "Yes" : "No"}`);
+		outputResult(watching, args, (data) => {
+			consola.log("");
+			consola.log(`  Watching #${data.id}`);
+			consola.log("");
+			consola.log(`    Type:           ${data.type}`);
+			consola.log(`    Read:           ${data.resourceAlreadyRead ? "Yes" : "No"}`);
 
-		if (watching.issue) {
-			consola.log(`    Issue:          ${watching.issue.issueKey} — ${watching.issue.summary}`);
-		}
+			if (data.issue) {
+				consola.log(`    Issue:          ${data.issue.issueKey} — ${data.issue.summary}`);
+			}
 
-		if (watching.note) {
-			consola.log(`    Note:           ${watching.note}`);
-		}
+			if (data.note) {
+				consola.log(`    Note:           ${data.note}`);
+			}
 
-		consola.log(`    Created:        ${formatDate(watching.created)}`);
-		consola.log(`    Updated:        ${formatDate(watching.updated)}`);
-		consola.log("");
+			consola.log(`    Created:        ${formatDate(data.created)}`);
+			consola.log(`    Updated:        ${formatDate(data.updated)}`);
+			consola.log("");
+		});
 	},
 });

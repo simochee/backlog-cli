@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
@@ -89,5 +89,37 @@ describe("watching list", () => {
 		await mod.default.run?.({ args: { "user-id": "123", limit: "20", order: "desc" } } as never);
 
 		expect(consola.info).toHaveBeenCalledWith("No watchings found.");
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			const data = [
+				{
+					id: 1,
+					issue: { issueKey: "PROJ-1", summary: "Issue 1" },
+					updated: "2025-01-01T00:00:00Z",
+					resourceAlreadyRead: true,
+				},
+			];
+			mockClient.mockResolvedValueOnce(data);
+
+			const mod = await import("#commands/watching/list.ts");
+			await mod.default.run?.({ args: { "user-id": "123", limit: "20", order: "desc", json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output).toEqual(data);
+		});
 	});
 });

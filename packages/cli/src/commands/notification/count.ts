@@ -2,6 +2,7 @@ import type { BacklogNotificationCount } from "@repo/api";
 import type { NotificationsCountData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "Show unread notification count",
 	},
 	args: {
+		...outputArgs,
 		"already-read": {
 			type: "boolean",
 			description: "Include already read notifications",
@@ -34,6 +36,8 @@ export default defineCommand({
 
 		const result = await client<BacklogNotificationCount>("/notifications/count", { query });
 
-		consola.log(`${result.count} notification(s)`);
+		outputResult(result, args, (data) => {
+			consola.log(`${data.count} notification(s)`);
+		});
 	},
 });

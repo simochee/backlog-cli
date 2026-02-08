@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
@@ -89,5 +89,30 @@ describe("pr view", () => {
 
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("Description:"));
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("PR description"));
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			mockClient.mockResolvedValue(mockPr);
+
+			const mod = await import("#commands/pr/view.ts");
+			await mod.default.run?.({ args: { number: "1", project: "PROJ", repo: "repo", json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output.number).toBe(1);
+			expect(output.summary).toBe("Test PR");
+		});
 	});
 });

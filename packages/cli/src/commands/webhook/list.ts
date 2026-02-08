@@ -2,6 +2,7 @@ import type { BacklogWebhook } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List webhooks",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -25,20 +27,22 @@ export default defineCommand({
 
 		const webhooks = await client<BacklogWebhook[]>(`/projects/${project}/webhooks`);
 
-		if (webhooks.length === 0) {
-			consola.info("No webhooks found.");
-			return;
-		}
+		outputResult(webhooks, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No webhooks found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("NAME", 30)}${padEnd("URL", 40)}${padEnd("UPDATED", 12)}ALL EVENTS`;
-		consola.log(header);
-		for (const webhook of webhooks) {
-			const id = padEnd(`${webhook.id}`, 10);
-			const name = padEnd(webhook.name, 30);
-			const url = padEnd(webhook.hookUrl, 40);
-			const updated = padEnd(formatDate(webhook.updated), 12);
-			const allEvent = webhook.allEvent ? "Yes" : "No";
-			consola.log(`${id}${name}${url}${updated}${allEvent}`);
-		}
+			const header = `${padEnd("ID", 10)}${padEnd("NAME", 30)}${padEnd("URL", 40)}${padEnd("UPDATED", 12)}ALL EVENTS`;
+			consola.log(header);
+			for (const webhook of data) {
+				const id = padEnd(`${webhook.id}`, 10);
+				const name = padEnd(webhook.name, 30);
+				const url = padEnd(webhook.hookUrl, 40);
+				const updated = padEnd(formatDate(webhook.updated), 12);
+				const allEvent = webhook.allEvent ? "Yes" : "No";
+				consola.log(`${id}${name}${url}${updated}${allEvent}`);
+			}
+		});
 	},
 });

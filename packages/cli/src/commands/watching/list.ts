@@ -3,6 +3,7 @@ import type { WatchingsListByUserData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List watchings",
 	},
 	args: {
+		...outputArgs,
 		"user-id": {
 			type: "positional",
 			description: "User ID (omit for yourself)",
@@ -52,19 +54,21 @@ export default defineCommand({
 
 		const watchings = await client<BacklogWatching[]>(`/users/${userId}/watchings`, { query });
 
-		if (watchings.length === 0) {
-			consola.info("No watchings found.");
-			return;
-		}
+		outputResult(watchings, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No watchings found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("ISSUE", 16)}${padEnd("UPDATED", 12)}READ`;
-		consola.log(header);
-		for (const watching of watchings) {
-			const id = padEnd(`${watching.id}`, 10);
-			const issue = padEnd(watching.issue?.issueKey ?? "-", 16);
-			const updated = padEnd(formatDate(watching.updated), 12);
-			const read = watching.resourceAlreadyRead ? "Yes" : "No";
-			consola.log(`${id}${issue}${updated}${read}`);
-		}
+			const header = `${padEnd("ID", 10)}${padEnd("ISSUE", 16)}${padEnd("UPDATED", 12)}READ`;
+			consola.log(header);
+			for (const watching of data) {
+				const id = padEnd(`${watching.id}`, 10);
+				const issue = padEnd(watching.issue?.issueKey ?? "-", 16);
+				const updated = padEnd(formatDate(watching.updated), 12);
+				const read = watching.resourceAlreadyRead ? "Yes" : "No";
+				consola.log(`${id}${issue}${updated}${read}`);
+			}
+		});
 	},
 });

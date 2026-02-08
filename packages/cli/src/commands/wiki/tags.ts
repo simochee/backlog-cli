@@ -2,6 +2,7 @@ import type { BacklogWikiTag } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List wiki tags",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -27,15 +29,17 @@ export default defineCommand({
 			query: { projectIdOrKey: project },
 		});
 
-		if (tags.length === 0) {
-			consola.info("No wiki tags found.");
-			return;
-		}
+		outputResult(tags, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No wiki tags found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}NAME`;
-		consola.log(header);
-		for (const tag of tags) {
-			consola.log(`${padEnd(`${tag.id}`, 10)}${tag.name}`);
-		}
+			const header = `${padEnd("ID", 10)}NAME`;
+			consola.log(header);
+			for (const tag of data) {
+				consola.log(`${padEnd(`${tag.id}`, 10)}${tag.name}`);
+			}
+		});
 	},
 });

@@ -3,6 +3,7 @@ import type { UsersGetStarsData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List stars",
 	},
 	args: {
+		...outputArgs,
 		"user-id": {
 			type: "positional",
 			description: "User ID (omit for yourself)",
@@ -46,19 +48,21 @@ export default defineCommand({
 			query,
 		});
 
-		if (stars.length === 0) {
-			consola.info("No stars found.");
-			return;
-		}
+		outputResult(stars, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No stars found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("TITLE", 40)}${padEnd("PRESENTER", 16)}DATE`;
-		consola.log(header);
-		for (const star of stars) {
-			const id = padEnd(`${star.id}`, 10);
-			const title = padEnd(star.title, 40);
-			const presenter = padEnd(star.presenter.name, 16);
-			const date = formatDate(star.created);
-			consola.log(`${id}${title}${presenter}${date}`);
-		}
+			const header = `${padEnd("ID", 10)}${padEnd("TITLE", 40)}${padEnd("PRESENTER", 16)}DATE`;
+			consola.log(header);
+			for (const star of data) {
+				const id = padEnd(`${star.id}`, 10);
+				const title = padEnd(star.title, 40);
+				const presenter = padEnd(star.presenter.name, 16);
+				const date = formatDate(star.created);
+				consola.log(`${id}${title}${presenter}${date}`);
+			}
+		});
 	},
 });

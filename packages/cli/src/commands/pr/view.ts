@@ -2,6 +2,7 @@ import type { BacklogPullRequest, BacklogPullRequestComment } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { openUrl, pullRequestUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "View pull request details",
 	},
 	args: {
+		...outputArgs,
 		number: {
 			type: "positional",
 			description: "Pull request number",
@@ -53,57 +55,59 @@ export default defineCommand({
 			return;
 		}
 
-		consola.log("");
-		consola.log(`  #${pr.number}: ${pr.summary}`);
-		consola.log("");
-		consola.log(`    Status:      ${pr.status.name}`);
-		consola.log(`    Branch:      ${pr.branch} → ${pr.base}`);
-		consola.log(`    Assignee:    ${pr.assignee?.name ?? "Unassigned"}`);
-		consola.log(`    Created by:  ${pr.createdUser.name}`);
-		consola.log(`    Created:     ${formatDate(pr.created)}`);
-		consola.log(`    Updated:     ${formatDate(pr.updated)}`);
-
-		if (pr.issue) {
-			consola.log(`    Issue:       ${pr.issue.issueKey}: ${pr.issue.summary}`);
-		}
-		if (pr.mergeAt) {
-			consola.log(`    Merged at:   ${formatDate(pr.mergeAt)}`);
-		}
-		if (pr.closeAt) {
-			consola.log(`    Closed at:   ${formatDate(pr.closeAt)}`);
-		}
-
-		if (pr.description) {
+		outputResult(pr, args, async (data) => {
 			consola.log("");
-			consola.log("  Description:");
-			consola.log(
-				pr.description
-					.split("\n")
-					.map((line: string) => `    ${line}`)
-					.join("\n"),
-			);
-		}
+			consola.log(`  #${data.number}: ${data.summary}`);
+			consola.log("");
+			consola.log(`    Status:      ${data.status.name}`);
+			consola.log(`    Branch:      ${data.branch} → ${data.base}`);
+			consola.log(`    Assignee:    ${data.assignee?.name ?? "Unassigned"}`);
+			consola.log(`    Created by:  ${data.createdUser.name}`);
+			consola.log(`    Created:     ${formatDate(data.created)}`);
+			consola.log(`    Updated:     ${formatDate(data.updated)}`);
 
-		if (args.comments) {
-			const comments = await client<BacklogPullRequestComment[]>(`${basePath}/${args.number}/comments`);
+			if (data.issue) {
+				consola.log(`    Issue:       ${data.issue.issueKey}: ${data.issue.summary}`);
+			}
+			if (data.mergeAt) {
+				consola.log(`    Merged at:   ${formatDate(data.mergeAt)}`);
+			}
+			if (data.closeAt) {
+				consola.log(`    Closed at:   ${formatDate(data.closeAt)}`);
+			}
 
-			if (comments.length > 0) {
+			if (data.description) {
 				consola.log("");
-				consola.log("  Comments:");
-				for (const comment of comments) {
-					if (!comment.content) continue;
+				consola.log("  Description:");
+				consola.log(
+					data.description
+						.split("\n")
+						.map((line: string) => `    ${line}`)
+						.join("\n"),
+				);
+			}
+
+			if (args.comments) {
+				const comments = await client<BacklogPullRequestComment[]>(`${basePath}/${args.number}/comments`);
+
+				if (comments.length > 0) {
 					consola.log("");
-					consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
-					consola.log(
-						comment.content
-							.split("\n")
-							.map((line: string) => `      ${line}`)
-							.join("\n"),
-					);
+					consola.log("  Comments:");
+					for (const comment of comments) {
+						if (!comment.content) continue;
+						consola.log("");
+						consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
+						consola.log(
+							comment.content
+								.split("\n")
+								.map((line: string) => `      ${line}`)
+								.join("\n"),
+						);
+					}
 				}
 			}
-		}
 
-		consola.log("");
+			consola.log("");
+		});
 	},
 });

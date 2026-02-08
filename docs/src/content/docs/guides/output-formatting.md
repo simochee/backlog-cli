@@ -25,33 +25,30 @@ backlog issue list --project PROJ --json
 backlog issue list --project PROJ --json issueKey,summary,status
 ```
 
-## jq フィルタ
-
-`--jq` フラグで jq 式を使って出力をフィルタリングできます。
-
-```bash
-# 課題キーだけを抽出
-backlog issue list --project PROJ --jq '.[].issueKey'
-
-# 条件付きフィルタ
-backlog issue list --project PROJ --jq '[.[] | select(.priority.name == "高")]'
-```
-
-## Go テンプレート
-
-`--template` フラグで Go テンプレート形式のカスタムフォーマットを指定できます。
-
-```bash
-backlog issue list --project PROJ --template '{{.Key}} {{.Summary}}'
-```
+TTY（ターミナル）接続時は整形された JSON が出力され、パイプ時はコンパクトな JSON が出力されます。
 
 ## スクリプトでの利用
 
 JSON 出力とシェルのパイプを組み合わせることで、スクリプトから活用できます。
 
 ```bash
-# 課題キーの一覧を取得
-backlog issue list --project PROJ --jq '.[].issueKey' | while read key; do
+# jq で課題キーだけを抽出
+backlog issue list --project PROJ --json | jq '.[].issueKey'
+
+# 条件付きフィルタ
+backlog issue list --project PROJ --json | jq '[.[] | select(.priority.name == "高")]'
+
+# 課題キーの一覧を取得してループ処理
+backlog issue list --project PROJ --json | jq -r '.[].issueKey' | while read key; do
   echo "Processing $key"
 done
 ```
+
+## 対応コマンド
+
+`--json` フラグは以下のコマンドカテゴリで利用できます。
+
+- **一覧系コマンド** (`list`): 配列として出力
+- **詳細表示コマンド** (`view`): オブジェクトとして出力
+- **カウントコマンド** (`count`): `{ count: number }` として出力
+- **ダッシュボード** (`status`): ユーザー情報・課題・通知をまとめたオブジェクトとして出力

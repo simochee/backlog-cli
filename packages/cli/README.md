@@ -37,7 +37,7 @@ $ backlog browse MYAPP-142
 ## Highlights
 
 - **99 commands** — Full coverage of the Backlog API: issues, PRs, wikis, notifications, webhooks, and more
-- **Flexible output** — Table (default), `--json`, `--jq`, and `--template` for easy pipeline integration
+- **Flexible output** — Table (default) or `--json` for easy pipeline integration
 - **Interactive & non-interactive** — Omit arguments for interactive prompts, or pass flags for CI/scripts
 - **Multi-space support** — Switch between Backlog spaces instantly with `backlog auth switch`
 - **Shell completions** — Bash, Zsh, and Fish supported
@@ -168,13 +168,11 @@ This is useful for CI pipelines, AI agent workflows, and other non-interactive e
 
 ## Output Formats
 
-| Flag                    | Format            | Use case               |
-| ----------------------- | ----------------- | ---------------------- |
-| _(none)_                | Table             | Human-readable output  |
-| `--json`                | JSON              | Programmatic access    |
-| `--json field1,field2`  | Filtered JSON     | Select specific fields |
-| `--jq '.[]'`            | jq-transformed    | Advanced filtering     |
-| `--template '{{.Key}}'` | Go-style template | Custom formatting      |
+| Flag                   | Format        | Use case               |
+| ---------------------- | ------------- | ---------------------- |
+| _(none)_               | Table         | Human-readable output  |
+| `--json`               | JSON          | Programmatic access    |
+| `--json field1,field2` | Filtered JSON | Select specific fields |
 
 ## Documentation
 

@@ -3,6 +3,7 @@ import type { ProjectsGetActivitiesData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, getActivityLabel } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "Show recent project activities",
 	},
 	args: {
+		...outputArgs,
 		projectKey: {
 			type: "positional",
 			description: "Project key",
@@ -41,20 +43,22 @@ export default defineCommand({
 
 		const activities = await client<BacklogActivity[]>(`/projects/${args.projectKey}/activities`, { query });
 
-		if (activities.length === 0) {
-			consola.info("No activities found.");
-			return;
-		}
+		outputResult(activities, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No activities found.");
+				return;
+			}
 
-		for (const activity of activities) {
-			const date = formatDate(activity.created);
-			const label = getActivityLabel(activity.type);
-			const user = activity.createdUser.name;
-			const summary =
-				(activity.content["summary"] as string) ??
-				(activity.content["key_id"] ? `${activity.project.projectKey}-${activity.content["key_id"]}` : "");
+			for (const activity of data) {
+				const date = formatDate(activity.created);
+				const label = getActivityLabel(activity.type);
+				const user = activity.createdUser.name;
+				const summary =
+					(activity.content["summary"] as string) ??
+					(activity.content["key_id"] ? `${activity.project.projectKey}-${activity.content["key_id"]}` : "");
 
-			consola.log(`${date}  ${label.padEnd(22)}  ${user.padEnd(14)}  ${summary}`);
-		}
+				consola.log(`${date}  ${label.padEnd(22)}  ${user.padEnd(14)}  ${summary}`);
+			}
+		});
 	},
 });

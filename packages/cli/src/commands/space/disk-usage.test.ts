@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
@@ -60,7 +60,7 @@ describe("disk-usage run()", () => {
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");
-		await mod.default.run?.({} as never);
+		await mod.default.run?.({ args: {} } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/space/diskUsage");
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("Disk Usage"));
@@ -80,7 +80,7 @@ describe("disk-usage run()", () => {
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");
-		await mod.default.run?.({} as never);
+		await mod.default.run?.({ args: {} } as never);
 
 		// Capacity: 1 GB
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("1.0 GB"));
@@ -98,5 +98,29 @@ describe("disk-usage run()", () => {
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("10.0 MB"));
 		// Git LFS: 5 MB
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("5.0 MB"));
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			mockClient.mockResolvedValue(mockUsage);
+
+			const mod = await import("#commands/space/disk-usage.ts");
+			await mod.default.run?.({ args: { json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output.capacity).toBe(1_073_741_824);
+		});
 	});
 });
