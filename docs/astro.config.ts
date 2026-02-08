@@ -347,16 +347,6 @@ export default defineConfig({
 								{ label: "watching read", link: "/commands/watching/read/" },
 							],
 						},
-						{
-							label: "backlog alias",
-							collapsed: true,
-							items: [
-								{ label: "概要", link: "/commands/alias/" },
-								{ label: "alias set", link: "/commands/alias/set/" },
-								{ label: "alias list", link: "/commands/alias/list/" },
-								{ label: "alias delete", link: "/commands/alias/delete/" },
-							],
-						},
 						{ label: "backlog status", link: "/commands/status/" },
 						{ label: "backlog browse", link: "/commands/browse/" },
 						{ label: "backlog api", link: "/commands/api/" },

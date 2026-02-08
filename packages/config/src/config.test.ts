@@ -65,7 +65,6 @@ describe("writeConfig", () => {
 					auth: { method: "api-key" as const, apiKey: "abc123" },
 				},
 			],
-			aliases: {} as Record<string, string>,
 		};
 
 		await writeConfig(config);

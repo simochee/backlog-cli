@@ -335,16 +335,6 @@ gh CLI の `label` に対応する Backlog の概念は3種類ある。
 
 ---
 
-## 20. `alias` — エイリアス
-
-| gh CLI            | backlog CLI            | 備考                       |
-| ----------------- | ---------------------- | -------------------------- |
-| `gh alias set`    | `backlog alias set`    | コマンドショートカット作成 |
-| `gh alias list`   | `backlog alias list`   | エイリアス一覧             |
-| `gh alias delete` | `backlog alias delete` | エイリアス削除             |
-
----
-
 ## gh CLI 機能で Backlog に対応がないもの
 
 以下の gh CLI コマンドグループは Backlog に該当概念がなく、実装対象外とする。

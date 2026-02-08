@@ -19,7 +19,6 @@ const makeSpace = (host: string) => ({
 const makeConfig = (spaces: ReturnType<typeof makeSpace>[], defaultSpace?: string) => ({
 	spaces,
 	defaultSpace,
-	aliases: {} as Record<string, string>,
 });
 
 describe("addSpace", () => {

@@ -131,7 +131,6 @@ backlog api /api/v2/space
 | `backlog webhook`      | Manage webhooks            |
 | `backlog star`         | Manage stars               |
 | `backlog watching`     | Manage watches             |
-| `backlog alias`        | Manage command aliases     |
 | `backlog status`       | Show dashboard             |
 | `backlog browse`       | Open in browser            |
 | `backlog api`          | Call Backlog API directly  |

@@ -9,7 +9,7 @@ $ backlog --help
 
 Backlog CLI — manage Backlog from the command line (backlog v0.0.0)
 
-USAGE backlog auth|config|issue|project|pr|repo|notification|status|browse|api|wiki|user|team|category|milestone|issue-type|status-type|space|webhook|star|watching|alias|completion
+USAGE backlog auth|config|issue|project|pr|repo|notification|status|browse|api|wiki|user|team|category|milestone|issue-type|status-type|space|webhook|star|watching|completion
 
 COMMANDS
 
@@ -34,7 +34,6 @@ COMMANDS
        webhook    Manage webhooks
           star    Manage stars
       watching    Manage watchings
-         alias    Manage command aliases
     completion    Generate shell completion script
 
 Use backlog <command> --help for more information about a command.
@@ -484,7 +483,7 @@ OPTIONS
 
 ## Other Commands
 
-For commands not detailed above (team, category, milestone, issue-type, status-type, space, webhook, star, watching, alias, completion), run:
+For commands not detailed above (team, category, milestone, issue-type, status-type, space, webhook, star, watching, completion), run:
 
 ```bash
 backlog <command> --help

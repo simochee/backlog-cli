@@ -56,7 +56,6 @@ src/commands/
   webhook/        — Webhook 管理（list, view, create, edit, delete）
   star/           — スター管理（add, list, count）
   watching/       — ウォッチ管理（list, add, view, delete, read）
-  alias/          — エイリアス管理（set, list, delete）
   status.ts       — ダッシュボード（自分の課題・通知・最近の更新サマリー）
   browse.ts       — ブラウザで開く
   api.ts          — 汎用 API リクエスト

@@ -1040,33 +1040,7 @@
 
 ---
 
-### 4.5 `backlog alias` — エイリアス
-
-#### `backlog alias set <name> <expansion>`
-
-| 引数/オプション | 型      | 必須 | 説明                     |
-| --------------- | ------- | ---- | ------------------------ |
-| `<name>`        | string  | Yes  | エイリアス名             |
-| `<expansion>`   | string  | Yes  | 展開されるコマンド       |
-| `--shell`       | boolean | No   | シェルコマンドとして登録 |
-
-- **対応 API**: ローカル設定
-
-#### `backlog alias list`
-
-- **対応 API**: ローカル設定
-
-#### `backlog alias delete <name>`
-
-| 引数/オプション | 型     | 必須 | 説明         |
-| --------------- | ------ | ---- | ------------ |
-| `<name>`        | string | Yes  | エイリアス名 |
-
-- **対応 API**: ローカル設定
-
----
-
-### 4.6 `backlog auth` (追加) — 認証拡張
+### 4.5 `backlog auth` (追加) — 認証拡張
 
 #### `backlog auth refresh`
 

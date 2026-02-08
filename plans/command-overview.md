@@ -151,11 +151,6 @@ backlog
 │   ├── set
 │   └── list
 │
-├── alias                   # エイリアス
-│   ├── set
-│   ├── list
-│   └── delete
-│
 ├── completion              # シェル補完
 └── status                  # 自分に関連する情報の概要表示
 ```

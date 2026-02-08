@@ -21,7 +21,6 @@
 - Webhook 管理（webhook）
 - スター（star）
 - ウォッチ（watching）
-- エイリアス（alias）
 - ユーティリティコマンド（api, browse, completion, status）
 - 設定管理（config）
 
