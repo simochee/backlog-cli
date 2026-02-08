@@ -1,7 +1,7 @@
 import { extractSpaceArg } from "#utils/argv.ts";
 import { defineCommand, runMain } from "citty";
 
-import { version } from "../package.json";
+import { version, description } from "../package.json";
 
 const { space, argv: cleanedArgv } = extractSpaceArg(process.argv);
 if (space) {
@@ -13,7 +13,7 @@ const main = defineCommand({
 	meta: {
 		name: "backlog",
 		version,
-		description: "Backlog CLI — manage Backlog from the command line",
+		description,
 	},
 	subCommands: {
 		auth: () => import("#commands/auth/index.ts").then((m) => m.default),
