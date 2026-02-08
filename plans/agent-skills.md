@@ -30,6 +30,7 @@ backlog-cli を coding agent（Claude Code 等）が効果的に利用するた�
 **user-invocable**: true（`/backlog-issue` で呼び出し可能）
 
 **スキルが教えること**:
+
 - `backlog issue list` のフィルタリングオプション（プロジェクト、担当者、ステータス、種別、優先度、キーワード、日付範囲）
 - `backlog issue view <KEY> --comments` で詳細とコメント取得
 - `backlog issue create` の必須フィールド（プロジェクト、タイトル、種別、優先度）とオプションフィールド
@@ -40,6 +41,7 @@ backlog-cli を coding agent（Claude Code 等）が効果的に利用するた�
 - `--json` フラグでJSON出力を得る方法
 
 **ユースケース例**:
+
 ```
 # 自分に割り当てられた未完了課題を確認
 backlog issue list -p PROJECT -a @me -S "未対応,処理中"
@@ -66,6 +68,7 @@ backlog issue close PROJECT-123
 **user-invocable**: true（`/backlog-pr` で呼び出し可能）
 
 **スキルが教えること**:
+
 - `backlog pr create` の必須フィールド（プロジェクト、リポジトリ、タイトル、ベースブランチ、ソースブランチ）
 - `--issue` フラグで課題との紐付け
 - `backlog pr list` でのフィルタリング
@@ -74,6 +77,7 @@ backlog issue close PROJECT-123
 - `backlog pr comment` でレビューコメント追加
 
 **ユースケース例**:
+
 ```
 # PR作成（課題紐付けあり）
 backlog pr create -p PROJECT -R repo-name -t "feat: ログイン画面のバグ修正" -B main --branch fix/login-error --issue PROJECT-123
@@ -97,6 +101,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **user-invocable**: false（エージェントが自動的に参照。ただし `/backlog-project-context` としても使えると便利）
 
 **スキルが教えること**:
+
 - `backlog issue-type list -p PROJECT` で利用可能な課題種別を確認
 - `backlog status-type list -p PROJECT` で利用可能なステータスを確認
 - `backlog category list -p PROJECT` でカテゴリ一覧
@@ -118,6 +123,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **user-invocable**: true（`/backlog-wiki`）
 
 **スキルが教えること**:
+
 - `backlog wiki list -p PROJECT` でWikiページ一覧
 - `backlog wiki view <ID>` で内容取得
 - `backlog wiki create` で新規作成
@@ -133,6 +139,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **user-invocable**: true（`/backlog-notification`）
 
 **スキルが教えること**:
+
 - `backlog notification count` で未読数確認
 - `backlog notification list` で通知一覧
 - `backlog notification read <ID>` で既読化
@@ -146,6 +153,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **user-invocable**: true（`/backlog-status`）
 
 **スキルが教えること**:
+
 - `backlog status` で自分に関連する課題・PRのサマリ表示
 - 作業の優先順位付けに利用
 
@@ -160,6 +168,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **user-invocable**: true（`/backlog-api`）
 
 **スキルが教えること**:
+
 - `backlog api <endpoint>` の使い方
 - `-X` でHTTPメソッド指定
 - `-f key=value` でリクエストフィールド指定
@@ -176,6 +185,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **背景**: 現在のデフォルト出力はテーブル形式で人間向け。エージェントがCLI出力をパースして次のアクションを決定するには、JSON出力が適している。
 
 **提案内容**:
+
 - 設定値 `config set output json` で全コマンドのデフォルト出力をJSONに変更できるようにする
 - または環境変数 `BACKLOG_OUTPUT=json` で切り替え
 - エージェントスキル内で `--json` フラグの利用を推奨するガイダンスを含める
@@ -191,11 +201,13 @@ backlog pr merge -p PROJECT -R repo-name 42
 **判断: 必要（ただし限定的な形で）**
 
 **理由**:
+
 - CLIの `--help` で各コマンドのフラグは分かるが、**レスポンスのデータ構造**（特に `--json` 出力時）は分からない
 - `backlog api` コマンドでは、エンドポイントごとのリクエスト/レスポンススキーマの知識が不可欠
 - 課題のカスタムフィールドやネストされたオブジェクト構造の理解に役立つ
 
 **提案内容**:
+
 - `backlog-api` スキル内に `reference.md` として主要なデータモデルのサマリを配置
 - 全スキーマを網羅するのではなく、エージェントが頻繁に扱う主要エンティティに絞る:
   - `Issue` — フィールド一覧（summary, description, status, issueType, priority, assignee, category[], milestone[], customFields[], startDate, dueDate, estimatedHours, actualHours）
@@ -214,6 +226,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **背景**: エージェントが課題を作成する際、毎回すべてのフィールドを指定するのは冗長。
 
 **提案内容**:
+
 - `.backlog/templates/` に課題テンプレートをYAMLで定義
 - `backlog issue create --template bug` のようにテンプレート名を指定
 - テンプレートにデフォルト値（種別、優先度、説明テンプレート等）を定義可能
@@ -242,6 +255,7 @@ description: |
 **背景**: ブランチ名やコミットメッセージから課題キーを自動検出し、PR作成時に自動で紐付ける。
 
 **提案内容**:
+
 - `backlog pr create --auto-link` フラグ
 - 現在のブランチ名から課題キーを抽出（例: `fix/PROJECT-123-login-bug` → `PROJECT-123`）
 - コミットメッセージからも課題キーを検出
@@ -253,6 +267,7 @@ description: |
 **背景**: エージェントが複数の課題を一括操作するケースがある（例: スプリント完了時に複数課題を一括クローズ）。
 
 **提案内容**:
+
 - `backlog issue close PROJECT-{1,2,3}` のようなバッチ指定
 - または `backlog issue list -p PROJECT -S "完了" --json | backlog issue close --stdin` のようなパイプ連携
 
@@ -263,6 +278,7 @@ description: |
 **背景**: 課題の確認 → ステータス更新 → 実装 → PR作成 → 課題クローズ という一連のフローを1コマンドで開始/完了する。
 
 **提案内容**:
+
 - `backlog workflow start PROJECT-123` — 課題のステータスを「処理中」に変更し、ブランチを作成
 - `backlog workflow finish PROJECT-123` — PR作成し、課題ステータスを更新
 
@@ -294,20 +310,20 @@ description: |
 
 ## 実装の優先順位
 
-| 順序 | スキル / 機能 | 種別 | 理由 |
-|------|-------------|------|------|
-| 1 | `backlog-issue` | スキル | エージェントの最も基本的な操作 |
-| 2 | `backlog-pr` | スキル | 開発ワークフローの必須要素 |
-| 3 | `backlog-project-context` | スキル | 正しい値を使うための前提知識 |
-| 4 | `--output json` デフォルト化 | CLI機能 | エージェントの出力パースの信頼性向上 |
-| 5 | `backlog-api` + スキーマ参照 | スキル | 高度な操作のための拡張 |
-| 6 | `backlog-status` | スキル | 作業優先度の判断に有用 |
-| 7 | `backlog-wiki` | スキル | ドキュメント参照・更新 |
-| 8 | `backlog-notification` | スキル | 通知管理 |
-| 9 | 課題-PR自動紐付け | CLI機能 | ワークフロー効率化 |
-| 10 | 課題テンプレート | CLI機能 | 課題作成の効率化 |
-| 11 | バッチ操作 | CLI機能 | 大量操作の効率化 |
-| 12 | ワークフローコマンド | CLI機能 | 上級ワークフロー自動化 |
+| 順序 | スキル / 機能                | 種別    | 理由                                 |
+| ---- | ---------------------------- | ------- | ------------------------------------ |
+| 1    | `backlog-issue`              | スキル  | エージェントの最も基本的な操作       |
+| 2    | `backlog-pr`                 | スキル  | 開発ワークフローの必須要素           |
+| 3    | `backlog-project-context`    | スキル  | 正しい値を使うための前提知識         |
+| 4    | `--output json` デフォルト化 | CLI機能 | エージェントの出力パースの信頼性向上 |
+| 5    | `backlog-api` + スキーマ参照 | スキル  | 高度な操作のための拡張               |
+| 6    | `backlog-status`             | スキル  | 作業優先度の判断に有用               |
+| 7    | `backlog-wiki`               | スキル  | ドキュメント参照・更新               |
+| 8    | `backlog-notification`       | スキル  | 通知管理                             |
+| 9    | 課題-PR自動紐付け            | CLI機能 | ワークフロー効率化                   |
+| 10   | 課題テンプレート             | CLI機能 | 課題作成の効率化                     |
+| 11   | バッチ操作                   | CLI機能 | 大量操作の効率化                     |
+| 12   | ワークフローコマンド         | CLI機能 | 上級ワークフロー自動化               |
 
 ---
 
