@@ -12,9 +12,9 @@ model Team {
   name: string;
   members: User[];
   displayOrder: int32 | null;
-  createdUser: User;
+  createdUser: User | null;
   created: utcDateTime;
-  updatedUser: User;
+  updatedUser: User | null;
   updated: utcDateTime;
 }
 

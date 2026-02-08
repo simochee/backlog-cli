@@ -307,8 +307,8 @@ export type IssueType = {
 	name: string;
 	color: string;
 	displayOrder: number;
-	templateSummary: string | null;
-	templateDescription: string | null;
+	templateSummary?: string | null;
+	templateDescription?: string | null;
 };
 
 /**
@@ -333,7 +333,7 @@ export type Licence = {
 	nulabAccount: boolean;
 	parentChildIssue: boolean;
 	postIssueByMail: boolean;
-	projectGroup: boolean;
+	projectGroup?: boolean;
 	projectLimit: number;
 	pullRequestAttachmentLimitPerFile: number;
 	pullRequestAttachmentNumLimit: number;
@@ -609,9 +609,9 @@ export type Team = {
 	name: string;
 	members: Array<User>;
 	displayOrder: number | null;
-	createdUser: User;
+	createdUser: User | null;
 	created: string;
-	updatedUser: User;
+	updatedUser: User | null;
 	updated: string;
 };
 

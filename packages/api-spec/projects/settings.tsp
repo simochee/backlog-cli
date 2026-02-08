@@ -84,8 +84,8 @@ model IssueType {
   name: string;
   color: string;
   displayOrder: int32;
-  templateSummary: string | null;
-  templateDescription: string | null;
+  templateSummary?: string | null;
+  templateDescription?: string | null;
 }
 
 @route("/projects/{projectIdOrKey}/issueTypes")
