@@ -34,7 +34,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "bun build ./src/index.ts --outfile ./dist/backlog.mjs --target=node",
+		"build": "bun build ./src/index.ts --outfile ./dist/backlog.mjs --target=node --minify --conditions=bun",
 		"build:compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
 		"dev": "bun ./src/index.ts",
 		"prepublishOnly": "bun run build",
