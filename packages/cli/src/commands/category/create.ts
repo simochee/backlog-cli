@@ -1,7 +1,7 @@
 import type { BacklogCategory } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";

@@ -16,15 +16,15 @@ describe("formatBytes", () => {
 	});
 
 	it("MB 単位をフォーマットする", () => {
-		expect(formatBytes(1048576)).toBe("1.0 MB");
-		expect(formatBytes(5242880)).toBe("5.0 MB");
+		expect(formatBytes(1_048_576)).toBe("1.0 MB");
+		expect(formatBytes(5_242_880)).toBe("5.0 MB");
 	});
 
 	it("GB 単位をフォーマットする", () => {
-		expect(formatBytes(1073741824)).toBe("1.0 GB");
+		expect(formatBytes(1_073_741_824)).toBe("1.0 GB");
 	});
 
 	it("TB 単位をフォーマットする", () => {
-		expect(formatBytes(1099511627776)).toBe("1.0 TB");
+		expect(formatBytes(1_099_511_627_776)).toBe("1.0 TB");
 	});
 });

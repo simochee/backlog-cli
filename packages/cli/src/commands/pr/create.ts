@@ -2,7 +2,7 @@ import type { BacklogPullRequest } from "@repo/api";
 import type { PullRequestsCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 import { openUrl, pullRequestUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";

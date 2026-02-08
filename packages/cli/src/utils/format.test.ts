@@ -178,7 +178,7 @@ describe("formatRepositoryLine", () => {
 
 describe("formatNotificationLine", () => {
 	const baseNotification = {
-		id: 12345,
+		id: 12_345,
 		alreadyRead: false,
 		reason: 1,
 		sender: { name: "Taro" },

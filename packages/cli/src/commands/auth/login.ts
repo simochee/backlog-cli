@@ -1,6 +1,4 @@
-import type { BacklogUser } from "@repo/api";
-
-import { createClient } from "@repo/api";
+import { type BacklogUser, createClient } from "@repo/api";
 import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -10,7 +8,7 @@ const readStdin = async (): Promise<string> => {
 	for await (const chunk of process.stdin) {
 		chunks.push(chunk);
 	}
-	return Buffer.concat(chunks).toString("utf-8").trim();
+	return Buffer.concat(chunks).toString("utf8").trim();
 };
 
 export default defineCommand({

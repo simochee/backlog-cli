@@ -2,7 +2,7 @@ import type { BacklogWiki } from "@repo/api";
 import type { WikisCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg, resolveProjectId } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";

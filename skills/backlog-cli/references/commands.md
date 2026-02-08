@@ -25,24 +25,24 @@ backlog config list [--hostname <host>]
 
 ### issue list
 
-| Flag | Alias | Description | Default |
-|------|-------|-------------|---------|
-| `--project` | `-p` | Project key (comma-separated for multiple) (env: BACKLOG_PROJECT) | |
-| `--assignee` | `-a` | Assignee (username or `@me`) | |
-| `--status` | `-S` | Status name (comma-separated for multiple) | |
-| `--type` | `-T` | Issue type name (comma-separated for multiple) | |
-| `--priority` | `-P` | Priority name | |
-| `--keyword` | `-k` | Keyword search | |
-| `--created-since` | | Created after date | |
-| `--created-until` | | Created before date | |
-| `--updated-since` | | Updated after date | |
-| `--updated-until` | | Updated before date | |
-| `--due-since` | | Due after date | |
-| `--due-until` | | Due before date | |
-| `--sort` | | Sort key | `updated` |
-| `--order` | | `asc` or `desc` | `desc` |
-| `--limit` | `-L` | Number of results (1-100) | `20` |
-| `--offset` | | Pagination offset | |
+| Flag              | Alias | Description                                                       | Default   |
+| ----------------- | ----- | ----------------------------------------------------------------- | --------- |
+| `--project`       | `-p`  | Project key (comma-separated for multiple) (env: BACKLOG_PROJECT) |           |
+| `--assignee`      | `-a`  | Assignee (username or `@me`)                                      |           |
+| `--status`        | `-S`  | Status name (comma-separated for multiple)                        |           |
+| `--type`          | `-T`  | Issue type name (comma-separated for multiple)                    |           |
+| `--priority`      | `-P`  | Priority name                                                     |           |
+| `--keyword`       | `-k`  | Keyword search                                                    |           |
+| `--created-since` |       | Created after date                                                |           |
+| `--created-until` |       | Created before date                                               |           |
+| `--updated-since` |       | Updated after date                                                |           |
+| `--updated-until` |       | Updated before date                                               |           |
+| `--due-since`     |       | Due after date                                                    |           |
+| `--due-until`     |       | Due before date                                                   |           |
+| `--sort`          |       | Sort key                                                          | `updated` |
+| `--order`         |       | `asc` or `desc`                                                   | `desc`    |
+| `--limit`         | `-L`  | Number of results (1-100)                                         | `20`      |
+| `--offset`        |       | Pagination offset                                                 |           |
 
 ### issue view
 
@@ -52,17 +52,17 @@ backlog issue view <issueKey> [--comments] [--web]
 
 ### issue create
 
-| Flag | Alias | Description |
-|------|-------|-------------|
-| `--project` | `-p` | **(required)** Project key (env: BACKLOG_PROJECT) |
-| `--title` | `-t` | **(required)** Issue title |
-| `--type` | `-T` | **(required)** Issue type name |
-| `--priority` | `-P` | **(required)** Priority name |
-| `--description` | `-d` | Description (`-` for stdin) |
-| `--assignee` | `-a` | Assignee username |
-| `--start-date` | | Start date |
-| `--due-date` | | Due date |
-| `--web` | | Open in browser after creation |
+| Flag            | Alias | Description                                       |
+| --------------- | ----- | ------------------------------------------------- |
+| `--project`     | `-p`  | **(required)** Project key (env: BACKLOG_PROJECT) |
+| `--title`       | `-t`  | **(required)** Issue title                        |
+| `--type`        | `-T`  | **(required)** Issue type name                    |
+| `--priority`    | `-P`  | **(required)** Priority name                      |
+| `--description` | `-d`  | Description (`-` for stdin)                       |
+| `--assignee`    | `-a`  | Assignee username                                 |
+| `--start-date`  |       | Start date                                        |
+| `--due-date`    |       | Due date                                          |
+| `--web`         |       | Open in browser after creation                    |
 
 ### issue edit
 
@@ -90,30 +90,30 @@ No arguments. Shows summary of issues related to you.
 
 ### pr list
 
-| Flag | Alias | Description | Default |
-|------|-------|-------------|---------|
-| `--repo` | `-R` | **(required)** Repository name | |
-| `--project` | `-p` | Project key (env: BACKLOG_PROJECT) | |
-| `--status` | `-S` | `open`, `closed`, `merged` (comma-separated) | `open` |
-| `--assignee` | `-a` | Assignee | |
-| `--created-by` | | Creator | |
-| `--issue` | | Related issue key | |
-| `--limit` | `-L` | Number of results | `20` |
-| `--offset` | | Pagination offset | |
+| Flag           | Alias | Description                                  | Default |
+| -------------- | ----- | -------------------------------------------- | ------- |
+| `--repo`       | `-R`  | **(required)** Repository name               |         |
+| `--project`    | `-p`  | Project key (env: BACKLOG_PROJECT)           |         |
+| `--status`     | `-S`  | `open`, `closed`, `merged` (comma-separated) | `open`  |
+| `--assignee`   | `-a`  | Assignee                                     |         |
+| `--created-by` |       | Creator                                      |         |
+| `--issue`      |       | Related issue key                            |         |
+| `--limit`      | `-L`  | Number of results                            | `20`    |
+| `--offset`     |       | Pagination offset                            |         |
 
 ### pr create
 
-| Flag | Alias | Description |
-|------|-------|-------------|
-| `--repo` | `-R` | **(required)** Repository name |
-| `--project` | `-p` | **(required)** Project key (env: BACKLOG_PROJECT) |
-| `--title` | `-t` | **(required)** Title |
-| `--base` | `-B` | **(required)** Base branch (merge target) |
-| `--branch` | | **(required)** Source branch |
-| `--body` | `-b` | Description |
-| `--assignee` | `-a` | Assignee |
-| `--issue` | | Related issue key |
-| `--web` | | Open in browser after creation |
+| Flag         | Alias | Description                                       |
+| ------------ | ----- | ------------------------------------------------- |
+| `--repo`     | `-R`  | **(required)** Repository name                    |
+| `--project`  | `-p`  | **(required)** Project key (env: BACKLOG_PROJECT) |
+| `--title`    | `-t`  | **(required)** Title                              |
+| `--base`     | `-B`  | **(required)** Base branch (merge target)         |
+| `--branch`   |       | **(required)** Source branch                      |
+| `--body`     | `-b`  | Description                                       |
+| `--assignee` | `-a`  | Assignee                                          |
+| `--issue`    |       | Related issue key                                 |
+| `--web`      |       | Open in browser after creation                    |
 
 ### pr view / edit / close / reopen / merge / comment / comments / status
 
@@ -281,15 +281,15 @@ backlog alias delete <name>
 backlog api <endpoint> [-X <METHOD>] [-f <key=value>] [-H <header>] [-i] [--paginate] [--silent]
 ```
 
-| Flag | Alias | Description | Default |
-|------|-------|-------------|---------|
-| `<endpoint>` | | **(required)** API path (`/api/v2` prefix optional) | |
-| `--method` | `-X` | HTTP method | `GET` |
-| `--field` | `-f` | `key=value` (query param for GET, body for others) | |
-| `--header` | `-H` | Additional header | |
-| `--include` | `-i` | Show response headers | |
-| `--paginate` | | Auto-paginate all results (GET only) | |
-| `--silent` | | Suppress output | |
+| Flag         | Alias | Description                                         | Default |
+| ------------ | ----- | --------------------------------------------------- | ------- |
+| `<endpoint>` |       | **(required)** API path (`/api/v2` prefix optional) |         |
+| `--method`   | `-X`  | HTTP method                                         | `GET`   |
+| `--field`    | `-f`  | `key=value` (query param for GET, body for others)  |         |
+| `--header`   | `-H`  | Additional header                                   |         |
+| `--include`  | `-i`  | Show response headers                               |         |
+| `--paginate` |       | Auto-paginate all results (GET only)                |         |
+| `--silent`   |       | Suppress output                                     |         |
 
 ## browse
 

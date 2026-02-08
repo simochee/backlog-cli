@@ -62,6 +62,5 @@ export function getNestedValue(obj: Record<string, unknown>, path: string): unkn
 		if (current != null && typeof current === "object" && key in current) {
 			return (current as Record<string, unknown>)[key];
 		}
-		return undefined;
 	}, obj);
 }

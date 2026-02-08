@@ -57,11 +57,11 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 
 インストールされるスキルの内容は次のとおりです。
 
-| ファイル | 内容 |
-|---------|------|
-| `SKILL.md` | コマンドの使い方、認証、名前解決、主要ワークフローの説明 |
-| `references/commands.md` | 全 99 コマンドのフラグ・オプション一覧 |
-| `references/schema.md` | `--json` 出力のデータモデル定義（Issue, PR, Project 等） |
+| ファイル                 | 内容                                                     |
+| ------------------------ | -------------------------------------------------------- |
+| `SKILL.md`               | コマンドの使い方、認証、名前解決、主要ワークフローの説明 |
+| `references/commands.md` | 全 99 コマンドのフラグ・オプション一覧                   |
+| `references/schema.md`   | `--json` 出力のデータモデル定義（Issue, PR, Project 等） |
 
 ## 使い方の例
 

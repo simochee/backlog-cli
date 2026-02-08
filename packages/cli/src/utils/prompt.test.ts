@@ -7,7 +7,7 @@ vi.mock("consola", () => ({
 	},
 }));
 
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("promptRequired", () => {
@@ -32,7 +32,7 @@ describe("promptRequired", () => {
 	it("既存の値が undefined の場合はプロンプトを表示する", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("prompted" as never);
 
-		const result = await promptRequired("Label:", undefined);
+		const result = await promptRequired("Label:");
 		expect(consola.prompt).toHaveBeenCalled();
 		expect(result).toBe("prompted");
 	});
