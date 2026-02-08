@@ -6,9 +6,13 @@ vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn((v: string) => v),
 }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+vi.mock("node:child_process", () => ({
+	spawn: vi.fn(),
+}));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
+import { spawn } from "node:child_process";
 
 describe("repo clone", () => {
 	it("リポジトリ情報を取得して git clone を実行する", async () => {
@@ -18,19 +22,19 @@ describe("repo clone", () => {
 			httpUrl: "https://example.backlog.com/git/PROJ/my-repo.git",
 		});
 
-		const mockProc = { exited: Promise.resolve(0) };
-		const originalSpawn = globalThis.Bun?.spawn;
-		globalThis.Bun = { spawn: vi.fn(() => mockProc) } as never;
+		const mockOn = vi.fn((event: string, cb: (code: number) => void) => {
+			if (event === "close") cb(0);
+		});
+		vi.mocked(spawn).mockReturnValue({ on: mockOn } as never);
 
 		const mod = await import("#commands/repo/clone.ts");
 		await mod.default.run?.({ args: { repoName: "my-repo", project: "PROJ" } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/projects/PROJ/git/repositories/my-repo");
+		expect(spawn).toHaveBeenCalledWith("git", ["clone", "https://example.backlog.com/git/PROJ/my-repo.git"], {
+			stdio: "inherit",
+		});
 		expect(consola.info).toHaveBeenCalledWith(expect.stringContaining("Cloning"));
 		expect(consola.success).toHaveBeenCalledWith("Cloned my-repo");
-
-		if (originalSpawn) {
-			globalThis.Bun = { spawn: originalSpawn } as never;
-		}
 	});
 });
