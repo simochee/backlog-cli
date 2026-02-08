@@ -1,9 +1,10 @@
 import type { BacklogStatus } from "@repo/api";
 import type { StatusesUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -45,13 +46,10 @@ export default defineCommand({
 			body.color = args.color;
 		}
 
-		const status = await client<BacklogStatus>(
-			`/projects/${project}/statuses/${args.id}`,
-			{
-				method: "PATCH",
-				body,
-			},
-		);
+		const status = await client<BacklogStatus>(`/projects/${project}/statuses/${args.id}`, {
+			method: "PATCH",
+			body,
+		});
 
 		consola.success(`Updated status #${status.id}: ${status.name}`);
 	},

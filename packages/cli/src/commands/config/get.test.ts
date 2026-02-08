@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { getNestedValue, resolveKey } from "#commands/config/get.ts";
+import { describe, expect, it } from "vitest";
 
 describe("getNestedValue", () => {
 	it("浅いキーで値を取得する", () => {
@@ -15,9 +15,7 @@ describe("getNestedValue", () => {
 	});
 
 	it("中間値が null の場合 undefined を返す", () => {
-		expect(
-			getNestedValue({ a: null } as Record<string, unknown>, "a.b"),
-		).toBeUndefined();
+		expect(getNestedValue({ a: null } as Record<string, unknown>, "a.b")).toBeUndefined();
 	});
 
 	it("中間値が undefined の場合 undefined を返す", () => {

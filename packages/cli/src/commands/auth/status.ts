@@ -1,4 +1,5 @@
 import type { BacklogUser } from "@repo/api";
+
 import { createClient } from "@repo/api";
 import { loadConfig } from "@repo/config";
 import { defineCommand } from "citty";
@@ -32,9 +33,7 @@ export default defineCommand({
 			if (args.hostname) {
 				consola.info(`No authentication configured for ${args.hostname}.`);
 			} else {
-				consola.info(
-					"No spaces are authenticated. Run `backlog auth login` to get started.",
-				);
+				consola.info("No spaces are authenticated. Run `backlog auth login` to get started.");
 			}
 			return;
 		}
@@ -68,10 +67,7 @@ export default defineCommand({
 			}
 
 			if (args["show-token"]) {
-				const token =
-					space.auth.method === "api-key"
-						? space.auth.apiKey
-						: space.auth.accessToken;
+				const token = space.auth.method === "api-key" ? space.auth.apiKey : space.auth.accessToken;
 				consola.log(`    Token:  ${token}`);
 			}
 		}

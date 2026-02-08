@@ -1,10 +1,11 @@
 import type { BacklogPullRequestComment } from "@repo/api";
 import type { PullRequestCommentsListData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -57,9 +58,7 @@ export default defineCommand({
 		for (const comment of comments) {
 			if (!comment.content) continue;
 			consola.log("");
-			consola.log(
-				`  ${comment.createdUser.name} (${formatDate(comment.created)}):`,
-			);
+			consola.log(`  ${comment.createdUser.name} (${formatDate(comment.created)}):`);
 			consola.log(
 				comment.content
 					.split("\n")

@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { resolveKey, WRITABLE_KEYS } from "#commands/config/set.ts";
+import { describe, expect, it } from "vitest";
 
 describe("resolveKey", () => {
 	it("snake_case エイリアスを camelCase に変換する", () => {

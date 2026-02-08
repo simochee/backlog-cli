@@ -7,15 +7,15 @@ description: Backlog スペースに認証する
 backlog auth login [flags]
 ```
 
-Backlog スペースに対して認証を行います。API キーまたは OAuth 2.0 による認証をサポートしています。
+Backlog スペースに対して認証します。API キーまたは OAuth 2.0 による認証をサポートしています。
 
 ## オプション
 
-| フラグ | 短縮 | 型 | デフォルト | 説明 |
-|--------|------|------|------------|------|
-| `--hostname` | `-h` | string | — | スペースホスト名（例: `xxx.backlog.com`） |
-| `--method` | `-m` | string | `api-key` | 認証方式（`api-key` / `oauth`） |
-| `--with-token` | | boolean | `false` | 標準入力からトークンを読み込む |
+| フラグ         | 短縮 | 型      | デフォルト | 説明                                      |
+| -------------- | ---- | ------- | ---------- | ----------------------------------------- |
+| `--hostname`   | `-h` | string  | —          | スペースホスト名（例: `xxx.backlog.com`） |
+| `--method`     | `-m` | string  | `api-key`  | 認証方式（`api-key` / `oauth`）           |
+| `--with-token` |      | boolean | `false`    | 標準入力からトークンを読み込む            |
 
 ## 使用例
 

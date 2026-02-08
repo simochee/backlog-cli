@@ -1,8 +1,9 @@
 import type { BacklogWiki } from "@repo/api";
 import type { WikisUpdateData } from "@repo/openapi-client";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {

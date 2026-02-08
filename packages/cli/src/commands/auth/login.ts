@@ -1,12 +1,7 @@
 import type { BacklogUser } from "@repo/api";
+
 import { createClient } from "@repo/api";
-import {
-	addSpace,
-	loadConfig,
-	resolveSpace,
-	updateSpaceAuth,
-	writeConfig,
-} from "@repo/config";
+import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -87,9 +82,7 @@ export default defineCommand({
 		try {
 			user = await client<BacklogUser>("/users/myself");
 		} catch {
-			consola.error(
-				`Authentication failed. Could not connect to ${hostname} with the provided API key.`,
-			);
+			consola.error(`Authentication failed. Could not connect to ${hostname} with the provided API key.`);
 			return process.exit(1);
 		}
 
@@ -111,8 +104,6 @@ export default defineCommand({
 			await writeConfig({ ...config, defaultSpace: hostname });
 		}
 
-		consola.success(
-			`Logged in to ${hostname} as ${user.name} (${user.userId})`,
-		);
+		consola.success(`Logged in to ${hostname} as ${user.name} (${user.userId})`);
 	},
 });

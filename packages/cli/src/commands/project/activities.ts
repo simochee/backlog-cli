@@ -1,9 +1,10 @@
 import type { BacklogActivity } from "@repo/api";
 import type { ProjectsGetActivitiesData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, getActivityLabel } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -35,15 +36,10 @@ export default defineCommand({
 			count: limit,
 		};
 		if (args["activity-type"]) {
-			query["activityTypeId[]"] = args["activity-type"]
-				.split(",")
-				.map((id) => Number.parseInt(id.trim(), 10));
+			query["activityTypeId[]"] = args["activity-type"].split(",").map((id) => Number.parseInt(id.trim(), 10));
 		}
 
-		const activities = await client<BacklogActivity[]>(
-			`/projects/${args.projectKey}/activities`,
-			{ query },
-		);
+		const activities = await client<BacklogActivity[]>(`/projects/${args.projectKey}/activities`, { query });
 
 		if (activities.length === 0) {
 			consola.info("No activities found.");
@@ -55,14 +51,10 @@ export default defineCommand({
 			const label = getActivityLabel(activity.type);
 			const user = activity.createdUser.name;
 			const summary =
-				(activity.content.summary as string) ??
-				(activity.content.key_id
-					? `${activity.project.projectKey}-${activity.content.key_id}`
-					: "");
+				(activity.content["summary"] as string) ??
+				(activity.content["key_id"] ? `${activity.project.projectKey}-${activity.content["key_id"]}` : "");
 
-			consola.log(
-				`${date}  ${label.padEnd(22)}  ${user.padEnd(14)}  ${summary}`,
-			);
+			consola.log(`${date}  ${label.padEnd(22)}  ${user.padEnd(14)}  ${summary}`);
 		}
 	},
 });

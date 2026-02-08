@@ -1,9 +1,10 @@
-import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
 import type { PullRequestsUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {

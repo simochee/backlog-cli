@@ -1,9 +1,10 @@
 import type { BacklogTeam } from "@repo/api";
 import type { TeamsCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -29,9 +30,7 @@ export default defineCommand({
 		const body: TeamsCreateData["body"] & Record<string, unknown> = { name };
 
 		if (args.members) {
-			body["members[]"] = args.members
-				.split(",")
-				.map((id) => Number.parseInt(id.trim(), 10));
+			body["members[]"] = args.members.split(",").map((id) => Number.parseInt(id.trim(), 10));
 		}
 
 		const team = await client<BacklogTeam>("/teams", {

@@ -18,16 +18,11 @@ export default defineCommand({
 		const space = await resolveSpace(args.hostname);
 
 		if (!space) {
-			consola.error(
-				"No space configured. Run `backlog auth login` to authenticate.",
-			);
+			consola.error("No space configured. Run `backlog auth login` to authenticate.");
 			return process.exit(1);
 		}
 
-		const token =
-			space.auth.method === "api-key"
-				? space.auth.apiKey
-				: space.auth.accessToken;
+		const token = space.auth.method === "api-key" ? space.auth.apiKey : space.auth.accessToken;
 
 		// Write directly to stdout without any formatting for script usage
 		process.stdout.write(token);

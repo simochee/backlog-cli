@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { parseField } from "#commands/api.ts";
+import { describe, expect, it } from "vitest";
 
 describe("parseField", () => {
 	it("key=value 形式の文字列をパースする", () => {

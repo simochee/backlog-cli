@@ -46,9 +46,7 @@ describe("auth switch", () => {
 			defaultSpace: undefined,
 		});
 
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/auth/switch.ts");
 		await mod.default.run?.({

@@ -1,9 +1,10 @@
 import type { BacklogWikiHistory } from "@repo/api";
 import type { WikisGetHistoryData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -38,10 +39,7 @@ export default defineCommand({
 			query.offset = Number.parseInt(args.offset, 10);
 		}
 
-		const history = await client<BacklogWikiHistory[]>(
-			`/wikis/${args["wiki-id"]}/history`,
-			{ query },
-		);
+		const history = await client<BacklogWikiHistory[]>(`/wikis/${args["wiki-id"]}/history`, { query });
 
 		if (history.length === 0) {
 			consola.info("No history found.");

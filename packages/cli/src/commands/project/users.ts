@@ -1,8 +1,9 @@
 import type { BacklogUser } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -19,9 +20,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const users = await client<BacklogUser[]>(
-			`/projects/${args["project-key"]}/users`,
-		);
+		const users = await client<BacklogUser[]>(`/projects/${args["project-key"]}/users`);
 
 		if (users.length === 0) {
 			consola.info("No users found.");

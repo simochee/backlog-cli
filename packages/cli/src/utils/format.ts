@@ -121,15 +121,10 @@ const NOTIFICATION_REASONS: Record<number, string> = {
 /**
  * Formats a notification for list display as a single line.
  */
-export function formatNotificationLine(
-	notification: BacklogNotification,
-): string {
+export function formatNotificationLine(notification: BacklogNotification): string {
 	const id = padEnd(`${notification.id}`, 12);
 	const read = notification.alreadyRead ? "  " : "* ";
-	const reason = padEnd(
-		NOTIFICATION_REASONS[notification.reason] ?? "Other",
-		18,
-	);
+	const reason = padEnd(NOTIFICATION_REASONS[notification.reason] ?? "Other", 18);
 	const sender = padEnd(notification.sender.name, 14);
 	const summary =
 		notification.issue?.summary ??

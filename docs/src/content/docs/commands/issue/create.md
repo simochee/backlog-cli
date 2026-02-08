@@ -11,19 +11,19 @@ backlog issue create [flags]
 
 ## オプション
 
-| フラグ | 短縮 | 型 | 必須 | デフォルト | 説明 |
-|--------|------|------|------|------------|------|
-| `--project` | `-p` | string | Yes* | — | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--title` | `-t` | string | Yes* | — | 課題の件名 |
-| `--type` | `-T` | string | Yes* | — | 課題種別名 |
-| `--priority` | `-P` | string | Yes* | — | 優先度名 |
-| `--description` | `-d` | string | No | — | 課題の詳細（`-` で標準入力） |
-| `--assignee` | `-a` | string | No | — | 担当者 |
-| `--start-date` | | string | No | — | 開始日（`yyyy-MM-dd`） |
-| `--due-date` | | string | No | — | 期限日（`yyyy-MM-dd`） |
-| `--web` | | boolean | No | `false` | 作成後ブラウザで開く |
+| フラグ          | 短縮 | 型      | 必須  | デフォルト | 説明                                       |
+| --------------- | ---- | ------- | ----- | ---------- | ------------------------------------------ |
+| `--project`     | `-p` | string  | Yes\* | —          | プロジェクトキー（env: `BACKLOG_PROJECT`） |
+| `--title`       | `-t` | string  | Yes\* | —          | 課題の件名                                 |
+| `--type`        | `-T` | string  | Yes\* | —          | 課題種別名                                 |
+| `--priority`    | `-P` | string  | Yes\* | —          | 優先度名                                   |
+| `--description` | `-d` | string  | No    | —          | 課題の詳細（`-` で標準入力）               |
+| `--assignee`    | `-a` | string  | No    | —          | 担当者                                     |
+| `--start-date`  |      | string  | No    | —          | 開始日（`yyyy-MM-dd`）                     |
+| `--due-date`    |      | string  | No    | —          | 期限日（`yyyy-MM-dd`）                     |
+| `--web`         |      | boolean | No    | `false`    | 作成後ブラウザで開く                       |
 
-> *: インタラクティブモードでは省略可能
+> \*: インタラクティブモードでは省略可能
 
 ## 使用例
 

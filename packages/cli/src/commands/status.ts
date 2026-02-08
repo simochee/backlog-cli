@@ -1,11 +1,8 @@
-import type {
-	BacklogIssue,
-	BacklogNotificationCount,
-	BacklogUser,
-} from "@repo/api";
+import type { BacklogIssue, BacklogNotificationCount, BacklogUser } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {

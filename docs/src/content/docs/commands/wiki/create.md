@@ -9,12 +9,12 @@ backlog wiki create [flags]
 
 ## オプション
 
-| フラグ | 短縮 | 型 | 必須 | 説明 |
-|--------|------|------|------|------|
-| `--project` | `-p` | string | Yes | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name` | `-n` | string | Yes* | ページ名 |
-| `--body` | `-b` | string | Yes* | 本文 |
-| `--notify` | | boolean | No | メール通知 |
+| フラグ      | 短縮 | 型      | 必須  | 説明                                       |
+| ----------- | ---- | ------- | ----- | ------------------------------------------ |
+| `--project` | `-p` | string  | Yes   | プロジェクトキー（env: `BACKLOG_PROJECT`） |
+| `--name`    | `-n` | string  | Yes\* | ページ名                                   |
+| `--body`    | `-b` | string  | Yes\* | 本文                                       |
+| `--notify`  |      | boolean | No    | メール通知                                 |
 
 ## 使用例
 

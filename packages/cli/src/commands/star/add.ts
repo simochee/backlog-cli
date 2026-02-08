@@ -1,7 +1,8 @@
 import type { StarsAddData } from "@repo/openapi-client";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -54,18 +55,14 @@ export default defineCommand({
 		if (args["pr-comment"]) {
 			const prCommentId = Number.parseInt(args["pr-comment"], 10);
 			if (Number.isNaN(prCommentId)) {
-				consola.error(
-					`Invalid pull request comment ID: "${args["pr-comment"]}"`,
-				);
+				consola.error(`Invalid pull request comment ID: "${args["pr-comment"]}"`);
 				return process.exit(1);
 			}
 			body.pullRequestCommentId = prCommentId;
 		}
 
 		if (Object.keys(body).length === 0) {
-			consola.error(
-				"Specify a target: --issue, --comment, --wiki, or --pr-comment",
-			);
+			consola.error("Specify a target: --issue, --comment, --wiki, or --pr-comment");
 			return process.exit(1);
 		}
 

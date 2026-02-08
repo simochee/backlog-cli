@@ -26,8 +26,11 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Format check
+        run: bunx oxfmt --check .
+
       - name: Lint
-        run: bunx biome check .
+        run: bunx oxlint .
 
   type-check:
     name: Type Check

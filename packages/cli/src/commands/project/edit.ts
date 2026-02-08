@@ -1,8 +1,9 @@
 import type { BacklogProject } from "@repo/api";
 import type { ProjectsUpdateData } from "@repo/openapi-client";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -52,13 +53,10 @@ export default defineCommand({
 			body.archived = args.archived;
 		}
 
-		const project = await client<BacklogProject>(
-			`/projects/${args["project-key"]}`,
-			{
-				method: "PATCH",
-				body,
-			},
-		);
+		const project = await client<BacklogProject>(`/projects/${args["project-key"]}`, {
+			method: "PATCH",
+			body,
+		});
 
 		consola.success(`Updated project ${project.projectKey}: ${project.name}`);
 	},

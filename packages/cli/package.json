@@ -2,24 +2,23 @@
 	"name": "@simochee/backlog-cli",
 	"version": "0.0.0",
 	"description": "Backlog CLI — manage Backlog from the command line",
-	"type": "module",
-	"license": "MIT",
-	"author": "simochee",
-	"homepage": "https://simochee.github.io/backlog-cli",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/simochee/backlog-cli.git",
-		"directory": "packages/cli"
-	},
-	"bugs": {
-		"url": "https://github.com/simochee/backlog-cli/issues"
-	},
 	"keywords": [
 		"backlog",
 		"cli",
 		"nulab",
 		"project-management"
 	],
+	"homepage": "https://simochee.github.io/backlog-cli",
+	"bugs": {
+		"url": "https://github.com/simochee/backlog-cli/issues"
+	},
+	"license": "MIT",
+	"author": "simochee",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/simochee/backlog-cli.git",
+		"directory": "packages/cli"
+	},
 	"bin": {
 		"backlog": "./bin/backlog.mjs"
 	},
@@ -29,6 +28,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
+	"type": "module",
 	"imports": {
 		"#*": "./src/*"
 	},
@@ -41,8 +41,8 @@
 	},
 	"dependencies": {
 		"@repo/api": "workspace:*",
-		"@repo/openapi-client": "workspace:*",
 		"@repo/config": "workspace:*",
+		"@repo/openapi-client": "workspace:*",
 		"citty": "^0.1.6",
 		"consola": "^3.4.2"
 	},

@@ -1,6 +1,6 @@
+import { Rc, RcAuth, RcSpace } from "#types.ts";
 import { type } from "arktype";
 import { describe, expect, it } from "vitest";
-import { Rc, RcAuth, RcSpace } from "#types.ts";
 
 describe("RcAuth", () => {
 	it("accepts valid api-key auth", () => {

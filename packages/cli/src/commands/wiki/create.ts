@@ -1,10 +1,11 @@
 import type { BacklogWiki } from "@repo/api";
 import type { WikisCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
 import { resolveProjectArg, resolveProjectId } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {

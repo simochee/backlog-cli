@@ -6,12 +6,7 @@ vi.mock("#config.ts", () => ({
 }));
 
 import { loadConfig, writeConfig } from "#config.ts";
-import {
-	addSpace,
-	removeSpace,
-	resolveSpace,
-	updateSpaceAuth,
-} from "#space.ts";
+import { addSpace, removeSpace, resolveSpace, updateSpaceAuth } from "#space.ts";
 
 const mockLoadConfig = vi.mocked(loadConfig);
 const mockWriteConfig = vi.mocked(writeConfig);
@@ -21,10 +16,7 @@ const makeSpace = (host: string) => ({
 	auth: { method: "api-key" as const, apiKey: "key123" },
 });
 
-const makeConfig = (
-	spaces: ReturnType<typeof makeSpace>[],
-	defaultSpace?: string,
-) => ({
+const makeConfig = (spaces: ReturnType<typeof makeSpace>[], defaultSpace?: string) => ({
 	spaces,
 	defaultSpace,
 });
@@ -76,9 +68,7 @@ describe("removeSpace", () => {
 
 	it("clears defaultSpace when removing the default space", async () => {
 		const space = makeSpace("default.backlog.com");
-		mockLoadConfig.mockResolvedValue(
-			makeConfig([space], "default.backlog.com"),
-		);
+		mockLoadConfig.mockResolvedValue(makeConfig([space], "default.backlog.com"));
 
 		await removeSpace("default.backlog.com");
 
@@ -92,9 +82,7 @@ describe("removeSpace", () => {
 	it("keeps defaultSpace when removing a non-default space", async () => {
 		const space1 = makeSpace("one.backlog.com");
 		const space2 = makeSpace("two.backlog.com");
-		mockLoadConfig.mockResolvedValue(
-			makeConfig([space1, space2], "one.backlog.com"),
-		);
+		mockLoadConfig.mockResolvedValue(makeConfig([space1, space2], "one.backlog.com"));
 
 		await removeSpace("two.backlog.com");
 
@@ -108,9 +96,7 @@ describe("removeSpace", () => {
 	it("throws if space not found", async () => {
 		mockLoadConfig.mockResolvedValue(makeConfig([]));
 
-		await expect(removeSpace("missing.backlog.com")).rejects.toThrow(
-			'Space with host "missing.backlog.com" not found',
-		);
+		await expect(removeSpace("missing.backlog.com")).rejects.toThrow('Space with host "missing.backlog.com" not found');
 	});
 });
 
@@ -153,7 +139,7 @@ describe("updateSpaceAuth", () => {
 describe("resolveSpace", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		delete process.env.BACKLOG_SPACE;
+		delete process.env["BACKLOG_SPACE"];
 	});
 
 	it("returns space matching explicit host", async () => {
@@ -168,7 +154,7 @@ describe("resolveSpace", () => {
 	it("returns space matching BACKLOG_SPACE env var", async () => {
 		const space = makeSpace("env.backlog.com");
 		mockLoadConfig.mockResolvedValue(makeConfig([space]));
-		process.env.BACKLOG_SPACE = "env.backlog.com";
+		process.env["BACKLOG_SPACE"] = "env.backlog.com";
 
 		const result = await resolveSpace();
 
@@ -177,9 +163,7 @@ describe("resolveSpace", () => {
 
 	it("returns space matching defaultSpace config", async () => {
 		const space = makeSpace("default.backlog.com");
-		mockLoadConfig.mockResolvedValue(
-			makeConfig([space], "default.backlog.com"),
-		);
+		mockLoadConfig.mockResolvedValue(makeConfig([space], "default.backlog.com"));
 
 		const result = await resolveSpace();
 
@@ -189,10 +173,8 @@ describe("resolveSpace", () => {
 	it("prioritizes explicit host over env and default", async () => {
 		const explicit = makeSpace("explicit.backlog.com");
 		const env = makeSpace("env.backlog.com");
-		mockLoadConfig.mockResolvedValue(
-			makeConfig([explicit, env], "env.backlog.com"),
-		);
-		process.env.BACKLOG_SPACE = "env.backlog.com";
+		mockLoadConfig.mockResolvedValue(makeConfig([explicit, env], "env.backlog.com"));
+		process.env["BACKLOG_SPACE"] = "env.backlog.com";
 
 		const result = await resolveSpace("explicit.backlog.com");
 

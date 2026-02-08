@@ -1,8 +1,9 @@
 import type { BacklogWatching } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -19,22 +20,16 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const watching = await client<BacklogWatching>(
-			`/watchings/${args["watching-id"]}`,
-		);
+		const watching = await client<BacklogWatching>(`/watchings/${args["watching-id"]}`);
 
 		consola.log("");
 		consola.log(`  Watching #${watching.id}`);
 		consola.log("");
 		consola.log(`    Type:           ${watching.type}`);
-		consola.log(
-			`    Read:           ${watching.resourceAlreadyRead ? "Yes" : "No"}`,
-		);
+		consola.log(`    Read:           ${watching.resourceAlreadyRead ? "Yes" : "No"}`);
 
 		if (watching.issue) {
-			consola.log(
-				`    Issue:          ${watching.issue.issueKey} — ${watching.issue.summary}`,
-			);
+			consola.log(`    Issue:          ${watching.issue.issueKey} — ${watching.issue.summary}`);
 		}
 
 		if (watching.note) {

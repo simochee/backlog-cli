@@ -1,9 +1,10 @@
 import type { BacklogMilestone } from "@repo/api";
 import type { VersionsUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -67,13 +68,10 @@ export default defineCommand({
 			body.archived = args.archived;
 		}
 
-		const milestone = await client<BacklogMilestone>(
-			`/projects/${project}/versions/${args.id}`,
-			{
-				method: "PATCH",
-				body,
-			},
-		);
+		const milestone = await client<BacklogMilestone>(`/projects/${project}/versions/${args.id}`, {
+			method: "PATCH",
+			body,
+		});
 
 		consola.success(`Updated milestone #${milestone.id}: ${milestone.name}`);
 	},

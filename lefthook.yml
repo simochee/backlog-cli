@@ -1,17 +1,20 @@
 pre-commit:
   commands:
-    biome:
+    oxfmt:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       stage_fixed: true
-      run: |-
-        npx biome check \
-          --write \
-          --unsafe \
-          --no-errors-on-unmatched \
-          {staged_files}
+      run: npx oxfmt {staged_files}
+
+    oxlint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
+      run: npx oxlint {staged_files}
 
     sort-package-json:
       glob: package.json
       stage_fixed: true
-      run: |-
-        npx sort-package-json
+      run: npx sort-package-json
+
+    textlint:
+      glob: "{README.md,docs/**/*.md}"
+      stage_fixed: true
+      run: npx textlint --fix {staged_files}

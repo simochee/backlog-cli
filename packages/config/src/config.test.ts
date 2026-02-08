@@ -1,7 +1,7 @@
+import { loadConfig, writeConfig } from "#config.ts";
 import consola from "consola";
 import { readUser, writeUser } from "rc9";
 import { beforeEach, describe, expect, it, type Mock, vi } from "vitest";
-import { loadConfig, writeConfig } from "#config.ts";
 
 vi.mock("rc9", () => ({
 	readUser: vi.fn(),
@@ -41,9 +41,7 @@ describe("loadConfig", () => {
 	});
 
 	it("exits process when config validation fails", async () => {
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 		const errorSpy = vi.spyOn(consola, "error").mockImplementation(() => {});
 
 		(readUser as Mock).mockResolvedValue({

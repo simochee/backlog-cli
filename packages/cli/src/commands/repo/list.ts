@@ -1,8 +1,9 @@
 import type { BacklogRepository } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatRepositoryLine, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -19,9 +20,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const repos = await client<BacklogRepository[]>(
-			`/projects/${args.projectKey}/git/repositories`,
-		);
+		const repos = await client<BacklogRepository[]>(`/projects/${args.projectKey}/git/repositories`);
 
 		if (repos.length === 0) {
 			consola.info("No repositories found.");

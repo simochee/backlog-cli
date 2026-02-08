@@ -1,13 +1,7 @@
+import { getClient } from "#utils/client.ts";
+import { buildBacklogUrl, dashboardUrl, issueUrl, openUrl, projectUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
-import {
-	buildBacklogUrl,
-	dashboardUrl,
-	issueUrl,
-	openUrl,
-	projectUrl,
-} from "#utils/url.ts";
 
 export default defineCommand({
 	meta: {
@@ -63,10 +57,7 @@ export default defineCommand({
 			} else if (args.git) {
 				url = buildBacklogUrl(host, `/git/${projectKey}`);
 			} else if (args.settings) {
-				url = buildBacklogUrl(
-					host,
-					`/EditProject.action?project.key=${projectKey}`,
-				);
+				url = buildBacklogUrl(host, `/EditProject.action?project.key=${projectKey}`);
 			} else {
 				url = projectUrl(host, projectKey);
 			}

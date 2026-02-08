@@ -18,9 +18,7 @@ export interface BacklogClientConfig {
 export function createClient(config: BacklogClientConfig): $Fetch {
 	return ofetch.create({
 		baseURL: joinURL(`https://${config.host}`, "/api/v2"),
-		headers: config.accessToken
-			? { Authorization: `Bearer ${config.accessToken}` }
-			: {},
+		headers: config.accessToken ? { Authorization: `Bearer ${config.accessToken}` } : {},
 		query: config.apiKey ? { apiKey: config.apiKey } : {},
 	});
 }

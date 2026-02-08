@@ -1,9 +1,10 @@
 import type { BacklogWebhook } from "@repo/api";
 import type { WebhooksUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -68,18 +69,13 @@ export default defineCommand({
 		}
 
 		if (args["activity-type-ids"]) {
-			body["activityTypeIds[]"] = args["activity-type-ids"]
-				.split(",")
-				.map((id) => Number.parseInt(id.trim(), 10));
+			body["activityTypeIds[]"] = args["activity-type-ids"].split(",").map((id) => Number.parseInt(id.trim(), 10));
 		}
 
-		const webhook = await client<BacklogWebhook>(
-			`/projects/${project}/webhooks/${args.id}`,
-			{
-				method: "PATCH",
-				body,
-			},
-		);
+		const webhook = await client<BacklogWebhook>(`/projects/${project}/webhooks/${args.id}`, {
+			method: "PATCH",
+			body,
+		});
 
 		consola.success(`Updated webhook #${webhook.id}: ${webhook.name}`);
 	},

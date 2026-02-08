@@ -1,9 +1,10 @@
 import type { BacklogProject } from "@repo/api";
 import type { ProjectsCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -49,8 +50,7 @@ export default defineCommand({
 			key,
 			chartEnabled: args["chart-enabled"] ?? false,
 			subtaskingEnabled: args["subtasking-enabled"] ?? false,
-			projectLeaderCanEditProjectLeader:
-				args["project-leader-can-edit-project-leader"] ?? false,
+			projectLeaderCanEditProjectLeader: args["project-leader-can-edit-project-leader"] ?? false,
 			textFormattingRule: (args["text-formatting-rule"] ??
 				"markdown") as ProjectsCreateData["body"]["textFormattingRule"],
 		};

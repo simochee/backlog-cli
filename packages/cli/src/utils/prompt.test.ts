@@ -7,8 +7,8 @@ vi.mock("consola", () => ({
 	},
 }));
 
-import consola from "consola";
 import { promptRequired } from "#utils/prompt.ts";
+import consola from "consola";
 
 describe("promptRequired", () => {
 	beforeEach(() => {
@@ -39,9 +39,7 @@ describe("promptRequired", () => {
 
 	it("プロンプトで空文字が入力された場合は process.exit(1) を呼ぶ", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const mockExit = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		await promptRequired("Label:");
 
@@ -52,9 +50,7 @@ describe("promptRequired", () => {
 
 	it("ラベル末尾のコロンを除去してエラーメッセージを生成する", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const mockExit = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		await promptRequired("Project key:");
 

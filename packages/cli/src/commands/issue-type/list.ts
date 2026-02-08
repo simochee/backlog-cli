@@ -1,9 +1,10 @@
 import type { BacklogIssueType } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -22,9 +23,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const issueTypes = await client<BacklogIssueType[]>(
-			`/projects/${project}/issueTypes`,
-		);
+		const issueTypes = await client<BacklogIssueType[]>(`/projects/${project}/issueTypes`);
 
 		if (issueTypes.length === 0) {
 			consola.info("No issue types found.");

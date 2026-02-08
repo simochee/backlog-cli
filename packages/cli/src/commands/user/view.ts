@@ -1,8 +1,9 @@
 import type { BacklogUser } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -36,9 +37,7 @@ export default defineCommand({
 		consola.log(`    ID:          ${user.id}`);
 		consola.log(`    User ID:     ${user.userId}`);
 		consola.log(`    Email:       ${user.mailAddress}`);
-		consola.log(
-			`    Role:        ${roleNames[user.roleType] ?? `Role ${user.roleType}`}`,
-		);
+		consola.log(`    Role:        ${roleNames[user.roleType] ?? `Role ${user.roleType}`}`);
 		consola.log(`    Language:    ${user.lang ?? "Not set"}`);
 		consola.log(`    Last login:  ${formatDate(user.lastLoginTime)}`);
 		consola.log("");

@@ -1,3 +1,4 @@
+import type { BacklogClient } from "#utils/client.ts";
 import type {
 	BacklogIssueType,
 	BacklogPriority,
@@ -6,8 +7,8 @@ import type {
 	BacklogStatus,
 	BacklogUser,
 } from "@repo/api";
+
 import consola from "consola";
-import type { BacklogClient } from "#utils/client.ts";
 
 /**
  * Resolves the project key from the provided argument or `BACKLOG_PROJECT` environment variable.
@@ -20,9 +21,7 @@ export function resolveProjectArg(argValue?: string): string {
 	const project = argValue || process.env.BACKLOG_PROJECT;
 
 	if (!project) {
-		consola.error(
-			"Project key is required. Specify --project (-p) or set BACKLOG_PROJECT environment variable.",
-		);
+		consola.error("Project key is required. Specify --project (-p) or set BACKLOG_PROJECT environment variable.");
 		return process.exit(1);
 	}
 
@@ -36,10 +35,7 @@ export function resolveProjectArg(argValue?: string): string {
  * and returns the item's `id`. Throws a descriptive error listing available names
  * when no match is found.
  */
-export async function resolveByName<
-	K extends string,
-	T extends { id: number } & Record<K, string>,
->(
+export async function resolveByName<K extends string, T extends { id: number } & Record<K, string>>(
 	client: BacklogClient,
 	endpoint: string,
 	nameField: K,
@@ -60,10 +56,7 @@ export async function resolveByName<
 /**
  * Resolves a project key to a project ID.
  */
-export async function resolveProjectId(
-	client: BacklogClient,
-	projectKey: string,
-): Promise<number> {
+export async function resolveProjectId(client: BacklogClient, projectKey: string): Promise<number> {
 	const project = await client<BacklogProject>(`/projects/${projectKey}`);
 	return project.id;
 }
@@ -71,19 +64,14 @@ export async function resolveProjectId(
 /**
  * Resolves a username to a user ID. Supports `@me` for the current user.
  */
-export async function resolveUserId(
-	client: BacklogClient,
-	username: string,
-): Promise<number> {
+export async function resolveUserId(client: BacklogClient, username: string): Promise<number> {
 	if (username === "@me") {
 		const me = await client<BacklogUser>("/users/myself");
 		return me.id;
 	}
 
 	const users = await client<BacklogUser[]>("/users");
-	const user = users.find(
-		(u: BacklogUser) => u.userId === username || u.name === username,
-	);
+	const user = users.find((u: BacklogUser) => u.userId === username || u.name === username);
 
 	if (!user) {
 		throw new Error(`User "${username}" not found.`);
@@ -95,37 +83,20 @@ export async function resolveUserId(
 /**
  * Resolves a priority name to its ID.
  */
-export async function resolvePriorityId(
-	client: BacklogClient,
-	name: string,
-): Promise<number> {
-	return resolveByName<BacklogPriority>(
-		client,
-		"/priorities",
-		"name",
-		name,
-		"Priority",
-	);
+export async function resolvePriorityId(client: BacklogClient, name: string): Promise<number> {
+	return resolveByName<BacklogPriority>(client, "/priorities", "name", name, "Priority");
 }
 
 /**
  * Resolves a status name to its ID within a project.
  */
-export async function resolveStatusId(
-	client: BacklogClient,
-	projectKey: string,
-	name: string,
-): Promise<number> {
-	const items = await client<BacklogStatus[]>(
-		`/projects/${projectKey}/statuses`,
-	);
+export async function resolveStatusId(client: BacklogClient, projectKey: string, name: string): Promise<number> {
+	const items = await client<BacklogStatus[]>(`/projects/${projectKey}/statuses`);
 	const item = items.find((s) => s.name === name);
 
 	if (!item) {
 		const names = items.map((s) => s.name).join(", ");
-		throw new Error(
-			`Status "${name}" not found in project ${projectKey}. Available: ${names}`,
-		);
+		throw new Error(`Status "${name}" not found in project ${projectKey}. Available: ${names}`);
 	}
 
 	return item.id;
@@ -134,15 +105,9 @@ export async function resolveStatusId(
 /**
  * Resolves the "completed" status ID for a project.
  */
-export async function resolveClosedStatusId(
-	client: BacklogClient,
-	projectKey: string,
-): Promise<number> {
-	const statuses = await client<BacklogStatus[]>(
-		`/projects/${projectKey}/statuses`,
-	);
-	const closed =
-		statuses.find((s: BacklogStatus) => s.id === 4) ?? statuses.at(-1);
+export async function resolveClosedStatusId(client: BacklogClient, projectKey: string): Promise<number> {
+	const statuses = await client<BacklogStatus[]>(`/projects/${projectKey}/statuses`);
+	const closed = statuses.find((s: BacklogStatus) => s.id === 4) ?? statuses.at(-1);
 
 	if (!closed) {
 		throw new Error(`No statuses found for project ${projectKey}.`);
@@ -154,13 +119,8 @@ export async function resolveClosedStatusId(
 /**
  * Resolves the "open" status ID for a project (first status, typically "未対応").
  */
-export async function resolveOpenStatusId(
-	client: BacklogClient,
-	projectKey: string,
-): Promise<number> {
-	const statuses = await client<BacklogStatus[]>(
-		`/projects/${projectKey}/statuses`,
-	);
+export async function resolveOpenStatusId(client: BacklogClient, projectKey: string): Promise<number> {
+	const statuses = await client<BacklogStatus[]>(`/projects/${projectKey}/statuses`);
 	const open = statuses.find((s: BacklogStatus) => s.id === 1) ?? statuses[0];
 
 	if (!open) {
@@ -173,21 +133,13 @@ export async function resolveOpenStatusId(
 /**
  * Resolves an issue type name to its ID within a project.
  */
-export async function resolveIssueTypeId(
-	client: BacklogClient,
-	projectKey: string,
-	name: string,
-): Promise<number> {
-	const items = await client<BacklogIssueType[]>(
-		`/projects/${projectKey}/issueTypes`,
-	);
+export async function resolveIssueTypeId(client: BacklogClient, projectKey: string, name: string): Promise<number> {
+	const items = await client<BacklogIssueType[]>(`/projects/${projectKey}/issueTypes`);
 	const item = items.find((t) => t.name === name);
 
 	if (!item) {
 		const names = items.map((t) => t.name).join(", ");
-		throw new Error(
-			`Issue type "${name}" not found in project ${projectKey}. Available: ${names}`,
-		);
+		throw new Error(`Issue type "${name}" not found in project ${projectKey}. Available: ${names}`);
 	}
 
 	return item.id;
@@ -196,17 +148,8 @@ export async function resolveIssueTypeId(
 /**
  * Resolves a resolution name to its ID.
  */
-export async function resolveResolutionId(
-	client: BacklogClient,
-	name: string,
-): Promise<number> {
-	return resolveByName<BacklogResolution>(
-		client,
-		"/resolutions",
-		"name",
-		name,
-		"Resolution",
-	);
+export async function resolveResolutionId(client: BacklogClient, name: string): Promise<number> {
+	return resolveByName<BacklogResolution>(client, "/resolutions", "name", name, "Resolution");
 }
 
 /**
@@ -216,9 +159,7 @@ export function extractProjectKey(issueKey: string): string {
 	const match = issueKey.match(/^([A-Z][A-Z0-9_]+)-\d+$/);
 
 	if (!match?.[1]) {
-		throw new Error(
-			`Invalid issue key format: "${issueKey}". Expected format: PROJECT-123`,
-		);
+		throw new Error(`Invalid issue key format: "${issueKey}". Expected format: PROJECT-123`);
 	}
 
 	return match[1];

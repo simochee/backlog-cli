@@ -1,11 +1,12 @@
 import type { BacklogPullRequest } from "@repo/api";
 import type { PullRequestsCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 import { openUrl, pullRequestUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -83,13 +84,10 @@ export default defineCommand({
 			body.issueId = issue.id;
 		}
 
-		const pr = await client<BacklogPullRequest>(
-			`/projects/${project}/git/repositories/${args.repo}/pullRequests`,
-			{
-				method: "POST",
-				body,
-			},
-		);
+		const pr = await client<BacklogPullRequest>(`/projects/${project}/git/repositories/${args.repo}/pullRequests`, {
+			method: "POST",
+			body,
+		});
 
 		consola.success(`Created PR #${pr.number}: ${pr.summary}`);
 

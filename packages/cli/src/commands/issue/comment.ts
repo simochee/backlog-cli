@@ -1,8 +1,9 @@
 import type { BacklogComment } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -40,16 +41,11 @@ export default defineCommand({
 			content = await promptRequired("Comment body:");
 		}
 
-		const comment = await client<BacklogComment>(
-			`/issues/${args.issueKey}/comments`,
-			{
-				method: "POST",
-				body: { content },
-			},
-		);
+		const comment = await client<BacklogComment>(`/issues/${args.issueKey}/comments`, {
+			method: "POST",
+			body: { content },
+		});
 
-		consola.success(
-			`Added comment to ${args.issueKey} by ${comment.createdUser.name}`,
-		);
+		consola.success(`Added comment to ${args.issueKey} by ${comment.createdUser.name}`);
 	},
 });

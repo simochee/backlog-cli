@@ -1,10 +1,11 @@
 import type { BacklogRepository } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { openUrl, repositoryUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -32,9 +33,7 @@ export default defineCommand({
 
 		const { client, host } = await getClient();
 
-		const repo = await client<BacklogRepository>(
-			`/projects/${project}/git/repositories/${args.repoName}`,
-		);
+		const repo = await client<BacklogRepository>(`/projects/${project}/git/repositories/${args.repoName}`);
 
 		if (args.web) {
 			const url = repositoryUrl(host, project, repo.name);

@@ -7,8 +7,8 @@ description: スターを管理します
 
 ## サブコマンド
 
-| コマンド | 説明 |
-|----------|------|
-| [star add](/backlog-cli/commands/star/add/) | スターを追加する |
-| [star list](/backlog-cli/commands/star/list/) | スターの一覧を表示する |
-| [star count](/backlog-cli/commands/star/count/) | スター数を表示する |
+| コマンド                                        | 説明                   |
+| ----------------------------------------------- | ---------------------- |
+| [star add](/backlog-cli/commands/star/add/)     | スターを追加する       |
+| [star list](/backlog-cli/commands/star/list/)   | スターの一覧を表示する |
+| [star count](/backlog-cli/commands/star/count/) | スター数を表示する     |

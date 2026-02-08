@@ -17,9 +17,7 @@ describe("auth refresh", () => {
 
 	it("スペースが未設定の場合 process.exit(1) を呼ぶ", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue(null as never);
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/auth/refresh.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -33,9 +31,7 @@ describe("auth refresh", () => {
 			host: "example.backlog.com",
 			auth: { method: "api-key" as const, apiKey: "key" },
 		});
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/auth/refresh.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -53,9 +49,7 @@ describe("auth refresh", () => {
 				refreshToken: "refresh",
 			},
 		});
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/auth/refresh.ts");
 		await mod.default.run?.({ args: {} } as never);

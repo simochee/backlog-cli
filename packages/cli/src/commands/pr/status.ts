@@ -1,8 +1,9 @@
 import type { BacklogPullRequest, BacklogUser } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -29,15 +30,12 @@ export default defineCommand({
 
 		const me = await client<BacklogUser>("/users/myself");
 
-		const prs = await client<BacklogPullRequest[]>(
-			`/projects/${project}/git/repositories/${args.repo}/pullRequests`,
-			{
-				query: {
-					"assigneeId[]": [me.id],
-					count: 100,
-				},
+		const prs = await client<BacklogPullRequest[]>(`/projects/${project}/git/repositories/${args.repo}/pullRequests`, {
+			query: {
+				"assigneeId[]": [me.id],
+				count: 100,
 			},
-		);
+		});
 
 		if (prs.length === 0) {
 			consola.info("No pull requests assigned to you.");

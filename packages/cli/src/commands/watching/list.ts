@@ -1,9 +1,10 @@
 import type { BacklogUser, BacklogWatching } from "@repo/api";
 import type { WatchingOpsListByUserData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -42,21 +43,14 @@ export default defineCommand({
 
 		const query: NonNullable<WatchingOpsListByUserData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
-			order: args.order as NonNullable<
-				WatchingOpsListByUserData["query"]
-			>["order"],
+			order: args.order as NonNullable<WatchingOpsListByUserData["query"]>["order"],
 		};
 
 		if (args.sort) {
-			query.sort = args.sort as NonNullable<
-				WatchingOpsListByUserData["query"]
-			>["sort"];
+			query.sort = args.sort as NonNullable<WatchingOpsListByUserData["query"]>["sort"];
 		}
 
-		const watchings = await client<BacklogWatching[]>(
-			`/users/${userId}/watchings`,
-			{ query },
-		);
+		const watchings = await client<BacklogWatching[]>(`/users/${userId}/watchings`, { query });
 
 		if (watchings.length === 0) {
 			consola.info("No watchings found.");

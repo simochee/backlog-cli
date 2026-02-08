@@ -1,8 +1,9 @@
 import type { BacklogWikiAttachment } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -19,9 +20,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const attachments = await client<BacklogWikiAttachment[]>(
-			`/wikis/${args["wiki-id"]}/attachments`,
-		);
+		const attachments = await client<BacklogWikiAttachment[]>(`/wikis/${args["wiki-id"]}/attachments`);
 
 		if (attachments.length === 0) {
 			consola.info("No attachments found.");

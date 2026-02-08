@@ -1,9 +1,10 @@
 import type { BacklogCategory } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -22,9 +23,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const categories = await client<BacklogCategory[]>(
-			`/projects/${project}/categories`,
-		);
+		const categories = await client<BacklogCategory[]>(`/projects/${project}/categories`);
 
 		if (categories.length === 0) {
 			consola.info("No categories found.");

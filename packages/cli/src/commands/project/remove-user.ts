@@ -1,7 +1,8 @@
 import type { BacklogUser } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -23,18 +24,13 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const user = await client<BacklogUser>(
-			`/projects/${args["project-key"]}/users`,
-			{
-				method: "DELETE",
-				body: {
-					userId: Number.parseInt(args["user-id"], 10),
-				},
+		const user = await client<BacklogUser>(`/projects/${args["project-key"]}/users`, {
+			method: "DELETE",
+			body: {
+				userId: Number.parseInt(args["user-id"], 10),
 			},
-		);
+		});
 
-		consola.success(
-			`Removed user ${user.name} from project ${args["project-key"]}.`,
-		);
+		consola.success(`Removed user ${user.name} from project ${args["project-key"]}.`);
 	},
 });

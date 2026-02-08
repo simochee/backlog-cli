@@ -1,9 +1,10 @@
 import type { BacklogWebhook } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -27,9 +28,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const webhook = await client<BacklogWebhook>(
-			`/projects/${project}/webhooks/${args.id}`,
-		);
+		const webhook = await client<BacklogWebhook>(`/projects/${project}/webhooks/${args.id}`);
 
 		consola.log("");
 		consola.log(`  ${webhook.name}`);

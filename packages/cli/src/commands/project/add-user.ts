@@ -1,7 +1,8 @@
 import type { BacklogUser } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -29,18 +30,13 @@ export default defineCommand({
 			return process.exit(1);
 		}
 
-		const user = await client<BacklogUser>(
-			`/projects/${args["project-key"]}/users`,
-			{
-				method: "POST",
-				body: {
-					userId,
-				},
+		const user = await client<BacklogUser>(`/projects/${args["project-key"]}/users`, {
+			method: "POST",
+			body: {
+				userId,
 			},
-		);
+		});
 
-		consola.success(
-			`Added user ${user.name} to project ${args["project-key"]}.`,
-		);
+		consola.success(`Added user ${user.name} to project ${args["project-key"]}.`);
 	},
 });

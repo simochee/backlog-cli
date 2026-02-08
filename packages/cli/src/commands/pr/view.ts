@@ -1,10 +1,11 @@
 import type { BacklogPullRequest, BacklogPullRequestComment } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { openUrl, pullRequestUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -84,9 +85,7 @@ export default defineCommand({
 		}
 
 		if (args.comments) {
-			const comments = await client<BacklogPullRequestComment[]>(
-				`${basePath}/${args.number}/comments`,
-			);
+			const comments = await client<BacklogPullRequestComment[]>(`${basePath}/${args.number}/comments`);
 
 			if (comments.length > 0) {
 				consola.log("");
@@ -94,9 +93,7 @@ export default defineCommand({
 				for (const comment of comments) {
 					if (!comment.content) continue;
 					consola.log("");
-					consola.log(
-						`    ${comment.createdUser.name} (${formatDate(comment.created)}):`,
-					);
+					consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
 					consola.log(
 						comment.content
 							.split("\n")

@@ -1,8 +1,9 @@
 import type { BacklogStarCount, BacklogUser } from "@repo/api";
 import type { UsersGetStarsCountData } from "@repo/openapi-client";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -41,10 +42,7 @@ export default defineCommand({
 			query.until = args.until;
 		}
 
-		const result = await client<BacklogStarCount>(
-			`/users/${userId}/stars/count`,
-			{ query },
-		);
+		const result = await client<BacklogStarCount>(`/users/${userId}/stars/count`, { query });
 
 		consola.log(`${result.count} star(s)`);
 	},
