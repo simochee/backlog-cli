@@ -1,4 +1,3 @@
-import { regex } from "arkregex";
 import { type } from "arktype";
 
 const ApiKeyAuth = type({
@@ -17,7 +16,7 @@ const OAuthAuth = type({
 export const RcAuth = ApiKeyAuth.or(OAuthAuth);
 
 export const RcSpace = type({
-	host: regex(String.raw`^[a-z0-9-]+\.backlog\.(com|jp)$`),
+	host: /^[a-z0-9-]+\.backlog\.(com|jp)$/,
 	auth: RcAuth,
 });
 

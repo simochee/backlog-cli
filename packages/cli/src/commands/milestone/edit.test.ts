@@ -35,7 +35,7 @@ describe("milestone edit", () => {
 		const mod = await import("#commands/milestone/edit.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", archived: true } } as never);
 
-		const callBody = mockClient.mock.calls[0][1].body;
+		const callBody = mockClient.mock.calls[0]?.[1]?.body;
 		expect(callBody).toHaveProperty("archived", true);
 		expect(callBody).not.toHaveProperty("name");
 	});

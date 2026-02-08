@@ -32,7 +32,7 @@ describe("wiki edit", () => {
 		const mod = await import("#commands/wiki/edit.ts");
 		await mod.default.run?.({ args: { "wiki-id": "1", name: "Page" } } as never);
 
-		const callBody = mockClient.mock.calls[0][1].body;
+		const callBody = mockClient.mock.calls[0]?.[1]?.body;
 		expect(callBody).toHaveProperty("name");
 		expect(callBody).not.toHaveProperty("content");
 	});

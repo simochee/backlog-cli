@@ -10,9 +10,9 @@ describe("completion", () => {
 		const mod = await import("#commands/completion.ts");
 		const command = mod.default;
 
-		expect(command.meta?.name).toBe("completion");
-		expect(command.meta?.description).toBe("Generate shell completion script");
-		expect(command.args?.shell).toBeDefined();
+		expect((command.meta as Record<string, unknown>)?.["name"]).toBe("completion");
+		expect((command.meta as Record<string, unknown>)?.["description"]).toBe("Generate shell completion script");
+		expect((command.args as Record<string, unknown>)?.["shell"]).toBeDefined();
 	});
 
 	it("run() で bash 補完スクリプトを stdout に出力する", async () => {
@@ -21,8 +21,8 @@ describe("completion", () => {
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "bash" } } as never);
 
-		expect(writeSpy).toHaveBeenCalledOnce();
-		const output = writeSpy.mock.calls[0][0] as string;
+		expect(writeSpy).toHaveBeenCalledTimes(1);
+		const output = writeSpy.mock.calls[0]?.[0] as string;
 		expect(output).toContain("_backlog");
 		expect(output).toContain("# backlog CLI bash completion");
 
@@ -35,8 +35,8 @@ describe("completion", () => {
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "zsh" } } as never);
 
-		expect(writeSpy).toHaveBeenCalledOnce();
-		const output = writeSpy.mock.calls[0][0] as string;
+		expect(writeSpy).toHaveBeenCalledTimes(1);
+		const output = writeSpy.mock.calls[0]?.[0] as string;
 		expect(output).toContain("#compdef backlog");
 
 		writeSpy.mockRestore();

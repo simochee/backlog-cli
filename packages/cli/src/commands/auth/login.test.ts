@@ -42,6 +42,7 @@ describe("auth login", () => {
 			vi.mocked(loadConfig).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
+				aliases: {},
 			});
 
 			const mod = await import("#commands/auth/login.ts");
@@ -86,6 +87,7 @@ describe("auth login", () => {
 					},
 				],
 				defaultSpace: "example.backlog.com",
+				aliases: {},
 			});
 
 			const mod = await import("#commands/auth/login.ts");
@@ -135,6 +137,7 @@ describe("auth login", () => {
 			vi.mocked(loadConfig).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
+				aliases: {},
 			});
 
 			const mod = await import("#commands/auth/login.ts");
@@ -208,6 +211,7 @@ describe("auth login", () => {
 			vi.mocked(loadConfig).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
+				aliases: {},
 			});
 			vi.mocked(exchangeAuthorizationCode).mockResolvedValue({
 				access_token: "new-access-token",
@@ -416,6 +420,7 @@ describe("auth login", () => {
 					},
 				],
 				defaultSpace: "example.backlog.com",
+				aliases: {},
 			});
 
 			const mod = await import("#commands/auth/login.ts");

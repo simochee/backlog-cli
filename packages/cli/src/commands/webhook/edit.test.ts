@@ -35,7 +35,7 @@ describe("webhook edit", () => {
 		const mod = await import("#commands/webhook/edit.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", "hook-url": "https://new.example.com" } } as never);
 
-		const callBody = mockClient.mock.calls[0][1].body;
+		const callBody = mockClient.mock.calls[0]?.[1]?.body;
 		expect(callBody).toHaveProperty("hookUrl", "https://new.example.com");
 		expect(callBody).not.toHaveProperty("name");
 	});

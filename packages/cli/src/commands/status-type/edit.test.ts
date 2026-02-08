@@ -35,7 +35,7 @@ describe("status-type edit", () => {
 		const mod = await import("#commands/status-type/edit.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", color: "#ffffff" } } as never);
 
-		const callBody = mockClient.mock.calls[0][1].body;
+		const callBody = mockClient.mock.calls[0]?.[1]?.body;
 		expect(callBody).toHaveProperty("color", "#ffffff");
 		expect(callBody).not.toHaveProperty("name");
 	});

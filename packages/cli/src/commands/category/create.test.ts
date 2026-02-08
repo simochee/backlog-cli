@@ -12,12 +12,12 @@ vi.mock("#utils/prompt.ts", () => {
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("category create", () => {
 	beforeEach(() => {
-		vi.mocked(promptRequired).mockImplementation((_label, value) => Promise.resolve(value as string));
+		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
 
 	it("カテゴリを作成する", async () => {

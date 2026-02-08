@@ -12,7 +12,7 @@
 		"lint": {},
 		"test": {},
 		"type-check": {
-			"dependsOn": ["^type-check"]
+			"dependsOn": ["^build", "^type-check"]
 		}
 	}
 }

@@ -3,10 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/prompt.ts", () => {
-	const fn = vi.fn();
-	return { default: fn, promptRequired: fn };
-});
+vi.mock("#utils/prompt.ts", () => ({ default: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectId: vi.fn(() => 1),
 	resolveIssueTypeId: vi.fn(() => 100),
@@ -19,7 +16,7 @@ vi.mock("#utils/url.ts", () => ({
 }));
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
 import consola from "consola";
@@ -31,7 +28,7 @@ const mockCreatedIssue = {
 
 describe("issue create", () => {
 	beforeEach(() => {
-		vi.mocked(promptRequired).mockImplementation((_label, value) => Promise.resolve(value as string));
+		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
 
 	it("必須引数で課題を作成する", async () => {

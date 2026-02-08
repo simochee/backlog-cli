@@ -84,7 +84,7 @@ export async function resolveUserId(client: BacklogClient, username: string): Pr
  * Resolves a priority name to its ID.
  */
 export function resolvePriorityId(client: BacklogClient, name: string): Promise<number> {
-	return resolveByName<BacklogPriority>(client, "/priorities", "name", name, "Priority");
+	return resolveByName<"name", BacklogPriority>(client, "/priorities", "name", name, "Priority");
 }
 
 /**
@@ -149,7 +149,7 @@ export async function resolveIssueTypeId(client: BacklogClient, projectKey: stri
  * Resolves a resolution name to its ID.
  */
 export function resolveResolutionId(client: BacklogClient, name: string): Promise<number> {
-	return resolveByName<BacklogResolution>(client, "/resolutions", "name", name, "Resolution");
+	return resolveByName<"name", BacklogResolution>(client, "/resolutions", "name", name, "Resolution");
 }
 
 /**

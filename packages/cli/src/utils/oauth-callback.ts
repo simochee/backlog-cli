@@ -66,7 +66,7 @@ export function startCallbackServer(): CallbackServer {
 	});
 
 	return {
-		port: server.port,
+		port: server.port as number,
 		waitForCallback(expectedState: string): Promise<string> {
 			return new Promise<string>((resolve, reject) => {
 				const timeout = setTimeout(() => {

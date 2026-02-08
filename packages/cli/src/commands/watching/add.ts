@@ -1,5 +1,5 @@
 import type { BacklogWatching } from "@repo/api";
-import type { WatchingOpsCreateData } from "@repo/openapi-client";
+import type { WatchingsCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
@@ -24,7 +24,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const body: WatchingOpsCreateData["body"] = {
+		const body: WatchingsCreateData["body"] = {
 			issueIdOrKey: args.issue,
 		};
 

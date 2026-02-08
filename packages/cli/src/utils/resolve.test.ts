@@ -73,7 +73,7 @@ describe("resolveByName", () => {
 			],
 		});
 
-		const id = await resolveByName<{ id: number; name: string }>(client, "/items", "name", "Beta", "Item");
+		const id = await resolveByName<"name", { id: number; name: string }>(client, "/items", "name", "Beta", "Item");
 		expect(id).toBe(2);
 	});
 
@@ -86,16 +86,16 @@ describe("resolveByName", () => {
 		});
 
 		await expect(
-			resolveByName<{ id: number; name: string }>(client, "/items", "name", "Gamma", "Item"),
+			resolveByName<"name", { id: number; name: string }>(client, "/items", "name", "Gamma", "Item"),
 		).rejects.toThrow('Item "Gamma" not found. Available: Alpha, Beta');
 	});
 
 	it("空リストの場合は空の Available を含むエラーを投げる", async () => {
 		const client = createMockClient({ "/items": [] });
 
-		await expect(resolveByName<{ id: number; name: string }>(client, "/items", "name", "X", "Item")).rejects.toThrow(
-			'Item "X" not found. Available: ',
-		);
+		await expect(
+			resolveByName<"name", { id: number; name: string }>(client, "/items", "name", "X", "Item"),
+		).rejects.toThrow('Item "X" not found. Available: ');
 	});
 });
 
