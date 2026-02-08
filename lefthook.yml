@@ -15,3 +15,8 @@ pre-commit:
       stage_fixed: true
       run: |-
         npx sort-package-json
+
+    textlint:
+      glob: "{README.md,docs/**/*.md}"
+      stage_fixed: true
+      run: npx textlint --fix {staged_files}
