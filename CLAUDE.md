@@ -9,6 +9,9 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 - `packages/cli` — CLI 本体（citty ベース、コマンドは遅延読み込み）
 - `packages/api` — Backlog API クライアント（ofetch + ufo）
 - `packages/config` — 設定管理（rc9 + arktype）
+- `packages/api-spec` — Backlog API 仕様（TypeSpec）
+- `packages/openapi-client` — OpenAPI TypeScript クライアント自動生成
+- `packages/test-utils` — テスト共有ユーティリティ
 - `packages/tsconfigs` — 共有 TypeScript 設定
 - `docs` — ドキュメントサイト（Astro + Starlight）
 
@@ -21,7 +24,7 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 - URL ユーティリティ: ufo (unjs)
 - 設定ファイル: rc9 (unjs)
 - ロギング: consola (unjs)
-- 型バリデーション: arktype
+- 型バリデーション: arktype + arkregex
 - テスト: Vitest
 - リンター: oxlint
 - フォーマッター: oxfmt
@@ -67,6 +70,10 @@ src/utils/
   format.ts       — 表示フォーマット（テーブル行・日付・パディング）
   url.ts          — Backlog Web URL 構築（issueUrl, projectUrl 等）
   prompt.ts       — インタラクティブプロンプト（promptRequired）
+  output.ts       — JSON 出力処理（outputArgs, outputResult, filterFields）
+  argv.ts         — グローバルオプション前処理（extractSpaceArg）
+  stdin.ts        — 標準入力読み込み（readStdin）
+  oauth-callback.ts — OAuth コールバックサーバー（startCallbackServer）
 ```
 
 新しいコマンドを追加する手順:
@@ -397,6 +404,10 @@ packages/cli/src/utils/
   url.test.ts
   prompt.ts
   prompt.test.ts
+  output.ts
+  output.test.ts
+  stdin.ts
+  stdin.test.ts
 ```
 
 ### テストの書き方
@@ -448,10 +459,23 @@ describe("addSpace", () => {
 - テストファイル名: `{source}.test.ts`
 - 副作用（ファイル I/O、環境変数）は `vi.mock` でモック化
 
-## PLAN.md の運用
+## plans/ ディレクトリの運用
 
-**PLAN.md はこのプロジェクトの実装計画書。Phase 1〜4 の全 99 コマンドは実装完了済み。**
+**`plans/` ディレクトリにプロジェクトの計画・設計ドキュメントを管理。Phase 1〜4 の全 99 コマンド + `issue delete` は実装完了済み。**
 
-- 新しいコマンドや引数を追加・変更した場合は PLAN.md にも反映する
-- 設計方針の変更があった場合は `plans/` 配下のドキュメントを更新する
-- 未実装バックログから着手する場合は PLAN.md の該当行を移動する
+### ドキュメント構成
+
+- `plans/project-status.md` — プロジェクトの実装完了状況
+- `plans/command-specifications.md` — 全コマンドの引数・オプション・API マッピング詳細
+- `plans/command-overview.md` — コマンドツリーと設計方針
+- `plans/gh-backlog-mapping.md` — gh CLI → backlog CLI のマッピング
+- `plans/backlog-api-reference.md` — Backlog API エンドポイントリファレンス
+- `plans/agent-skills.md` — Agent Skills の設計構想
+- `plans/unimplemented-commands.md` — 未実装コマンドの検討記録
+
+### 更新ルール
+
+- 新しいコマンドや引数を追加・変更した場合は `plans/command-specifications.md` と `plans/command-overview.md` を更新する
+- 設計方針の変更があった場合は該当する `plans/` 配下のドキュメントを更新する
+- 未実装バックログから着手する場合は `plans/unimplemented-commands.md` を更新する
+- プロジェクトの完了状況が変わった場合は `plans/project-status.md` を更新する
