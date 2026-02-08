@@ -9,7 +9,9 @@
 		"clean": "rm -rf src/generated"
 	},
 	"dependencies": {
-		"@repo/api-spec": "workspace:*"
+		"@repo/api-spec": "workspace:*",
+		"ofetch": "^1.5.1",
+		"zod": "^4.3.6"
 	},
 	"devDependencies": {
 		"@hey-api/openapi-ts": "0.92.3",
