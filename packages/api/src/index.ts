@@ -42,4 +42,4 @@ export type {
 	BacklogWikiHistory,
 	BacklogWikiTag,
 } from "#types.ts";
-export { PR_STATUS } from "#types.ts";
+export { DEFAULT_PRIORITY_ID, PR_STATUS, PRIORITY, RESOLUTION } from "#types.ts";

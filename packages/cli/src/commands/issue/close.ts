@@ -26,23 +26,19 @@ export default defineCommand({
 			type: "string",
 			alias: "r",
 			description: "Resolution name",
-			default: "完了",
 		},
 	},
 	async run({ args }) {
 		const { client } = await getClient();
 		const projectKey = extractProjectKey(args.issueKey);
 
-		const [statusId, resolutionId] = await Promise.all([
-			resolveClosedStatusId(client, projectKey),
-			resolveResolutionId(client, args.resolution),
-		]);
+		const statusId = await resolveClosedStatusId(client, projectKey);
 
-		const body: IssuesUpdateData["body"] = {
-			statusId,
-			resolutionId,
-		};
+		const body: IssuesUpdateData["body"] = { statusId };
 
+		if (args.resolution) {
+			body.resolutionId = await resolveResolutionId(client, args.resolution);
+		}
 		if (args.comment) {
 			body.comment = args.comment;
 		}

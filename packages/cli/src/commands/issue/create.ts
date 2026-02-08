@@ -1,4 +1,3 @@
-import type { BacklogIssue } from "@repo/api";
 import type { IssuesCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
@@ -6,6 +5,7 @@ import promptRequired from "#utils/prompt.ts";
 import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import readStdin from "#utils/stdin.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
+import { DEFAULT_PRIORITY_ID, type BacklogIssue } from "@repo/api";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -65,7 +65,6 @@ export default defineCommand({
 		const projectKey = await promptRequired("Project key:", args.project || process.env.BACKLOG_PROJECT);
 		const title = await promptRequired("Issue title:", args.title);
 		const typeName = await promptRequired("Issue type:", args.type);
-		const priorityName = await promptRequired("Priority:", args.priority);
 
 		// Resolve description from stdin if "-"
 		let description = args.description;
@@ -79,7 +78,7 @@ export default defineCommand({
 		const [projectId, issueTypeId, priorityId] = await Promise.all([
 			resolveProjectId(client, projectKey),
 			resolveIssueTypeId(client, projectKey, typeName),
-			resolvePriorityId(client, priorityName),
+			args.priority ? resolvePriorityId(client, args.priority) : Promise.resolve(DEFAULT_PRIORITY_ID),
 		]);
 
 		const body: IssuesCreateData["body"] = {
