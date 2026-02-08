@@ -7,13 +7,13 @@ Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。
 
 ## 設定の表示
 
-すべての設定を表示:
+すべての設定を表示するには、次のコマンドを実行します。
 
 ```bash
 backlog config list
 ```
 
-特定の値を取得:
+特定の値を取得するには、次のコマンドを実行します。
 
 ```bash
 backlog config get default_space

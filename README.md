@@ -91,7 +91,7 @@ backlog api /api/v2/space
 
 ## AI エージェント連携
 
-AI コーディングエージェント（Claude Code、Cursor、Codex など）から backlog-cli を使う場合、[Agent Skill](https://github.com/vercel-labs/skills) をインストールすると、エージェントが Backlog の操作方法を自動的に理解します。
+backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) に対応しています。インストールすると、AI コーディングエージェントが Backlog の操作方法を自動的に理解します。
 
 ```bash
 npx skills add simochee/backlog-cli

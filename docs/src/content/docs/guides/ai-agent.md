@@ -9,7 +9,7 @@ backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) を同梱�
 
 ## 対応エージェント
 
-[skills CLI](https://www.npmjs.com/package/skills) は以下を含む 35 以上のエージェントに対応しています:
+[skills CLI](https://www.npmjs.com/package/skills) は 35 以上のエージェントに対応しています。主な対応エージェントは次のとおりです。
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 - [Cursor](https://cursor.sh/)
@@ -25,7 +25,7 @@ backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) を同梱�
 npx skills add simochee/backlog-cli
 ```
 
-インタラクティブにインストール先のエージェントを選択できます。特定のエージェントを指定する場合:
+インタラクティブにインストール先のエージェントを選択できます。特定のエージェントも指定できます。
 
 ```bash
 # Claude Code にインストール
@@ -35,7 +35,7 @@ npx skills add simochee/backlog-cli -a claude-code -y
 npx skills add simochee/backlog-cli -a cursor -y
 ```
 
-グローバルにインストール（全プロジェクトで利用）:
+全プロジェクトで利用する場合は、グローバルにインストールします。
 
 ```bash
 npx skills add simochee/backlog-cli -g
@@ -55,7 +55,7 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 
 ## スキルの内容
 
-インストールされるスキルには以下が含まれます:
+インストールされるスキルの内容は次のとおりです。
 
 | ファイル | 内容 |
 |---------|------|
@@ -65,7 +65,7 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 
 ## 使い方の例
 
-スキルのインストール後、エージェントに自然言語で Backlog 操作を指示できます:
+スキルのインストール後、エージェントに自然言語で Backlog 操作を指示できます。
 
 - 「PROJ-123 の詳細を見せて」
 - 「自分に割り当てられた未完了の課題を一覧して」
@@ -73,11 +73,11 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 - 「PROJ-789 を処理中にしてコメントを追加して」
 - 「プロジェクト MYAPP の課題種別一覧を確認して」
 
-エージェントはスキルの情報をもとに、適切な `backlog` コマンドを組み立てて実行します。
+エージェントはスキルの情報をもとに、対応する `backlog` コマンドを組み立てて実行します。
 
 ## 前提条件
 
-エージェントが backlog-cli を利用するには、事前に以下が必要です:
+エージェントが backlog-cli を利用するには、事前に次の準備が必要です。
 
 1. `@simochee/backlog-cli` がインストール済み（`npm install -g @simochee/backlog-cli`）
 2. `backlog auth login` で認証済み
