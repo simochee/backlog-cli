@@ -3,7 +3,9 @@ title: 設定
 description: Backlog CLI の設定管理
 ---
 
-Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。
+Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。設定ファイルの読み書きには [rc9](https://github.com/unjs/rc9) を使用しています。
+
+環境変数 `XDG_CONFIG_HOME` が設定されている場合、設定ファイルの場所は `$XDG_CONFIG_HOME/.backlogrc` になります。
 
 ## 設定の表示
 

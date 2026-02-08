@@ -100,7 +100,7 @@ backlog issue list --project YOUR_PROJECT
 
 ## 認証情報の保存場所
 
-認証情報は `~/.backlogrc` ファイルに保存されます。
+認証情報は `~/.backlogrc` ファイルに保存されます。設定ファイルの管理には [rc9](https://github.com/unjs/rc9) を使用しており、環境変数 `XDG_CONFIG_HOME` が設定されている場合は `$XDG_CONFIG_HOME/.backlogrc` に保存されます。
 
 ## ログアウト
 
