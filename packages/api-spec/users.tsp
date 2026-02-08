@@ -25,15 +25,15 @@ model User {
 @route("/users")
 @tag("Users")
 interface Users {
-  /** Get list of users in the space. */
+  @summary("Get list of users in the space")
   @get op list(): User[] | BacklogErrorResponse;
 
-  /** Get user information. */
+  @summary("Get user information")
   @get
   @route("/{userId}")
   op get(@path userId: int64): User | BacklogErrorResponse;
 
-  /** Add a new user to the space. */
+  @summary("Add a new user to the space")
   @post op create(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {
@@ -48,7 +48,7 @@ interface Users {
     @body user: User;
   } | BacklogErrorResponse;
 
-  /** Update user information. */
+  @summary("Update user information")
   @patch(#{implicitOptionality: false})
   @route("/{userId}")
   op update(
@@ -62,17 +62,17 @@ interface Users {
     },
   ): User | BacklogErrorResponse;
 
-  /** Delete a user from the space. */
+  @summary("Delete a user from the space")
   @delete
   @route("/{userId}")
   op delete(@path userId: int64): User | BacklogErrorResponse;
 
-  /** Get own user information. */
+  @summary("Get own user information")
   @get
   @route("/myself")
   op getMyself(): User | BacklogErrorResponse;
 
-  /** Get user icon image. */
+  @summary("Get user icon image")
   @get
   @route("/{userId}/icon")
   op getIcon(@path userId: int64): {
@@ -80,7 +80,7 @@ interface Users {
     @body image: bytes;
   } | BacklogErrorResponse;
 
-  /** Get user's recent activities. */
+  @summary("Get user's recent activities")
   @get
   @route("/{userId}/activities")
   op getActivities(
@@ -88,7 +88,7 @@ interface Users {
     ...ActivityPaginationQuery,
   ): Activity[] | BacklogErrorResponse;
 
-  /** Get list of stars the user received. */
+  @summary("Get list of stars the user received")
   @get
   @route("/{userId}/stars")
   op getStars(
@@ -98,7 +98,7 @@ interface Users {
     @query maxId?: int64,
   ): Star[] | BacklogErrorResponse;
 
-  /** Get count of stars the user received. */
+  @summary("Get count of stars the user received")
   @get
   @route("/{userId}/stars/count")
   op getStarsCount(

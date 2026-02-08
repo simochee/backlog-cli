@@ -45,25 +45,25 @@ model WikiHistory {
 @route("/wikis")
 @tag("Wikis")
 interface Wikis {
-  /** Get list of wiki pages. */
+  @summary("Get list of wiki pages")
   @get op list(
     @query projectIdOrKey?: string,
     @query keyword?: string,
   ): Wiki[] | BacklogErrorResponse;
 
-  /** Get count of wiki pages. */
+  @summary("Get count of wiki pages")
   @get
   @route("/count")
   op count(@query projectIdOrKey?: string): {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Get list of wiki tags. */
+  @summary("Get list of wiki tags")
   @get
   @route("/tags")
   op getTags(@query projectIdOrKey?: string): WikiTag[] | BacklogErrorResponse;
 
-  /** Create a new wiki page. */
+  @summary("Create a new wiki page")
   @post op create(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {
@@ -77,12 +77,12 @@ interface Wikis {
     @body wiki: Wiki;
   } | BacklogErrorResponse;
 
-  /** Get wiki page information. */
+  @summary("Get wiki page information")
   @get
   @route("/{wikiId}")
   op get(@path wikiId: int64): Wiki | BacklogErrorResponse;
 
-  /** Update a wiki page. */
+  @summary("Update a wiki page")
   @patch(#{implicitOptionality: false})
   @route("/{wikiId}")
   op update(
@@ -95,7 +95,7 @@ interface Wikis {
     },
   ): Wiki | BacklogErrorResponse;
 
-  /** Delete a wiki page. */
+  @summary("Delete a wiki page")
   @delete
   @route("/{wikiId}")
   op delete(
@@ -103,7 +103,7 @@ interface Wikis {
     @query mailNotify?: boolean,
   ): Wiki | BacklogErrorResponse;
 
-  /** Get wiki page update history. */
+  @summary("Get wiki page update history")
   @get
   @route("/{wikiId}/history")
   op getHistory(
@@ -113,7 +113,7 @@ interface Wikis {
     @query maxId?: int64,
   ): WikiHistory[] | BacklogErrorResponse;
 
-  /** Get list of stars on a wiki page. */
+  @summary("Get list of stars on a wiki page")
   @get
   @route("/{wikiId}/stars")
   op getStars(@path wikiId: int64): Star[] | BacklogErrorResponse;
