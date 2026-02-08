@@ -5,10 +5,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release-please:
     name: Release Please
@@ -16,12 +12,20 @@ jobs:
     outputs:
       release_created: ${{ steps.release.outputs['packages/cli--release_created'] }}
     steps:
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Run Release Please
         uses: googleapis/release-please-action@v4
         id: release
         with:
           manifest-file: .release-please-manifest.json
           config-file: release-please-config.json
+          token: ${{ steps.app-token.outputs.token }}
 
   publish:
     name: Publish to npm
