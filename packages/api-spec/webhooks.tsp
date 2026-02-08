@@ -27,10 +27,10 @@ model Webhook {
 @route("/projects/{projectIdOrKey}/webhooks")
 @tag("Webhooks")
 interface Webhooks {
-  /** Get list of webhooks in a project. */
+  @summary("Get list of webhooks in a project")
   @get op list(@path projectIdOrKey: string): Webhook[] | BacklogErrorResponse;
 
-  /** Add a webhook to the project. */
+  @summary("Add a webhook to the project")
   @post op create(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -47,7 +47,7 @@ interface Webhooks {
     @body webhook: Webhook;
   } | BacklogErrorResponse;
 
-  /** Get webhook information. */
+  @summary("Get webhook information")
   @get
   @route("/{webhookId}")
   op get(
@@ -55,7 +55,7 @@ interface Webhooks {
     @path webhookId: int64,
   ): Webhook | BacklogErrorResponse;
 
-  /** Update a webhook. */
+  @summary("Update a webhook")
   @patch(#{implicitOptionality: false})
   @route("/{webhookId}")
   op update(
@@ -72,7 +72,7 @@ interface Webhooks {
     },
   ): Webhook | BacklogErrorResponse;
 
-  /** Delete a webhook. */
+  @summary("Delete a webhook")
   @delete
   @route("/{webhookId}")
   op delete(

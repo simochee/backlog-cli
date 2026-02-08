@@ -9,10 +9,10 @@ namespace Backlog;
 @route("/wikis/{wikiId}/attachments")
 @tag("Wiki Attachments")
 interface WikiAttachments {
-  /** Get list of wiki page attachments. */
+  @summary("Get list of wiki page attachments")
   @get op list(@path wikiId: int64): AttachmentInfo[] | BacklogErrorResponse;
 
-  /** Attach files to a wiki page. */
+  @summary("Attach files to a wiki page")
   @post op attach(
     @path wikiId: int64,
     @header contentType: "application/x-www-form-urlencoded",
@@ -22,7 +22,7 @@ interface WikiAttachments {
     },
   ): AttachmentInfo[] | BacklogErrorResponse;
 
-  /** Download a wiki page attachment. */
+  @summary("Download a wiki page attachment")
   @get
   @route("/{attachmentId}")
   op download(
@@ -33,7 +33,7 @@ interface WikiAttachments {
     @body file: bytes;
   } | BacklogErrorResponse;
 
-  /** Delete a wiki page attachment. */
+  @summary("Delete a wiki page attachment")
   @delete
   @route("/{attachmentId}")
   op delete(
@@ -49,10 +49,10 @@ interface WikiAttachments {
 @route("/wikis/{wikiId}/sharedFiles")
 @tag("Wiki Shared Files")
 interface WikiSharedFiles {
-  /** Get list of shared files linked to a wiki page. */
+  @summary("Get list of shared files linked to a wiki page")
   @get op list(@path wikiId: int64): SharedFile[] | BacklogErrorResponse;
 
-  /** Link shared files to a wiki page. */
+  @summary("Link shared files to a wiki page")
   @post op link(
     @path wikiId: int64,
     @header contentType: "application/x-www-form-urlencoded",
@@ -62,7 +62,7 @@ interface WikiSharedFiles {
     },
   ): SharedFile[] | BacklogErrorResponse;
 
-  /** Unlink a shared file from a wiki page. */
+  @summary("Unlink a shared file from a wiki page")
   @delete
   @route("/{sharedFileId}")
   op unlink(

@@ -9,7 +9,8 @@ namespace Backlog;
 @route("/stars")
 @tag("Stars")
 interface Stars {
-  /** Add a star to an issue, comment, wiki page, or pull request. */
+  @summary("Add a star")
+  @doc("Add a star to an issue, comment, wiki page, or pull request.")
   @post op add(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {

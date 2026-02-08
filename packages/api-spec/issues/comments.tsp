@@ -34,7 +34,7 @@ model Comment {
 @route("/issues/{issueIdOrKey}/comments")
 @tag("Issue Comments")
 interface IssueComments {
-  /** Get list of comments on an issue. */
+  @summary("Get list of comments on an issue")
   @get op list(
     @path issueIdOrKey: string,
     ...PaginationQuery,
@@ -42,7 +42,7 @@ interface IssueComments {
     @query maxId?: int64,
   ): Comment[] | BacklogErrorResponse;
 
-  /** Add a comment to an issue. */
+  @summary("Add a comment to an issue")
   @post op create(
     @path issueIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -58,14 +58,14 @@ interface IssueComments {
     @body comment: Comment;
   } | BacklogErrorResponse;
 
-  /** Get count of comments on an issue. */
+  @summary("Get count of comments on an issue")
   @get
   @route("/count")
   op count(@path issueIdOrKey: string): {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Get a specific comment. */
+  @summary("Get a specific comment")
   @get
   @route("/{commentId}")
   op get(
@@ -73,7 +73,7 @@ interface IssueComments {
     @path commentId: int64,
   ): Comment | BacklogErrorResponse;
 
-  /** Update a comment. */
+  @summary("Update a comment")
   @patch(#{implicitOptionality: false})
   @route("/{commentId}")
   op update(
@@ -85,7 +85,7 @@ interface IssueComments {
     },
   ): Comment | BacklogErrorResponse;
 
-  /** Delete a comment. */
+  @summary("Delete a comment")
   @delete
   @route("/{commentId}")
   op delete(
@@ -93,7 +93,7 @@ interface IssueComments {
     @path commentId: int64,
   ): Comment | BacklogErrorResponse;
 
-  /** Get list of notifications for a comment. */
+  @summary("Get list of notifications for a comment")
   @get
   @route("/{commentId}/notifications")
   op getNotifications(
@@ -101,7 +101,7 @@ interface IssueComments {
     @path commentId: int64,
   ): CommentNotification[] | BacklogErrorResponse;
 
-  /** Add notifications to a comment. */
+  @summary("Add notifications to a comment")
   @post
   @route("/{commentId}/notifications")
   op addNotification(

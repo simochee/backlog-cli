@@ -89,12 +89,12 @@ model RecentlyViewedWiki {
 
 @tag("Priorities & Resolutions")
 interface PrioritiesAndResolutions {
-  /** Get list of priorities. */
+  @summary("Get list of priorities")
   @get
   @route("/priorities")
   op listPriorities(): Priority[] | BacklogErrorResponse;
 
-  /** Get list of resolutions. */
+  @summary("Get list of resolutions")
   @get
   @route("/resolutions")
   op listResolutions(): Resolution[] | BacklogErrorResponse;
@@ -107,21 +107,21 @@ interface PrioritiesAndResolutions {
 @route("/users/myself")
 @tag("Recently Viewed")
 interface RecentlyViewed {
-  /** Get recently viewed issues. */
+  @summary("Get recently viewed issues")
   @get
   @route("/recentlyViewedIssues")
   op listIssues(
     ...PaginationQuery,
   ): RecentlyViewedIssue[] | BacklogErrorResponse;
 
-  /** Get recently viewed projects. */
+  @summary("Get recently viewed projects")
   @get
   @route("/recentlyViewedProjects")
   op listProjects(
     ...PaginationQuery,
   ): RecentlyViewedProject[] | BacklogErrorResponse;
 
-  /** Get recently viewed wiki pages. */
+  @summary("Get recently viewed wiki pages")
   @get
   @route("/recentlyViewedWikis")
   op listWikis(
@@ -135,12 +135,12 @@ interface RecentlyViewed {
 
 @tag("Licence & Rate Limit")
 interface LicenceAndRateLimit {
-  /** Get space licence information. */
+  @summary("Get space licence information")
   @get
   @route("/space/licence")
   op getLicence(): Licence | BacklogErrorResponse;
 
-  /** Get rate limit information. */
+  @summary("Get rate limit information")
   @get
   @route("/rateLimit")
   op getRateLimit(): RateLimit | BacklogErrorResponse;

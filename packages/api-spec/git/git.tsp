@@ -87,10 +87,10 @@ enum PullRequestStatusType {
 @route("/projects/{projectIdOrKey}/git/repositories")
 @tag("Git Repositories")
 interface GitRepositories {
-  /** Get list of Git repositories in a project. */
+  @summary("Get list of Git repositories in a project")
   @get op list(@path projectIdOrKey: string): GitRepository[] | BacklogErrorResponse;
 
-  /** Get a Git repository. */
+  @summary("Get a Git repository")
   @get
   @route("/{repoIdOrName}")
   op get(
@@ -106,7 +106,7 @@ interface GitRepositories {
 @route("/projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests")
 @tag("Pull Requests")
 interface PullRequests {
-  /** Get list of pull requests. */
+  @summary("Get list of pull requests")
   @get op list(
     @path projectIdOrKey: string,
     @path repoIdOrName: string,
@@ -121,7 +121,7 @@ interface PullRequests {
     count?: int32 = 20,
   ): PullRequest[] | BacklogErrorResponse;
 
-  /** Get count of pull requests. */
+  @summary("Get count of pull requests")
   @get
   @route("/count")
   op count(
@@ -135,7 +135,7 @@ interface PullRequests {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Create a pull request. */
+  @summary("Create a pull request")
   @post op create(
     @path projectIdOrKey: string,
     @path repoIdOrName: string,
@@ -157,7 +157,7 @@ interface PullRequests {
     @body pullRequest: PullRequest;
   } | BacklogErrorResponse;
 
-  /** Get a pull request. */
+  @summary("Get a pull request")
   @get
   @route("/{number}")
   op get(
@@ -166,7 +166,7 @@ interface PullRequests {
     @path number: int64,
   ): PullRequest | BacklogErrorResponse;
 
-  /** Update a pull request. */
+  @summary("Update a pull request")
   @patch(#{implicitOptionality: false})
   @route("/{number}")
   op update(
@@ -193,7 +193,7 @@ interface PullRequests {
 @route("/projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/comments")
 @tag("Pull Request Comments")
 interface PullRequestComments {
-  /** Get list of comments on a pull request. */
+  @summary("Get list of comments on a pull request")
   @get op list(
     @path projectIdOrKey: string,
     @path repoIdOrName: string,
@@ -203,7 +203,7 @@ interface PullRequestComments {
     @query maxId?: int64,
   ): PullRequestComment[] | BacklogErrorResponse;
 
-  /** Add a comment to a pull request. */
+  @summary("Add a comment to a pull request")
   @post op create(
     @path projectIdOrKey: string,
     @path repoIdOrName: string,
@@ -221,7 +221,7 @@ interface PullRequestComments {
     @body comment: PullRequestComment;
   } | BacklogErrorResponse;
 
-  /** Get count of comments on a pull request. */
+  @summary("Get count of comments on a pull request")
   @get
   @route("/count")
   op count(
@@ -232,7 +232,7 @@ interface PullRequestComments {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Update a pull request comment. */
+  @summary("Update a pull request comment")
   @patch(#{implicitOptionality: false})
   @route("/{commentId}")
   op update(
@@ -254,14 +254,14 @@ interface PullRequestComments {
 @route("/projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/attachments")
 @tag("Pull Request Attachments")
 interface PullRequestAttachments {
-  /** Get list of attachments on a pull request. */
+  @summary("Get list of attachments on a pull request")
   @get op list(
     @path projectIdOrKey: string,
     @path repoIdOrName: string,
     @path number: int64,
   ): AttachmentInfo[] | BacklogErrorResponse;
 
-  /** Download a pull request attachment. */
+  @summary("Download a pull request attachment")
   @get
   @route("/{attachmentId}")
   op download(
@@ -274,7 +274,7 @@ interface PullRequestAttachments {
     @body file: bytes;
   } | BacklogErrorResponse;
 
-  /** Delete a pull request attachment. */
+  @summary("Delete a pull request attachment")
   @delete
   @route("/{attachmentId}")
   op delete(

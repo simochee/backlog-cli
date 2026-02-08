@@ -99,15 +99,15 @@ model Activity {
 @route("/space")
 @tag("Space")
 interface Spaces {
-  /** Get space information. */
+  @summary("Get space information")
   @get op getSpace(): Space | BacklogErrorResponse;
 
-  /** Get recent space activities. */
+  @summary("Get recent space activities")
   @get
   @route("/activities")
   op getActivities(...ActivityPaginationQuery): Activity[] | BacklogErrorResponse;
 
-  /** Get space logo image. */
+  @summary("Get space logo image")
   @get
   @route("/logo")
   op getLogo(): {
@@ -115,12 +115,12 @@ interface Spaces {
     @body image: bytes;
   } | BacklogErrorResponse;
 
-  /** Get space notification. */
+  @summary("Get space notification")
   @get
   @route("/notification")
   op getNotification(): SpaceNotification | BacklogErrorResponse;
 
-  /** Update space notification. */
+  @summary("Update space notification")
   @put
   @route("/notification")
   op updateNotification(
@@ -130,12 +130,12 @@ interface Spaces {
     },
   ): SpaceNotification | BacklogErrorResponse;
 
-  /** Get disk usage information. */
+  @summary("Get disk usage information")
   @get
   @route("/diskUsage")
   op getDiskUsage(): DiskUsage | BacklogErrorResponse;
 
-  /** Upload an attachment file for later use in issue or wiki creation. */
+  @summary("Upload an attachment file")
   @post
   @route("/attachment")
   op postAttachment(
