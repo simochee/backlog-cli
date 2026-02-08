@@ -1,0 +1,153 @@
+---
+title: Backlog CLI
+description: Backlog をコマンドラインから操作する CLI ツール
+template: splash
+hero:
+  title: Backlog をコマンドラインから。
+  tagline: 課題管理、プルリクエスト、Wiki — Backlog のあらゆる操作をターミナルから実行できる CLI ツール。gh CLI ライクなインターフェースで、日常のワークフローをもっと速く。
+  actions:
+    - text: はじめる
+      link: /backlog-cli/getting-started/installation/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub
+      link: https://github.com/simochee/backlog-cli
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+## インストール
+
+<Tabs>
+  <TabItem label="npm">
+    ```bash
+    npm install -g @simochee/backlog-cli
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```bash
+    yarn global add @simochee/backlog-cli
+    ```
+  </TabItem>
+  <TabItem label="pnpm">
+    ```bash
+    pnpm add -g @simochee/backlog-cli
+    ```
+  </TabItem>
+  <TabItem label="bun">
+    ```bash
+    bun install -g @simochee/backlog-cli
+    ```
+  </TabItem>
+</Tabs>
+
+## できること
+
+<CardGrid>
+  <Card title="課題管理" icon="pencil">
+    課題の一覧表示、作成、編集、ステータス変更をコマンドひとつで。フィルタリングやソートも自在に操作できます。
+  </Card>
+  <Card title="プルリクエスト" icon="approve-check-circle">
+    PR の作成からレビュー、マージまで。ブラウザを開かずにコードレビューのワークフローを完結できます。
+  </Card>
+  <Card title="スクリプタブル" icon="setting">
+    `--json` や `--jq` 出力で他のツールと連携。CI/CD パイプラインやシェルスクリプトに組み込めます。
+  </Card>
+  <Card title="AI エージェント連携" icon="star">
+    Claude Code や Cursor などの AI エージェントから Backlog を直接操作。Agent Skill として簡単に導入できます。
+  </Card>
+</CardGrid>
+
+## コマンドの使用例
+
+### 課題を一覧表示する
+
+```bash
+backlog issue list --project MY_PROJECT
+```
+
+```
+#    種別    優先度  担当者        件名
+123  タスク  中      yamada        API エンドポイントの設計
+124  バグ    高      tanaka        ログインページの表示崩れ
+125  タスク  低      suzuki        README の更新
+```
+
+### 課題を作成する
+
+```bash
+backlog issue create --project MY_PROJECT \
+  --title "新機能: ダークモード対応" \
+  --type タスク \
+  --priority 中 \
+  --assignee yamada
+```
+
+### プルリクエストの状態を確認する
+
+```bash
+backlog pr status --project MY_PROJECT --repo my-app
+```
+
+```
+オープン
+#42  ダークモード対応       feature/dark-mode → main
+#39  パフォーマンス改善     fix/perf → main
+
+マージ済み
+#38  認証フローのリファクタ refactor/auth → main
+```
+
+### ダッシュボードで全体を把握する
+
+```bash
+backlog status
+```
+
+```
+自分の課題 (3件)
+  MY_PROJECT-123  API エンドポイントの設計     処理中
+  MY_PROJECT-130  テストカバレッジの改善       未対応
+  MY_PROJECT-142  ドキュメントの整備           未対応
+
+未読通知 (2件)
+  MY_PROJECT-124  tanaka がコメントしました
+  MY_PROJECT-138  PR がマージされました
+```
+
+## クイックスタート
+
+<Steps>
+
+1. **インストール**
+
+   ```bash
+   npm install -g @simochee/backlog-cli
+   ```
+
+2. **認証**
+
+   ```bash
+   backlog auth login
+   ```
+
+   対話形式でホスト名と認証方式（API キーまたは OAuth）を設定します。
+
+3. **使ってみる**
+
+   ```bash
+   backlog issue list --project YOUR_PROJECT
+   ```
+
+</Steps>
+
+## さらに詳しく
+
+<CardGrid>
+  <LinkCard title="インストール" href="/backlog-cli/getting-started/installation/" description="パッケージマネージャーごとのインストール手順" />
+  <LinkCard title="クイックスタート" href="/backlog-cli/getting-started/quickstart/" description="認証の設定と基本的なコマンドの使い方" />
+  <LinkCard title="コマンドリファレンス" href="/backlog-cli/commands/auth/" description="全 99 コマンドの詳細なリファレンス" />
+  <LinkCard title="AI エージェント連携" href="/backlog-cli/guides/ai-agent/" description="Claude Code や Cursor から Backlog を操作する" />
+</CardGrid>
