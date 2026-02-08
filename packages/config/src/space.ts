@@ -1,5 +1,6 @@
-import { loadConfig, writeConfig } from "#config.ts";
 import type { RcSpace } from "#types.ts";
+
+import { loadConfig, writeConfig } from "#config.ts";
 
 /**
  * Adds a new Backlog space to the configuration.
@@ -12,9 +13,7 @@ export const addSpace = async (space: typeof RcSpace.infer): Promise<void> => {
 	const exists = config.spaces.some((s) => s.host === space.host);
 
 	if (exists) {
-		throw new Error(
-			`Space with host "${space.host}" already exists in configuration.`,
-		);
+		throw new Error(`Space with host "${space.host}" already exists in configuration.`);
 	}
 
 	await writeConfig({
@@ -38,8 +37,7 @@ export const removeSpace = async (host: string): Promise<void> => {
 	}
 
 	const spaces = config.spaces.filter((space) => space.host !== host);
-	const defaultSpace =
-		config.defaultSpace === host ? undefined : config.defaultSpace;
+	const defaultSpace = config.defaultSpace === host ? undefined : config.defaultSpace;
 
 	await writeConfig({ ...config, spaces, defaultSpace });
 };
@@ -51,10 +49,7 @@ export const removeSpace = async (host: string): Promise<void> => {
  * @param auth - The new auth configuration.
  * @throws {Error} If no space with the specified host exists.
  */
-export const updateSpaceAuth = async (
-	host: string,
-	auth: typeof RcSpace.infer.auth,
-): Promise<void> => {
+export const updateSpaceAuth = async (host: string, auth: typeof RcSpace.infer.auth): Promise<void> => {
 	const config = await loadConfig();
 	const index = config.spaces.findIndex((space) => space.host === host);
 	const space = config.spaces[index];
@@ -78,11 +73,9 @@ export const updateSpaceAuth = async (
  * @param explicitHost - Host specified via --space flag.
  * @returns The resolved space configuration, or null if none found.
  */
-export const resolveSpace = async (
-	explicitHost?: string,
-): Promise<typeof RcSpace.infer | null> => {
+export const resolveSpace = async (explicitHost?: string): Promise<typeof RcSpace.infer | null> => {
 	const config = await loadConfig();
-	const host = explicitHost ?? process.env.BACKLOG_SPACE ?? config.defaultSpace;
+	const host = explicitHost ?? process.env["BACKLOG_SPACE"] ?? config.defaultSpace;
 
 	if (!host) return null;
 

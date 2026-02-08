@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
 import type { BacklogClient } from "#utils/client.ts";
+
 import {
 	extractProjectKey,
 	resolveByName,
@@ -13,6 +13,7 @@ import {
 	resolveStatusId,
 	resolveUserId,
 } from "#utils/resolve.ts";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 function createMockClient(responses: Record<string, unknown>): BacklogClient {
 	return ((url: string) => {
@@ -50,9 +51,7 @@ describe("resolveProjectArg", () => {
 
 	it("引数も環境変数も未指定の場合は process.exit(1) を呼ぶ", () => {
 		delete process.env.BACKLOG_PROJECT;
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 		resolveProjectArg(undefined);
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();
@@ -73,13 +72,7 @@ describe("resolveByName", () => {
 			],
 		});
 
-		const id = await resolveByName<{ id: number; name: string }>(
-			client,
-			"/items",
-			"name",
-			"Beta",
-			"Item",
-		);
+		const id = await resolveByName<{ id: number; name: string }>(client, "/items", "name", "Beta", "Item");
 		expect(id).toBe(2);
 	});
 
@@ -92,28 +85,16 @@ describe("resolveByName", () => {
 		});
 
 		await expect(
-			resolveByName<{ id: number; name: string }>(
-				client,
-				"/items",
-				"name",
-				"Gamma",
-				"Item",
-			),
+			resolveByName<{ id: number; name: string }>(client, "/items", "name", "Gamma", "Item"),
 		).rejects.toThrow('Item "Gamma" not found. Available: Alpha, Beta');
 	});
 
 	it("空リストの場合は空の Available を含むエラーを投げる", async () => {
 		const client = createMockClient({ "/items": [] });
 
-		await expect(
-			resolveByName<{ id: number; name: string }>(
-				client,
-				"/items",
-				"name",
-				"X",
-				"Item",
-			),
-		).rejects.toThrow('Item "X" not found. Available: ');
+		await expect(resolveByName<{ id: number; name: string }>(client, "/items", "name", "X", "Item")).rejects.toThrow(
+			'Item "X" not found. Available: ',
+		);
 	});
 });
 
@@ -131,21 +112,15 @@ describe("extractProjectKey", () => {
 	});
 
 	it("throws for invalid issue key format", () => {
-		expect(() => extractProjectKey("invalid")).toThrow(
-			'Invalid issue key format: "invalid"',
-		);
+		expect(() => extractProjectKey("invalid")).toThrow('Invalid issue key format: "invalid"');
 	});
 
 	it("throws for lowercase project key", () => {
-		expect(() => extractProjectKey("project-123")).toThrow(
-			'Invalid issue key format: "project-123"',
-		);
+		expect(() => extractProjectKey("project-123")).toThrow('Invalid issue key format: "project-123"');
 	});
 
 	it("throws for missing number part", () => {
-		expect(() => extractProjectKey("PROJECT-")).toThrow(
-			"Invalid issue key format",
-		);
+		expect(() => extractProjectKey("PROJECT-")).toThrow("Invalid issue key format");
 	});
 });
 
@@ -194,9 +169,7 @@ describe("resolveUserId", () => {
 	it("throws when user not found", async () => {
 		const client = createMockClient({ "/users": [] });
 
-		await expect(resolveUserId(client, "unknown")).rejects.toThrow(
-			'User "unknown" not found',
-		);
+		await expect(resolveUserId(client, "unknown")).rejects.toThrow('User "unknown" not found');
 	});
 });
 
@@ -269,9 +242,7 @@ describe("resolveClosedStatusId", () => {
 			"/projects/PROJ/statuses": [],
 		});
 
-		await expect(resolveClosedStatusId(client, "PROJ")).rejects.toThrow(
-			"No statuses found for project PROJ",
-		);
+		await expect(resolveClosedStatusId(client, "PROJ")).rejects.toThrow("No statuses found for project PROJ");
 	});
 });
 
@@ -303,9 +274,7 @@ describe("resolveOpenStatusId", () => {
 			"/projects/PROJ/statuses": [],
 		});
 
-		await expect(resolveOpenStatusId(client, "PROJ")).rejects.toThrow(
-			"No statuses found for project PROJ",
-		);
+		await expect(resolveOpenStatusId(client, "PROJ")).rejects.toThrow("No statuses found for project PROJ");
 	});
 });
 
