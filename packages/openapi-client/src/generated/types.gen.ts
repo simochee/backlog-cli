@@ -333,7 +333,7 @@ export type Licence = {
 	nulabAccount: boolean;
 	parentChildIssue: boolean;
 	postIssueByMail: boolean;
-	projectGroup: boolean | null;
+	projectGroup?: boolean;
 	projectLimit: number;
 	pullRequestAttachmentLimitPerFile: number;
 	pullRequestAttachmentNumLimit: number;

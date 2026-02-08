@@ -328,7 +328,7 @@ export const zLicence = z.object({
 	nulabAccount: z.boolean(),
 	parentChildIssue: z.boolean(),
 	postIssueByMail: z.boolean(),
-	projectGroup: z.union([z.boolean(), z.null()]),
+	projectGroup: z.optional(z.boolean()),
 	projectLimit: z
 		.int()
 		.min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })

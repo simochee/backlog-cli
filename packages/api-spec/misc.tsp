@@ -49,7 +49,7 @@ model Licence {
   nulabAccount: boolean;
   parentChildIssue: boolean;
   postIssueByMail: boolean;
-  projectGroup: boolean | null;
+  projectGroup?: boolean;
   projectLimit: int32;
   pullRequestAttachmentLimitPerFile: int64;
   pullRequestAttachmentNumLimit: int32;
