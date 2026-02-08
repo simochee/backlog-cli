@@ -37,7 +37,7 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 src/commands/
   auth/           — 認証管理（login, logout, status, token, refresh, switch）
   config/         — CLI 設定（get, set, list）
-  issue/          — 課題管理（list, view, create, edit, close, reopen, comment, status）
+  issue/          — 課題管理（list, view, create, edit, close, reopen, delete, comment, status）
   project/        — プロジェクト管理（list, view, create, edit, delete, users, add-user, remove-user, activities）
   pr/             — プルリクエスト管理（list, view, create, edit, close, merge, reopen, comment, comments, status）
   repo/           — Git リポジトリ管理（list, view, clone）
