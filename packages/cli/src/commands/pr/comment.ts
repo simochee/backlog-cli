@@ -3,6 +3,7 @@ import type { BacklogPullRequestComment } from "@repo/api";
 import { getClient } from "#utils/client.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import readStdin from "#utils/stdin.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -43,11 +44,7 @@ export default defineCommand({
 
 		// Read from stdin if "-"
 		if (content === "-") {
-			const chunks: Uint8Array[] = [];
-			for await (const chunk of process.stdin) {
-				chunks.push(chunk);
-			}
-			content = Buffer.concat(chunks).toString("utf8").trim();
+			content = await readStdin();
 		}
 
 		// Prompt for body if not provided

@@ -1,17 +1,10 @@
 import { startCallbackServer } from "#utils/oauth-callback.ts";
+import readStdin from "#utils/stdin.ts";
 import { openUrl } from "#utils/url.ts";
 import { type BacklogUser, createClient, exchangeAuthorizationCode } from "@repo/api";
 import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
-
-const readStdin = async (): Promise<string> => {
-	const chunks: Uint8Array[] = [];
-	for await (const chunk of process.stdin) {
-		chunks.push(chunk);
-	}
-	return Buffer.concat(chunks).toString("utf8").trim();
-};
 
 export default defineCommand({
 	meta: {
