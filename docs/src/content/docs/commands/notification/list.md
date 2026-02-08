@@ -9,6 +9,8 @@ backlog notification list [flags]
 
 通知の一覧を表示します。
 
+対応する Backlog API については「[お知らせ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-notification/)」を参照してください。
+
 ## オプション
 
 `-L`, `--limit <int>` (default 20)

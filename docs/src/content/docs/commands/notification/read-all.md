@@ -9,6 +9,8 @@ backlog notification read-all
 
 すべての未読通知を既読にします。
 
+対応する Backlog API については「[お知らせ数のリセット](https://developer.nulab.com/ja/docs/backlog/api/2/reset-unread-notification-count/)」を参照してください。
+
 ## 使用例
 
 ```bash

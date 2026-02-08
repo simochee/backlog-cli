@@ -7,6 +7,8 @@ description: ステータスを編集する
 backlog status-type edit <id> [flags]
 ```
 
+対応する Backlog API については「[状態情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-status/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

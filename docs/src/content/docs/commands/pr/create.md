@@ -9,6 +9,8 @@ backlog pr create [flags]
 
 新しいプルリクエストを作成します。
 
+対応する Backlog API については「[プルリクエストの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-pull-request/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

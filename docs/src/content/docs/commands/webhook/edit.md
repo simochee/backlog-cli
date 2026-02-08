@@ -7,6 +7,8 @@ description: Webhook を編集する
 backlog webhook edit <id> [flags]
 ```
 
+対応する Backlog API については「[Webhookの更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-webhook/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

@@ -7,6 +7,8 @@ description: ユーザーのアクティビティを表示する
 backlog user activities <user-id> [flags]
 ```
 
+対応する Backlog API については「[ユーザーの最近の活動の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-user-recent-updates/)」を参照してください。
+
 ## 引数
 
 `<user-id> <int>`

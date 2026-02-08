@@ -7,6 +7,8 @@ description: カテゴリを作成する
 backlog category create [flags]
 ```
 
+対応する Backlog API については「[カテゴリーの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-category/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

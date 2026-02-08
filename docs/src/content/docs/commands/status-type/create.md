@@ -7,6 +7,8 @@ description: ステータスを作成する
 backlog status-type create [flags]
 ```
 
+対応する Backlog API については「[状態の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-status/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

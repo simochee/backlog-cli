@@ -9,6 +9,8 @@ backlog project view <project-key> [flags]
 
 プロジェクトの詳細情報を表示します。
 
+対応する Backlog API については「[プロジェクト情報の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-project/)」を参照してください。
+
 ## 引数
 
 `<project-key> <string>`

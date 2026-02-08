@@ -7,6 +7,8 @@ description: Webhook を作成する
 backlog webhook create [flags]
 ```
 
+対応する Backlog API については「[Webhookの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-webhook/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

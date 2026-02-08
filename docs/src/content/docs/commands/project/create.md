@@ -9,6 +9,8 @@ backlog project create [flags]
 
 新しいプロジェクトを作成します。
 
+対応する Backlog API については「[プロジェクトの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-project/)」を参照してください。
+
 ## オプション
 
 `-n`, `--name <string>`

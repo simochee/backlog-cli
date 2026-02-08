@@ -7,6 +7,8 @@ description: カテゴリを削除する
 backlog category delete <id> [flags]
 ```
 
+対応する Backlog API については「[カテゴリーの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-category/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

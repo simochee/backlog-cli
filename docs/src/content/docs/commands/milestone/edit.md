@@ -7,6 +7,8 @@ description: マイルストーンを編集する
 backlog milestone edit <id> [flags]
 ```
 
+対応する Backlog API については「[バージョン(マイルストーン)情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-version-milestone/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`
