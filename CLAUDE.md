@@ -214,8 +214,6 @@ const name = await promptRequired("Project name:", args.name);
 - `bun run lint` でリント
 - `bun run test` でテスト
 - Conventional Commits 形式でコミットメッセージを書く（詳細は後述の「コミットメッセージと release-please」セクションを参照）
-- JSDoc は `.github/instructions/jsdoc.instructions.md` に従う
-- Bun の利用は `.github/instructions/bun.instructions.md` に従う
 
 ### コミットメッセージと release-please
 
