@@ -11,6 +11,8 @@
 
 **Backlog on the command line.**
 
+> **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
+
 ターミナルから離れずに [Backlog](https://backlog.com/) を操作する CLI ツール。
 <br>
 課題、プルリクエスト、Wiki、通知 ── すべてをコマンドラインで。

@@ -4,6 +4,7 @@ import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
+import { spawn } from "node:child_process";
 
 export default defineCommand({
 	meta: {
@@ -34,19 +35,20 @@ export default defineCommand({
 
 		const repo = await client<BacklogRepository>(`/projects/${project}/git/repositories/${args.repoName}`);
 
-		const cloneArgs = ["git", "clone", repo.httpUrl];
+		const cloneArgs = ["clone", repo.httpUrl];
 		if (args.directory) {
 			cloneArgs.push(args.directory);
 		}
 
 		consola.info(`Cloning ${repo.httpUrl}...`);
 
-		const proc = Bun.spawn(cloneArgs, {
-			stdout: "inherit",
-			stderr: "inherit",
+		const proc = spawn("git", cloneArgs, {
+			stdio: "inherit",
 		});
 
-		const exitCode = await proc.exited;
+		const exitCode = await new Promise<number>((resolve) => {
+			proc.on("close", (code) => resolve(code ?? 1));
+		});
 		if (exitCode !== 0) {
 			consola.error(`git clone failed with exit code ${exitCode}`);
 			return process.exit(exitCode);

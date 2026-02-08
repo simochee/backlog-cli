@@ -64,16 +64,14 @@
       "bin": {
         "backlog": "./bin/backlog.mjs",
       },
-      "dependencies": {
+      "devDependencies": {
         "@repo/api": "workspace:*",
         "@repo/config": "workspace:*",
         "@repo/openapi-client": "workspace:*",
-        "citty": "^0.1.6",
-        "consola": "^3.4.2",
-      },
-      "devDependencies": {
         "@repo/test-utils": "workspace:*",
         "@repo/tsconfigs": "workspace:*",
+        "citty": "^0.1.6",
+        "consola": "^3.4.2",
       },
       "peerDependencies": {
         "typescript": "^5",

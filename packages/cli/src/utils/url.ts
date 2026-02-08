@@ -1,11 +1,14 @@
 import consola from "consola";
+import { spawn } from "node:child_process";
 
 /**
  * Opens a URL in the default browser with proper error handling.
  */
 export async function openUrl(url: string): Promise<void> {
-	const proc = Bun.spawn(["open", url]);
-	const exitCode = await proc.exited;
+	const proc = spawn("open", [url], { stdio: "ignore" });
+	const exitCode = await new Promise<number>((resolve) => {
+		proc.on("close", (code) => resolve(code ?? 1));
+	});
 	if (exitCode !== 0) {
 		consola.error(`Failed to open browser (exit code ${exitCode})`);
 		process.exit(exitCode);
