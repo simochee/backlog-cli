@@ -1,0 +1,50 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "import", "vitest"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"pedantic": "warn",
+		"style": "warn"
+	},
+	"rules": {
+		"no-console": "warn",
+		"no-alert": "error",
+		"no-magic-numbers": "off",
+		"no-ternary": "off",
+		"no-continue": "off",
+		"sort-keys": "off",
+		"sort-imports": "off",
+		"id-length": "off",
+		"max-statements": "off",
+		"max-lines-per-function": "off",
+		"max-lines": "off",
+		"max-params": "off",
+		"func-style": "off",
+		"new-cap": "off",
+		"curly": "off",
+		"init-declarations": "off",
+		"prefer-destructuring": "off",
+		"eqeqeq": ["error", "smart"],
+		"typescript/no-explicit-any": "error",
+		"typescript/consistent-type-imports": "error",
+		"unicorn/no-null": "off",
+		"import/no-named-as-default": "off",
+		"import/no-named-export": "off",
+		"import/group-exports": "off",
+		"import/exports-last": "off",
+		"import/max-dependencies": "off",
+		"import/consistent-type-specifier-style": "off",
+		"import/first": "off",
+		"vitest/prefer-describe-function-title": "off"
+	},
+	"ignorePatterns": ["packages/openapi-client/src/generated", "node_modules", "dist", "out", "tsp-output"],
+	"overrides": [
+		{
+			"files": ["**/*.test.ts"],
+			"rules": {
+				"no-console": "off"
+			}
+		}
+	]
+}
