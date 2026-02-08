@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
 
       - name: Install Backlog CLI
         run: npm install -g @simochee/backlog-cli
@@ -52,7 +52,7 @@ jobs:
           BACKLOG_SPACE: ${{ secrets.BACKLOG_SPACE }}
           BACKLOG_API_KEY: ${{ secrets.BACKLOG_API_KEY }}
           BACKLOG_PROJECT: ${{ secrets.BACKLOG_PROJECT }}
-        run: backlog issue close PROJ-123 --resolution 完了
+        run: backlog issue close PROJ-123
 ```
 
 ## GitLab CI/CD
@@ -60,14 +60,14 @@ jobs:
 ```yaml
 # .gitlab-ci.yml
 notify:
-  image: node:22
+  image: node:24
   variables:
     BACKLOG_SPACE: ${BACKLOG_SPACE}
     BACKLOG_API_KEY: ${BACKLOG_API_KEY}
     BACKLOG_PROJECT: ${BACKLOG_PROJECT}
   script:
     - npm install -g @simochee/backlog-cli
-    - backlog issue close PROJ-123 --resolution 完了
+    - backlog issue close PROJ-123
 ```
 
 GitLab では **Settings > CI/CD > Variables** からシークレット変数を設定できます。
@@ -80,7 +80,7 @@ version: 2.1
 jobs:
   notify:
     docker:
-      - image: cimg/node:22.0
+      - image: cimg/node:24.0
     steps:
       - checkout
       - run:
@@ -88,7 +88,7 @@ jobs:
           command: npm install -g @simochee/backlog-cli
       - run:
           name: Update issue status
-          command: backlog issue close PROJ-123 --resolution 完了
+          command: backlog issue close PROJ-123
           environment:
             BACKLOG_SPACE: ${BACKLOG_SPACE}
             BACKLOG_API_KEY: ${BACKLOG_API_KEY}
@@ -106,7 +106,7 @@ CircleCI では **Project Settings > Environment Variables** からシークレ�
 
 ```yaml
 # bitbucket-pipelines.yml
-image: node:22
+image: node:24
 
 pipelines:
   default:
@@ -114,7 +114,7 @@ pipelines:
         name: Notify Backlog
         script:
           - npm install -g @simochee/backlog-cli
-          - backlog issue close PROJ-123 --resolution 完了
+          - backlog issue close PROJ-123
 ```
 
 Bitbucket では **Repository settings > Pipelines > Repository variables** からシークレット変数を設定できます。`BACKLOG_SPACE`、`BACKLOG_API_KEY`、`BACKLOG_PROJECT` を登録してください。
@@ -127,12 +127,12 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 22
+      nodejs: 24
     commands:
       - npm install -g @simochee/backlog-cli
   build:
     commands:
-      - backlog issue close PROJ-123 --resolution 完了
+      - backlog issue close PROJ-123
 ```
 
 AWS CodeBuild では環境変数のセクションからシークレット変数を設定できます。AWS Systems Manager Parameter Store の利用も可能です。
@@ -144,7 +144,7 @@ CI パイプラインで Backlog CLI を使う代表的なユースケースを�
 ### デプロイ後に課題をクローズする
 
 ```bash
-backlog issue close PROJ-123 --resolution 完了
+backlog issue close PROJ-123
 ```
 
 ### 課題にコメントを追加する
