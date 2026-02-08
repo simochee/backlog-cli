@@ -2,7 +2,7 @@
 
 > gh CLI のインターフェースを基準に、Backlog API を操作する CLI ツール。
 >
-> Phase 1〜4 の全 99 コマンドの実装が完了。詳細な仕様は `plans/` 配下を参照。
+> Phase 1〜4 の全 99 コマンド + `issue delete` の実装が完了。詳細な仕様は `plans/` 配下を参照。
 
 ---
 
@@ -12,7 +12,6 @@
 
 | コマンド             | 対応 API                                        | 備考                |
 | -------------------- | ----------------------------------------------- | ------------------- |
-| `issue delete`       | `DELETE /api/v2/issues/:issueIdOrKey`           | 課題の削除          |
 | `issue comments`     | `GET /api/v2/issues/:issueIdOrKey/comments`     | コメント一覧表示    |
 | `issue count`        | `GET /api/v2/issues/count`                      | 課題件数取得        |
 | `issue attachments`  | `GET /api/v2/issues/:issueIdOrKey/attachments`  | 添付ファイル一覧    |
