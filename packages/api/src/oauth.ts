@@ -25,7 +25,7 @@ export interface RefreshAccessTokenParams {
 /**
  * Exchanges an authorization code for access and refresh tokens.
  */
-export async function exchangeAuthorizationCode(params: ExchangeAuthorizationCodeParams): Promise<OAuthTokenResponse> {
+export function exchangeAuthorizationCode(params: ExchangeAuthorizationCodeParams): Promise<OAuthTokenResponse> {
 	return ofetch<OAuthTokenResponse>(`https://${params.host}/api/v2/oauth2/token`, {
 		method: "POST",
 		headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -42,7 +42,7 @@ export async function exchangeAuthorizationCode(params: ExchangeAuthorizationCod
 /**
  * Refreshes an access token using a refresh token.
  */
-export async function refreshAccessToken(params: RefreshAccessTokenParams): Promise<OAuthTokenResponse> {
+export function refreshAccessToken(params: RefreshAccessTokenParams): Promise<OAuthTokenResponse> {
 	return ofetch<OAuthTokenResponse>(`https://${params.host}/api/v2/oauth2/token`, {
 		method: "POST",
 		headers: { "Content-Type": "application/x-www-form-urlencoded" },

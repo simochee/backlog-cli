@@ -1,4 +1,5 @@
-const CALLBACK_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+/** 5 minutes */
+const CALLBACK_TIMEOUT_MS = 5 * 60 * 1_000;
 
 const SUCCESS_HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Authentication Successful</title></head>
@@ -75,10 +76,10 @@ export function startCallbackServer(): CallbackServer {
 				resolveCode = (codeAndState: string) => {
 					clearTimeout(timeout);
 					const [code, state] = codeAndState.split(":");
-					if (state !== expectedState) {
-						reject(new Error("OAuth state mismatch — possible CSRF attack"));
-					} else {
+					if (state === expectedState) {
 						resolve(code!);
+					} else {
+						reject(new Error("OAuth state mismatch — possible CSRF attack"));
 					}
 				};
 
