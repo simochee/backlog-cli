@@ -95,7 +95,7 @@ export default defineCommand({
 			required: true,
 		},
 	},
-	async run({ args }) {
+	run({ args }) {
 		const shell = args.shell.toLowerCase();
 		const completion = COMPLETIONS[shell];
 

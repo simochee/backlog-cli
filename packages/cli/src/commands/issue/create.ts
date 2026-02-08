@@ -2,7 +2,7 @@ import type { BacklogIssue } from "@repo/api";
 import type { IssuesCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
@@ -73,7 +73,7 @@ export default defineCommand({
 			for await (const chunk of process.stdin) {
 				chunks.push(chunk);
 			}
-			description = Buffer.concat(chunks).toString("utf-8").trim();
+			description = Buffer.concat(chunks).toString("utf8").trim();
 		}
 
 		consola.start("Creating issue...");
