@@ -332,6 +332,113 @@ describe("auth login", () => {
 			);
 		});
 
+		it("client-secret 未指定時にプロンプトで入力を求める", async () => {
+			setupOAuthMocks();
+			vi.mocked(consola.prompt).mockResolvedValueOnce("prompted-client-secret" as never);
+
+			const mod = await import("#commands/auth/login.ts");
+			await mod.default.run?.({
+				args: {
+					hostname: "example.backlog.com",
+					method: "oauth",
+					"client-id": "my-client-id",
+				},
+			} as never);
+
+			expect(consola.prompt).toHaveBeenCalledWith("OAuth Client Secret:", { type: "text" });
+			expect(exchangeAuthorizationCode).toHaveBeenCalledWith(
+				expect.objectContaining({ clientSecret: "prompted-client-secret" }),
+			);
+		});
+
+		it("client-secret プロンプトで空入力の場合エラーを返す", async () => {
+			vi.mocked(consola.prompt).mockResolvedValueOnce("" as never);
+			const exitSpy = spyOnProcessExit();
+
+			const mod = await import("#commands/auth/login.ts");
+			await mod.default.run?.({
+				args: {
+					hostname: "example.backlog.com",
+					method: "oauth",
+					"client-id": "my-client-id",
+				},
+			} as never);
+
+			expect(consola.error).toHaveBeenCalledWith("Client Secret is required.");
+			expect(exitSpy).toHaveBeenCalledWith(1);
+			exitSpy.mockRestore();
+		});
+
+		it("トークン検証に失敗した場合 process.exit(1) を呼ぶ", async () => {
+			setupOAuthMocks();
+			const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
+			vi.mocked(createClient).mockReturnValue(mockClient as never);
+			const exitSpy = spyOnProcessExit();
+
+			const mod = await import("#commands/auth/login.ts");
+			await mod.default.run?.({
+				args: {
+					hostname: "example.backlog.com",
+					method: "oauth",
+					"client-id": "my-client-id",
+					"client-secret": "my-client-secret",
+				},
+			} as never);
+
+			expect(consola.error).toHaveBeenCalledWith("Authentication verification failed.");
+			expect(exitSpy).toHaveBeenCalledWith(1);
+			exitSpy.mockRestore();
+		});
+
+		it("既存スペースの OAuth 認証情報を更新する", async () => {
+			setupOAuthMocks();
+			vi.mocked(resolveSpace).mockResolvedValue({
+				host: "example.backlog.com",
+				auth: {
+					method: "oauth" as const,
+					accessToken: "old-access",
+					refreshToken: "old-refresh",
+					clientId: "old-client-id",
+					clientSecret: "old-client-secret",
+				},
+			});
+			vi.mocked(loadConfig).mockResolvedValue({
+				spaces: [
+					{
+						host: "example.backlog.com",
+						auth: {
+							method: "oauth" as const,
+							accessToken: "old-access",
+							refreshToken: "old-refresh",
+							clientId: "old-client-id",
+							clientSecret: "old-client-secret",
+						},
+					},
+				],
+				defaultSpace: "example.backlog.com",
+			});
+
+			const mod = await import("#commands/auth/login.ts");
+			await mod.default.run?.({
+				args: {
+					hostname: "example.backlog.com",
+					method: "oauth",
+					"client-id": "my-client-id",
+					"client-secret": "my-client-secret",
+				},
+			} as never);
+
+			expect(updateSpaceAuth).toHaveBeenCalledWith("example.backlog.com", {
+				method: "oauth",
+				accessToken: "new-access-token",
+				refreshToken: "new-refresh-token",
+				clientId: "my-client-id",
+				clientSecret: "my-client-secret",
+			});
+			expect(addSpace).not.toHaveBeenCalled();
+			expect(writeConfig).not.toHaveBeenCalled();
+		});
+
 		it("client-id プロンプトで空入力の場合エラーを返す", async () => {
 			vi.mocked(consola.prompt).mockResolvedValueOnce("" as never);
 			const exitSpy = spyOnProcessExit();
