@@ -8,6 +8,7 @@
 		"build": "astro build"
 	},
 	"dependencies": {
+		"@astrojs/cloudflare": "^12.6.12",
 		"@astrojs/starlight": "^0.37.1",
 		"@repo/api-spec": "workspace:*",
 		"astro": "^5.16.6",
