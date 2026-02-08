@@ -7,6 +7,7 @@
 [![npm version](https://img.shields.io/npm/v/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![npm downloads](https://img.shields.io/npm/dm/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](./LICENSE)
+[![Open in Visual Studio Code](https://img.shields.io/badge/Open_in-VSCode-007ACC?logo=visualstudiocode)](https://vscode.dev/github/simochee/backlog-cli)
 
 **Backlog on the command line.**
 
@@ -117,13 +118,13 @@ bun install
 bun run dev
 ```
 
-| コマンド             | 内容               |
-| -------------------- | ------------------ |
-| `bun run dev`        | 開発モードで実行   |
-| `bun run build`      | ビルド             |
-| `bun run test`       | テスト実行         |
-| `bun run lint`       | Biome によるリント |
-| `bun run type-check` | 型チェック         |
+| コマンド             | 内容                |
+| -------------------- | ------------------- |
+| `bun run dev`        | 開発モードで実行    |
+| `bun run build`      | ビルド              |
+| `bun run test`       | テスト実行          |
+| `bun run lint`       | oxlint によるリント |
+| `bun run type-check` | 型チェック          |
 
 ## ライセンス
 

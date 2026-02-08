@@ -1,6 +1,20 @@
+<div align="center">
+
 # @simochee/backlog-cli
 
-[Backlog](https://backlog.com/) をコマンドラインから操作するための CLI ツールです。[GitHub CLI (gh)](https://cli.github.com/) のインターフェースを参考に設計されています。
+[![npm version](https://img.shields.io/npm/v/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
+[![npm downloads](https://img.shields.io/npm/dm/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
+[![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](../../LICENSE)
+
+[Backlog](https://backlog.com/) をコマンドラインから操作する CLI ツール。
+<br>
+[GitHub CLI (gh)](https://cli.github.com/) のインターフェースを参考に設計。
+
+[ドキュメント](https://simochee.github.io/backlog-cli) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli)
+
+</div>
+
+---
 
 ## インストール
 
@@ -73,6 +87,8 @@ backlog status
 | `backlog browse`       | ブラウザで開く             |
 | `backlog api`          | Backlog API の直接呼び出し |
 | `backlog completion`   | シェル補完スクリプトの生成 |
+
+各コマンドの詳細は `backlog <command> --help` または[コマンドリファレンス](https://simochee.github.io/backlog-cli/commands/issue/)で。
 
 ## 環境変数
 
