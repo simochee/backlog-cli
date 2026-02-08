@@ -4,11 +4,13 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"prebuild": "mkdir -p public/api && cp ../packages/api-spec/tsp-output/redoc.html public/api/index.html",
 		"dev": "astro dev",
 		"build": "astro build"
 	},
 	"dependencies": {
 		"@astrojs/starlight": "^0.37.1",
+		"@repo/api-spec": "workspace:*",
 		"astro": "^5.16.6",
 		"sharp": "^0.34.5"
 	}

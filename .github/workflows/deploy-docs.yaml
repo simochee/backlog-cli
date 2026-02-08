@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "docs/**"
+      - "packages/api-spec/**"
       - ".github/workflows/deploy-docs.yaml"
   workflow_dispatch:
 
@@ -36,6 +37,13 @@ jobs:
 
       - name: Install dependencies
         run: bun install
+
+      - name: Build API spec
+        working-directory: packages/api-spec
+        run: bun run build
+
+      - name: Copy ReDoc static HTML to docs
+        run: mkdir -p docs/public/api && cp packages/api-spec/tsp-output/redoc.html docs/public/api/index.html
 
       - name: Build docs
         working-directory: docs
