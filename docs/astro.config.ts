@@ -2,8 +2,7 @@ import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-	site: "https://simochee.github.io",
-	base: "/backlog-cli",
+	site: "https://backlog-cli.simochee.net",
 	integrations: [
 		starlight({
 			title: "Backlog CLI",
