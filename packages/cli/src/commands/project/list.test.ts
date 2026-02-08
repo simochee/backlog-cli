@@ -1,24 +1,19 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/format.ts", () => ({
 	formatProjectLine: vi.fn(() => "PROJ  Test Project  Active"),
 	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("project list", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("プロジェクト一覧を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([
 			{ id: 1, projectKey: "PROJ1", name: "Project 1", archived: false },
 			{ id: 2, projectKey: "PROJ2", name: "Project 2", archived: false },
@@ -33,8 +28,7 @@ describe("project list", () => {
 	});
 
 	it("0件の場合メッセージ表示", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
 		const mod = await import("#commands/project/list.ts");
@@ -44,8 +38,7 @@ describe("project list", () => {
 	});
 
 	it("--archived でクエリに archived が含まれる", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
 		const mod = await import("#commands/project/list.ts");

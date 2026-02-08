@@ -1,4 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	resolveSpace: vi.fn(),
@@ -8,19 +9,13 @@ vi.mock("@repo/api", () => ({
 	createClient: vi.fn(() => (() => {}) as unknown),
 }));
 
-vi.mock("consola", () => ({
-	default: { error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import { createClient } from "@repo/api";
 import { resolveSpace } from "@repo/config";
 
 describe("getClient", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("API Key 認証でクライアントを作成する", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue({
 			host: "example.backlog.com",
@@ -68,7 +63,7 @@ describe("getClient", () => {
 
 	it("スペースが未設定の場合 process.exit(1) を呼ぶ", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue(undefined as never);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOnProcessExit();
 
 		await getClient();
 

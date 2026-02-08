@@ -1,13 +1,12 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient, spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 	resolveUserId: vi.fn(() => Promise.resolve(999)),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/format.ts", () => ({
 	formatPullRequestLine: vi.fn(() => "#1  Open  user  branch  Summary"),
 	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
@@ -22,13 +21,8 @@ import { resolveUserId } from "#utils/resolve.ts";
 import consola from "consola";
 
 describe("pr list", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("PR一覧を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([
 			{ number: 1, summary: "PR 1", status: { name: "Open" } },
 			{ number: 2, summary: "PR 2", status: { name: "Open" } },
@@ -47,8 +41,7 @@ describe("pr list", () => {
 	});
 
 	it("0件の場合メッセージを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
 		const mod = await import("#commands/pr/list.ts");
@@ -59,8 +52,7 @@ describe("pr list", () => {
 	});
 
 	it("--status でフィルタする", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([{ number: 1, summary: "PR 1", status: { name: "Open" } }]);
 
 		const mod = await import("#commands/pr/list.ts");
@@ -75,9 +67,8 @@ describe("pr list", () => {
 	});
 
 	it("無効な --limit でエラーを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		setupMockClient(getClient);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/pr/list.ts");
 		await mod.default.run?.({ args: { project: "PROJ", repo: "repo", status: "open", limit: "0" } } as never);
@@ -89,8 +80,7 @@ describe("pr list", () => {
 	});
 
 	it("--assignee で担当者フィルタを適用する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		vi.mocked(resolveUserId).mockResolvedValue(999);
 		mockClient.mockResolvedValue([{ number: 1, summary: "PR 1", status: { name: "Open" } }]);
 

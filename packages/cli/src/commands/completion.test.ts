@@ -1,16 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
-vi.mock("consola", () => ({
-	default: { error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import consola from "consola";
 
 describe("completion", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("メタデータが正しく設定されている", async () => {
 		const mod = await import("#commands/completion.ts");
 		const command = mod.default;
@@ -48,7 +43,7 @@ describe("completion", () => {
 	});
 
 	it("run() でサポートされていないシェルの場合 process.exit(1) が呼ばれる", async () => {
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "powershell" } } as never);

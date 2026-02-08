@@ -1,24 +1,16 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	loadConfig: vi.fn(),
 	writeConfig: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		success: vi.fn(),
-		error: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { loadConfig, writeConfig } from "@repo/config";
 
 describe("alias delete", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("既存のエイリアスを削除する", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
@@ -44,7 +36,7 @@ describe("alias delete", () => {
 			defaultSpace: undefined,
 		} as never);
 
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/alias/delete.ts");
 		await mod.default.run?.({

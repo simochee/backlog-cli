@@ -1,4 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/api", () => ({
 	createClient: vi.fn(),
@@ -12,24 +13,13 @@ vi.mock("@repo/config", () => ({
 	writeConfig: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		error: vi.fn(),
-		start: vi.fn(),
-		success: vi.fn(),
-		prompt: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { createClient } from "@repo/api";
 import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
 import consola from "consola";
 
 describe("auth login", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("hostname と API キーで新規スペースを認証する", async () => {
 		const mockClient = vi.fn().mockResolvedValue({
 			name: "Test User",
@@ -105,7 +95,7 @@ describe("auth login", () => {
 		const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
 		vi.mocked(createClient).mockReturnValue(mockClient as never);
 		vi.mocked(consola.prompt).mockResolvedValue("bad-key" as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/login.ts");
 		await mod.default.run?.({
@@ -122,7 +112,7 @@ describe("auth login", () => {
 	});
 
 	it("api-key 以外の method でエラーを返す", async () => {
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/login.ts");
 		await mod.default.run?.({
@@ -168,7 +158,7 @@ describe("auth login", () => {
 
 	it("hostname プロンプトで空入力の場合エラーを返す", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/login.ts");
 		await mod.default.run?.({
@@ -182,7 +172,7 @@ describe("auth login", () => {
 
 	it("API key プロンプトで空入力の場合エラーを返す", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/login.ts");
 		await mod.default.run?.({

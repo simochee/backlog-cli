@@ -1,9 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn(), prompt: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/format.ts", () => ({
 	formatIssueLine: vi.fn(() => "PROJ-1  Open  Bug  High  user  Summary"),
 	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
@@ -20,13 +19,8 @@ import { resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import consola from "consola";
 
 describe("issue list", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("課題一覧を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([
 			{ issueKey: "PROJ-1", summary: "Issue 1" },
 			{ issueKey: "PROJ-2", summary: "Issue 2" },
@@ -42,8 +36,7 @@ describe("issue list", () => {
 	});
 
 	it("0件の場合メッセージを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
 		const mod = await import("#commands/issue/list.ts");
@@ -54,8 +47,7 @@ describe("issue list", () => {
 	});
 
 	it("--project でプロジェクトを指定する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		vi.mocked(resolveProjectId).mockResolvedValue(12_345);
 		mockClient.mockResolvedValue([{ issueKey: "PROJ-1", summary: "Issue 1" }]);
 
@@ -72,8 +64,7 @@ describe("issue list", () => {
 	});
 
 	it("--assignee で担当者フィルタを適用する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		vi.mocked(resolveUserId).mockResolvedValue(999);
 		mockClient.mockResolvedValue([{ issueKey: "PROJ-1", summary: "Issue 1" }]);
 

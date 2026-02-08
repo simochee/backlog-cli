@@ -1,12 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/format.ts", () => ({
 	formatDate: vi.fn(() => "2024-01-01"),
 }));
@@ -36,13 +35,8 @@ const mockPr = {
 };
 
 describe("pr view", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("PRの詳細を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockPr);
 
 		const mod = await import("#commands/pr/view.ts");
@@ -59,8 +53,7 @@ describe("pr view", () => {
 	});
 
 	it("--web でブラウザを開く", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockPr);
 
 		const mod = await import("#commands/pr/view.ts");
@@ -72,8 +65,7 @@ describe("pr view", () => {
 	});
 
 	it("--comments でコメントを含める", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValueOnce(mockPr).mockResolvedValueOnce([
 			{ content: "Comment 1", createdUser: { name: "User1" }, created: "2024-01-03T00:00:00Z" },
 			{ content: "Comment 2", createdUser: { name: "User2" }, created: "2024-01-04T00:00:00Z" },
@@ -89,8 +81,7 @@ describe("pr view", () => {
 	});
 
 	it("descriptionを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockPr);
 
 		const mod = await import("#commands/pr/view.ts");

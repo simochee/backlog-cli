@@ -1,27 +1,17 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	loadConfig: vi.fn(),
 	removeSpace: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		error: vi.fn(),
-		info: vi.fn(),
-		success: vi.fn(),
-		prompt: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { loadConfig, removeSpace } from "@repo/config";
 import consola from "consola";
 
 describe("auth logout", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("指定ホストをログアウトする", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [
@@ -65,7 +55,7 @@ describe("auth logout", () => {
 		});
 		vi.mocked(removeSpace).mockRejectedValue(new Error("not found"));
 
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/logout.ts");
 		await mod.default.run?.({

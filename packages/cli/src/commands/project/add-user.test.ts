@@ -1,20 +1,15 @@
+import { setupMockClient, spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("project add-user", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("ユーザーを追加する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 12_345, name: "Test User" });
 
 		const mod = await import("#commands/project/add-user.ts");
@@ -31,10 +26,9 @@ describe("project add-user", () => {
 	});
 
 	it("無効な user-id でエラー", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/project/add-user.ts");
 		await mod.default.run?.({ args: { "project-key": "PROJ", "user-id": "abc" } } as never);

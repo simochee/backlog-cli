@@ -1,12 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/format.ts", () => ({
 	formatDate: vi.fn(() => "2024-01-01"),
 }));
@@ -15,13 +14,8 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("pr comments", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("PRコメント一覧を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([
 			{ id: 1, content: "First comment", createdUser: { name: "User1" }, created: "2024-01-01T00:00:00Z" },
 			{ id: 2, content: "Second comment", createdUser: { name: "User2" }, created: "2024-01-02T00:00:00Z" },
@@ -39,8 +33,7 @@ describe("pr comments", () => {
 	});
 
 	it("0件の場合メッセージを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
 		const mod = await import("#commands/pr/comments.ts");

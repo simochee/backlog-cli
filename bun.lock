@@ -11,7 +11,6 @@
         "lefthook": "^2.0.12",
         "oxfmt": "^0.28.0",
         "oxlint": "^1.43.0",
-        "sort-package-json": "^3.6.0",
         "textlint": "^15.5.1",
         "textlint-rule-preset-ja-technical-writing": "^12.0.2",
         "turbo": "^2.7.0",
@@ -35,6 +34,7 @@
         "ufo": "^1.5.4",
       },
       "devDependencies": {
+        "@repo/test-utils": "workspace:*",
         "@repo/tsconfigs": "workspace:*",
       },
     },
@@ -57,6 +57,9 @@
     "packages/cli": {
       "name": "@simochee/backlog-cli",
       "version": "0.0.0",
+      "bin": {
+        "backlog": "./bin/backlog.mjs",
+      },
       "dependencies": {
         "@repo/api": "workspace:*",
         "@repo/config": "workspace:*",
@@ -65,6 +68,7 @@
         "consola": "^3.4.2",
       },
       "devDependencies": {
+        "@repo/test-utils": "workspace:*",
         "@repo/tsconfigs": "workspace:*",
       },
       "peerDependencies": {
@@ -80,6 +84,7 @@
         "rc9": "^2.1.2",
       },
       "devDependencies": {
+        "@repo/test-utils": "workspace:*",
         "@repo/tsconfigs": "workspace:*",
       },
     },
@@ -94,6 +99,15 @@
       "devDependencies": {
         "@hey-api/openapi-ts": "0.92.3",
         "@repo/tsconfigs": "workspace:*",
+      },
+    },
+    "packages/test-utils": {
+      "name": "@repo/test-utils",
+      "devDependencies": {
+        "@repo/tsconfigs": "workspace:*",
+      },
+      "peerDependencies": {
+        "vitest": "^4",
       },
     },
     "packages/tsconfigs": {
@@ -403,6 +417,8 @@
     "@repo/docs": ["@repo/docs@workspace:docs"],
 
     "@repo/openapi-client": ["@repo/openapi-client@workspace:packages/openapi-client"],
+
+    "@repo/test-utils": ["@repo/test-utils@workspace:packages/test-utils"],
 
     "@repo/tsconfigs": ["@repo/tsconfigs@workspace:packages/tsconfigs"],
 
@@ -824,11 +840,7 @@
 
     "destr": ["destr@2.0.5", "", {}, "sha512-ugFTXCtDZunbzasqBxrK93Ik/DRYsO6S/fedkWEMKqt04xZ4csmnmwGDBAb07QWNaGMAmnTIemsYZCksjATwsA=="],
 
-    "detect-indent": ["detect-indent@7.0.2", "", {}, "sha512-y+8xyqdGLL+6sh0tVeHcfP/QDd8gUgbasolJJpY7NgeQGSZ739bDtSiaiDgtoicy+mtYB81dKLxO9xRhCyIB3A=="],
-
     "detect-libc": ["detect-libc@2.1.2", "", {}, "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ=="],
-
-    "detect-newline": ["detect-newline@4.0.1", "", {}, "sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog=="],
 
     "deterministic-object-hash": ["deterministic-object-hash@2.0.2", "", { "dependencies": { "base-64": "^1.0.0" } }, "sha512-KxektNH63SrbfUyDiwXqRb1rLwKt33AmMv+5Nhsw1kqZ13SJBRTgZHtGbE+hH3a1mVW1cz+4pqSWVPAtLVXTzQ=="],
 
@@ -1003,8 +1015,6 @@
     "get-symbol-description": ["get-symbol-description@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "es-errors": "^1.3.0", "get-intrinsic": "^1.2.6" } }, "sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg=="],
 
     "giget": ["giget@2.0.0", "", { "dependencies": { "citty": "^0.1.6", "consola": "^3.4.0", "defu": "^6.1.4", "node-fetch-native": "^1.6.6", "nypm": "^0.6.0", "pathe": "^2.0.3" }, "bin": { "giget": "dist/cli.mjs" } }, "sha512-L5bGsVkxJbJgdnwyuheIunkGatUF/zssUoxxjACCseZYAVbaqdh9Tsmmlkl8vYan09H7sbvKt4pS8GqKLBrEzA=="],
-
-    "git-hooks-list": ["git-hooks-list@4.1.1", "", {}, "sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA=="],
 
     "github-slugger": ["github-slugger@2.0.0", "", {}, "sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw=="],
 
@@ -1745,10 +1755,6 @@
     "slide": ["slide@1.1.6", "", {}, "sha512-NwrtjCg+lZoqhFU8fOwl4ay2ei8PaqCBOUV3/ektPY9trO1yQ1oXEfmHAhKArUVUr/hOHvy5f6AdP17dCM0zMw=="],
 
     "smol-toml": ["smol-toml@1.6.0", "", {}, "sha512-4zemZi0HvTnYwLfrpk/CF9LOd9Lt87kAt50GnqhMpyF9U3poDAP2+iukq2bZsO/ufegbYehBkqINbsWxj4l4cw=="],
-
-    "sort-object-keys": ["sort-object-keys@2.0.1", "", {}, "sha512-R89fO+z3x7hiKPXX5P0qim+ge6Y60AjtlW+QQpRozrrNcR1lw9Pkpm5MLB56HoNvdcLHL4wbpq16OcvGpEDJIg=="],
-
-    "sort-package-json": ["sort-package-json@3.6.0", "", { "dependencies": { "detect-indent": "^7.0.2", "detect-newline": "^4.0.1", "git-hooks-list": "^4.1.1", "is-plain-obj": "^4.1.0", "semver": "^7.7.3", "sort-object-keys": "^2.0.1", "tinyglobby": "^0.2.15" }, "bin": { "sort-package-json": "cli.js" } }, "sha512-fyJsPLhWvY7u2KsKPZn1PixbXp+1m7V8NWqU8CvgFRbMEX41Ffw1kD8n0CfJiGoaSfoAvbrqRRl/DcHO8omQOQ=="],
 
     "source-map": ["source-map@0.7.6", "", {}, "sha512-i5uvt8C3ikiWeNZSVZNWcfZPItFQOsYTUAOkcUPGd8DqDy1uOUikjt5dG+uRlwyvR108Fb9DOd4GvXfT0N2/uQ=="],
 

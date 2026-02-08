@@ -1,7 +1,8 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), warn: vi.fn(), error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 	resolveUserId: vi.fn(() => Promise.resolve(999)),
@@ -10,16 +11,10 @@ vi.mock("#utils/resolve.ts", () => ({
 import { getClient } from "#utils/client.ts";
 import { resolveUserId } from "#utils/resolve.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("pr edit", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("PRを更新する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ number: 1, summary: "Updated" });
 
 		const mod = await import("#commands/pr/edit.ts");
@@ -36,8 +31,7 @@ describe("pr edit", () => {
 	});
 
 	it("assignee を変更する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ number: 1, summary: "Test PR" });
 
 		const mod = await import("#commands/pr/edit.ts");
