@@ -19,12 +19,12 @@ import "./misc.tsp";
 using TypeSpec.Http;
 using TypeSpec.OpenAPI;
 
-/**
- * Backlog API — Project management tool by Nulab.
- *
- * This is an unofficial OpenAPI specification and is not provided or endorsed by Nulab.
- * Complete compatibility with the actual Backlog API is not guaranteed.
- */
+@doc("""
+  Backlog API — Project management tool by Nulab.
+
+  This is an unofficial OpenAPI specification and is not provided or endorsed by Nulab.
+  Complete compatibility with the actual Backlog API is not guaranteed.
+  """)
 @service(#{ title: "Backlog API" })
 @info(#{
   version: "2.0.0",
