@@ -15,7 +15,7 @@ backlog completion bash > /etc/bash_completion.d/backlog
 eval "$(backlog completion bash)"
 ```
 
-`~/.bashrc` に追加して永続化する場合:
+`~/.bashrc` に追加して永続化する場合は、次のコマンドを実行します。
 
 ```bash
 echo 'eval "$(backlog completion bash)"' >> ~/.bashrc
@@ -31,7 +31,7 @@ backlog completion zsh > "${fpath[1]}/_backlog"
 eval "$(backlog completion zsh)"
 ```
 
-`~/.zshrc` に追加して永続化する場合:
+`~/.zshrc` に追加して永続化する場合は、次のコマンドを実行します。
 
 ```bash
 echo 'eval "$(backlog completion zsh)"' >> ~/.zshrc

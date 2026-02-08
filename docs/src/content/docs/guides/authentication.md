@@ -41,13 +41,13 @@ backlog auth refresh
 backlog auth status
 ```
 
-特定のスペースの認証状態を確認する場合:
+特定のスペースの認証状態を確認する場合は、次のコマンドを実行します。
 
 ```bash
 backlog auth status --hostname your-space.backlog.com
 ```
 
-トークンを表示する場合:
+トークンを表示する場合は、次のコマンドを実行します。
 
 ```bash
 backlog auth status --show-token
@@ -55,7 +55,7 @@ backlog auth status --show-token
 
 ## 複数スペースの管理
 
-複数の Backlog スペースに認証することができます。
+複数の Backlog スペースに認証できます。
 
 ```bash
 # スペース A に認証

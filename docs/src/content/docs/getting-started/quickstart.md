@@ -17,7 +17,7 @@ backlog auth login
 backlog auth login --hostname your-space.backlog.com --method api-key
 ```
 
-認証状態を確認するには:
+認証状態を確認するには、次のコマンドを実行します。
 
 ```bash
 backlog auth status

@@ -7,7 +7,7 @@ description: Backlog スペースに認証する
 backlog auth login [flags]
 ```
 
-Backlog スペースに対して認証を行います。API キーまたは OAuth 2.0 による認証をサポートしています。
+Backlog スペースに対して認証します。API キーまたは OAuth 2.0 による認証をサポートしています。
 
 ## オプション
 
