@@ -24,3 +24,27 @@ export default async function promptRequired(label: string, existing?: string): 
 
 	return value;
 }
+
+/**
+ * Prompts the user for confirmation before a destructive action.
+ *
+ * Returns `true` immediately if confirmation is already given via `skipConfirm`.
+ * Otherwise, shows an interactive confirm prompt. Logs "Cancelled." and returns
+ * `false` if the user declines.
+ *
+ * @param message - The confirmation message shown to the user.
+ * @param skipConfirm - Whether to skip the prompt (e.g., `--confirm` or `--yes` flag).
+ * @returns `true` if the action should proceed, `false` otherwise.
+ */
+export async function confirmOrExit(message: string, skipConfirm?: boolean): Promise<boolean> {
+	if (skipConfirm) return true;
+
+	const confirmed = await consola.prompt(message, { type: "confirm" });
+
+	if (!confirmed) {
+		consola.info("Cancelled.");
+		return false;
+	}
+
+	return true;
+}

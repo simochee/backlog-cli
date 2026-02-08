@@ -1,4 +1,5 @@
 import { getClient } from "#utils/client.ts";
+import { confirmOrExit } from "#utils/prompt.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -21,15 +22,11 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		if (!args.confirm) {
-			const confirmed = await consola.prompt(`Are you sure you want to delete watching ${args["watching-id"]}?`, {
-				type: "confirm",
-			});
-			if (!confirmed) {
-				consola.info("Cancelled.");
-				return;
-			}
-		}
+		const proceed = await confirmOrExit(
+			`Are you sure you want to delete watching ${args["watching-id"]}?`,
+			args.confirm,
+		);
+		if (!proceed) return;
 
 		await client(`/watchings/${args["watching-id"]}`, {
 			method: "DELETE",

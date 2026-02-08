@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
-import promptRequired from "#utils/prompt.ts";
+import promptRequired, { confirmOrExit } from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("promptRequired", () => {
@@ -48,5 +48,46 @@ describe("promptRequired", () => {
 
 		expect(consola.error).toHaveBeenCalledWith("Project key is required.");
 		mockExit.mockRestore();
+	});
+});
+
+describe("confirmOrExit", () => {
+	it("skipConfirm が true の場合、プロンプトを表示せず true を返す", async () => {
+		const result = await confirmOrExit("Are you sure?", true);
+		expect(result).toBeTruthy();
+		expect(consola.prompt).not.toHaveBeenCalled();
+	});
+
+	it("ユーザーが確認した場合、true を返す", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue(true as never);
+
+		const result = await confirmOrExit("Are you sure?");
+		expect(consola.prompt).toHaveBeenCalledWith("Are you sure?", { type: "confirm" });
+		expect(result).toBeTruthy();
+	});
+
+	it("ユーザーがキャンセルした場合、false を返し Cancelled. を表示する", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue(false as never);
+
+		const result = await confirmOrExit("Are you sure?");
+		expect(consola.prompt).toHaveBeenCalledWith("Are you sure?", { type: "confirm" });
+		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
+		expect(result).toBeFalsy();
+	});
+
+	it("skipConfirm が undefined の場合、プロンプトを表示する", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue(true as never);
+
+		const result = await confirmOrExit("Are you sure?");
+		expect(consola.prompt).toHaveBeenCalled();
+		expect(result).toBeTruthy();
+	});
+
+	it("skipConfirm が false の場合、プロンプトを表示する", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue(true as never);
+
+		const result = await confirmOrExit("Are you sure?", false);
+		expect(consola.prompt).toHaveBeenCalled();
+		expect(result).toBeTruthy();
 	});
 });
