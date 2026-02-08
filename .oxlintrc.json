@@ -46,6 +46,19 @@
 			"rules": {
 				"no-console": "off"
 			}
+		},
+		{
+			"files": ["packages/test-utils/src/setup.ts"],
+			"rules": {
+				"vitest/no-hooks": "off",
+				"vitest/require-top-level-describe": "off"
+			}
+		},
+		{
+			"files": ["packages/test-utils/src/mock-client.ts", "packages/test-utils/src/process.ts"],
+			"rules": {
+				"import/prefer-default-export": "off"
+			}
 		}
 	]
 }
