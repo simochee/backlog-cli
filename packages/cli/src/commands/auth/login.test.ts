@@ -219,7 +219,7 @@ describe("auth login", () => {
 			const mockStop = vi.fn();
 			const mockWaitForCallback = vi.fn().mockResolvedValue("auth-code-123");
 			vi.mocked(startCallbackServer).mockReturnValue({
-				port: 5_033,
+				port: 5033,
 				waitForCallback: mockWaitForCallback,
 				stop: mockStop,
 			});
@@ -269,7 +269,7 @@ describe("auth login", () => {
 		it("コールバック待機中にエラーが発生した場合 process.exit(1) を呼ぶ", async () => {
 			const mockStop = vi.fn();
 			vi.mocked(startCallbackServer).mockReturnValue({
-				port: 5_033,
+				port: 5033,
 				waitForCallback: vi.fn().mockRejectedValue(new Error("OAuth callback timed out after 5 minutes")),
 				stop: mockStop,
 			});

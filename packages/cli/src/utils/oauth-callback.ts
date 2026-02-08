@@ -1,6 +1,6 @@
 /** 5 minutes in milliseconds */
 const CALLBACK_TIMEOUT_MS = 300_000;
-const CALLBACK_PORT = 5_033;
+const CALLBACK_PORT = 5033;
 
 const SUCCESS_HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Authentication Successful</title></head>
