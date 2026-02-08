@@ -1,6 +1,8 @@
 import { extractSpaceArg } from "#utils/argv.ts";
 import { defineCommand, runMain } from "citty";
 
+import { version } from "../package.json";
+
 const { space, argv: cleanedArgv } = extractSpaceArg(process.argv);
 if (space) {
 	process.env["BACKLOG_SPACE"] = space;
@@ -10,6 +12,7 @@ process.argv = cleanedArgv;
 const main = defineCommand({
 	meta: {
 		name: "backlog",
+		version,
 		description: "Backlog CLI — manage Backlog from the command line",
 	},
 	subCommands: {
