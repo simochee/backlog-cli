@@ -1,6 +1,6 @@
 import { vi } from "vitest";
 
-export default {
+const mockConsola = {
 	log: vi.fn(),
 	info: vi.fn(),
 	success: vi.fn(),
@@ -10,3 +10,5 @@ export default {
 	prompt: vi.fn(),
 	debug: vi.fn(),
 };
+
+export default mockConsola;

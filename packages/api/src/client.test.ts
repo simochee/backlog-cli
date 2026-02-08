@@ -159,9 +159,9 @@ describe("createClient", () => {
 
 describe("formatResetTime", () => {
 	it("エポック秒をローカライズされた日時文字列に変換する", () => {
-		const epochSeconds = 1700000000;
+		const epochSeconds = 1_700_000_000;
 		const result = formatResetTime(epochSeconds);
-		const expected = new Date(1700000000 * 1000).toLocaleString();
+		const expected = new Date(1_700_000_000 * 1000).toLocaleString();
 
 		expect(result).toBe(expected);
 	});
