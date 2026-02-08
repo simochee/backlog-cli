@@ -1,3 +1,5 @@
+import { type Server, type ServerResponse, createServer } from "node:http";
+
 /** 5 minutes in milliseconds */
 const CALLBACK_TIMEOUT_MS = 300_000;
 const CALLBACK_PORT = 5033;
@@ -22,6 +24,11 @@ export interface CallbackServer {
 	stop: () => void;
 }
 
+function respondHtml(res: ServerResponse, html: string, statusCode = 200): void {
+	res.writeHead(statusCode, { "Content-Type": "text/html" });
+	res.end(html);
+}
+
 /**
  * Starts a local HTTP server to receive the OAuth callback.
  *
@@ -31,47 +38,44 @@ export function startCallbackServer(): CallbackServer {
 	let resolveCode: ((code: string) => void) | null = null;
 	let rejectCode: ((error: Error) => void) | null = null;
 
-	const server = Bun.serve({
-		port: CALLBACK_PORT,
-		fetch(request) {
-			const url = new URL(request.url);
+	const server: Server = createServer((req, res) => {
+		const url = new URL(req.url ?? "/", `http://localhost:${CALLBACK_PORT}`);
 
-			if (url.pathname !== "/callback") {
-				return new Response("Not Found", { status: 404 });
-			}
+		if (url.pathname !== "/callback") {
+			res.writeHead(404);
+			res.end("Not Found");
+			return;
+		}
 
-			const code = url.searchParams.get("code");
-			const state = url.searchParams.get("state");
-			const error = url.searchParams.get("error");
+		const code = url.searchParams.get("code");
+		const state = url.searchParams.get("state");
+		const error = url.searchParams.get("error");
 
-			if (error) {
-				rejectCode?.(new Error(`OAuth error: ${error}`));
-				return new Response(ERROR_HTML, {
-					headers: { "Content-Type": "text/html" },
-				});
-			}
+		if (error) {
+			rejectCode?.(new Error(`OAuth error: ${error}`));
+			respondHtml(res, ERROR_HTML);
+			return;
+		}
 
-			if (!code || !state) {
-				rejectCode?.(new Error("Missing code or state parameter"));
-				return new Response(ERROR_HTML, {
-					headers: { "Content-Type": "text/html" },
-				});
-			}
+		if (!code || !state) {
+			rejectCode?.(new Error("Missing code or state parameter"));
+			respondHtml(res, ERROR_HTML);
+			return;
+		}
 
-			resolveCode?.(`${code}:${state}`);
-			return new Response(SUCCESS_HTML, {
-				headers: { "Content-Type": "text/html" },
-			});
-		},
+		resolveCode?.(`${code}:${state}`);
+		respondHtml(res, SUCCESS_HTML);
 	});
 
+	server.listen(CALLBACK_PORT);
+
 	return {
-		port: server.port as number,
+		port: CALLBACK_PORT,
 		waitForCallback(expectedState: string): Promise<string> {
 			return new Promise<string>((resolve, reject) => {
 				const timeout = setTimeout(() => {
 					reject(new Error("OAuth callback timed out after 5 minutes"));
-					server.stop();
+					server.close();
 				}, CALLBACK_TIMEOUT_MS);
 
 				resolveCode = (codeAndState: string) => {
@@ -91,7 +95,7 @@ export function startCallbackServer(): CallbackServer {
 			});
 		},
 		stop() {
-			server.stop();
+			server.close();
 		},
 	};
 }
