@@ -3,6 +3,7 @@
 # @simochee/backlog-cli
 
 [![npm version](https://img.shields.io/npm/v/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/@simochee/backlog-cli)](https://bundlephobia.com/package/@simochee/backlog-cli)
 [![npm downloads](https://img.shields.io/npm/dm/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![CI](https://github.com/simochee/backlog-cli/actions/workflows/ci.yaml/badge.svg)](https://github.com/simochee/backlog-cli/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](https://github.com/simochee/backlog-cli/blob/main/LICENSE)

@@ -5,6 +5,7 @@
 [![CI](https://github.com/simochee/backlog-cli/actions/workflows/ci.yaml/badge.svg)](https://github.com/simochee/backlog-cli/actions/workflows/ci.yaml)
 [![codecov](https://codecov.io/gh/simochee/backlog-cli/branch/main/graph/badge.svg)](https://codecov.io/gh/simochee/backlog-cli)
 [![npm version](https://img.shields.io/npm/v/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/@simochee/backlog-cli)](https://bundlephobia.com/package/@simochee/backlog-cli)
 [![npm downloads](https://img.shields.io/npm/dm/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](./LICENSE)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in-VSCode-007ACC?logo=visualstudiocode)](https://vscode.dev/github/simochee/backlog-cli)
