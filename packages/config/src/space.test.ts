@@ -6,7 +6,7 @@ vi.mock("#config.ts", () => ({
 }));
 
 import { loadConfig, writeConfig } from "#config.ts";
-import { addSpace, removeSpace, resolveSpace, updateSpaceAuth } from "#space.ts";
+import { addSpace, findSpace, removeSpace, resolveSpace, updateSpaceAuth } from "#space.ts";
 
 const mockLoadConfig = vi.mocked(loadConfig);
 const mockWriteConfig = vi.mocked(writeConfig);
@@ -127,6 +127,52 @@ describe("updateSpaceAuth", () => {
 	});
 });
 
+describe("findSpace", () => {
+	it("完全一致するホスト名でスペースを返す", () => {
+		const space = makeSpace("myspace.backlog.com");
+		const result = findSpace([space], "myspace.backlog.com");
+
+		expect(result).toEqual(space);
+	});
+
+	it("省略名でプレフィックスマッチしてスペースを返す", () => {
+		const space = makeSpace("myspace.backlog.com");
+		const result = findSpace([space], "myspace");
+
+		expect(result).toEqual(space);
+	});
+
+	it("省略名で複数のスペースがマッチした場合にエラーをスローする", () => {
+		const spaceCom = makeSpace("myspace.backlog.com");
+		const spaceJp = makeSpace("myspace.backlog.jp");
+
+		expect(() => findSpace([spaceCom, spaceJp], "myspace")).toThrow(
+			'Ambiguous space name "myspace". Matching spaces: myspace.backlog.com, myspace.backlog.jp',
+		);
+	});
+
+	it("完全一致がある場合はプレフィックスマッチより優先する", () => {
+		const exactSpace = makeSpace("myspace.backlog.com");
+		const otherSpace = makeSpace("myspace.backlog.com.extra.backlog.com");
+		const result = findSpace([exactSpace, otherSpace], "myspace.backlog.com");
+
+		expect(result).toEqual(exactSpace);
+	});
+
+	it("マッチするスペースがない場合にnullを返す", () => {
+		const space = makeSpace("other.backlog.com");
+		const result = findSpace([space], "unknown");
+
+		expect(result).toBeNull();
+	});
+
+	it("空のスペース配列でnullを返す", () => {
+		const result = findSpace([], "myspace");
+
+		expect(result).toBeNull();
+	});
+});
+
 describe("resolveSpace", () => {
 	beforeEach(() => {
 		delete process.env["BACKLOG_SPACE"];
@@ -185,5 +231,52 @@ describe("resolveSpace", () => {
 		const result = await resolveSpace("missing.backlog.com");
 
 		expect(result).toBeNull();
+	});
+
+	it("省略名でスペースを解決できる", async () => {
+		const space = makeSpace("myspace.backlog.com");
+		mockLoadConfig.mockResolvedValue(makeConfig([space]));
+
+		const result = await resolveSpace("myspace");
+
+		expect(result).toEqual(space);
+	});
+
+	it("省略名で複数マッチした場合にエラーをスローする", async () => {
+		const spaceCom = makeSpace("myspace.backlog.com");
+		const spaceJp = makeSpace("myspace.backlog.jp");
+		mockLoadConfig.mockResolvedValue(makeConfig([spaceCom, spaceJp]));
+
+		await expect(resolveSpace("myspace")).rejects.toThrow(
+			'Ambiguous space name "myspace". Matching spaces: myspace.backlog.com, myspace.backlog.jp',
+		);
+	});
+
+	it("完全一致するホスト名は引き続き動作する（後方互換性）", async () => {
+		const space = makeSpace("myspace.backlog.com");
+		mockLoadConfig.mockResolvedValue(makeConfig([space]));
+
+		const result = await resolveSpace("myspace.backlog.com");
+
+		expect(result).toEqual(space);
+	});
+
+	it("省略名でマッチしない場合にnullを返す", async () => {
+		const space = makeSpace("other.backlog.com");
+		mockLoadConfig.mockResolvedValue(makeConfig([space]));
+
+		const result = await resolveSpace("unknown");
+
+		expect(result).toBeNull();
+	});
+
+	it("BACKLOG_SPACE環境変数に省略名を設定した場合にスペースを解決できる", async () => {
+		const space = makeSpace("envspace.backlog.com");
+		mockLoadConfig.mockResolvedValue(makeConfig([space]));
+		process.env["BACKLOG_SPACE"] = "envspace";
+
+		const result = await resolveSpace();
+
+		expect(result).toEqual(space);
 	});
 });
