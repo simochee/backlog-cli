@@ -1,4 +1,8 @@
 import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
+import type {
+	PullRequestStatusType,
+	PullRequestsListData,
+} from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -63,7 +67,8 @@ export default defineCommand({
 			return process.exit(1);
 		}
 
-		const query: Record<string, unknown> = { count };
+		const query: NonNullable<PullRequestsListData["query"]> &
+			Record<string, unknown> = { count };
 
 		if (args.offset) {
 			const offset = Number.parseInt(args.offset, 10);
@@ -76,10 +81,10 @@ export default defineCommand({
 
 		// Resolve status names to IDs
 		if (args.status) {
-			const statusMap: Record<string, number> = {
-				open: PR_STATUS.Open,
-				closed: PR_STATUS.Closed,
-				merged: PR_STATUS.Merged,
+			const statusMap: Record<string, PullRequestStatusType> = {
+				open: PR_STATUS.Open as PullRequestStatusType,
+				closed: PR_STATUS.Closed as PullRequestStatusType,
+				merged: PR_STATUS.Merged as PullRequestStatusType,
 			};
 			const statuses = args.status.split(",").map((s) => s.trim());
 			query["statusId[]"] = statuses.map((s) => {

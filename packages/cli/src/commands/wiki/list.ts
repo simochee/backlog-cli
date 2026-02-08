@@ -1,4 +1,5 @@
 import type { BacklogWiki } from "@repo/api";
+import type { WikisListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -47,12 +48,13 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
-			projectIdOrKey: project,
-			sort: args.sort,
-			order: args.order,
-			count: Number.parseInt(args.limit, 10),
-		};
+		const query: NonNullable<WikisListData["query"]> & Record<string, unknown> =
+			{
+				projectIdOrKey: project,
+				sort: args.sort,
+				order: args.order,
+				count: Number.parseInt(args.limit, 10),
+			};
 
 		if (args.keyword) {
 			query.keyword = args.keyword;

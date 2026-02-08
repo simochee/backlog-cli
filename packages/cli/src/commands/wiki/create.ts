@@ -1,4 +1,5 @@
 import type { BacklogWiki } from "@repo/api";
+import type { WikisCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -41,7 +42,7 @@ export default defineCommand({
 
 		const projectId = await resolveProjectId(client, project);
 
-		const requestBody: Record<string, unknown> = {
+		const requestBody: WikisCreateData["body"] = {
 			projectId,
 			name,
 			content: body,

@@ -1,4 +1,5 @@
 import type { BacklogTeam } from "@repo/api";
+import type { TeamsCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -25,7 +26,7 @@ export default defineCommand({
 
 		const name = await promptRequired("Team name:", args.name);
 
-		const body: Record<string, unknown> = { name };
+		const body: TeamsCreateData["body"] & Record<string, unknown> = { name };
 
 		if (args.members) {
 			body["members[]"] = args.members

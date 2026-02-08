@@ -1,4 +1,5 @@
 import type { BacklogMilestone } from "@repo/api";
+import type { VersionsUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -48,7 +49,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {};
+		const body: VersionsUpdateData["body"] = {};
 
 		if (args.name) {
 			body.name = args.name;

@@ -1,4 +1,5 @@
 import type { BacklogStatus } from "@repo/api";
+import type { StatusesUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -35,7 +36,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {};
+		const body: StatusesUpdateData["body"] = {};
 
 		if (args.name) {
 			body.name = args.name;

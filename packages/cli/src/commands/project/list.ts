@@ -1,4 +1,5 @@
 import type { BacklogProject } from "@repo/api";
+import type { ProjectsListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -29,7 +30,7 @@ export default defineCommand({
 		const { client } = await getClient();
 		const limit = Number.parseInt(args.limit, 10);
 
-		const query: Record<string, unknown> = {};
+		const query: NonNullable<ProjectsListData["query"]> = {};
 		if (args.archived != null) {
 			query.archived = args.archived;
 		}

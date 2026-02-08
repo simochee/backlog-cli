@@ -1,4 +1,5 @@
 import type { BacklogProject } from "@repo/api";
+import type { ProjectsUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -36,7 +37,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {};
+		const body: ProjectsUpdateData["body"] = {};
 
 		if (args.name) {
 			body.name = args.name;

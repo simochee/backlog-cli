@@ -1,4 +1,5 @@
 import type { BacklogNotificationCount } from "@repo/api";
+import type { NotificationsCountData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -21,7 +22,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {};
+		const query: NonNullable<NotificationsCountData["query"]> = {};
 
 		if (args["already-read"]) {
 			query.alreadyRead = true;

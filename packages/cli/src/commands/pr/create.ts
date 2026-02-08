@@ -1,4 +1,5 @@
 import type { BacklogPullRequest } from "@repo/api";
+import type { PullRequestsCreateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -66,7 +67,7 @@ export default defineCommand({
 		const base = await promptRequired("Base branch:", args.base);
 		const branch = await promptRequired("Source branch:", args.branch);
 
-		const body: Record<string, unknown> = {
+		const body: PullRequestsCreateData["body"] = {
 			summary: title,
 			description: args.body ?? "",
 			base,

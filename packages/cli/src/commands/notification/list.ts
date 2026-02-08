@@ -1,4 +1,5 @@
 import type { BacklogNotification } from "@repo/api";
+import type { NotificationsListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -33,9 +34,9 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<NotificationsListData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
-			order: args.order,
+			order: args.order as NonNullable<NotificationsListData["query"]>["order"],
 		};
 
 		if (args["min-id"]) {

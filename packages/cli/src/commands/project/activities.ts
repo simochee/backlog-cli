@@ -1,4 +1,5 @@
 import type { BacklogActivity } from "@repo/api";
+import type { ProjectsGetActivitiesData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -30,7 +31,9 @@ export default defineCommand({
 		const { client } = await getClient();
 		const limit = Number.parseInt(args.limit, 10);
 
-		const query: Record<string, unknown> = { count: limit };
+		const query: NonNullable<ProjectsGetActivitiesData["query"]> = {
+			count: limit,
+		};
 		if (args["activity-type"]) {
 			query["activityTypeId[]"] = args["activity-type"]
 				.split(",")

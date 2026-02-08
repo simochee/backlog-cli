@@ -8,9 +8,9 @@
 
 ## 1. テストが不足している箇所
 
-### 全体カバレッジ: 約13%（132ソースファイル中17テストファイル）
+### 全体カバレッジ: 約14%（132ソースファイル中18テストファイル）
 
-### テストが全くないコマンド（112ファイル）
+### テストが全くないコマンド（107ファイル）
 
 | カテゴリ | ファイル数 | 優先度 |
 |---|---|---|
@@ -26,11 +26,11 @@
 | `repo/*` | 4 | 中 |
 | `category/*`, `milestone/*`, `issue-type/*`, `status-type/*` | 20 | 中 |
 | `star/*`, `watching/*` | 10 | 低 |
-| `api.ts`, `browse.ts`, `status.ts` | 3 | 中 |
+| `browse.ts`, `status.ts` | 2 | 中 |
 
 ### 既存テストの問題
 
-- **`packages/api/src/client.test.ts`**: `createClient` が関数を返すことしか検証していない。リクエスト送信、認証ヘッダ付与、エラーハンドリングのテストなし
+- ~~**`packages/api/src/client.test.ts`**: `createClient` が関数を返すことしか検証していない。リクエスト送信、認証ヘッダ付与、エラーハンドリングのテストなし~~ **→ 解決済み（PR #26）**: テスト数 3→10 に拡充。base URL構築、API Key クエリパラメータ、OAuth Bearer ヘッダ、認証なしの設定を検証
 - **`packages/cli/src/commands/config/get.test.ts`** / **`set.test.ts`**: ヘルパー関数のみテスト。`run()` メソッド未テスト
 - **`packages/cli/src/commands/space/disk-usage.test.ts`**: `formatBytes()` のみテスト。コマンド本体未テスト
 - **`packages/cli/src/commands/completion.test.ts`**: メタデータのみ検証。補完スクリプト生成ロジック未テスト
@@ -39,54 +39,30 @@
 
 ## 2. 型安全でない箇所
 
-### `as unknown as T` ダブルキャスト（6箇所）
+### ~~`as unknown as T` ダブルキャスト（6箇所）~~ → 解決済み（PR #25）
 
-| ファイル | 行 | コード |
-|---|---|---|
-| `packages/cli/src/utils/resolve.ts` | 47 | `i[nameField] as unknown as string` |
-| `packages/cli/src/utils/resolve.ts` | 51 | `i[nameField] as unknown as string` |
-| `packages/cli/src/utils/client.test.ts` | 8 | `(() => {}) as unknown` |
-| `packages/cli/src/utils/format.test.ts` | 211, 221 | `} as unknown as BacklogNotification` |
-| `packages/cli/src/utils/resolve.test.ts` | 23 | `}) as unknown as BacklogClient` |
+`resolveByName` のジェネリック制約を改善し、ダブルキャストを解消。
 
-**改善案**: `resolveByName` のジェネリック制約を `T extends { id: number } & Record<K, string>` にする。
+### ~~`as typeof config` の不安全なキャスト（2箇所）~~ → 解決済み（PR #25）
 
-### `as typeof config` の不安全なキャスト（2箇所）
+`Rc` スキーマに `aliases` フィールドを追加し、型安全なアクセスを実現。
 
-| ファイル | 行 |
-|---|---|
-| `packages/cli/src/commands/alias/delete.ts` | 31 |
-| `packages/cli/src/commands/alias/set.ts` | 36 |
+### ~~`Record<string, unknown>` の多用（49箇所）~~ → 解決済み（PR #26）
 
-**原因**: `Rc` スキーマの型に `aliases` フィールドが含まれていない。
+`@repo/openapi-client` の生成型（`IssuesCreateData`, `PullRequestsUpdateData` 等）を活用するよう39ファイルを修正。
 
-### `Record<string, unknown>` の多用（49箇所）
+**残存する `Record<string, unknown>`（意図的な使用）:**
+- `api.ts`: 汎用APIコマンドのため型を限定できない
+- `config/get.ts`: 動的なキーアクセスのため
+- 一部コマンドの `& Record<string, unknown>` 交差型: Backlog API の `"key[]"` 配列記法に対応するため
 
-ほぼ全てのコマンドで API リクエストのボディを `Record<string, unknown>` として構築している。`@repo/openapi-client` の生成型を活用していない。
+### ~~`unknown[]` の型未定義（10箇所 `packages/api/src/types.ts`）~~ → 解決済み（PR #25）
 
-**主な該当ファイル**:
-- `commands/issue/create.ts`, `edit.ts`, `close.ts`, `list.ts`, `reopen.ts`
-- `commands/pr/create.ts`, `edit.ts`, `close.ts`, `merge.ts`, `list.ts`, `comments.ts`
-- `commands/project/create.ts`, `edit.ts`, `list.ts`, `activities.ts`
-- `commands/wiki/create.ts`, `edit.ts`, `list.ts`, `history.ts`
-- `commands/api.ts`
-- その他30以上のコマンドファイル
+`BacklogChangeLog[]`, `BacklogStar[]`, `BacklogCommentNotification[]`, `BacklogSharedFile[]` 等の適切な型に置換。
 
-### `unknown[]` の型未定義（10箇所 `packages/api/src/types.ts`）
+### ~~型不安全な `config` アクセス（3箇所）~~ → 解決済み（PR #25）
 
-```
-changeLog: unknown[]    — 行87, 176
-stars: unknown[]        — 行91, 180, 212
-notifications: unknown[] — 行92, 107, 181
-sharedFiles: unknown[]  — 行211
-```
-
-### 型不安全な `config` アクセス（3箇所）
-
-```typescript
-// alias/delete.ts:20-21, alias/list.ts:16, alias/set.ts:30
-(config as Record<string, unknown>).aliases as Record<string, string>
-```
+`Rc` スキーマへの `aliases` フィールド追加により解消。
 
 ---
 
@@ -96,56 +72,48 @@ sharedFiles: unknown[]  — 行211
 
 - **`packages/cli/src/commands/auth/refresh.ts`**: OAuth トークンリフレッシュが未実装（行34-37）
 
-### ハードコードされたステータスID
+### ~~ハードコードされたステータスID~~ → 解決済み（PR #25）
 
-| ファイル | 行 | 値 | 問題 |
-|---|---|---|---|
-| `commands/pr/close.ts` | 41 | `statusId: 2` | Closed のIDがハードコード |
-| `commands/pr/reopen.ts` | 40 | `statusId: 1` | Open のIDがハードコード |
-| `commands/pr/merge.ts` | 41 | `statusId: 3` | Merged のIDがハードコード |
+`PR_STATUS` 定数（`PR_STATUS.Open`, `PR_STATUS.Closed`, `PR_STATUS.Merged`）を使用するよう修正。
 
-Issue系コマンドでは `resolveClosedStatusId()` / `resolveOpenStatusId()` で動的解決しているが、PR系はしていない。
+### ~~入力バリデーション不足~~ → 解決済み（PR #25）
 
-### 入力バリデーション不足
+`star/add.ts`, `project/add-user.ts`, `pr/list.ts` に `Number.isNaN()` チェックと範囲バリデーションを追加。
 
-| ファイル | 行 | 問題 |
-|---|---|---|
-| `commands/star/add.ts` | 34 | Issue キーを数値IDに変換せず文字列のまま送信 |
-| `commands/project/add-user.ts` | 31 | `Number.parseInt` の NaN チェックなし |
-| `commands/pr/list.ts` | 61, 65 | `Number.parseInt` の NaN チェック・範囲バリデーションなし |
+### ~~エラーハンドリングの問題~~ → 解決済み（PR #25）
 
-### エラーハンドリングの問題
+- `auth/status.ts`: 空の catch ブロックに `consola.debug` によるログ出力を追加
+- `config.ts`: `consola` への統一
+- `completion.ts`: `process.stdout.write()` に変更
 
-| ファイル | 行 | 問題 |
-|---|---|---|
-| `commands/auth/status.ts` | 55-57 | 空の `catch` ブロックでエラー握りつぶし |
-| `packages/config/src/config.ts` | 18-19 | `console.error()` を直接使用（`consola` との不一致） |
-| `commands/completion.ts` | 110 | `console.log()` を直接使用 |
+### ~~`Bun.spawn` のエラーハンドリング不足（8箇所）~~ → 解決済み（PR #25）
 
-### `Bun.spawn` のエラーハンドリング不足（8箇所）
+共通ユーティリティ `openUrl()` を作成し、全コマンドで使用するよう統一。
 
-以下のコマンドで `Bun.spawn(["open", url])` の終了コード未チェック:
-- `browse.ts`, `issue/create.ts`, `issue/view.ts`, `pr/create.ts`, `pr/view.ts`, `project/view.ts`, `repo/view.ts`, `wiki/view.ts`
+### ~~`aliases` がスキーマ未定義~~ → 解決済み（PR #25）
 
-（対照的に `repo/clone.ts` は正しくハンドリング）
-
-### `aliases` がスキーマ未定義
-
-`packages/config/src/types.ts` の `Rc` スキーマに `aliases` フィールドがなく、alias コマンドで二重キャストが必要になっている。
+`Rc` スキーマに `aliases: type("Record<string, string>").default(() => ({}))` を追加。
 
 ---
 
 ## まとめ（優先度順）
 
-| 優先度 | 問題 | 件数 |
-|---|---|---|
-| 高 | コマンドのテスト不足（93%がテストなし） | 112ファイル |
-| 高 | `Record<string, unknown>` で型付きSDKを活用できていない | 49箇所 |
-| 高 | API クライアントのテストが実質ゼロ | 1ファイル |
-| 中 | `unknown[]` の不適切な型定義 | 10箇所 |
-| 中 | `as unknown as T` のダブルキャスト | 6箇所 |
-| 中 | PRコマンドのハードコードされたステータスID | 3箇所 |
-| 中 | 入力バリデーション不足（NaN チェックなし） | 3箇所 |
-| 中 | `auth/refresh` が未実装 | 1箇所 |
-| 低 | `Bun.spawn` のエラーハンドリング不足 | 8箇所 |
-| 低 | `console.error`/`console.log` の不一致 | 3箇所 |
+| 優先度 | 問題 | 件数 | 状態 |
+|---|---|---|---|
+| 高 | コマンドのテスト不足（93%がテストなし） | 107ファイル | **未対応** |
+| ~~高~~ | ~~`Record<string, unknown>` で型付きSDKを活用できていない~~ | ~~49箇所~~ | **解決済み（PR #26）** |
+| ~~高~~ | ~~API クライアントのテストが実質ゼロ~~ | ~~1ファイル~~ | **解決済み（PR #26: 3→10テスト）** |
+| ~~中~~ | ~~`unknown[]` の不適切な型定義~~ | ~~10箇所~~ | **解決済み（PR #25）** |
+| ~~中~~ | ~~`as unknown as T` のダブルキャスト~~ | ~~6箇所~~ | **解決済み（PR #25）** |
+| ~~中~~ | ~~PRコマンドのハードコードされたステータスID~~ | ~~3箇所~~ | **解決済み（PR #25）** |
+| ~~中~~ | ~~入力バリデーション不足（NaN チェックなし）~~ | ~~3箇所~~ | **解決済み（PR #25）** |
+| 中 | `auth/refresh` が未実装 | 1箇所 | **未対応** |
+| ~~低~~ | ~~`Bun.spawn` のエラーハンドリング不足~~ | ~~8箇所~~ | **解決済み（PR #25）** |
+| ~~低~~ | ~~`console.error`/`console.log` の不一致~~ | ~~3箇所~~ | **解決済み（PR #25）** |
+
+### 対応履歴
+
+| PR | 内容 |
+|---|---|
+| #25 | 型安全性、エラーハンドリング、バリデーションの改善（中〜低優先度項目） |
+| #26 | `Record<string, unknown>` → 型付きSDK型への移行（39ファイル）、APIクライアントテスト拡充（3→10）、parseFieldテスト追加（11） |

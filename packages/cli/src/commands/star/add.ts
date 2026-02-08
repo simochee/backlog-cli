@@ -1,3 +1,4 @@
+import type { StarsAddData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -28,7 +29,7 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const body: Record<string, unknown> = {};
+		const body: StarsAddData["body"] = {};
 
 		if (args.issue) {
 			const issue = await client<{ id: number }>(`/issues/${args.issue}`);

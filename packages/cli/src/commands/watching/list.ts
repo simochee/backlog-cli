@@ -1,4 +1,5 @@
 import type { BacklogUser, BacklogWatching } from "@repo/api";
+import type { WatchingOpsListByUserData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -39,13 +40,17 @@ export default defineCommand({
 			userId = `${me.id}`;
 		}
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<WatchingOpsListByUserData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
-			order: args.order,
+			order: args.order as NonNullable<
+				WatchingOpsListByUserData["query"]
+			>["order"],
 		};
 
 		if (args.sort) {
-			query.sort = args.sort;
+			query.sort = args.sort as NonNullable<
+				WatchingOpsListByUserData["query"]
+			>["sort"];
 		}
 
 		const watchings = await client<BacklogWatching[]>(

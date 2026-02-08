@@ -1,4 +1,5 @@
 import type { BacklogIssue } from "@repo/api";
+import type { IssuesUpdateData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -27,7 +28,7 @@ export default defineCommand({
 
 		const statusId = await resolveOpenStatusId(client, projectKey);
 
-		const body: Record<string, unknown> = { statusId };
+		const body: IssuesUpdateData["body"] = { statusId };
 
 		if (args.comment) {
 			body.comment = args.comment;

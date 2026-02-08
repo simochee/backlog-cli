@@ -1,4 +1,5 @@
 import type { BacklogIssue } from "@repo/api";
+import type { IssuesListData } from "@repo/openapi-client";
 import { defineCommand } from "citty";
 import consola from "consola";
 import { getClient } from "#utils/client.ts";
@@ -94,10 +95,10 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: Record<string, unknown> = {
+		const query: NonNullable<IssuesListData["query"]> = {
 			count: Number.parseInt(args.limit, 10),
-			sort: args.sort,
-			order: args.order,
+			sort: args.sort as NonNullable<IssuesListData["query"]>["sort"],
+			order: args.order as NonNullable<IssuesListData["query"]>["order"],
 		};
 
 		if (args.offset) {
