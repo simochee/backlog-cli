@@ -36,6 +36,7 @@ export default defineConfig({
 						{ label: "設定", link: "/guides/configuration/" },
 						{ label: "出力形式", link: "/guides/output-formatting/" },
 						{ label: "シェル補完", link: "/guides/shell-completion/" },
+					{ label: "AI エージェント連携", link: "/guides/ai-agent/" },
 					],
 				},
 				{
