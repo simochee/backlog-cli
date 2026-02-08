@@ -28,8 +28,8 @@ model Issue {
   category: Category[];
   versions: Version[];
   milestone: Version[];
-  startDate: plainDate | null;
-  dueDate: plainDate | null;
+  startDate: utcDateTime | null;
+  dueDate: utcDateTime | null;
   estimatedHours: float64 | null;
   actualHours: float64 | null;
   parentIssueId: int64 | null;

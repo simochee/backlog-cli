@@ -278,8 +278,8 @@ export const zIssueType = z.object({
 		.int()
 		.min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
 		.max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
-	templateSummary: z.union([z.string(), z.null()]),
-	templateDescription: z.union([z.string(), z.null()]),
+	templateSummary: z.optional(z.union([z.string(), z.null()])),
+	templateDescription: z.optional(z.union([z.string(), z.null()])),
 });
 
 /**
@@ -324,11 +324,11 @@ export const zLicence = z.object({
 		.int()
 		.min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
 		.max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
-	limitDate: z.iso.date(),
+	limitDate: z.iso.datetime(),
 	nulabAccount: z.boolean(),
 	parentChildIssue: z.boolean(),
 	postIssueByMail: z.boolean(),
-	projectGroup: z.boolean(),
+	projectGroup: z.union([z.boolean(), z.null()]),
 	projectLimit: z
 		.int()
 		.min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
@@ -342,7 +342,7 @@ export const zLicence = z.object({
 		.min(-2147483648, { error: "Invalid value: Expected int32 to be >= -2147483648" })
 		.max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
 	remoteAddress: z.boolean(),
-	startedOn: z.iso.date(),
+	startedOn: z.iso.datetime(),
 	storageLimit: z.coerce
 		.bigint()
 		.min(BigInt("-9223372036854775808"), { error: "Invalid value: Expected int64 to be >= -9223372036854775808" })
@@ -734,9 +734,9 @@ export const zTeam = z.object({
 			.max(2147483647, { error: "Invalid value: Expected int32 to be <= 2147483647" }),
 		z.null(),
 	]),
-	createdUser: zUser,
+	createdUser: z.union([zUser, z.null()]),
 	created: z.iso.datetime(),
-	updatedUser: zUser,
+	updatedUser: z.union([zUser, z.null()]),
 	updated: z.iso.datetime(),
 });
 
@@ -790,8 +790,8 @@ export const zIssue = z.object({
 	category: z.array(zCategory),
 	versions: z.array(zVersion),
 	milestone: z.array(zVersion),
-	startDate: z.union([z.iso.date(), z.null()]),
-	dueDate: z.union([z.iso.date(), z.null()]),
+	startDate: z.union([z.iso.datetime(), z.null()]),
+	dueDate: z.union([z.iso.datetime(), z.null()]),
 	estimatedHours: z.union([z.number(), z.null()]),
 	actualHours: z.union([z.number(), z.null()]),
 	parentIssueId: z.union([

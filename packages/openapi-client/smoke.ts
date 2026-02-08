@@ -206,6 +206,7 @@ const tests: TestCase[] = [
 		name: "GET /groups",
 		path: "/groups",
 		schema: zGroupsListResponse,
+		skip: true, // deprecated endpoint, returns 400 on new plans
 	},
 	{
 		name: "GET /teams",
@@ -319,12 +320,14 @@ const tests: TestCase[] = [
 		path: "/wikis",
 		query: PROJECT_ID ? { projectIdOrKey: PROJECT_ID } : undefined,
 		schema: zWikisListResponse,
+		skip: !PROJECT_ID, // projectIdOrKey is required
 	},
 	{
 		name: "GET /wikis/count",
 		path: "/wikis/count",
 		query: PROJECT_ID ? { projectIdOrKey: PROJECT_ID } : undefined,
 		schema: zWikisCountResponse,
+		skip: !PROJECT_ID, // projectIdOrKey is required
 	},
 
 	// ---- Notifications ----
