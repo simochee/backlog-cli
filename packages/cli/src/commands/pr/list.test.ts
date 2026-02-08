@@ -1,5 +1,5 @@
 import { setupMockClient, spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
@@ -96,5 +96,32 @@ describe("pr list", () => {
 				query: expect.objectContaining({ "assigneeId[]": [999] }),
 			}),
 		);
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			const data = [{ number: 1, summary: "PR 1", status: { name: "Open" } }];
+			mockClient.mockResolvedValue(data);
+
+			const mod = await import("#commands/pr/list.ts");
+			await mod.default.run?.({
+				args: { project: "PROJ", repo: "repo", status: "open", limit: "20", json: "" },
+			} as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output).toEqual(data);
+		});
 	});
 });

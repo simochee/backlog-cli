@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/format.ts", () => ({
@@ -34,5 +34,30 @@ describe("wiki history", () => {
 		await mod.default.run?.({ args: { "wiki-id": "1", limit: "20" } } as never);
 
 		expect(consola.info).toHaveBeenCalledWith("No history found.");
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+			const data = [{ version: 3, name: "Page v3", created: "2024-01-03" }];
+			mockClient.mockResolvedValue(data);
+
+			const mod = await import("#commands/wiki/history.ts");
+			await mod.default.run?.({ args: { "wiki-id": "1", limit: "20", json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output).toEqual(data);
+		});
 	});
 });

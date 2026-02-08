@@ -1,5 +1,5 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
@@ -41,5 +41,34 @@ describe("status", () => {
 		await mod.default.run?.({ args: {} } as never);
 
 		expect(consola.log).toHaveBeenCalledWith("  No issues assigned to you.");
+	});
+
+	describe("--json", () => {
+		let writeSpy: ReturnType<typeof vi.spyOn>;
+
+		beforeEach(() => {
+			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		});
+
+		afterEach(() => {
+			writeSpy.mockRestore();
+		});
+
+		it("--json で JSON を出力する", async () => {
+			const mockClient = setupMockClient(getClient);
+
+			mockClient.mockResolvedValueOnce({ id: 1, name: "Test User" });
+			mockClient.mockResolvedValueOnce([{ issueKey: "PROJ-1", summary: "Issue 1", status: { name: "Open" } }]);
+			mockClient.mockResolvedValueOnce({ count: 3 });
+			mockClient.mockResolvedValueOnce([]);
+
+			const mod = await import("#commands/status.ts");
+			await mod.default.run?.({ args: { json: "" } } as never);
+
+			expect(consola.log).not.toHaveBeenCalled();
+			const output = JSON.parse(String(writeSpy.mock.calls[0]?.[0]).trim());
+			expect(output.user.name).toBe("Test User");
+			expect(output.notificationCount.count).toBe(3);
+		});
 	});
 });
