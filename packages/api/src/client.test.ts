@@ -133,7 +133,7 @@ describe("createClient", () => {
 			const headers = new Headers({ "X-RateLimit-Reset": String(resetEpoch) });
 
 			expect(() => onResponseError({ response: { status: 429, headers } })).toThrowError(
-				`API レートリミットに達しました。リクエスト制限は ${formatResetTime(resetEpoch)} にリセットされます。`,
+				`API rate limit exceeded. Rate limit resets at ${formatResetTime(resetEpoch)}.`,
 			);
 		});
 
@@ -142,7 +142,7 @@ describe("createClient", () => {
 			const headers = new Headers();
 
 			expect(() => onResponseError({ response: { status: 429, headers } })).toThrowError(
-				"API レートリミットに達しました。しばらく時間をおいて再度お試しください。",
+				"API rate limit exceeded. Please wait and try again later.",
 			);
 		});
 
