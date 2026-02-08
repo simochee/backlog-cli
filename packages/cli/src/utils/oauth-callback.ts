@@ -1,5 +1,5 @@
-/** 5 minutes */
-const CALLBACK_TIMEOUT_MS = 5 * 60 * 1_000;
+/** 5 minutes in milliseconds */
+const CALLBACK_TIMEOUT_MS = 300_000;
 
 const SUCCESS_HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Authentication Successful</title></head>
