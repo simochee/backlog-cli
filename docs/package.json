@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@astrojs/starlight": "^0.37.1",
+		"@repo/api-spec": "workspace:*",
 		"astro": "^5.16.6",
 		"sharp": "^0.34.5"
 	}
