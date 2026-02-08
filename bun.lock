@@ -64,6 +64,9 @@
       "bin": {
         "backlog": "./bin/backlog.mjs",
       },
+      "dependencies": {
+        "open": "^11.0.0",
+      },
       "devDependencies": {
         "@repo/api": "workspace:*",
         "@repo/config": "workspace:*",
