@@ -36,6 +36,7 @@
 		"import/max-dependencies": "off",
 		"import/consistent-type-specifier-style": "off",
 		"import/first": "off",
+		"vitest/prefer-called-times": "off",
 		"vitest/prefer-describe-function-title": "off"
 	},
 	"ignorePatterns": ["packages/openapi-client/src/generated", "node_modules", "dist", "out", "tsp-output"],
