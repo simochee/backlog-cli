@@ -13,7 +13,7 @@ A CLI tool to manage [Backlog](https://backlog.com/) from the terminal — inspi
 <br>
 Issues, pull requests, wikis, notifications — all from your command line.
 
-[Documentation](https://simochee.github.io/backlog-cli) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [GitHub](https://github.com/simochee/backlog-cli)
+[Documentation](https://backlog-cli.simochee.net) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [GitHub](https://github.com/simochee/backlog-cli)
 
 </div>
 
@@ -134,7 +134,7 @@ backlog api /api/v2/space
 | `backlog api`          | Call Backlog API directly  |
 | `backlog completion`   | Generate shell completions |
 
-Run `backlog <command> --help` for details, or visit the [command reference](https://simochee.github.io/backlog-cli/commands/issue/).
+Run `backlog <command> --help` for details, or visit the [command reference](https://backlog-cli.simochee.net/commands/issue/).
 
 ## Environment Variables
 
@@ -178,13 +178,13 @@ This is useful for CI pipelines, AI agent workflows, and other non-interactive e
 
 ## Documentation
 
-For full documentation, visit **https://simochee.github.io/backlog-cli**
+For full documentation, visit **https://backlog-cli.simochee.net**
 
-- [Getting Started](https://simochee.github.io/backlog-cli/getting-started/quickstart/)
-- [Authentication Guide](https://simochee.github.io/backlog-cli/guides/authentication/)
-- [Output Formatting](https://simochee.github.io/backlog-cli/guides/output-formatting/)
-- [Shell Completion](https://simochee.github.io/backlog-cli/guides/shell-completion/)
-- [Configuration](https://simochee.github.io/backlog-cli/guides/configuration/)
+- [Getting Started](https://backlog-cli.simochee.net/getting-started/quickstart/)
+- [Authentication Guide](https://backlog-cli.simochee.net/guides/authentication/)
+- [Output Formatting](https://backlog-cli.simochee.net/guides/output-formatting/)
+- [Shell Completion](https://backlog-cli.simochee.net/guides/shell-completion/)
+- [Configuration](https://backlog-cli.simochee.net/guides/configuration/)
 
 ## License
 

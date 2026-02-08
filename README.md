@@ -15,7 +15,7 @@
 <br>
 課題、プルリクエスト、Wiki、通知 ── すべてをコマンドラインで。
 
-[ドキュメント](https://simochee.github.io/backlog-cli) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [Issues](https://github.com/simochee/backlog-cli/issues)
+[ドキュメント](https://backlog-cli.simochee.net) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [Issues](https://github.com/simochee/backlog-cli/issues)
 
 </div>
 
@@ -50,7 +50,7 @@ $ backlog browse MYAPP-142
 npm install -g @simochee/backlog-cli
 ```
 
-> yarn / pnpm / bun でのインストールは[ドキュメント](https://simochee.github.io/backlog-cli/getting-started/installation/)を参照。
+> yarn / pnpm / bun でのインストールは[ドキュメント](https://backlog-cli.simochee.net/getting-started/installation/)を参照。
 
 ## セットアップ
 
@@ -66,7 +66,7 @@ backlog status
 
 ダッシュボードが表示されれば準備完了。
 
-> 認証方式やトークン管理の詳細は[認証ガイド](https://simochee.github.io/backlog-cli/guides/authentication/)へ。
+> 認証方式やトークン管理の詳細は[認証ガイド](https://backlog-cli.simochee.net/guides/authentication/)へ。
 
 ## 使い方
 
@@ -88,7 +88,7 @@ backlog issue list --project MYAPP --json key,summary | jq '.[].summary'
 backlog api /api/v2/space
 ```
 
-各コマンドの詳細は `backlog <command> --help` または[コマンドリファレンス](https://simochee.github.io/backlog-cli/commands/issue/)で。
+各コマンドの詳細は `backlog <command> --help` または[コマンドリファレンス](https://backlog-cli.simochee.net/commands/issue/)で。
 
 ## AI エージェント連携
 
@@ -102,12 +102,12 @@ npx skills add simochee/backlog-cli
 
 ## ドキュメント
 
-**https://simochee.github.io/backlog-cli**
+**https://backlog-cli.simochee.net**
 
-- [クイックスタート](https://simochee.github.io/backlog-cli/getting-started/quickstart/)
-- [出力形式](https://simochee.github.io/backlog-cli/guides/output-formatting/)
-- [シェル補完](https://simochee.github.io/backlog-cli/guides/shell-completion/)
-- [設定](https://simochee.github.io/backlog-cli/guides/configuration/)
+- [クイックスタート](https://backlog-cli.simochee.net/getting-started/quickstart/)
+- [出力形式](https://backlog-cli.simochee.net/guides/output-formatting/)
+- [シェル補完](https://backlog-cli.simochee.net/guides/shell-completion/)
+- [設定](https://backlog-cli.simochee.net/guides/configuration/)
 
 ## コントリビュート
 
