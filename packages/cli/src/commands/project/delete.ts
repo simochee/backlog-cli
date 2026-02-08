@@ -1,6 +1,7 @@
 import type { BacklogProject } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
+import { confirmOrExit } from "#utils/prompt.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -23,16 +24,11 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		if (!args.confirm) {
-			const confirmed = await consola.prompt(
-				`Are you sure you want to delete project ${args["project-key"]}? This cannot be undone.`,
-				{ type: "confirm" },
-			);
-			if (!confirmed) {
-				consola.info("Cancelled.");
-				return;
-			}
-		}
+		const proceed = await confirmOrExit(
+			`Are you sure you want to delete project ${args["project-key"]}? This cannot be undone.`,
+			args.confirm,
+		);
+		if (!proceed) return;
 
 		const project = await client<BacklogProject>(`/projects/${args["project-key"]}`, {
 			method: "DELETE",

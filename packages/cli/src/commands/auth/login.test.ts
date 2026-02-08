@@ -165,7 +165,7 @@ describe("auth login", () => {
 				args: { method: "api-key" },
 			} as never);
 
-			expect(consola.error).toHaveBeenCalledWith("Hostname is required.");
+			expect(consola.error).toHaveBeenCalledWith("Backlog space hostname is required.");
 			expect(exitSpy).toHaveBeenCalledWith(1);
 			exitSpy.mockRestore();
 		});
@@ -368,7 +368,7 @@ describe("auth login", () => {
 				},
 			} as never);
 
-			expect(consola.error).toHaveBeenCalledWith("Client Secret is required.");
+			expect(consola.error).toHaveBeenCalledWith("OAuth Client Secret is required.");
 			expect(exitSpy).toHaveBeenCalledWith(1);
 			exitSpy.mockRestore();
 		});
@@ -456,7 +456,7 @@ describe("auth login", () => {
 				},
 			} as never);
 
-			expect(consola.error).toHaveBeenCalledWith("Client ID is required.");
+			expect(consola.error).toHaveBeenCalledWith("OAuth Client ID is required.");
 			expect(exitSpy).toHaveBeenCalledWith(1);
 			exitSpy.mockRestore();
 		});

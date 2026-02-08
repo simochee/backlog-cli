@@ -1,17 +1,11 @@
 import { startCallbackServer } from "#utils/oauth-callback.ts";
+import promptRequired from "#utils/prompt.ts";
+import readStdin from "#utils/stdin.ts";
 import { openUrl } from "#utils/url.ts";
 import { type BacklogUser, createClient, exchangeAuthorizationCode } from "@repo/api";
 import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
-
-const readStdin = async (): Promise<string> => {
-	const chunks: Uint8Array[] = [];
-	for await (const chunk of process.stdin) {
-		chunks.push(chunk);
-	}
-	return Buffer.concat(chunks).toString("utf8").trim();
-};
 
 export default defineCommand({
 	meta: {
@@ -52,18 +46,9 @@ export default defineCommand({
 		}
 
 		// Resolve hostname
-		let hostname = args.hostname;
-		if (!hostname) {
-			hostname = await consola.prompt("Backlog space hostname:", {
-				type: "text",
-				placeholder: "xxx.backlog.com",
-			});
-
-			if (typeof hostname !== "string" || !hostname) {
-				consola.error("Hostname is required.");
-				return process.exit(1);
-			}
-		}
+		const hostname = await promptRequired("Backlog space hostname:", args.hostname, {
+			placeholder: "xxx.backlog.com",
+		});
 
 		if (method === "api-key") {
 			await loginWithApiKey(hostname, args);
@@ -74,21 +59,7 @@ export default defineCommand({
 });
 
 async function loginWithApiKey(hostname: string, args: { "with-token"?: boolean }): Promise<void> {
-	let apiKey: string;
-	if (args["with-token"]) {
-		apiKey = await readStdin();
-	} else {
-		const input = await consola.prompt("API key:", {
-			type: "text",
-		});
-
-		if (typeof input !== "string" || !input) {
-			consola.error("API key is required.");
-			return process.exit(1);
-		}
-
-		apiKey = input;
-	}
+	const apiKey = args["with-token"] ? await readStdin() : await promptRequired("API key:");
 
 	consola.start(`Authenticating with ${hostname}...`);
 
@@ -110,26 +81,16 @@ async function loginWithOAuth(
 	args: { "client-id"?: string; "client-secret"?: string },
 ): Promise<void> {
 	// Resolve client ID
-	let clientId = args["client-id"] ?? process.env["BACKLOG_OAUTH_CLIENT_ID"];
-	if (!clientId) {
-		const input = await consola.prompt("OAuth Client ID:", { type: "text" });
-		if (typeof input !== "string" || !input) {
-			consola.error("Client ID is required.");
-			return process.exit(1);
-		}
-		clientId = input;
-	}
+	const clientId = await promptRequired(
+		"OAuth Client ID:",
+		args["client-id"] ?? process.env["BACKLOG_OAUTH_CLIENT_ID"],
+	);
 
 	// Resolve client secret
-	let clientSecret = args["client-secret"] ?? process.env["BACKLOG_OAUTH_CLIENT_SECRET"];
-	if (!clientSecret) {
-		const input = await consola.prompt("OAuth Client Secret:", { type: "text" });
-		if (typeof input !== "string" || !input) {
-			consola.error("Client Secret is required.");
-			return process.exit(1);
-		}
-		clientSecret = input;
-	}
+	const clientSecret = await promptRequired(
+		"OAuth Client Secret:",
+		args["client-secret"] ?? process.env["BACKLOG_OAUTH_CLIENT_SECRET"],
+	);
 
 	// Start callback server
 	const callbackServer = startCallbackServer();

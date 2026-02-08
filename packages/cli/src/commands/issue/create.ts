@@ -4,6 +4,7 @@ import type { IssuesCreateData } from "@repo/openapi-client";
 import { getClient } from "#utils/client.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
+import readStdin from "#utils/stdin.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -69,11 +70,7 @@ export default defineCommand({
 		// Resolve description from stdin if "-"
 		let description = args.description;
 		if (description === "-") {
-			const chunks: Uint8Array[] = [];
-			for await (const chunk of process.stdin) {
-				chunks.push(chunk);
-			}
-			description = Buffer.concat(chunks).toString("utf8").trim();
+			description = await readStdin();
 		}
 
 		consola.start("Creating issue...");
