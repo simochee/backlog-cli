@@ -11,9 +11,8 @@ backlog notification read <id>
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明    |
-| ------ | ------ | ---- | ------- |
-| `<id>` | number | Yes  | 通知 ID |
+`<id> <int>`
+: 通知 ID
 
 ## 使用例
 

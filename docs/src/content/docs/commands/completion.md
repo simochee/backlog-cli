@@ -11,9 +11,8 @@ backlog completion <shell>
 
 ## 引数
 
-| 引数      | 型     | 必須 | 説明                                  |
-| --------- | ------ | ---- | ------------------------------------- |
-| `<shell>` | string | Yes  | シェル種別（`bash` / `zsh` / `fish`） |
+`<shell> <string>`
+: シェル種別: {bash|zsh|fish}
 
 ## 使用例
 

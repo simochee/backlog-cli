@@ -11,19 +11,32 @@ backlog pr create [flags]
 
 ## オプション
 
-| フラグ       | 短縮 | 型      | 必須  | 説明                                           |
-| ------------ | ---- | ------- | ----- | ---------------------------------------------- |
-| `--project`  | `-p` | string  | Yes   | プロジェクトキー（env: `BACKLOG_PROJECT`）     |
-| `--repo`     | `-R` | string  | Yes   | リポジトリ名                                   |
-| `--title`    | `-t` | string  | Yes\* | PR タイトル                                    |
-| `--body`     | `-b` | string  | Yes\* | PR 説明                                        |
-| `--base`     | `-B` | string  | Yes\* | マージ先ブランチ                               |
-| `--branch`   |      | string  | No    | マージ元ブランチ（デフォルト: 現在のブランチ） |
-| `--assignee` | `-a` | string  | No    | 担当者                                         |
-| `--issue`    |      | string  | No    | 関連課題キー                                   |
-| `--web`      |      | boolean | No    | 作成後ブラウザで開く                           |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
 
-> \*: インタラクティブモードでは省略可能
+`-R`, `--repo <string>`
+: リポジトリ名
+
+`-t`, `--title <string>`
+: PR タイトル
+
+`-b`, `--body <string>`
+: PR 説明
+
+`-B`, `--base <string>`
+: マージ先ブランチ
+
+`--branch <string>`
+: マージ元ブランチ（デフォルト: 現在のブランチ）
+
+`-a`, `--assignee <string>`
+: 担当者
+
+`--issue <string>`
+: 関連課題キー
+
+`--web`
+: 作成後ブラウザで開く
 
 ## 使用例
 

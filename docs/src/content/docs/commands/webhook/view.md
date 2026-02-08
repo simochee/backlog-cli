@@ -9,15 +9,13 @@ backlog webhook view <id> [flags]
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明       |
-| ------ | ------ | ---- | ---------- |
-| `<id>` | number | Yes  | Webhook ID |
+`<id> <int>`
+: Webhook ID
 
 ## オプション
 
-| フラグ      | 短縮 | 型     | 説明                                       |
-| ----------- | ---- | ------ | ------------------------------------------ |
-| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
 
 ## 使用例
 

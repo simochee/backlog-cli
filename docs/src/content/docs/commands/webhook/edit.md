@@ -9,20 +9,28 @@ backlog webhook edit <id> [flags]
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明       |
-| ------ | ------ | ---- | ---------- |
-| `<id>` | number | Yes  | Webhook ID |
+`<id> <int>`
+: Webhook ID
 
 ## オプション
 
-| フラグ                | 短縮 | 型      | 説明                                       |
-| --------------------- | ---- | ------- | ------------------------------------------ |
-| `--project`           | `-p` | string  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name`              | `-n` | string  | Webhook 名                                 |
-| `--hook-url`          |      | string  | 通知先 URL                                 |
-| `--description`       | `-d` | string  | 説明                                       |
-| `--all-event`         |      | boolean | 全イベント対象                             |
-| `--activity-type-ids` |      | string  | イベントタイプ ID（カンマ区切り）          |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-n`, `--name <string>`
+: Webhook 名
+
+`--hook-url <string>`
+: 通知先 URL
+
+`-d`, `--description <string>`
+: 説明
+
+`--all-event`
+: 全イベント対象
+
+`--activity-type-ids <string>`
+: イベントタイプ ID（カンマ区切り）
 
 ## 使用例
 

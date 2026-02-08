@@ -11,18 +11,22 @@ backlog pr view <number> [flags]
 
 ## 引数
 
-| 引数       | 型     | 必須 | 説明               |
-| ---------- | ------ | ---- | ------------------ |
-| `<number>` | number | Yes  | プルリクエスト番号 |
+`<number> <int>`
+: プルリクエスト番号
 
 ## オプション
 
-| フラグ       | 短縮 | 型      | 説明                                       |
-| ------------ | ---- | ------- | ------------------------------------------ |
-| `--project`  | `-p` | string  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--repo`     | `-R` | string  | リポジトリ名                               |
-| `--comments` |      | boolean | コメントも表示する                         |
-| `--web`      |      | boolean | ブラウザで開く                             |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-R`, `--repo <string>`
+: リポジトリ名
+
+`--comments`
+: コメントも表示する
+
+`--web`
+: ブラウザで開く
 
 ## 使用例
 

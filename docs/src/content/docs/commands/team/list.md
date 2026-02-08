@@ -9,11 +9,14 @@ backlog team list [flags]
 
 ## オプション
 
-| フラグ     | 短縮 | 型     | デフォルト | 説明                     |
-| ---------- | ---- | ------ | ---------- | ------------------------ |
-| `--order`  |      | string | `desc`     | 並び順（`asc` / `desc`） |
-| `--offset` |      | number | `0`        | オフセット               |
-| `--limit`  | `-L` | number | `20`       | 取得件数                 |
+`--order <string>` (default "desc")
+: 並び順: {asc|desc}
+
+`--offset <int>` (default 0)
+: オフセット
+
+`-L`, `--limit <int>` (default 20)
+: 取得件数
 
 ## 使用例
 

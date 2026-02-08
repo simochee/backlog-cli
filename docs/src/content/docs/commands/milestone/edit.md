@@ -9,20 +9,28 @@ backlog milestone edit <id> [flags]
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明              |
-| ------ | ------ | ---- | ----------------- |
-| `<id>` | number | Yes  | マイルストーン ID |
+`<id> <int>`
+: マイルストーン ID
 
 ## オプション
 
-| フラグ               | 短縮 | 型      | 説明                                       |
-| -------------------- | ---- | ------- | ------------------------------------------ |
-| `--project`          | `-p` | string  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name`             | `-n` | string  | マイルストーン名                           |
-| `--description`      | `-d` | string  | 説明                                       |
-| `--start-date`       |      | string  | 開始日（`yyyy-MM-dd`）                     |
-| `--release-due-date` |      | string  | リリース予定日（`yyyy-MM-dd`）             |
-| `--archived`         |      | boolean | アーカイブ                                 |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-n`, `--name <string>`
+: マイルストーン名
+
+`-d`, `--description <string>`
+: 説明
+
+`--start-date <string>`
+: 開始日（`yyyy-MM-dd`）
+
+`--release-due-date <string>`
+: リリース予定日（`yyyy-MM-dd`）
+
+`--archived`
+: アーカイブ
 
 ## 使用例
 

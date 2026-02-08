@@ -11,19 +11,32 @@ backlog issue create [flags]
 
 ## オプション
 
-| フラグ          | 短縮 | 型      | 必須  | デフォルト | 説明                                       |
-| --------------- | ---- | ------- | ----- | ---------- | ------------------------------------------ |
-| `--project`     | `-p` | string  | Yes\* | —          | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--title`       | `-t` | string  | Yes\* | —          | 課題の件名                                 |
-| `--type`        | `-T` | string  | Yes\* | —          | 課題種別名                                 |
-| `--priority`    | `-P` | string  | No    | `中`       | 優先度名                                   |
-| `--description` | `-d` | string  | No    | —          | 課題の詳細（`-` で標準入力）               |
-| `--assignee`    | `-a` | string  | No    | —          | 担当者                                     |
-| `--start-date`  |      | string  | No    | —          | 開始日（`yyyy-MM-dd`）                     |
-| `--due-date`    |      | string  | No    | —          | 期限日（`yyyy-MM-dd`）                     |
-| `--web`         |      | boolean | No    | `false`    | 作成後ブラウザで開く                       |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
 
-> \*: インタラクティブモードでは省略可能
+`-t`, `--title <string>`
+: 課題の件名
+
+`-T`, `--type <string>`
+: 課題種別名
+
+`-P`, `--priority <string>`
+: 優先度名
+
+`-d`, `--description <string>`
+: 課題の詳細（`-` で標準入力）
+
+`-a`, `--assignee <string>`
+: 担当者
+
+`--start-date <string>`
+: 開始日（`yyyy-MM-dd`）
+
+`--due-date <string>`
+: 期限日（`yyyy-MM-dd`）
+
+`--web`
+: 作成後ブラウザで開く
 
 ## 使用例
 

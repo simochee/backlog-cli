@@ -9,10 +9,11 @@ backlog watching add [flags]
 
 ## オプション
 
-| フラグ    | 型     | 必須 | 説明     |
-| --------- | ------ | ---- | -------- |
-| `--issue` | string | Yes  | 課題キー |
-| `--note`  | string | No   | メモ     |
+`--issue <string>`
+: 課題キー
+
+`--note <string>`
+: メモ
 
 ## 使用例
 

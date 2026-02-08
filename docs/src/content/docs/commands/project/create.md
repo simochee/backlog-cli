@@ -11,14 +11,23 @@ backlog project create [flags]
 
 ## オプション
 
-| フラグ                                     | 短縮 | 型      | 必須 | 説明                                 |
-| ------------------------------------------ | ---- | ------- | ---- | ------------------------------------ |
-| `--name`                                   | `-n` | string  | Yes  | プロジェクト名                       |
-| `--key`                                    | `-k` | string  | Yes  | プロジェクトキー（英大文字）         |
-| `--chart-enabled`                          |      | boolean | No   | チャート有効                         |
-| `--subtasking-enabled`                     |      | boolean | No   | サブタスク有効                       |
-| `--project-leader-can-edit-project-leader` |      | boolean | No   | PL 変更権限                          |
-| `--text-formatting-rule`                   |      | string  | No   | 書式ルール（`markdown` / `backlog`） |
+`-n`, `--name <string>`
+: プロジェクト名
+
+`-k`, `--key <string>`
+: プロジェクトキー（英大文字）
+
+`--chart-enabled`
+: チャート有効
+
+`--subtasking-enabled`
+: サブタスク有効
+
+`--project-leader-can-edit-project-leader`
+: PL 変更権限
+
+`--text-formatting-rule <string>`
+: 書式ルール: {markdown|backlog}
 
 ## 使用例
 

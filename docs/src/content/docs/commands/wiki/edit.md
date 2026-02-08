@@ -9,17 +9,19 @@ backlog wiki edit <wiki-id> [flags]
 
 ## 引数
 
-| 引数        | 型     | 必須 | 説明      |
-| ----------- | ------ | ---- | --------- |
-| `<wiki-id>` | number | Yes  | ページ ID |
+`<wiki-id> <int>`
+: ページ ID
 
 ## オプション
 
-| フラグ     | 短縮 | 型      | 説明       |
-| ---------- | ---- | ------- | ---------- |
-| `--name`   | `-n` | string  | ページ名   |
-| `--body`   | `-b` | string  | 本文       |
-| `--notify` |      | boolean | メール通知 |
+`-n`, `--name <string>`
+: ページ名
+
+`-b`, `--body <string>`
+: 本文
+
+`--notify`
+: メール通知
 
 ## 使用例
 
