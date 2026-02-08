@@ -11,6 +11,14 @@ export interface BacklogClientConfig {
 }
 
 /**
+ * Formats a UTC epoch seconds value into a localized date-time string.
+ */
+export function formatResetTime(epochSeconds: number): string {
+	const date = new Date(epochSeconds * 1000);
+	return date.toLocaleString();
+}
+
+/**
  * Creates a pre-configured HTTP client for the Backlog API v2.
  *
  * Supports both API Key (query parameter) and OAuth 2.0 (Bearer token) authentication.
@@ -20,5 +28,14 @@ export function createClient(config: BacklogClientConfig): $Fetch {
 		baseURL: joinURL(`https://${config.host}`, "/api/v2"),
 		headers: config.accessToken ? { Authorization: `Bearer ${config.accessToken}` } : {},
 		query: config.apiKey ? { apiKey: config.apiKey } : {},
+		onResponseError({ response }) {
+			if (response.status === 429) {
+				const resetEpoch = response.headers.get("X-RateLimit-Reset");
+				const resetMessage = resetEpoch
+					? `リクエスト制限は ${formatResetTime(Number(resetEpoch))} にリセットされます。`
+					: "しばらく時間をおいて再度お試しください。";
+				throw new Error(`API レートリミットに達しました。${resetMessage}`);
+			}
+		},
 	});
 }

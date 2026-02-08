@@ -1,4 +1,4 @@
-import { createClient } from "#client.ts";
+import { createClient, formatResetTime } from "#client.ts";
 import { describe, expect, it, vi } from "vitest";
 
 // Mock ofetch to inspect how client is configured
@@ -105,5 +105,64 @@ describe("createClient", () => {
 
 		expect(client._config["headers"]).toEqual({});
 		expect(client._config["query"]).toEqual({});
+	});
+
+	it("registers onResponseError interceptor", () => {
+		const client = createClient({
+			host: "example.backlog.com",
+			apiKey: "key",
+		}) as unknown as { _config: Record<string, unknown> };
+
+		expect(client._config["onResponseError"]).toBeTypeOf("function");
+	});
+
+	describe("onResponseError", () => {
+		function getInterceptor() {
+			const client = createClient({
+				host: "example.backlog.com",
+				apiKey: "key",
+			}) as unknown as {
+				_config: { onResponseError: (ctx: { response: { status: number; headers: Headers } }) => void };
+			};
+			return client._config.onResponseError;
+		}
+
+		it("429 レスポンスで X-RateLimit-Reset ヘッダーがある場合、リセット日時を含むエラーを投げる", () => {
+			const onResponseError = getInterceptor();
+			const resetEpoch = Math.floor(Date.now() / 1000) + 3600;
+			const headers = new Headers({ "X-RateLimit-Reset": String(resetEpoch) });
+
+			expect(() => onResponseError({ response: { status: 429, headers } })).toThrowError(
+				`API レートリミットに達しました。リクエスト制限は ${formatResetTime(resetEpoch)} にリセットされます。`,
+			);
+		});
+
+		it("429 レスポンスで X-RateLimit-Reset ヘッダーがない場合、汎用メッセージのエラーを投げる", () => {
+			const onResponseError = getInterceptor();
+			const headers = new Headers();
+
+			expect(() => onResponseError({ response: { status: 429, headers } })).toThrowError(
+				"API レートリミットに達しました。しばらく時間をおいて再度お試しください。",
+			);
+		});
+
+		it("429 以外のステータスではエラーを投げない", () => {
+			const onResponseError = getInterceptor();
+			const headers = new Headers();
+
+			expect(() => onResponseError({ response: { status: 500, headers } })).not.toThrow();
+			expect(() => onResponseError({ response: { status: 403, headers } })).not.toThrow();
+			expect(() => onResponseError({ response: { status: 404, headers } })).not.toThrow();
+		});
+	});
+});
+
+describe("formatResetTime", () => {
+	it("エポック秒をローカライズされた日時文字列に変換する", () => {
+		const epochSeconds = 1700000000;
+		const result = formatResetTime(epochSeconds);
+		const expected = new Date(1700000000 * 1000).toLocaleString();
+
+		expect(result).toBe(expected);
 	});
 });
