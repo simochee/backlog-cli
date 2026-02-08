@@ -1,8 +1,9 @@
 import type { BacklogSpaceNotification } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -13,9 +14,7 @@ export default defineCommand({
 	async run() {
 		const { client } = await getClient();
 
-		const notification = await client<BacklogSpaceNotification>(
-			"/space/notification",
-		);
+		const notification = await client<BacklogSpaceNotification>("/space/notification");
 
 		if (!notification.content) {
 			consola.info("No space notification set.");

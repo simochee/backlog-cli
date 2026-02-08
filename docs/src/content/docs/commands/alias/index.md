@@ -7,8 +7,8 @@ description: コマンドエイリアスを管理します
 
 ## サブコマンド
 
-| コマンド | 説明 |
-|----------|------|
-| [alias set](/backlog-cli/commands/alias/set/) | エイリアスを設定する |
-| [alias list](/backlog-cli/commands/alias/list/) | エイリアスの一覧を表示する |
-| [alias delete](/backlog-cli/commands/alias/delete/) | エイリアスを削除する |
+| コマンド                                            | 説明                       |
+| --------------------------------------------------- | -------------------------- |
+| [alias set](/backlog-cli/commands/alias/set/)       | エイリアスを設定する       |
+| [alias list](/backlog-cli/commands/alias/list/)     | エイリアスの一覧を表示する |
+| [alias delete](/backlog-cli/commands/alias/delete/) | エイリアスを削除する       |

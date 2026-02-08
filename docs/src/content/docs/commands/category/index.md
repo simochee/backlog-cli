@@ -7,9 +7,9 @@ description: カテゴリを管理します
 
 ## サブコマンド
 
-| コマンド | 説明 |
-|----------|------|
-| [category list](/backlog-cli/commands/category/list/) | カテゴリの一覧を表示する |
-| [category create](/backlog-cli/commands/category/create/) | カテゴリを作成する |
-| [category edit](/backlog-cli/commands/category/edit/) | カテゴリを編集する |
-| [category delete](/backlog-cli/commands/category/delete/) | カテゴリを削除する |
+| コマンド                                                  | 説明                     |
+| --------------------------------------------------------- | ------------------------ |
+| [category list](/backlog-cli/commands/category/list/)     | カテゴリの一覧を表示する |
+| [category create](/backlog-cli/commands/category/create/) | カテゴリを作成する       |
+| [category edit](/backlog-cli/commands/category/edit/)     | カテゴリを編集する       |
+| [category delete](/backlog-cli/commands/category/delete/) | カテゴリを削除する       |

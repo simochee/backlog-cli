@@ -1,8 +1,3 @@
 export { loadConfig, writeConfig } from "#config.ts";
-export {
-	addSpace,
-	removeSpace,
-	resolveSpace,
-	updateSpaceAuth,
-} from "#space.ts";
+export { addSpace, removeSpace, resolveSpace, updateSpaceAuth } from "#space.ts";
 export type { Rc, RcAuth, RcSpace } from "#types.ts";

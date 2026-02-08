@@ -27,8 +27,8 @@ backlog config set default_space your-space.backlog.com
 
 ## 設定キー
 
-| キー | 説明 |
-|------|------|
+| キー            | 説明                                  |
+| --------------- | ------------------------------------- |
 | `default_space` | デフォルトの Backlog スペースホスト名 |
 
 ## スペース固有の設定
@@ -48,9 +48,9 @@ backlog config list --hostname your-space.backlog.com
 
 ## 環境変数
 
-| 環境変数 | 説明 |
-|----------|------|
-| `BACKLOG_SPACE` | 使用するスペースのホスト名（`--space` フラグと同等） |
+| 環境変数          | 説明                                                     |
+| ----------------- | -------------------------------------------------------- |
+| `BACKLOG_SPACE`   | 使用するスペースのホスト名（`--space` フラグと同等）     |
 | `BACKLOG_PROJECT` | デフォルトのプロジェクトキー（`--project` フラグと同等） |
 
 ### `BACKLOG_PROJECT`

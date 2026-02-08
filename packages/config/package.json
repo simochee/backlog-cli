@@ -1,21 +1,21 @@
 {
 	"name": "@repo/config",
-	"devDependencies": {
-		"@repo/tsconfigs": "workspace:*"
-	},
-	"exports": "./src/index.ts",
+	"private": true,
+	"type": "module",
 	"imports": {
 		"#*": "./src/*"
 	},
-	"private": true,
+	"exports": "./src/index.ts",
 	"scripts": {
 		"test": "vitest run"
 	},
-	"type": "module",
 	"dependencies": {
 		"arkregex": "^0.0.5",
 		"arktype": "^2.1.29",
 		"consola": "^3.4.0",
 		"rc9": "^2.1.2"
+	},
+	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*"
 	}
 }

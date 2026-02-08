@@ -1,9 +1,10 @@
 import type { BacklogWiki } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { openUrl, wikiUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -43,9 +44,7 @@ export default defineCommand({
 		consola.log(`    Updated:     ${formatDate(wiki.updated)}`);
 
 		if (wiki.tags.length > 0) {
-			consola.log(
-				`    Tags:        ${wiki.tags.map((t) => t.name).join(", ")}`,
-			);
+			consola.log(`    Tags:        ${wiki.tags.map((t) => t.name).join(", ")}`);
 		}
 
 		if (wiki.attachments.length > 0) {

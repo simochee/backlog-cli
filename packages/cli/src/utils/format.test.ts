@@ -5,7 +5,7 @@ import type {
 	BacklogPullRequest,
 	BacklogRepository,
 } from "@repo/api";
-import { describe, expect, it } from "vitest";
+
 import {
 	formatDate,
 	formatIssueLine,
@@ -16,6 +16,7 @@ import {
 	getActivityLabel,
 	padEnd,
 } from "#utils/format.ts";
+import { describe, expect, it } from "vitest";
 
 describe("formatDate", () => {
 	it("returns empty string for null", () => {

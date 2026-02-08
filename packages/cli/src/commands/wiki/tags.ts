@@ -1,9 +1,10 @@
 import type { BacklogWikiTag } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {

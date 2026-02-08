@@ -1,7 +1,8 @@
 import type { BacklogProject } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -33,12 +34,9 @@ export default defineCommand({
 			}
 		}
 
-		const project = await client<BacklogProject>(
-			`/projects/${args["project-key"]}`,
-			{
-				method: "DELETE",
-			},
-		);
+		const project = await client<BacklogProject>(`/projects/${args["project-key"]}`, {
+			method: "DELETE",
+		});
 
 		consola.success(`Deleted project ${project.projectKey}: ${project.name}`);
 	},

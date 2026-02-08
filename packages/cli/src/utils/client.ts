@@ -18,9 +18,7 @@ export async function getClient(hostname?: string): Promise<{
 	const space = await resolveSpace(hostname);
 
 	if (!space) {
-		consola.error(
-			"No space configured. Run `backlog auth login` to authenticate.",
-		);
+		consola.error("No space configured. Run `backlog auth login` to authenticate.");
 		return process.exit(1);
 	}
 

@@ -1,9 +1,10 @@
 import type { BacklogNotification } from "@repo/api";
 import type { NotificationsListData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatNotificationLine, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -46,10 +47,7 @@ export default defineCommand({
 			query.maxId = Number.parseInt(args["max-id"], 10);
 		}
 
-		const notifications = await client<BacklogNotification[]>(
-			"/notifications",
-			{ query },
-		);
+		const notifications = await client<BacklogNotification[]>("/notifications", { query });
 
 		if (notifications.length === 0) {
 			consola.info("No notifications found.");

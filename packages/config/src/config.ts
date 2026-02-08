@@ -1,7 +1,7 @@
+import { Rc } from "#types.ts";
 import { type } from "arktype";
 import consola from "consola";
 import { readUser, writeUser } from "rc9";
-import { Rc } from "#types.ts";
 
 const APP_NAME = "backlog";
 

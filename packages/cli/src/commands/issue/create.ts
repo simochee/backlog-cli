@@ -1,16 +1,12 @@
 import type { BacklogIssue } from "@repo/api";
 import type { IssuesCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
-import {
-	resolveIssueTypeId,
-	resolvePriorityId,
-	resolveProjectId,
-	resolveUserId,
-} from "#utils/resolve.ts";
+import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -65,10 +61,7 @@ export default defineCommand({
 		const { client, host } = await getClient();
 
 		// Resolve required fields — prompt interactively if missing
-		const projectKey = await promptRequired(
-			"Project key:",
-			args.project || process.env.BACKLOG_PROJECT,
-		);
+		const projectKey = await promptRequired("Project key:", args.project || process.env.BACKLOG_PROJECT);
 		const title = await promptRequired("Issue title:", args.title);
 		const typeName = await promptRequired("Issue type:", args.type);
 		const priorityName = await promptRequired("Priority:", args.priority);

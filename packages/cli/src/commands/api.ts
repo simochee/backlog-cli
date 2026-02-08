@@ -1,6 +1,6 @@
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 /**
  * Parses a `key=value` field string. Values are auto-converted:
@@ -111,9 +111,9 @@ export default defineCommand({
 
 		if (Object.keys(fields).length > 0) {
 			if (isReadMethod) {
-				fetchOptions.query = fields;
+				fetchOptions["query"] = fields;
 			} else {
-				fetchOptions.body = fields;
+				fetchOptions["body"] = fields;
 			}
 		}
 
@@ -125,7 +125,7 @@ export default defineCommand({
 
 			while (true) {
 				const query = {
-					...(fetchOptions.query as Record<string, unknown> | undefined),
+					...(fetchOptions["query"] as Record<string, unknown> | undefined),
 					count,
 					offset,
 				};

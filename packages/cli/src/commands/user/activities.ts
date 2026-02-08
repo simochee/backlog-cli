@@ -1,9 +1,10 @@
 import type { BacklogActivity } from "@repo/api";
 import type { UsersGetActivitiesData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, getActivityLabel, padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -30,21 +31,15 @@ export default defineCommand({
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const query: NonNullable<UsersGetActivitiesData["query"]> &
-			Record<string, unknown> = {
+		const query: NonNullable<UsersGetActivitiesData["query"]> & Record<string, unknown> = {
 			count: Number.parseInt(args.limit, 10),
 		};
 
 		if (args["activity-type"]) {
-			query["activityTypeId[]"] = args["activity-type"]
-				.split(",")
-				.map((id) => Number.parseInt(id.trim(), 10));
+			query["activityTypeId[]"] = args["activity-type"].split(",").map((id) => Number.parseInt(id.trim(), 10));
 		}
 
-		const activities = await client<BacklogActivity[]>(
-			`/users/${args["user-id"]}/activities`,
-			{ query },
-		);
+		const activities = await client<BacklogActivity[]>(`/users/${args["user-id"]}/activities`, { query });
 
 		if (activities.length === 0) {
 			consola.info("No activities found.");

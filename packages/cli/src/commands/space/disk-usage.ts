@@ -1,7 +1,8 @@
 import type { BacklogSpaceDiskUsage } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 /**
  * Formats a byte count into a human-readable string.
@@ -26,13 +27,7 @@ export default defineCommand({
 		const usage = await client<BacklogSpaceDiskUsage>("/space/diskUsage");
 
 		const total =
-			usage.issue +
-			usage.wiki +
-			usage.file +
-			usage.subversion +
-			usage.git +
-			usage.gitLFS +
-			usage.pullRequest;
+			usage.issue + usage.wiki + usage.file + usage.subversion + usage.git + usage.gitLFS + usage.pullRequest;
 
 		consola.log("");
 		consola.log("  Disk Usage");

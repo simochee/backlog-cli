@@ -1,9 +1,10 @@
 import type { BacklogMilestone } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -22,9 +23,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const milestones = await client<BacklogMilestone[]>(
-			`/projects/${project}/versions`,
-		);
+		const milestones = await client<BacklogMilestone[]>(`/projects/${project}/versions`);
 
 		if (milestones.length === 0) {
 			consola.info("No milestones found.");

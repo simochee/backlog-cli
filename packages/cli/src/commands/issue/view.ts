@@ -1,9 +1,10 @@
 import type { BacklogComment, BacklogIssue } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
 import { issueUrl, openUrl } from "#utils/url.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -61,19 +62,13 @@ export default defineCommand({
 			consola.log(`    Actual:      ${issue.actualHours}h`);
 		}
 		if (issue.category.length > 0) {
-			consola.log(
-				`    Categories:  ${issue.category.map((c: { id: number; name: string }) => c.name).join(", ")}`,
-			);
+			consola.log(`    Categories:  ${issue.category.map((c: { id: number; name: string }) => c.name).join(", ")}`);
 		}
 		if (issue.milestone.length > 0) {
-			consola.log(
-				`    Milestones:  ${issue.milestone.map((m: { id: number; name: string }) => m.name).join(", ")}`,
-			);
+			consola.log(`    Milestones:  ${issue.milestone.map((m: { id: number; name: string }) => m.name).join(", ")}`);
 		}
 		if (issue.versions.length > 0) {
-			consola.log(
-				`    Versions:    ${issue.versions.map((v: { id: number; name: string }) => v.name).join(", ")}`,
-			);
+			consola.log(`    Versions:    ${issue.versions.map((v: { id: number; name: string }) => v.name).join(", ")}`);
 		}
 
 		if (issue.description) {
@@ -88,9 +83,7 @@ export default defineCommand({
 		}
 
 		if (args.comments) {
-			const comments = await client<BacklogComment[]>(
-				`/issues/${args.issueKey}/comments`,
-			);
+			const comments = await client<BacklogComment[]>(`/issues/${args.issueKey}/comments`);
 
 			if (comments.length > 0) {
 				consola.log("");
@@ -98,9 +91,7 @@ export default defineCommand({
 				for (const comment of comments) {
 					if (!comment.content) continue;
 					consola.log("");
-					consola.log(
-						`    ${comment.createdUser.name} (${formatDate(comment.created)}):`,
-					);
+					consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
 					consola.log(
 						comment.content
 							.split("\n")

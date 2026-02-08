@@ -1,8 +1,9 @@
 import type { BacklogRepository } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -31,9 +32,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const repo = await client<BacklogRepository>(
-			`/projects/${project}/git/repositories/${args.repoName}`,
-		);
+		const repo = await client<BacklogRepository>(`/projects/${project}/git/repositories/${args.repoName}`);
 
 		const cloneArgs = ["git", "clone", repo.httpUrl];
 		if (args.directory) {

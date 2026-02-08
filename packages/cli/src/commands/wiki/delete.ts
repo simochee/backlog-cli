@@ -1,7 +1,8 @@
 import type { BacklogWiki } from "@repo/api";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -23,10 +24,9 @@ export default defineCommand({
 		const { client } = await getClient();
 
 		if (!args.confirm) {
-			const confirmed = await consola.prompt(
-				`Are you sure you want to delete wiki page ${args["wiki-id"]}?`,
-				{ type: "confirm" },
-			);
+			const confirmed = await consola.prompt(`Are you sure you want to delete wiki page ${args["wiki-id"]}?`, {
+				type: "confirm",
+			});
 			if (!confirmed) {
 				consola.info("Cancelled.");
 				return;

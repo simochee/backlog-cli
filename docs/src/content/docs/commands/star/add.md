@@ -11,11 +11,11 @@ backlog star add [flags]
 
 ## オプション
 
-| フラグ | 型 | 説明 |
-|--------|------|------|
-| `--issue` | string | 課題キー |
-| `--comment` | number | コメント ID |
-| `--wiki` | number | Wiki ID |
+| フラグ         | 型     | 説明           |
+| -------------- | ------ | -------------- |
+| `--issue`      | string | 課題キー       |
+| `--comment`    | number | コメント ID    |
+| `--wiki`       | number | Wiki ID        |
 | `--pr-comment` | number | PR コメント ID |
 
 ## 使用例

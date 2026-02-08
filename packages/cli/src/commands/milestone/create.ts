@@ -1,10 +1,11 @@
 import type { BacklogMilestone } from "@repo/api";
 import type { VersionsCreateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -55,13 +56,10 @@ export default defineCommand({
 			body.releaseDueDate = args["release-due-date"];
 		}
 
-		const milestone = await client<BacklogMilestone>(
-			`/projects/${project}/versions`,
-			{
-				method: "POST",
-				body,
-			},
-		);
+		const milestone = await client<BacklogMilestone>(`/projects/${project}/versions`, {
+			method: "POST",
+			body,
+		});
 
 		consola.success(`Created milestone #${milestone.id}: ${milestone.name}`);
 	},

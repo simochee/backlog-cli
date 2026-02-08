@@ -1,8 +1,9 @@
 import type { BacklogNotificationCount } from "@repo/api";
 import type { NotificationsCountData } from "@repo/openapi-client";
+
+import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { getClient } from "#utils/client.ts";
 
 export default defineCommand({
 	meta: {
@@ -31,10 +32,7 @@ export default defineCommand({
 			query.resourceAlreadyRead = true;
 		}
 
-		const result = await client<BacklogNotificationCount>(
-			"/notifications/count",
-			{ query },
-		);
+		const result = await client<BacklogNotificationCount>("/notifications/count", { query });
 
 		consola.log(`${result.count} notification(s)`);
 	},

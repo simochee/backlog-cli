@@ -1,9 +1,10 @@
 import type { BacklogStatus } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -22,9 +23,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const statuses = await client<BacklogStatus[]>(
-			`/projects/${project}/statuses`,
-		);
+		const statuses = await client<BacklogStatus[]>(`/projects/${project}/statuses`);
 
 		if (statuses.length === 0) {
 			consola.info("No statuses found.");

@@ -44,9 +44,7 @@ describe("alias delete", () => {
 			defaultSpace: undefined,
 		} as never);
 
-		const exitSpy = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/alias/delete.ts");
 		await mod.default.run?.({

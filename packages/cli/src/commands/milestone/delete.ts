@@ -1,8 +1,9 @@
 import type { BacklogMilestone } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -31,22 +32,18 @@ export default defineCommand({
 		const { client } = await getClient();
 
 		if (!args.confirm) {
-			const confirmed = await consola.prompt(
-				`Are you sure you want to delete milestone ${args.id}?`,
-				{ type: "confirm" },
-			);
+			const confirmed = await consola.prompt(`Are you sure you want to delete milestone ${args.id}?`, {
+				type: "confirm",
+			});
 			if (!confirmed) {
 				consola.info("Cancelled.");
 				return;
 			}
 		}
 
-		const milestone = await client<BacklogMilestone>(
-			`/projects/${project}/versions/${args.id}`,
-			{
-				method: "DELETE",
-			},
-		);
+		const milestone = await client<BacklogMilestone>(`/projects/${project}/versions/${args.id}`, {
+			method: "DELETE",
+		});
 
 		consola.success(`Deleted milestone #${milestone.id}: ${milestone.name}`);
 	},

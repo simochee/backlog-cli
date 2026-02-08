@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { formatBytes } from "#commands/space/disk-usage.ts";
+import { describe, expect, it } from "vitest";
 
 describe("formatBytes", () => {
 	it("0 バイトを正しくフォーマットする", () => {

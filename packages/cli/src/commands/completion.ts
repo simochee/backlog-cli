@@ -100,9 +100,7 @@ export default defineCommand({
 		const completion = COMPLETIONS[shell];
 
 		if (!completion) {
-			consola.error(
-				`Unsupported shell: "${args.shell}". Supported: bash, zsh, fish`,
-			);
+			consola.error(`Unsupported shell: "${args.shell}". Supported: bash, zsh, fish`);
 			return process.exit(1);
 		}
 

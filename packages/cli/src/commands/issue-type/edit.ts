@@ -1,9 +1,10 @@
 import type { BacklogIssueType } from "@repo/api";
 import type { IssueTypesUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -45,13 +46,10 @@ export default defineCommand({
 			body.color = args.color;
 		}
 
-		const issueType = await client<BacklogIssueType>(
-			`/projects/${project}/issueTypes/${args.id}`,
-			{
-				method: "PATCH",
-				body,
-			},
-		);
+		const issueType = await client<BacklogIssueType>(`/projects/${project}/issueTypes/${args.id}`, {
+			method: "PATCH",
+			body,
+		});
 
 		consola.success(`Updated issue type #${issueType.id}: ${issueType.name}`);
 	},

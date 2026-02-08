@@ -48,37 +48,37 @@ backlog status
 
 ## コマンド一覧
 
-| コマンド | 説明 |
-|---|---|
-| `backlog auth` | 認証の管理 |
-| `backlog config` | CLI の設定管理 |
-| `backlog issue` | 課題の操作 |
-| `backlog pr` | プルリクエストの操作 |
-| `backlog project` | プロジェクトの操作 |
-| `backlog repo` | Git リポジトリの操作 |
-| `backlog notification` | 通知の操作 |
-| `backlog wiki` | Wiki の操作 |
-| `backlog user` | ユーザーの操作 |
-| `backlog team` | チームの操作 |
-| `backlog category` | カテゴリーの操作 |
-| `backlog milestone` | マイルストーンの操作 |
-| `backlog issue-type` | 種別の操作 |
-| `backlog status-type` | 状態の操作 |
-| `backlog space` | スペースの操作 |
-| `backlog webhook` | Webhook の操作 |
-| `backlog star` | スターの操作 |
-| `backlog watching` | ウォッチの操作 |
-| `backlog alias` | エイリアスの操作 |
-| `backlog status` | ダッシュボードの表示 |
-| `backlog browse` | ブラウザで開く |
-| `backlog api` | Backlog API の直接呼び出し |
-| `backlog completion` | シェル補完スクリプトの生成 |
+| コマンド               | 説明                       |
+| ---------------------- | -------------------------- |
+| `backlog auth`         | 認証の管理                 |
+| `backlog config`       | CLI の設定管理             |
+| `backlog issue`        | 課題の操作                 |
+| `backlog pr`           | プルリクエストの操作       |
+| `backlog project`      | プロジェクトの操作         |
+| `backlog repo`         | Git リポジトリの操作       |
+| `backlog notification` | 通知の操作                 |
+| `backlog wiki`         | Wiki の操作                |
+| `backlog user`         | ユーザーの操作             |
+| `backlog team`         | チームの操作               |
+| `backlog category`     | カテゴリーの操作           |
+| `backlog milestone`    | マイルストーンの操作       |
+| `backlog issue-type`   | 種別の操作                 |
+| `backlog status-type`  | 状態の操作                 |
+| `backlog space`        | スペースの操作             |
+| `backlog webhook`      | Webhook の操作             |
+| `backlog star`         | スターの操作               |
+| `backlog watching`     | ウォッチの操作             |
+| `backlog alias`        | エイリアスの操作           |
+| `backlog status`       | ダッシュボードの表示       |
+| `backlog browse`       | ブラウザで開く             |
+| `backlog api`          | Backlog API の直接呼び出し |
+| `backlog completion`   | シェル補完スクリプトの生成 |
 
 ## 環境変数
 
-| 環境変数 | 説明 |
-|----------|------|
-| `BACKLOG_SPACE` | 使用するスペースのホスト名（`--space` フラグと同等） |
+| 環境変数          | 説明                                                     |
+| ----------------- | -------------------------------------------------------- |
+| `BACKLOG_SPACE`   | 使用するスペースのホスト名（`--space` フラグと同等）     |
 | `BACKLOG_PROJECT` | デフォルトのプロジェクトキー（`--project` フラグと同等） |
 
 ```bash

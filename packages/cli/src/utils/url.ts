@@ -33,24 +33,12 @@ export function projectUrl(host: string, projectKey: string): string {
 }
 
 /** Returns the URL for a pull request page. */
-export function pullRequestUrl(
-	host: string,
-	projectKey: string,
-	repoName: string,
-	prNumber: number,
-): string {
-	return buildBacklogUrl(
-		host,
-		`/git/${projectKey}/${repoName}/pullRequests/${prNumber}`,
-	);
+export function pullRequestUrl(host: string, projectKey: string, repoName: string, prNumber: number): string {
+	return buildBacklogUrl(host, `/git/${projectKey}/${repoName}/pullRequests/${prNumber}`);
 }
 
 /** Returns the URL for a repository page. */
-export function repositoryUrl(
-	host: string,
-	projectKey: string,
-	repoName: string,
-): string {
+export function repositoryUrl(host: string, projectKey: string, repoName: string): string {
 	return buildBacklogUrl(host, `/git/${projectKey}/${repoName}`);
 }
 

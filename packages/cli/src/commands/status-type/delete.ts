@@ -1,8 +1,9 @@
 import type { BacklogStatus } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -36,25 +37,19 @@ export default defineCommand({
 		const { client } = await getClient();
 
 		if (!args.confirm) {
-			const confirmed = await consola.prompt(
-				`Are you sure you want to delete status ${args.id}?`,
-				{ type: "confirm" },
-			);
+			const confirmed = await consola.prompt(`Are you sure you want to delete status ${args.id}?`, { type: "confirm" });
 			if (!confirmed) {
 				consola.info("Cancelled.");
 				return;
 			}
 		}
 
-		const status = await client<BacklogStatus>(
-			`/projects/${project}/statuses/${args.id}`,
-			{
-				method: "DELETE",
-				body: {
-					substituteStatusId: Number.parseInt(args["substitute-status-id"], 10),
-				},
+		const status = await client<BacklogStatus>(`/projects/${project}/statuses/${args.id}`, {
+			method: "DELETE",
+			body: {
+				substituteStatusId: Number.parseInt(args["substitute-status-id"], 10),
 			},
-		);
+		});
 
 		consola.success(`Deleted status #${status.id}: ${status.name}`);
 	},

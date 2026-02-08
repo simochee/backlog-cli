@@ -12,9 +12,9 @@ vi.mock("consola", () => ({
 	default: { error: vi.fn() },
 }));
 
+import { getClient } from "#utils/client.ts";
 import { createClient } from "@repo/api";
 import { resolveSpace } from "@repo/config";
-import { getClient } from "#utils/client.ts";
 
 describe("getClient", () => {
 	beforeEach(() => {
@@ -68,9 +68,7 @@ describe("getClient", () => {
 
 	it("スペースが未設定の場合 process.exit(1) を呼ぶ", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue(undefined as never);
-		const mockExit = vi
-			.spyOn(process, "exit")
-			.mockImplementation(() => undefined as never);
+		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		await getClient();
 

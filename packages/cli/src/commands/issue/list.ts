@@ -1,14 +1,11 @@
 import type { BacklogIssue } from "@repo/api";
 import type { IssuesListData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { formatIssueLine, padEnd } from "#utils/format.ts";
-import {
-	resolvePriorityId,
-	resolveProjectId,
-	resolveUserId,
-} from "#utils/resolve.ts";
+import { resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -19,8 +16,7 @@ export default defineCommand({
 		project: {
 			type: "string",
 			alias: "p",
-			description:
-				"Project key (multiple allowed, comma-separated) (env: BACKLOG_PROJECT)",
+			description: "Project key (multiple allowed, comma-separated) (env: BACKLOG_PROJECT)",
 		},
 		assignee: {
 			type: "string",
@@ -113,9 +109,7 @@ export default defineCommand({
 		const projectArg = args.project || process.env.BACKLOG_PROJECT;
 		if (projectArg) {
 			const keys = projectArg.split(",").map((k) => k.trim());
-			const ids = await Promise.all(
-				keys.map((key) => resolveProjectId(client, key)),
-			);
+			const ids = await Promise.all(keys.map((key) => resolveProjectId(client, key)));
 			query["projectId[]"] = ids;
 		}
 

@@ -1,7 +1,6 @@
 import type { BacklogIssue } from "@repo/api";
 import type { IssuesUpdateData } from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import {
 	extractProjectKey,
@@ -10,6 +9,8 @@ import {
 	resolveStatusId,
 	resolveUserId,
 } from "#utils/resolve.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {

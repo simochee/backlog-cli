@@ -21,9 +21,7 @@ export default defineCommand({
 
 		if (!hostname) {
 			if (config.spaces.length === 0) {
-				consola.error(
-					"No spaces configured. Run `backlog auth login` to add a space.",
-				);
+				consola.error("No spaces configured. Run `backlog auth login` to add a space.");
 				return process.exit(1);
 			}
 
@@ -42,9 +40,7 @@ export default defineCommand({
 		const space = config.spaces.find((s) => s.host === hostname);
 
 		if (!space) {
-			consola.error(
-				`Space "${hostname}" not found. Available spaces: ${config.spaces.map((s) => s.host).join(", ")}`,
-			);
+			consola.error(`Space "${hostname}" not found. Available spaces: ${config.spaces.map((s) => s.host).join(", ")}`);
 			return process.exit(1);
 		}
 

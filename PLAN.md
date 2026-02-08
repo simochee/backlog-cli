@@ -8,13 +8,13 @@
 
 ## 完了済み
 
-| Phase | 対象 | サブコマンド数 | 状態 |
-|-------|------|----------------|------|
-| Phase 1 | MVP（auth, config, issue, project, api） | 19 | 完了 |
-| Phase 2 | 開発者向け（pr, repo, notification, status, browse） | 19 | 完了 |
-| Phase 3 | 管理機能（wiki, user, team, category, milestone, issue-type, status-type, project 拡張） | 38 | 完了 |
-| Phase 4 | 拡張機能（space, webhook, star, watching, alias, auth 拡張, completion） | 23 | 完了 |
-| **合計** | | **99** | |
+| Phase    | 対象                                                                                     | サブコマンド数 | 状態 |
+| -------- | ---------------------------------------------------------------------------------------- | -------------- | ---- |
+| Phase 1  | MVP（auth, config, issue, project, api）                                                 | 19             | 完了 |
+| Phase 2  | 開発者向け（pr, repo, notification, status, browse）                                     | 19             | 完了 |
+| Phase 3  | 管理機能（wiki, user, team, category, milestone, issue-type, status-type, project 拡張） | 38             | 完了 |
+| Phase 4  | 拡張機能（space, webhook, star, watching, alias, auth 拡張, completion）                 | 23             | 完了 |
+| **合計** |                                                                                          | **99**         |      |
 
 ---
 
@@ -22,24 +22,24 @@
 
 `plans/command-overview.md` に構想として記載されているが、実装スコープ外としたコマンド:
 
-| コマンド | 対応 API | 備考 |
-|----------|----------|------|
-| `issue delete` | `DELETE /api/v2/issues/:issueIdOrKey` | 課題の削除 |
-| `issue comments` | `GET /api/v2/issues/:issueIdOrKey/comments` | コメント一覧表示 |
-| `issue count` | `GET /api/v2/issues/count` | 課題件数取得 |
-| `issue attachments` | `GET /api/v2/issues/:issueIdOrKey/attachments` | 添付ファイル一覧 |
-| `issue participants` | `GET /api/v2/issues/:issueIdOrKey/participants` | 参加者一覧 |
-| `pr count` | `GET .../pullRequests/count` | PR 件数取得 |
-| `pr attachments` | `GET .../pullRequests/:number/attachments` | PR 添付ファイル一覧 |
+| コマンド             | 対応 API                                        | 備考                |
+| -------------------- | ----------------------------------------------- | ------------------- |
+| `issue delete`       | `DELETE /api/v2/issues/:issueIdOrKey`           | 課題の削除          |
+| `issue comments`     | `GET /api/v2/issues/:issueIdOrKey/comments`     | コメント一覧表示    |
+| `issue count`        | `GET /api/v2/issues/count`                      | 課題件数取得        |
+| `issue attachments`  | `GET /api/v2/issues/:issueIdOrKey/attachments`  | 添付ファイル一覧    |
+| `issue participants` | `GET /api/v2/issues/:issueIdOrKey/participants` | 参加者一覧          |
+| `pr count`           | `GET .../pullRequests/count`                    | PR 件数取得         |
+| `pr attachments`     | `GET .../pullRequests/:number/attachments`      | PR 添付ファイル一覧 |
 
 ---
 
 ## 関連ドキュメント
 
-| ファイル | 内容 |
-|----------|------|
-| `claude.md` | 開発ガイドライン・設計原則・テストルール |
+| ファイル                          | 内容                                             |
+| --------------------------------- | ------------------------------------------------ |
+| `claude.md`                       | 開発ガイドライン・設計原則・テストルール         |
 | `plans/command-specifications.md` | 全コマンドの引数・オプション・API マッピング詳細 |
-| `plans/command-overview.md` | コマンドツリーと実装優先度 |
-| `plans/gh-backlog-mapping.md` | gh CLI → backlog CLI のマッピング |
-| `plans/backlog-api-reference.md` | Backlog API エンドポイントリファレンス |
+| `plans/command-overview.md`       | コマンドツリーと実装優先度                       |
+| `plans/gh-backlog-mapping.md`     | gh CLI → backlog CLI のマッピング                |
+| `plans/backlog-api-reference.md`  | Backlog API エンドポイントリファレンス           |

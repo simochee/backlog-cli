@@ -12,21 +12,21 @@
 
 ### テストが全くないコマンド（107ファイル）
 
-| カテゴリ | ファイル数 | 優先度 |
-|---|---|---|
-| `issue/*` (list, view, create, edit, close, reopen, comment, status) | 8 | 高 |
-| `pr/*` (list, view, create, edit, close, reopen, merge, comment, comments, status) | 10 | 高 |
-| `project/*` (list, view, create, edit, delete, users, add-user, remove-user, activities) | 9 | 高 |
-| `auth/login`, `auth/logout`, `auth/status`, `auth/token` | 4 | 高 |
-| `wiki/*` | 10 | 中 |
-| `webhook/*` | 6 | 中 |
-| `team/*` | 6 | 中 |
-| `notification/*` | 5 | 中 |
-| `user/*` | 5 | 中 |
-| `repo/*` | 4 | 中 |
-| `category/*`, `milestone/*`, `issue-type/*`, `status-type/*` | 20 | 中 |
-| `star/*`, `watching/*` | 10 | 低 |
-| `browse.ts`, `status.ts` | 2 | 中 |
+| カテゴリ                                                                                 | ファイル数 | 優先度 |
+| ---------------------------------------------------------------------------------------- | ---------- | ------ |
+| `issue/*` (list, view, create, edit, close, reopen, comment, status)                     | 8          | 高     |
+| `pr/*` (list, view, create, edit, close, reopen, merge, comment, comments, status)       | 10         | 高     |
+| `project/*` (list, view, create, edit, delete, users, add-user, remove-user, activities) | 9          | 高     |
+| `auth/login`, `auth/logout`, `auth/status`, `auth/token`                                 | 4          | 高     |
+| `wiki/*`                                                                                 | 10         | 中     |
+| `webhook/*`                                                                              | 6          | 中     |
+| `team/*`                                                                                 | 6          | 中     |
+| `notification/*`                                                                         | 5          | 中     |
+| `user/*`                                                                                 | 5          | 中     |
+| `repo/*`                                                                                 | 4          | 中     |
+| `category/*`, `milestone/*`, `issue-type/*`, `status-type/*`                             | 20         | 中     |
+| `star/*`, `watching/*`                                                                   | 10         | 低     |
+| `browse.ts`, `status.ts`                                                                 | 2          | 中     |
 
 ### 既存テストの問題
 
@@ -52,6 +52,7 @@
 `@repo/openapi-client` の生成型（`IssuesCreateData`, `PullRequestsUpdateData` 等）を活用するよう39ファイルを修正。
 
 **残存する `Record<string, unknown>`（意図的な使用）:**
+
 - `api.ts`: 汎用APIコマンドのため型を限定できない
 - `config/get.ts`: 動的なキーアクセスのため
 - 一部コマンドの `& Record<string, unknown>` 交差型: Backlog API の `"key[]"` 配列記法に対応するため
@@ -98,22 +99,22 @@
 
 ## まとめ（優先度順）
 
-| 優先度 | 問題 | 件数 | 状態 |
-|---|---|---|---|
-| 高 | コマンドのテスト不足（93%がテストなし） | 107ファイル | **未対応** |
-| ~~高~~ | ~~`Record<string, unknown>` で型付きSDKを活用できていない~~ | ~~49箇所~~ | **解決済み（PR #26）** |
-| ~~高~~ | ~~API クライアントのテストが実質ゼロ~~ | ~~1ファイル~~ | **解決済み（PR #26: 3→10テスト）** |
-| ~~中~~ | ~~`unknown[]` の不適切な型定義~~ | ~~10箇所~~ | **解決済み（PR #25）** |
-| ~~中~~ | ~~`as unknown as T` のダブルキャスト~~ | ~~6箇所~~ | **解決済み（PR #25）** |
-| ~~中~~ | ~~PRコマンドのハードコードされたステータスID~~ | ~~3箇所~~ | **解決済み（PR #25）** |
-| ~~中~~ | ~~入力バリデーション不足（NaN チェックなし）~~ | ~~3箇所~~ | **解決済み（PR #25）** |
-| 中 | `auth/refresh` が未実装 | 1箇所 | **未対応** |
-| ~~低~~ | ~~`Bun.spawn` のエラーハンドリング不足~~ | ~~8箇所~~ | **解決済み（PR #25）** |
-| ~~低~~ | ~~`console.error`/`console.log` の不一致~~ | ~~3箇所~~ | **解決済み（PR #25）** |
+| 優先度 | 問題                                                        | 件数          | 状態                               |
+| ------ | ----------------------------------------------------------- | ------------- | ---------------------------------- |
+| 高     | コマンドのテスト不足（93%がテストなし）                     | 107ファイル   | **未対応**                         |
+| ~~高~~ | ~~`Record<string, unknown>` で型付きSDKを活用できていない~~ | ~~49箇所~~    | **解決済み（PR #26）**             |
+| ~~高~~ | ~~API クライアントのテストが実質ゼロ~~                      | ~~1ファイル~~ | **解決済み（PR #26: 3→10テスト）** |
+| ~~中~~ | ~~`unknown[]` の不適切な型定義~~                            | ~~10箇所~~    | **解決済み（PR #25）**             |
+| ~~中~~ | ~~`as unknown as T` のダブルキャスト~~                      | ~~6箇所~~     | **解決済み（PR #25）**             |
+| ~~中~~ | ~~PRコマンドのハードコードされたステータスID~~              | ~~3箇所~~     | **解決済み（PR #25）**             |
+| ~~中~~ | ~~入力バリデーション不足（NaN チェックなし）~~              | ~~3箇所~~     | **解決済み（PR #25）**             |
+| 中     | `auth/refresh` が未実装                                     | 1箇所         | **未対応**                         |
+| ~~低~~ | ~~`Bun.spawn` のエラーハンドリング不足~~                    | ~~8箇所~~     | **解決済み（PR #25）**             |
+| ~~低~~ | ~~`console.error`/`console.log` の不一致~~                  | ~~3箇所~~     | **解決済み（PR #25）**             |
 
 ### 対応履歴
 
-| PR | 内容 |
-|---|---|
-| #25 | 型安全性、エラーハンドリング、バリデーションの改善（中〜低優先度項目） |
+| PR  | 内容                                                                                                                         |
+| --- | ---------------------------------------------------------------------------------------------------------------------------- |
+| #25 | 型安全性、エラーハンドリング、バリデーションの改善（中〜低優先度項目）                                                       |
 | #26 | `Record<string, unknown>` → 型付きSDK型への移行（39ファイル）、APIクライアントテスト拡充（3→10）、parseFieldテスト追加（11） |

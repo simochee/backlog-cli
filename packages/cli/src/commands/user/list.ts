@@ -1,8 +1,9 @@
 import type { BacklogUser } from "@repo/api";
-import { defineCommand } from "citty";
-import consola from "consola";
+
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -35,10 +36,7 @@ export default defineCommand({
 			const id = padEnd(`${user.id}`, 10);
 			const userId = padEnd(user.userId, 20);
 			const name = padEnd(user.name, 20);
-			const role = padEnd(
-				roleNames[user.roleType] ?? `Role ${user.roleType}`,
-				16,
-			);
+			const role = padEnd(roleNames[user.roleType] ?? `Role ${user.roleType}`, 16);
 			consola.log(`${id}${userId}${name}${role}${user.mailAddress}`);
 		}
 	},

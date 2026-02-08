@@ -11,20 +11,20 @@ backlog pr edit <number> [flags]
 
 ## 引数
 
-| 引数 | 型 | 必須 | 説明 |
-|------|------|------|------|
-| `<number>` | number | Yes | プルリクエスト番号 |
+| 引数       | 型     | 必須 | 説明               |
+| ---------- | ------ | ---- | ------------------ |
+| `<number>` | number | Yes  | プルリクエスト番号 |
 
 ## オプション
 
-| フラグ | 短縮 | 型 | 説明 |
-|--------|------|------|------|
-| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--repo` | `-R` | string | リポジトリ名 |
-| `--title` | `-t` | string | タイトル |
-| `--body` | `-b` | string | 説明 |
-| `--assignee` | `-a` | string | 担当者 |
-| `--issue` | | string | 関連課題キー |
+| フラグ       | 短縮 | 型     | 説明                                       |
+| ------------ | ---- | ------ | ------------------------------------------ |
+| `--project`  | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
+| `--repo`     | `-R` | string | リポジトリ名                               |
+| `--title`    | `-t` | string | タイトル                                   |
+| `--body`     | `-b` | string | 説明                                       |
+| `--assignee` | `-a` | string | 担当者                                     |
+| `--issue`    |      | string | 関連課題キー                               |
 
 ## 使用例
 

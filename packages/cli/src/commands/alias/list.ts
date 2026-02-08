@@ -1,7 +1,7 @@
+import { padEnd } from "#utils/format.ts";
 import { loadConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
-import { padEnd } from "#utils/format.ts";
 
 export default defineCommand({
 	meta: {

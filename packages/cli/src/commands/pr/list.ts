@@ -1,13 +1,11 @@
-import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
-import type {
-	PullRequestStatusType,
-	PullRequestsListData,
-} from "@repo/openapi-client";
-import { defineCommand } from "citty";
-import consola from "consola";
+import type { PullRequestStatusType, PullRequestsListData } from "@repo/openapi-client";
+
 import { getClient } from "#utils/client.ts";
 import { formatPullRequestLine, padEnd } from "#utils/format.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
+import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
+import { defineCommand } from "citty";
+import consola from "consola";
 
 export default defineCommand({
 	meta: {
@@ -67,8 +65,7 @@ export default defineCommand({
 			return process.exit(1);
 		}
 
-		const query: NonNullable<PullRequestsListData["query"]> &
-			Record<string, unknown> = { count };
+		const query: NonNullable<PullRequestsListData["query"]> & Record<string, unknown> = { count };
 
 		if (args.offset) {
 			const offset = Number.parseInt(args.offset, 10);
@@ -89,10 +86,7 @@ export default defineCommand({
 			const statuses = args.status.split(",").map((s) => s.trim());
 			query["statusId[]"] = statuses.map((s) => {
 				const id = statusMap[s.toLowerCase()];
-				if (!id)
-					throw new Error(
-						`Invalid PR status "${s}". Available: open, closed, merged`,
-					);
+				if (!id) throw new Error(`Invalid PR status "${s}". Available: open, closed, merged`);
 				return id;
 			});
 		}
@@ -112,10 +106,9 @@ export default defineCommand({
 			query["issueId[]"] = [issue.id];
 		}
 
-		const prs = await client<BacklogPullRequest[]>(
-			`/projects/${project}/git/repositories/${args.repo}/pullRequests`,
-			{ query },
-		);
+		const prs = await client<BacklogPullRequest[]>(`/projects/${project}/git/repositories/${args.repo}/pullRequests`, {
+			query,
+		});
 
 		if (prs.length === 0) {
 			consola.info("No pull requests found.");
