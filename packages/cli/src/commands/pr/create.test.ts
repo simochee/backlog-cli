@@ -8,9 +8,10 @@ vi.mock("#utils/resolve.ts", () => ({
 vi.mock("consola", () => ({
 	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn() },
 }));
-vi.mock("#utils/prompt.ts", () => ({
-	promptRequired: vi.fn((_label: string, value: string) => Promise.resolve(value)),
-}));
+vi.mock("#utils/prompt.ts", () => {
+	const fn = vi.fn((_label: string, value: string) => Promise.resolve(value));
+	return { default: fn, promptRequired: fn };
+});
 vi.mock("#utils/url.ts", () => ({
 	openUrl: vi.fn(),
 	pullRequestUrl: vi.fn(() => "https://example.backlog.com/git/PROJ/repo/pullRequests/1"),

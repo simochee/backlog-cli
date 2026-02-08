@@ -1,5 +1,8 @@
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/prompt.ts", () => ({ promptRequired: vi.fn() }));
+vi.mock("#utils/prompt.ts", () => {
+	const fn = vi.fn();
+	return { default: fn, promptRequired: fn };
+});
 vi.mock("consola", () => ({
 	default: { log: vi.fn(), success: vi.fn() },
 }));

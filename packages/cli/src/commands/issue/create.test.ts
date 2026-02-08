@@ -4,9 +4,10 @@ vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("consola", () => ({
 	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn(), prompt: vi.fn() },
 }));
-vi.mock("#utils/prompt.ts", () => ({
-	promptRequired: vi.fn(),
-}));
+vi.mock("#utils/prompt.ts", () => {
+	const fn = vi.fn();
+	return { default: fn, promptRequired: fn };
+});
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectId: vi.fn(() => 1),
 	resolveIssueTypeId: vi.fn(() => 100),
