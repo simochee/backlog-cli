@@ -25,7 +25,7 @@
 | `user/*`                                                                                 | 5          | 中     | 未対応                     |
 | `repo/*`                                                                                 | 4          | 中     | 未対応                     |
 | `category/*`, `milestone/*`, `issue-type/*`, `status-type/*`                             | 20         | 中     | 未対応                     |
-| `star/*`, `watching/*`                                                                   | 10         | 低     | 未対応                     |
+| ~~`star/*`, `watching/*`~~                                                               | ~~10~~     | ~~低~~ | **解決済み（全8テスト）**  |
 | `browse.ts`, `status.ts`                                                                 | 2          | 中     | 未対応                     |
 
 ### 既存テストの問題
