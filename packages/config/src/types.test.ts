@@ -21,6 +21,32 @@ describe("RcAuth", () => {
 		});
 	});
 
+	it("accepts oauth auth with clientId and clientSecret", () => {
+		const result = RcAuth({
+			method: "oauth",
+			accessToken: "access",
+			refreshToken: "refresh",
+			clientId: "my-client-id",
+			clientSecret: "my-client-secret",
+		});
+		expect(result).toEqual({
+			method: "oauth",
+			accessToken: "access",
+			refreshToken: "refresh",
+			clientId: "my-client-id",
+			clientSecret: "my-client-secret",
+		});
+	});
+
+	it("accepts oauth auth without clientId and clientSecret (backward compat)", () => {
+		const result = RcAuth({
+			method: "oauth",
+			accessToken: "access",
+			refreshToken: "refresh",
+		});
+		expect(result).not.toBeInstanceOf(type.errors);
+	});
+
 	it("rejects invalid method", () => {
 		const result = RcAuth({ method: "invalid" });
 		expect(result).toBeInstanceOf(type.errors);
