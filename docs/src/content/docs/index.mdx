@@ -21,10 +21,26 @@ import { Card, CardGrid, LinkCard, Tabs, TabItem, Steps } from "@astrojs/starlig
 ## インストール
 
 <Tabs>
-	<TabItem label="npm">```bash npm install -g @simochee/backlog-cli ```</TabItem>
-	<TabItem label="yarn">```bash yarn global add @simochee/backlog-cli ```</TabItem>
-	<TabItem label="pnpm">```bash pnpm add -g @simochee/backlog-cli ```</TabItem>
-	<TabItem label="bun">```bash bun install -g @simochee/backlog-cli ```</TabItem>
+	<TabItem label="npm">
+		```bash
+		npm install -g @simochee/backlog-cli
+		```
+	</TabItem>
+	<TabItem label="yarn">
+		```bash
+		yarn global add @simochee/backlog-cli
+		```
+	</TabItem>
+	<TabItem label="pnpm">
+		```bash
+		pnpm add -g @simochee/backlog-cli
+		```
+	</TabItem>
+	<TabItem label="bun">
+		```bash
+		bun install -g @simochee/backlog-cli
+		```
+	</TabItem>
 </Tabs>
 
 ## できること
@@ -100,6 +116,16 @@ backlog status
   MY_PROJECT-124  tanaka がコメントしました
   MY_PROJECT-138  PR がマージされました
 ```
+
+### AI エージェントから使う
+
+[Agent Skill](https://github.com/vercel-labs/skills) をインストールすると、AI コーディングエージェントに自然言語で Backlog 操作を指示できます。
+
+```bash
+npx skills add simochee/backlog-cli
+```
+
+たとえば Claude Code に「PROJ-123 を処理中にして」と指示するだけで、エージェントが適切な `backlog` コマンドを組み立てて実行します。詳しくは [AI エージェント連携ガイド](/backlog-cli/guides/ai-agent/) をご覧ください。
 
 ## クイックスタート
 
