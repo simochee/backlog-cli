@@ -23,13 +23,15 @@ backlog
 │   ├── edit
 │   ├── close
 │   ├── reopen
-│   ├── delete              # 未実装
+│   ├── delete
 │   ├── comment
-│   ├── comments            # 未実装
-│   ├── count               # 未実装
 │   ├── status
-│   ├── attachments         # 未実装
-│   └── participants        # 未実装
+│   │
+│   └── (実装スコープ外)
+│       ├── comments
+│       ├── count
+│       ├── attachments
+│       └── participants
 │
 ├── pr                      # プルリクエスト管理 ★ 重要
 │   ├── list
@@ -41,9 +43,11 @@ backlog
 │   ├── reopen
 │   ├── comment
 │   ├── comments
-│   ├── count               # 未実装
 │   ├── status
-│   └── attachments         # 未実装
+│   │
+│   └── (実装スコープ外)
+│       ├── count
+│       └── attachments
 │
 ├── project                 # プロジェクト管理
 │   ├── list

@@ -1,32 +1,33 @@
 # 未実装コマンドの検討
 
-PLAN.md に「実装スコープ外」として記載されている 7 コマンドについて、gh CLI に対応するコマンドがあるかを調査し、実装判断を行った。
+当初検討されていた 7 コマンドについて、gh CLI に対応するコマンドがあるかを調査し、実装判断を行った。
 
-## 調査結果
+## 最終判断結果
 
-| backlog-cli 未実装コマンド | gh CLI 対応コマンド | 実装判断 |
-| -------------------------- | ------------------- | -------- |
-| `issue delete`             | `gh issue delete`   | 実装する |
-| `issue comments`           | なし                | 見送り   |
-| `issue count`              | なし                | 見送り   |
-| `issue attachments`        | なし                | 見送り   |
-| `issue participants`       | なし                | 見送り   |
-| `pr count`                 | なし                | 見送り   |
-| `pr attachments`           | なし                | 見送り   |
+| backlog-cli コマンド     | gh CLI 対応コマンド | 実装状況     |
+| ------------------------ | ------------------- | ------------ |
+| `issue delete`           | `gh issue delete`   | ✅ **実装完了** |
+| `issue comments`         | なし                | 見送り       |
+| `issue count`            | なし                | 見送り       |
+| `issue attachments`      | なし                | 見送り       |
+| `issue participants`     | なし                | 見送り       |
+| `pr count`               | なし                | 見送り       |
+| `pr attachments`         | なし                | 見送り       |
 
 ## 判断基準
 
 gh CLI に対応するコマンドが存在するものを実装対象とする。
 
-## 実装対象: `issue delete`
+## 実装完了: `issue delete`
 
 - **対応 API**: `DELETE /api/v2/issues/:issueIdOrKey`
 - **gh CLI の仕様**: `gh issue delete {<number> | <url>} [--yes]`
   - `--yes` フラグで確認プロンプトをスキップ
-- **backlog-cli での設計方針**:
+- **backlog-cli での実装**:
   - 引数: `issueKey`（positional、例: `PROJECT-123`）
   - オプション: `--yes` / `-y`（確認スキップ）
   - デフォルトでは確認プロンプトを表示（破壊的操作のため）
+- **実装場所**: `packages/cli/src/commands/issue/delete.ts`
 
 ## 見送りコマンドの理由
 
