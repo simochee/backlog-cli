@@ -39,7 +39,7 @@
 		"vitest/prefer-called-times": "off",
 		"vitest/prefer-describe-function-title": "off"
 	},
-	"ignorePatterns": ["packages/openapi-client/src/generated", "node_modules", "dist", "out", "tsp-output"],
+	"ignorePatterns": ["packages/openapi-client/src/generated", "node_modules", "dist", "out", "bin", "tsp-output"],
 	"overrides": [
 		{
 			"files": ["**/*.test.ts"],
