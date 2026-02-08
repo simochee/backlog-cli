@@ -1,0 +1,8 @@
+/* LINE Seed JP フォントの導入 */
+@import '@fontsource/line-seed-jp/400.css';
+@import '@fontsource/line-seed-jp/700.css';
+
+:root {
+	--sl-font: 'LINE Seed JP', system-ui, -apple-system, sans-serif;
+	--sl-font-system: 'LINE Seed JP', system-ui, -apple-system, sans-serif;
+}

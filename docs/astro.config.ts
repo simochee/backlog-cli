@@ -12,6 +12,22 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "Backlog CLI",
+			customCss: ["./src/styles/custom.css"],
+			logo: {
+				light: "./src/assets/logo-light.svg",
+				dark: "./src/assets/logo-dark.svg",
+				replacesTitle: true,
+			},
+			head: [
+				{
+					tag: "link",
+					attrs: {
+						rel: "icon",
+						href: "/icon.svg",
+						type: "image/svg+xml",
+					},
+				},
+			],
 			defaultLocale: "root",
 			locales: {
 				root: {
