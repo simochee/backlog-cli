@@ -9,6 +9,8 @@
 
 **Backlog on the command line.**
 
+> **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
+
 A CLI tool to manage [Backlog](https://backlog.com/) from the terminal — inspired by [GitHub CLI (gh)](https://cli.github.com/).
 <br>
 Issues, pull requests, wikis, notifications — all from your command line.
