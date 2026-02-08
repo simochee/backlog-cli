@@ -1,5 +1,6 @@
 /** 5 minutes in milliseconds */
 const CALLBACK_TIMEOUT_MS = 300_000;
+const CALLBACK_PORT = 5_033;
 
 const SUCCESS_HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Authentication Successful</title></head>
@@ -24,14 +25,14 @@ export interface CallbackServer {
 /**
  * Starts a local HTTP server to receive the OAuth callback.
  *
- * Uses `Bun.serve({ port: 0 })` to let the OS assign an available port.
+ * Listens on port 5033 (Nulab's stock code).
  */
 export function startCallbackServer(): CallbackServer {
 	let resolveCode: ((code: string) => void) | null = null;
 	let rejectCode: ((error: Error) => void) | null = null;
 
 	const server = Bun.serve({
-		port: 0,
+		port: CALLBACK_PORT,
 		fetch(request) {
 			const url = new URL(request.url);
 

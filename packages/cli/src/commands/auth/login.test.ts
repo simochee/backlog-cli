@@ -219,7 +219,7 @@ describe("auth login", () => {
 			const mockStop = vi.fn();
 			const mockWaitForCallback = vi.fn().mockResolvedValue("auth-code-123");
 			vi.mocked(startCallbackServer).mockReturnValue({
-				port: 54_321,
+				port: 5_033,
 				waitForCallback: mockWaitForCallback,
 				stop: mockStop,
 			});
@@ -246,7 +246,7 @@ describe("auth login", () => {
 				code: "auth-code-123",
 				clientId: "my-client-id",
 				clientSecret: "my-client-secret",
-				redirectUri: "http://localhost:54321/callback",
+				redirectUri: "http://localhost:5033/callback",
 			});
 			expect(createClient).toHaveBeenCalledWith({
 				host: "example.backlog.com",
@@ -269,7 +269,7 @@ describe("auth login", () => {
 		it("コールバック待機中にエラーが発生した場合 process.exit(1) を呼ぶ", async () => {
 			const mockStop = vi.fn();
 			vi.mocked(startCallbackServer).mockReturnValue({
-				port: 54_321,
+				port: 5_033,
 				waitForCallback: vi.fn().mockRejectedValue(new Error("OAuth callback timed out after 5 minutes")),
 				stop: mockStop,
 			});
