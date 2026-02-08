@@ -101,6 +101,16 @@ backlog status
   MY_PROJECT-138  PR がマージされました
 ```
 
+### AI エージェントから使う
+
+[skills CLI](https://www.npmjs.com/package/skills) で AI エージェント向けのスキルを追加すると、自然言語で Backlog 操作を指示できるようになります。
+
+```bash
+npx skills add simochee/backlog-cli
+```
+
+たとえば Claude Code に「PROJ-123 を処理中にして」と指示するだけで、エージェントが適切な `backlog` コマンドを組み立てて実行します。詳しくは [AI エージェント連携ガイド](/backlog-cli/guides/ai-agent/) をご覧ください。
+
 ## クイックスタート
 
 <Steps>
