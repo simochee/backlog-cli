@@ -43,7 +43,10 @@ jobs:
         run: bun run build
 
       - name: Copy ReDoc static HTML to docs
-        run: mkdir -p docs/public/api && cp packages/api-spec/tsp-output/redoc.html docs/public/api/index.html
+        run: |
+          mkdir -p docs/public/openapi
+          cp packages/api-spec/tsp-output/redoc.html docs/public/openapi/index.html
+          sed -i 's/<head>/<head><meta name="robots" content="noindex, nofollow">/' docs/public/openapi/index.html
 
       - name: Build docs
         working-directory: docs
