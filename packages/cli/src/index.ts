@@ -1,4 +1,11 @@
+import { extractSpaceArg } from "#utils/argv.ts";
 import { defineCommand, runMain } from "citty";
+
+const { space, argv: cleanedArgv } = extractSpaceArg(process.argv);
+if (space) {
+	process.env["BACKLOG_SPACE"] = space;
+}
+process.argv = cleanedArgv;
 
 const main = defineCommand({
 	meta: {
