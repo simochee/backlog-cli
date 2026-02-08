@@ -15,6 +15,7 @@ bin
 
 # generated code
 tsp-output
+**/src/generated
 
 # code coverage
 coverage
