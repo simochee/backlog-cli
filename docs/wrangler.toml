@@ -1,2 +1,11 @@
 name = "backlog-cli-docs"
-pages_build_output_dir = "./dist"
+main = "./dist/_worker.js/index.js"
+compatibility_date = "2025-03-25"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+binding = "ASSETS"
+directory = "./dist"
+
+[observability]
+enabled = true
