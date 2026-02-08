@@ -1,4 +1,11 @@
 export { type BacklogClientConfig, createClient } from "#client.ts";
+export {
+	type ExchangeAuthorizationCodeParams,
+	type OAuthTokenResponse,
+	type RefreshAccessTokenParams,
+	exchangeAuthorizationCode,
+	refreshAccessToken,
+} from "#oauth.ts";
 export type {
 	BacklogActivity,
 	BacklogCategory,

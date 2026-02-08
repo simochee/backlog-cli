@@ -1,4 +1,5 @@
-import { resolveSpace } from "@repo/config";
+import { type BacklogUser, createClient, refreshAccessToken } from "@repo/api";
+import { resolveSpace, updateSpaceAuth } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -27,7 +28,47 @@ export default defineCommand({
 			return process.exit(1);
 		}
 
-		consola.error("OAuth token refresh is not yet implemented. Please re-authenticate with `backlog auth login`.");
-		return process.exit(1);
+		const { clientId, clientSecret } = space.auth;
+		if (!clientId || !clientSecret) {
+			consola.error(
+				"Client ID and Client Secret are missing from the stored OAuth configuration. Please re-authenticate with `backlog auth login -m oauth`.",
+			);
+			return process.exit(1);
+		}
+
+		consola.start(`Refreshing OAuth token for ${space.host}...`);
+
+		let tokenResponse: Awaited<ReturnType<typeof refreshAccessToken>>;
+		try {
+			tokenResponse = await refreshAccessToken({
+				host: space.host,
+				refreshToken: space.auth.refreshToken,
+				clientId,
+				clientSecret,
+			});
+		} catch {
+			consola.error("Failed to refresh OAuth token. Please re-authenticate with `backlog auth login -m oauth`.");
+			return process.exit(1);
+		}
+
+		// Verify the new token
+		const client = createClient({ host: space.host, accessToken: tokenResponse.access_token });
+		let user: BacklogUser;
+		try {
+			user = await client<BacklogUser>("/users/myself");
+		} catch {
+			consola.error("Token verification failed after refresh.");
+			return process.exit(1);
+		}
+
+		await updateSpaceAuth(space.host, {
+			method: "oauth",
+			accessToken: tokenResponse.access_token,
+			refreshToken: tokenResponse.refresh_token,
+			clientId,
+			clientSecret,
+		});
+
+		consola.success(`Token refreshed for ${space.host} (${user.name})`);
 	},
 });

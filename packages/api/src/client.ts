@@ -32,9 +32,9 @@ export function createClient(config: BacklogClientConfig): $Fetch {
 			if (response.status === 429) {
 				const resetEpoch = response.headers.get("X-RateLimit-Reset");
 				const resetMessage = resetEpoch
-					? `リクエスト制限は ${formatResetTime(Number(resetEpoch))} にリセットされます。`
-					: "しばらく時間をおいて再度お試しください。";
-				throw new Error(`API レートリミットに達しました。${resetMessage}`);
+					? `Rate limit resets at ${formatResetTime(Number(resetEpoch))}.`
+					: "Please wait and try again later.";
+				throw new Error(`API rate limit exceeded. ${resetMessage}`);
 			}
 		},
 	});
