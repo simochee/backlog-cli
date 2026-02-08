@@ -41,7 +41,7 @@ model Notification {
 @route("/notifications")
 @tag("Notifications")
 interface Notifications {
-  /** Get list of notifications. */
+  @summary("Get list of notifications")
   @get op list(
     @query minId?: int64,
     @query maxId?: int64,
@@ -53,7 +53,7 @@ interface Notifications {
     @query resourceAlreadyRead?: boolean,
   ): Notification[] | BacklogErrorResponse;
 
-  /** Get count of unread notifications. */
+  @summary("Get count of unread notifications")
   @get
   @route("/count")
   op count(
@@ -63,14 +63,14 @@ interface Notifications {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Mark all notifications as read. */
+  @summary("Mark all notifications as read")
   @post
   @route("/markAsRead")
   op markAllAsRead(): {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Mark a specific notification as read. */
+  @summary("Mark a specific notification as read")
   @post
   @route("/{notificationId}/markAsRead")
   op markAsRead(@path notificationId: int64): void | BacklogErrorResponse;

@@ -24,7 +24,7 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: "API リファレンス",
-					link: "/api/",
+					link: "/openapi/",
 				},
 				{
 					label: "はじめに",

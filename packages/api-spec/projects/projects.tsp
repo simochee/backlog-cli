@@ -34,13 +34,13 @@ model Project {
 @route("/projects")
 @tag("Projects")
 interface Projects {
-  /** Get list of projects. */
+  @summary("Get list of projects")
   @get op list(
     @query archived?: boolean,
     @query all?: boolean,
   ): Project[] | BacklogErrorResponse;
 
-  /** Add a new project. */
+  @summary("Add a new project")
   @post op create(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {
@@ -61,12 +61,12 @@ interface Projects {
     @body project: Project;
   } | BacklogErrorResponse;
 
-  /** Get project information. */
+  @summary("Get project information")
   @get
   @route("/{projectIdOrKey}")
   op get(@path projectIdOrKey: string): Project | BacklogErrorResponse;
 
-  /** Update project information. */
+  @summary("Update project information")
   @patch(#{implicitOptionality: false})
   @route("/{projectIdOrKey}")
   op update(
@@ -88,12 +88,12 @@ interface Projects {
     },
   ): Project | BacklogErrorResponse;
 
-  /** Delete a project. */
+  @summary("Delete a project")
   @delete
   @route("/{projectIdOrKey}")
   op delete(@path projectIdOrKey: string): Project | BacklogErrorResponse;
 
-  /** Get project icon image. */
+  @summary("Get project icon image")
   @get
   @route("/{projectIdOrKey}/image")
   op getImage(@path projectIdOrKey: string): {
@@ -101,7 +101,7 @@ interface Projects {
     @body image: bytes;
   } | BacklogErrorResponse;
 
-  /** Get project activities. */
+  @summary("Get project activities")
   @get
   @route("/{projectIdOrKey}/activities")
   op getActivities(
@@ -110,7 +110,7 @@ interface Projects {
     @query("activityTypeId[]") activityTypeId?: int32[],
   ): Activity[] | BacklogErrorResponse;
 
-  /** Get project disk usage. */
+  @summary("Get project disk usage")
   @get
   @route("/{projectIdOrKey}/diskUsage")
   op getDiskUsage(@path projectIdOrKey: string): DiskUsageDetail | BacklogErrorResponse;
@@ -119,13 +119,13 @@ interface Projects {
 @route("/projects/{projectIdOrKey}/users")
 @tag("Project Members")
 interface ProjectMembers {
-  /** Get list of project members. */
+  @summary("Get list of project members")
   @get op list(
     @path projectIdOrKey: string,
     @query excludeGroupMembers?: boolean,
   ): User[] | BacklogErrorResponse;
 
-  /** Add a user to the project. */
+  @summary("Add a user to the project")
   @post op add(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -137,7 +137,7 @@ interface ProjectMembers {
     @body user: User;
   } | BacklogErrorResponse;
 
-  /** Remove a user from the project. */
+  @summary("Remove a user from the project")
   @delete op remove(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -150,10 +150,10 @@ interface ProjectMembers {
 @route("/projects/{projectIdOrKey}/administrators")
 @tag("Project Administrators")
 interface ProjectAdministrators {
-  /** Get list of project administrators. */
+  @summary("Get list of project administrators")
   @get op list(@path projectIdOrKey: string): User[] | BacklogErrorResponse;
 
-  /** Add a project administrator. */
+  @summary("Add a project administrator")
   @post op add(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -165,7 +165,7 @@ interface ProjectAdministrators {
     @body user: User;
   } | BacklogErrorResponse;
 
-  /** Remove a project administrator. */
+  @summary("Remove a project administrator")
   @delete op remove(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",

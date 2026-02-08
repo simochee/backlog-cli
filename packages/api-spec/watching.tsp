@@ -23,8 +23,8 @@ model Watching {
 // ────────────────────────────────────────────
 
 @tag("Watching")
-interface WatchingOps {
-  /** Get list of watchings for a user. */
+interface Watchings {
+  @summary("Get list of watchings for a user")
   @get
   @route("/users/{userId}/watchings")
   op listByUser(
@@ -34,7 +34,7 @@ interface WatchingOps {
     @query sort?: "created" | "updated" | "issueUpdated",
   ): Watching[] | BacklogErrorResponse;
 
-  /** Get count of watchings. */
+  @summary("Get count of watchings")
   @get
   @route("/watchings/count")
   op count(
@@ -44,12 +44,12 @@ interface WatchingOps {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Get a watching. */
+  @summary("Get a watching")
   @get
   @route("/watchings/{watchingId}")
   op get(@path watchingId: int64): Watching | BacklogErrorResponse;
 
-  /** Add a watching. */
+  @summary("Add a watching")
   @post
   @route("/watchings")
   op create(
@@ -63,7 +63,7 @@ interface WatchingOps {
     @body watching: Watching;
   } | BacklogErrorResponse;
 
-  /** Update a watching. */
+  @summary("Update a watching")
   @patch(#{implicitOptionality: false})
   @route("/watchings/{watchingId}")
   op update(
@@ -74,12 +74,12 @@ interface WatchingOps {
     },
   ): Watching | BacklogErrorResponse;
 
-  /** Delete a watching. */
+  @summary("Delete a watching")
   @delete
   @route("/watchings/{watchingId}")
   op delete(@path watchingId: int64): Watching | BacklogErrorResponse;
 
-  /** Mark a watching as read. */
+  @summary("Mark a watching as read")
   @post
   @route("/watchings/{watchingId}/markAsRead")
   op markAsRead(@path watchingId: int64): void | BacklogErrorResponse;

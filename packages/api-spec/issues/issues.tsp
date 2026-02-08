@@ -97,7 +97,7 @@ enum ParentChildType {
 @route("/issues")
 @tag("Issues")
 interface Issues {
-  /** Get list of issues. */
+  @summary("Get list of issues")
   @get op list(
     @query("projectId[]") projectId?: int64[],
     @query("issueTypeId[]") issueTypeId?: int64[],
@@ -134,7 +134,7 @@ interface Issues {
     @query keyword?: string,
   ): Issue[] | BacklogErrorResponse;
 
-  /** Get count of issues. */
+  @summary("Get count of issues")
   @get
   @route("/count")
   op count(
@@ -166,7 +166,7 @@ interface Issues {
     count: int32;
   } | BacklogErrorResponse;
 
-  /** Create a new issue. */
+  @summary("Create a new issue")
   @post op create(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {
@@ -197,12 +197,12 @@ interface Issues {
     @body issue: Issue;
   } | BacklogErrorResponse;
 
-  /** Get issue information. */
+  @summary("Get issue information")
   @get
   @route("/{issueIdOrKey}")
   op get(@path issueIdOrKey: string): Issue | BacklogErrorResponse;
 
-  /** Update an issue. */
+  @summary("Update an issue")
   @patch(#{implicitOptionality: false})
   @route("/{issueIdOrKey}")
   op update(
@@ -235,7 +235,7 @@ interface Issues {
     },
   ): Issue | BacklogErrorResponse;
 
-  /** Delete an issue. */
+  @summary("Delete an issue")
   @delete
   @route("/{issueIdOrKey}")
   op delete(@path issueIdOrKey: string): Issue | BacklogErrorResponse;

@@ -25,12 +25,12 @@ model Team {
 @route("/teams")
 @tag("Teams")
 interface Teams {
-  /** Get list of teams. */
+  @summary("Get list of teams")
   @get op list(
     ...PaginationQuery,
   ): Team[] | BacklogErrorResponse;
 
-  /** Create a new team. */
+  @summary("Create a new team")
   @post op create(
     @header contentType: "application/x-www-form-urlencoded",
     @body body: {
@@ -43,12 +43,12 @@ interface Teams {
     @body team: Team;
   } | BacklogErrorResponse;
 
-  /** Get team information. */
+  @summary("Get team information")
   @get
   @route("/{teamId}")
   op get(@path teamId: int64): Team | BacklogErrorResponse;
 
-  /** Update a team. */
+  @summary("Update a team")
   @patch(#{implicitOptionality: false})
   @route("/{teamId}")
   op update(
@@ -61,12 +61,12 @@ interface Teams {
     },
   ): Team | BacklogErrorResponse;
 
-  /** Delete a team. */
+  @summary("Delete a team")
   @delete
   @route("/{teamId}")
   op delete(@path teamId: int64): Team | BacklogErrorResponse;
 
-  /** Get team icon image. */
+  @summary("Get team icon image")
   @get
   @route("/{teamId}/icon")
   op getIcon(@path teamId: int64): {
@@ -78,10 +78,10 @@ interface Teams {
 @route("/projects/{projectIdOrKey}/teams")
 @tag("Project Teams")
 interface ProjectTeams {
-  /** Get list of project teams. */
+  @summary("Get list of project teams")
   @get op list(@path projectIdOrKey: string): Team[] | BacklogErrorResponse;
 
-  /** Add a team to the project. */
+  @summary("Add a team to the project")
   @post op add(
     @path projectIdOrKey: string,
     @header contentType: "application/x-www-form-urlencoded",
@@ -93,7 +93,7 @@ interface ProjectTeams {
     @body team: Team;
   } | BacklogErrorResponse;
 
-  /** Remove a team from the project. */
+  @summary("Remove a team from the project")
   @delete
   @route("/{teamId}")
   op remove(
@@ -105,12 +105,14 @@ interface ProjectTeams {
 @route("/groups")
 @tag("Groups (Deprecated)")
 interface Groups {
-  /** Get list of groups (deprecated, use Teams). */
+  @summary("Get list of groups")
+  @doc("Deprecated: use Teams instead.")
   @get op list(
     ...PaginationQuery,
   ): Team[] | BacklogErrorResponse;
 
-  /** Get group information (deprecated, use Teams). */
+  @summary("Get group information")
+  @doc("Deprecated: use Teams instead.")
   @get
   @route("/{groupId}")
   op get(@path groupId: int64): Team | BacklogErrorResponse;
