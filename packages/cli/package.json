@@ -25,6 +25,9 @@
 	"files": [
 		"bin"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"type": "module",
 	"imports": {
 		"#*": "./src/*"
