@@ -37,7 +37,8 @@
 		"build:compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
 		"dev": "bun ./src/index.ts",
 		"prepublishOnly": "bun run build",
-		"test": "vitest run"
+		"test": "vitest run",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@repo/api": "workspace:*",

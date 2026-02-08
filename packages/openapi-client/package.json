@@ -6,7 +6,8 @@
 	"exports": "./src/index.ts",
 	"scripts": {
 		"build": "openapi-ts",
-		"clean": "rm -rf src/generated"
+		"clean": "rm -rf src/generated",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@repo/api-spec": "workspace:*"
