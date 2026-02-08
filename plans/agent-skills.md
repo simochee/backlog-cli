@@ -39,6 +39,8 @@ backlog-cli を coding agent（Claude Code 等）が効果的に利用するた�
 - `backlog issue comment <KEY>` でコメント追加
 - 名前解決の仕組み（ステータス名・種別名・優先度名・ユーザー名をそのまま渡せる、`@me` の利用）
 - `--json` フラグでJSON出力を得る方法
+- `--json field1,field2` でフィールドを絞り込む方法（例: `--json issueKey,summary,status`）
+- `jq` コマンドとのパイプ連携（例: `backlog issue list -p PROJECT --json | jq '.[] | .issueKey'`）
 
 **ユースケース例**:
 
@@ -57,6 +59,12 @@ backlog issue edit PROJECT-123 -S "処理中" -c "対応開始します"
 
 # 課題を閉じる
 backlog issue close PROJECT-123
+
+# JSON出力でフィールドを絞り込む
+backlog issue list -p PROJECT --json issueKey,summary,status
+
+# jq と組み合わせて課題キーだけ抽出
+backlog issue list -p PROJECT --json | jq '.[].issueKey'
 ```
 
 ---
@@ -183,6 +191,22 @@ backlog pr merge -p PROJECT -R repo-name 42
 ### 提案1: `--output json` のデフォルト化オプション（優先度: 高）
 
 **背景**: 現在のデフォルト出力はテーブル形式で人間向け。エージェントがCLI出力をパースして次のアクションを決定するには、JSON出力が適している。
+
+**現在の `--json` フラグの機能**:
+
+- `--json` — 全フィールドをJSON形式で出力
+- `--json field1,field2` — 指定フィールドのみに絞り込んでJSON出力（例: `--json issueKey,summary,status`）
+- `jq` コマンドとパイプで連携することで高度なフィルタリングが可能:
+  ```bash
+  # 課題キーだけ抽出
+  backlog issue list -p PROJECT --json | jq '.[].issueKey'
+
+  # 特定ステータスの課題を絞り込み
+  backlog issue list -p PROJECT --json | jq '[.[] | select(.status.name == "処理中")]'
+
+  # フィールド絞り込みと jq の組み合わせ
+  backlog issue list -p PROJECT --json issueKey,summary | jq '.[].summary'
+  ```
 
 **提案内容**:
 
