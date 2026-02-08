@@ -23,7 +23,8 @@
 		"backlog": "./bin/backlog.mjs"
 	},
 	"files": [
-		"bin"
+		"bin",
+		"dist"
 	],
 	"type": "module",
 	"imports": {
@@ -33,7 +34,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "bun build ./src/index.ts --outfile ./bin/backlog.mjs --target=node",
+		"build": "bun build ./src/index.ts --outfile ./dist/backlog.mjs --target=node",
 		"build:compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
 		"dev": "bun ./src/index.ts",
 		"prepublishOnly": "bun run build",
