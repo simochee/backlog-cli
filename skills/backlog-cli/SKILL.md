@@ -49,6 +49,28 @@ Format: `PROJECT_KEY-number` (e.g., `PROJ-123`). Since the key embeds the projec
 
 Specify with `--project` (`-p`) flag or `BACKLOG_PROJECT` env var.
 
+### Environment Variables
+
+Environment variables provide defaults that can be overridden by CLI flags:
+
+- `BACKLOG_SPACE` — Default space hostname (e.g., `example.backlog.com`)
+- `BACKLOG_PROJECT` — Default project key (e.g., `MYAPP`)
+- `BACKLOG_API_KEY` — API key for CI/CD environments (requires `BACKLOG_SPACE`)
+
+**Priority order:** CLI flag > Environment variable > Config file (`~/.backlogrc`)
+
+```bash
+# Set project for session
+export BACKLOG_PROJECT=MYAPP
+
+# Now -p flag can be omitted
+backlog issue list
+backlog milestone list
+
+# CLI flag overrides environment variable
+backlog issue list -p OTHER_PROJECT
+```
+
 ### JSON Output
 
 Most commands support `--json` flag for machine-readable output:
@@ -135,6 +157,58 @@ For operations not covered by CLI commands. The `/api/v2` prefix can be omitted.
 ```bash
 backlog api /issues -X POST -f "projectId=123" -f "summary=New issue"
 backlog api /issues --paginate -f "projectId[]=123"
+```
+
+## Common Issues
+
+### Authentication Failed
+
+If you encounter authentication errors:
+
+```bash
+# Check current authentication status
+backlog auth status
+
+# Re-authenticate
+backlog auth login
+```
+
+### "Status name not found" or "Issue type not found"
+
+Status names and issue type names are **project-specific**. Always query them first:
+
+```bash
+# Get available statuses for a project
+backlog status-type list -p PROJECT_KEY
+
+# Get available issue types for a project
+backlog issue-type list -p PROJECT_KEY
+
+# Get available priorities (these are global)
+# Built-in values: 高 (High), 中 (Normal), 低 (Low)
+```
+
+**Before creating or editing issues:**
+1. Query status names: `backlog status-type list -p PROJECT`
+2. Query issue types: `backlog issue-type list -p PROJECT`
+3. Use exact names from the query results
+
+### Missing Required Fields
+
+If a command hangs or prompts for input:
+- You're missing a required field
+- Specify all required flags explicitly (see command help with `--help`)
+- Never rely on interactive prompts in agent workflows
+
+### Project Not Found
+
+Ensure the project key is correct and you have access:
+
+```bash
+# List available projects
+backlog project list
+
+# Use exact project key from the list
 ```
 
 ## References
