@@ -11,10 +11,11 @@ backlog notification count [flags]
 
 ## オプション
 
-| フラグ                    | 型      | 説明                 |
-| ------------------------- | ------- | -------------------- |
-| `--already-read`          | boolean | 既読を含める         |
-| `--resource-already-read` | boolean | リソース既読を含める |
+`--already-read`
+: 既読を含める
+
+`--resource-already-read`
+: リソース既読を含める
 
 ## 使用例
 

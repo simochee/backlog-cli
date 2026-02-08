@@ -11,17 +11,19 @@ backlog pr comments <number> [flags]
 
 ## 引数
 
-| 引数       | 型     | 必須 | 説明               |
-| ---------- | ------ | ---- | ------------------ |
-| `<number>` | number | Yes  | プルリクエスト番号 |
+`<number> <int>`
+: プルリクエスト番号
 
 ## オプション
 
-| フラグ      | 短縮 | 型     | デフォルト | 説明                                       |
-| ----------- | ---- | ------ | ---------- | ------------------------------------------ |
-| `--project` | `-p` | string | —          | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--repo`    | `-R` | string | —          | リポジトリ名                               |
-| `--limit`   | `-L` | number | `20`       | 取得件数                                   |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-R`, `--repo <string>`
+: リポジトリ名
+
+`-L`, `--limit <int>` (default 20)
+: 取得件数
 
 ## 使用例
 

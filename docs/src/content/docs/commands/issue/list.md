@@ -11,24 +11,53 @@ backlog issue list [flags]
 
 ## オプション
 
-| フラグ            | 短縮 | 型     | デフォルト | 説明                                                               |
-| ----------------- | ---- | ------ | ---------- | ------------------------------------------------------------------ |
-| `--project`       | `-p` | string | —          | プロジェクトキー（カンマ区切りで複数可）（env: `BACKLOG_PROJECT`） |
-| `--assignee`      | `-a` | string | —          | 担当者（ユーザー名 or `@me`）                                      |
-| `--status`        | `-S` | string | —          | ステータス名（カンマ区切りで複数可）                               |
-| `--type`          | `-T` | string | —          | 課題種別名（カンマ区切りで複数可）                                 |
-| `--priority`      | `-P` | string | —          | 優先度名                                                           |
-| `--keyword`       | `-k` | string | —          | キーワード検索                                                     |
-| `--created-since` |      | string | —          | 作成日 FROM（`yyyy-MM-dd`）                                        |
-| `--created-until` |      | string | —          | 作成日 TO（`yyyy-MM-dd`）                                          |
-| `--updated-since` |      | string | —          | 更新日 FROM（`yyyy-MM-dd`）                                        |
-| `--updated-until` |      | string | —          | 更新日 TO（`yyyy-MM-dd`）                                          |
-| `--due-since`     |      | string | —          | 期限日 FROM（`yyyy-MM-dd`）                                        |
-| `--due-until`     |      | string | —          | 期限日 TO（`yyyy-MM-dd`）                                          |
-| `--sort`          |      | string | `updated`  | ソートキー                                                         |
-| `--order`         |      | string | `desc`     | 並び順（`asc` / `desc`）                                           |
-| `--limit`         | `-L` | number | `20`       | 取得件数（1-100）                                                  |
-| `--offset`        |      | number | `0`        | オフセット                                                         |
+`-p`, `--project <string>`
+: プロジェクトキー（カンマ区切りで複数可）（env: `BACKLOG_PROJECT`）
+
+`-a`, `--assignee <string>`
+: 担当者（ユーザー名 or `@me`）
+
+`-S`, `--status <string>`
+: ステータス名（カンマ区切りで複数可）
+
+`-T`, `--type <string>`
+: 課題種別名（カンマ区切りで複数可）
+
+`-P`, `--priority <string>`
+: 優先度名
+
+`-k`, `--keyword <string>`
+: キーワード検索
+
+`--created-since <string>`
+: 作成日 FROM（`yyyy-MM-dd`）
+
+`--created-until <string>`
+: 作成日 TO（`yyyy-MM-dd`）
+
+`--updated-since <string>`
+: 更新日 FROM（`yyyy-MM-dd`）
+
+`--updated-until <string>`
+: 更新日 TO（`yyyy-MM-dd`）
+
+`--due-since <string>`
+: 期限日 FROM（`yyyy-MM-dd`）
+
+`--due-until <string>`
+: 期限日 TO（`yyyy-MM-dd`）
+
+`--sort <string>` (default "updated")
+: ソートキー
+
+`--order <string>` (default "desc")
+: 並び順: {asc|desc}
+
+`-L`, `--limit <int>` (default 20)
+: 取得件数（1-100）
+
+`--offset <int>` (default 0)
+: オフセット
 
 ## 使用例
 

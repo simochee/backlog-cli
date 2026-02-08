@@ -1,10 +1,14 @@
 import cloudflare from "@astrojs/cloudflare";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import remarkDeflist from "remark-deflist";
 
 export default defineConfig({
 	adapter: cloudflare(),
 	site: "https://backlog-cli.simochee.net",
+	markdown: {
+		remarkPlugins: [remarkDeflist],
+	},
 	integrations: [
 		starlight({
 			title: "Backlog CLI",

@@ -11,16 +11,16 @@ backlog issue close <issue-key> [flags]
 
 ## 引数
 
-| 引数          | 型     | 必須 | 説明                          |
-| ------------- | ------ | ---- | ----------------------------- |
-| `<issue-key>` | string | Yes  | 課題キー（例: `PROJECT-123`） |
+`<issue-key> <string>`
+: 課題キー（例: `PROJECT-123`）
 
 ## オプション
 
-| フラグ         | 短縮 | 型     | デフォルト | 説明         |
-| -------------- | ---- | ------ | ---------- | ------------ |
-| `--comment`    | `-c` | string | —          | 完了コメント |
-| `--resolution` | `-r` | string | —          | 完了理由名   |
+`-c`, `--comment <string>`
+: 完了コメント
+
+`-r`, `--resolution <string>`
+: 完了理由名
 
 ## 使用例
 

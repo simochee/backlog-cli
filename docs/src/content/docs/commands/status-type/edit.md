@@ -9,17 +9,19 @@ backlog status-type edit <id> [flags]
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明          |
-| ------ | ------ | ---- | ------------- |
-| `<id>` | number | Yes  | ステータス ID |
+`<id> <int>`
+: ステータス ID
 
 ## オプション
 
-| フラグ      | 短縮 | 型     | 説明                                       |
-| ----------- | ---- | ------ | ------------------------------------------ |
-| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name`    | `-n` | string | ステータス名                               |
-| `--color`   |      | string | 表示色（`#hex` 形式）                      |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-n`, `--name <string>`
+: ステータス名
+
+`--color <string>`
+: 表示色（`#hex` 形式）
 
 ## 使用例
 

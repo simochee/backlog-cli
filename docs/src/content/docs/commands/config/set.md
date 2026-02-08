@@ -11,16 +11,16 @@ backlog config set <key> <value> [flags]
 
 ## 引数
 
-| 引数      | 型     | 必須 | 説明     |
-| --------- | ------ | ---- | -------- |
-| `<key>`   | string | Yes  | 設定キー |
-| `<value>` | string | Yes  | 設定値   |
+`<key> <string>`
+: 設定キー
+
+`<value> <string>`
+: 設定値
 
 ## オプション
 
-| フラグ       | 型     | 説明                     |
-| ------------ | ------ | ------------------------ |
-| `--hostname` | string | スペース固有の設定を変更 |
+`--hostname <string>`
+: スペース固有の設定を変更
 
 ## 使用例
 

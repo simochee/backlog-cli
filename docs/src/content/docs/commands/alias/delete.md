@@ -9,9 +9,8 @@ backlog alias delete <name>
 
 ## 引数
 
-| 引数     | 型     | 必須 | 説明         |
-| -------- | ------ | ---- | ------------ |
-| `<name>` | string | Yes  | エイリアス名 |
+`<name> <string>`
+: エイリアス名
 
 ## 使用例
 

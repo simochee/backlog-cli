@@ -9,16 +9,16 @@ backlog category edit <id> [flags]
 
 ## 引数
 
-| 引数   | 型     | 必須 | 説明        |
-| ------ | ------ | ---- | ----------- |
-| `<id>` | number | Yes  | カテゴリ ID |
+`<id> <int>`
+: カテゴリ ID
 
 ## オプション
 
-| フラグ      | 短縮 | 型     | 必須 | 説明                                       |
-| ----------- | ---- | ------ | ---- | ------------------------------------------ |
-| `--project` | `-p` | string | Yes  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name`    | `-n` | string | Yes  | カテゴリ名                                 |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-n`, `--name <string>`
+: カテゴリ名
 
 ## 使用例
 

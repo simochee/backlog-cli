@@ -11,9 +11,8 @@ backlog project users <project-key>
 
 ## 引数
 
-| 引数            | 型     | 必須 | 説明             |
-| --------------- | ------ | ---- | ---------------- |
-| `<project-key>` | string | Yes  | プロジェクトキー |
+`<project-key> <string>`
+: プロジェクトキー
 
 ## 使用例
 

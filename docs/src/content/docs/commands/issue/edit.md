@@ -11,21 +11,31 @@ backlog issue edit <issue-key> [flags]
 
 ## 引数
 
-| 引数          | 型     | 必須 | 説明                          |
-| ------------- | ------ | ---- | ----------------------------- |
-| `<issue-key>` | string | Yes  | 課題キー（例: `PROJECT-123`） |
+`<issue-key> <string>`
+: 課題キー（例: `PROJECT-123`）
 
 ## オプション
 
-| フラグ          | 短縮 | 型     | 説明         |
-| --------------- | ---- | ------ | ------------ |
-| `--title`       | `-t` | string | 件名         |
-| `--description` | `-d` | string | 詳細         |
-| `--status`      | `-S` | string | ステータス名 |
-| `--type`        | `-T` | string | 課題種別名   |
-| `--priority`    | `-P` | string | 優先度名     |
-| `--assignee`    | `-a` | string | 担当者       |
-| `--comment`     | `-c` | string | 更新コメント |
+`-t`, `--title <string>`
+: 件名
+
+`-d`, `--description <string>`
+: 詳細
+
+`-S`, `--status <string>`
+: ステータス名
+
+`-T`, `--type <string>`
+: 課題種別名
+
+`-P`, `--priority <string>`
+: 優先度名
+
+`-a`, `--assignee <string>`
+: 担当者
+
+`-c`, `--comment <string>`
+: 更新コメント
 
 ## 使用例
 

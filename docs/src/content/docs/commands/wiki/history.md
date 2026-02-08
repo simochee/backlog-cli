@@ -9,16 +9,16 @@ backlog wiki history <wiki-id> [flags]
 
 ## 引数
 
-| 引数        | 型     | 必須 | 説明      |
-| ----------- | ------ | ---- | --------- |
-| `<wiki-id>` | number | Yes  | ページ ID |
+`<wiki-id> <int>`
+: ページ ID
 
 ## オプション
 
-| フラグ     | 短縮 | 型     | デフォルト | 説明       |
-| ---------- | ---- | ------ | ---------- | ---------- |
-| `--limit`  | `-L` | number | `20`       | 取得件数   |
-| `--offset` |      | number | `0`        | オフセット |
+`-L`, `--limit <int>` (default 20)
+: 取得件数
+
+`--offset <int>` (default 0)
+: オフセット
 
 ## 使用例
 

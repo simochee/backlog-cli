@@ -11,10 +11,11 @@ backlog pr status [flags]
 
 ## オプション
 
-| フラグ      | 短縮 | 型     | 説明                                       |
-| ----------- | ---- | ------ | ------------------------------------------ |
-| `--project` | `-p` | string | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--repo`    | `-R` | string | リポジトリ名                               |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-R`, `--repo <string>`
+: リポジトリ名
 
 ## 使用例
 

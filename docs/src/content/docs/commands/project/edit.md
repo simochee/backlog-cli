@@ -11,18 +11,22 @@ backlog project edit <project-key> [flags]
 
 ## 引数
 
-| 引数            | 型     | 必須 | 説明             |
-| --------------- | ------ | ---- | ---------------- |
-| `<project-key>` | string | Yes  | プロジェクトキー |
+`<project-key> <string>`
+: プロジェクトキー
 
 ## オプション
 
-| フラグ            | 短縮 | 型      | 説明                   |
-| ----------------- | ---- | ------- | ---------------------- |
-| `--name`          | `-n` | string  | プロジェクト名         |
-| `--key`           | `-k` | string  | 新しいプロジェクトキー |
-| `--chart-enabled` |      | boolean | チャート有効           |
-| `--archived`      |      | boolean | アーカイブ             |
+`-n`, `--name <string>`
+: プロジェクト名
+
+`-k`, `--key <string>`
+: 新しいプロジェクトキー
+
+`--chart-enabled`
+: チャート有効
+
+`--archived`
+: アーカイブ
 
 ## 使用例
 

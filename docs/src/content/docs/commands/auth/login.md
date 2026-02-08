@@ -11,11 +11,14 @@ Backlog スペースに対して認証します。API キーまたは OAuth 2.0 
 
 ## オプション
 
-| フラグ         | 短縮 | 型      | デフォルト | 説明                                      |
-| -------------- | ---- | ------- | ---------- | ----------------------------------------- |
-| `--hostname`   | `-h` | string  | —          | スペースホスト名（例: `xxx.backlog.com`） |
-| `--method`     | `-m` | string  | `api-key`  | 認証方式（`api-key` / `oauth`）           |
-| `--with-token` |      | boolean | `false`    | 標準入力からトークンを読み込む            |
+`-h`, `--hostname <string>`
+: スペースホスト名（例: `xxx.backlog.com`）
+
+`-m`, `--method <string>` (default "api-key")
+: 認証方式: {api-key|oauth}
+
+`--with-token`
+: 標準入力からトークンを読み込む
 
 ## 使用例
 

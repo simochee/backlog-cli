@@ -11,20 +11,28 @@ Backlog API に対して認証済みのリクエストを送信します。任�
 
 ## 引数
 
-| 引数         | 型     | 必須 | 説明                                   |
-| ------------ | ------ | ---- | -------------------------------------- |
-| `<endpoint>` | string | Yes  | API パス（例: `/api/v2/users/myself`） |
+`<endpoint> <string>`
+: API パス（例: `/api/v2/users/myself`）
 
 ## オプション
 
-| フラグ       | 短縮 | 型      | デフォルト | 説明                                            |
-| ------------ | ---- | ------- | ---------- | ----------------------------------------------- |
-| `--method`   | `-X` | string  | `GET`      | HTTP メソッド                                   |
-| `--field`    | `-f` | string  | —          | リクエストフィールド（`key=value`、繰り返し可） |
-| `--header`   | `-H` | string  | —          | 追加ヘッダー（繰り返し可）                      |
-| `--include`  | `-i` | boolean | `false`    | レスポンスヘッダーを含める                      |
-| `--paginate` |      | boolean | `false`    | ページネーションで全件取得                      |
-| `--silent`   |      | boolean | `false`    | 出力を抑制                                      |
+`-X`, `--method <string>` (default "GET")
+: HTTP メソッド
+
+`-f`, `--field <string>`
+: リクエストフィールド（key=value、繰り返し可）
+
+`-H`, `--header <string>`
+: 追加ヘッダー（繰り返し可）
+
+`-i`, `--include`
+: レスポンスヘッダーを含める
+
+`--paginate`
+: ページネーションで全件取得
+
+`--silent`
+: 出力を抑制
 
 ## フィールドの型変換
 

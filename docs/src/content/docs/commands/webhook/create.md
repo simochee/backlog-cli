@@ -9,14 +9,23 @@ backlog webhook create [flags]
 
 ## オプション
 
-| フラグ                | 短縮 | 型      | 必須 | 説明                                       |
-| --------------------- | ---- | ------- | ---- | ------------------------------------------ |
-| `--project`           | `-p` | string  | Yes  | プロジェクトキー（env: `BACKLOG_PROJECT`） |
-| `--name`              | `-n` | string  | Yes  | Webhook 名                                 |
-| `--hook-url`          |      | string  | Yes  | 通知先 URL                                 |
-| `--description`       | `-d` | string  | No   | 説明                                       |
-| `--all-event`         |      | boolean | No   | 全イベント対象                             |
-| `--activity-type-ids` |      | string  | No   | 対象イベントタイプ ID（カンマ区切り）      |
+`-p`, `--project <string>`
+: プロジェクトキー（env: `BACKLOG_PROJECT`）
+
+`-n`, `--name <string>`
+: Webhook 名
+
+`--hook-url <string>`
+: 通知先 URL
+
+`-d`, `--description <string>`
+: 説明
+
+`--all-event`
+: 全イベント対象
+
+`--activity-type-ids <string>`
+: 対象イベントタイプ ID（カンマ区切り）
 
 ## 使用例
 

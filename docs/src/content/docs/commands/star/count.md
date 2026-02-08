@@ -9,16 +9,16 @@ backlog star count [user-id] [flags]
 
 ## 引数
 
-| 引数        | 型     | 必須 | 説明                        |
-| ----------- | ------ | ---- | --------------------------- |
-| `[user-id]` | number | No   | ユーザー ID（省略時は自分） |
+`[user-id] <int>`
+: ユーザー ID（省略時は自分）
 
 ## オプション
 
-| フラグ    | 型     | 説明                   |
-| --------- | ------ | ---------------------- |
-| `--since` | string | 開始日（`yyyy-MM-dd`） |
-| `--until` | string | 終了日（`yyyy-MM-dd`） |
+`--since <string>`
+: 開始日（`yyyy-MM-dd`）
+
+`--until <string>`
+: 終了日（`yyyy-MM-dd`）
 
 ## 使用例
 
