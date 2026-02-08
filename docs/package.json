@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"prebuild": "cp ../packages/api-spec/tsp-output/@typespec/openapi3/openapi.yaml public/openapi.yaml",
+		"prebuild": "mkdir -p public/api && cp ../packages/api-spec/tsp-output/redoc.html public/api/index.html",
 		"dev": "astro dev",
 		"build": "astro build"
 	},

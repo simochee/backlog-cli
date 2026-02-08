@@ -42,8 +42,8 @@ jobs:
         working-directory: packages/api-spec
         run: bun run build
 
-      - name: Copy OpenAPI spec to docs
-        run: cp packages/api-spec/tsp-output/@typespec/openapi3/openapi.yaml docs/public/openapi.yaml
+      - name: Copy ReDoc static HTML to docs
+        run: mkdir -p docs/public/api && cp packages/api-spec/tsp-output/redoc.html docs/public/api/index.html
 
       - name: Build docs
         working-directory: docs
