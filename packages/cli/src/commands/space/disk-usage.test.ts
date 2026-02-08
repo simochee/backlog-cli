@@ -60,7 +60,7 @@ describe("disk-usage run()", () => {
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");
-		await mod.default.run?.({} as never);
+		await mod.default.run?.({ args: {} } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/space/diskUsage");
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("Disk Usage"));
@@ -80,7 +80,7 @@ describe("disk-usage run()", () => {
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");
-		await mod.default.run?.({} as never);
+		await mod.default.run?.({ args: {} } as never);
 
 		// Capacity: 1 GB
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("1.0 GB"));

@@ -23,7 +23,7 @@ describe("space info run()", () => {
 		});
 
 		const mod = await import("#commands/space/info.ts");
-		await mod.default.run?.({} as never);
+		await mod.default.run?.({ args: {} } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/space");
 		expect(consola.log).toHaveBeenCalledWith(expect.stringContaining("Test Space"));

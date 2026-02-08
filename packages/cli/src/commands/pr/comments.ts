@@ -3,6 +3,7 @@ import type { PullRequestCommentsListData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "List pull request comments",
 	},
 	args: {
+		...outputArgs,
 		number: {
 			type: "positional",
 			description: "Pull request number",
@@ -50,22 +52,24 @@ export default defineCommand({
 			{ query },
 		);
 
-		if (comments.length === 0) {
-			consola.info("No comments found.");
-			return;
-		}
+		outputResult(comments, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No comments found.");
+				return;
+			}
 
-		for (const comment of comments) {
-			if (!comment.content) continue;
+			for (const comment of data) {
+				if (!comment.content) continue;
+				consola.log("");
+				consola.log(`  ${comment.createdUser.name} (${formatDate(comment.created)}):`);
+				consola.log(
+					comment.content
+						.split("\n")
+						.map((line: string) => `    ${line}`)
+						.join("\n"),
+				);
+			}
 			consola.log("");
-			consola.log(`  ${comment.createdUser.name} (${formatDate(comment.created)}):`);
-			consola.log(
-				comment.content
-					.split("\n")
-					.map((line: string) => `    ${line}`)
-					.join("\n"),
-			);
-		}
-		consola.log("");
+		});
 	},
 });

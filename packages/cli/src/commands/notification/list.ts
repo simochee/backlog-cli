@@ -3,6 +3,7 @@ import type { NotificationsListData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatNotificationLine, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List notifications",
 	},
 	args: {
+		...outputArgs,
 		limit: {
 			type: "string",
 			alias: "L",
@@ -49,15 +51,17 @@ export default defineCommand({
 
 		const notifications = await client<BacklogNotification[]>("/notifications", { query });
 
-		if (notifications.length === 0) {
-			consola.info("No notifications found.");
-			return;
-		}
+		outputResult(notifications, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No notifications found.");
+				return;
+			}
 
-		const header = `  ${padEnd("ID", 12)}${padEnd("REASON", 18)}${padEnd("FROM", 14)}SUMMARY`;
-		consola.log(header);
-		for (const notification of notifications) {
-			consola.log(formatNotificationLine(notification));
-		}
+			const header = `  ${padEnd("ID", 12)}${padEnd("REASON", 18)}${padEnd("FROM", 14)}SUMMARY`;
+			consola.log(header);
+			for (const notification of data) {
+				consola.log(formatNotificationLine(notification));
+			}
+		});
 	},
 });

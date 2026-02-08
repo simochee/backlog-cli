@@ -2,6 +2,7 @@ import type { BacklogWikiAttachment } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "List wiki page attachments",
 	},
 	args: {
+		...outputArgs,
 		"wiki-id": {
 			type: "positional",
 			description: "Wiki page ID",
@@ -22,19 +24,21 @@ export default defineCommand({
 
 		const attachments = await client<BacklogWikiAttachment[]>(`/wikis/${args["wiki-id"]}/attachments`);
 
-		if (attachments.length === 0) {
-			consola.info("No attachments found.");
-			return;
-		}
+		outputResult(attachments, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No attachments found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("NAME", 30)}${padEnd("SIZE", 12)}${padEnd("DATE", 12)}CREATED BY`;
-		consola.log(header);
-		for (const attachment of attachments) {
-			const id = padEnd(`${attachment.id}`, 10);
-			const name = padEnd(attachment.name, 30);
-			const size = padEnd(`${attachment.size}`, 12);
-			const date = padEnd(formatDate(attachment.created), 12);
-			consola.log(`${id}${name}${size}${date}${attachment.createdUser.name}`);
-		}
+			const header = `${padEnd("ID", 10)}${padEnd("NAME", 30)}${padEnd("SIZE", 12)}${padEnd("DATE", 12)}CREATED BY`;
+			consola.log(header);
+			for (const attachment of data) {
+				const id = padEnd(`${attachment.id}`, 10);
+				const name = padEnd(attachment.name, 30);
+				const size = padEnd(`${attachment.size}`, 12);
+				const date = padEnd(formatDate(attachment.created), 12);
+				consola.log(`${id}${name}${size}${date}${attachment.createdUser.name}`);
+			}
+		});
 	},
 });

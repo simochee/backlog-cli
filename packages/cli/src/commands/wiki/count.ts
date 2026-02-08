@@ -1,6 +1,7 @@
 import type { BacklogWikiCount } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "Show wiki page count",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -26,6 +28,8 @@ export default defineCommand({
 			query: { projectIdOrKey: project },
 		});
 
-		consola.log(`${result.count} wiki page(s)`);
+		outputResult(result, args, (data) => {
+			consola.log(`${data.count} wiki page(s)`);
+		});
 	},
 });

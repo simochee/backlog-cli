@@ -2,6 +2,7 @@ import type { BacklogWebhook } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "View a webhook",
 	},
 	args: {
+		...outputArgs,
 		id: {
 			type: "positional",
 			description: "Webhook ID",
@@ -30,24 +32,26 @@ export default defineCommand({
 
 		const webhook = await client<BacklogWebhook>(`/projects/${project}/webhooks/${args.id}`);
 
-		consola.log("");
-		consola.log(`  ${webhook.name}`);
-		consola.log("");
-		consola.log(`    ID:              ${webhook.id}`);
-		consola.log(`    Hook URL:        ${webhook.hookUrl}`);
-		consola.log(`    All Events:      ${webhook.allEvent ? "Yes" : "No"}`);
+		outputResult(webhook, args, (data) => {
+			consola.log("");
+			consola.log(`  ${data.name}`);
+			consola.log("");
+			consola.log(`    ID:              ${data.id}`);
+			consola.log(`    Hook URL:        ${data.hookUrl}`);
+			consola.log(`    All Events:      ${data.allEvent ? "Yes" : "No"}`);
 
-		if (!webhook.allEvent && webhook.activityTypeIds.length > 0) {
-			consola.log(`    Activity Types:  ${webhook.activityTypeIds.join(", ")}`);
-		}
+			if (!data.allEvent && data.activityTypeIds.length > 0) {
+				consola.log(`    Activity Types:  ${data.activityTypeIds.join(", ")}`);
+			}
 
-		if (webhook.description) {
-			consola.log(`    Description:     ${webhook.description}`);
-		}
+			if (data.description) {
+				consola.log(`    Description:     ${data.description}`);
+			}
 
-		consola.log(`    Created by:      ${webhook.createdUser.name}`);
-		consola.log(`    Created:         ${formatDate(webhook.created)}`);
-		consola.log(`    Updated:         ${formatDate(webhook.updated)}`);
-		consola.log("");
+			consola.log(`    Created by:      ${data.createdUser.name}`);
+			consola.log(`    Created:         ${formatDate(data.created)}`);
+			consola.log(`    Updated:         ${formatDate(data.updated)}`);
+			consola.log("");
+		});
 	},
 });

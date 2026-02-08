@@ -3,6 +3,7 @@ import type { WikisGetHistoryData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "Show wiki page history",
 	},
 	args: {
+		...outputArgs,
 		"wiki-id": {
 			type: "positional",
 			description: "Wiki page ID",
@@ -41,18 +43,20 @@ export default defineCommand({
 
 		const history = await client<BacklogWikiHistory[]>(`/wikis/${args["wiki-id"]}/history`, { query });
 
-		if (history.length === 0) {
-			consola.info("No history found.");
-			return;
-		}
+		outputResult(history, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No history found.");
+				return;
+			}
 
-		const header = `${padEnd("VERSION", 10)}${padEnd("NAME", 30)}${padEnd("DATE", 12)}AUTHOR`;
-		consola.log(header);
-		for (const entry of history) {
-			const version = padEnd(`v${entry.version}`, 10);
-			const name = padEnd(entry.name, 30);
-			const date = padEnd(formatDate(entry.created), 12);
-			consola.log(`${version}${name}${date}${entry.createdUser.name}`);
-		}
+			const header = `${padEnd("VERSION", 10)}${padEnd("NAME", 30)}${padEnd("DATE", 12)}AUTHOR`;
+			consola.log(header);
+			for (const entry of data) {
+				const version = padEnd(`v${entry.version}`, 10);
+				const name = padEnd(entry.name, 30);
+				const date = padEnd(formatDate(entry.created), 12);
+				consola.log(`${version}${name}${date}${entry.createdUser.name}`);
+			}
+		});
 	},
 });

@@ -2,6 +2,7 @@ import type { PullRequestStatusType, PullRequestsListData } from "@repo/openapi-
 
 import { getClient } from "#utils/client.ts";
 import { formatPullRequestLine, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 import { type BacklogPullRequest, PR_STATUS } from "@repo/api";
 import { defineCommand } from "citty";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "List pull requests",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -110,15 +112,17 @@ export default defineCommand({
 			query,
 		});
 
-		if (prs.length === 0) {
-			consola.info("No pull requests found.");
-			return;
-		}
+		outputResult(prs, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No pull requests found.");
+				return;
+			}
 
-		const header = `${padEnd("#", 8)}${padEnd("STATUS", 10)}${padEnd("ASSIGNEE", 14)}${padEnd("BRANCH", 30)}SUMMARY`;
-		consola.log(header);
-		for (const pr of prs) {
-			consola.log(formatPullRequestLine(pr));
-		}
+			const header = `${padEnd("#", 8)}${padEnd("STATUS", 10)}${padEnd("ASSIGNEE", 14)}${padEnd("BRANCH", 30)}SUMMARY`;
+			consola.log(header);
+			for (const pr of data) {
+				consola.log(formatPullRequestLine(pr));
+			}
+		});
 	},
 });

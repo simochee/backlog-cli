@@ -3,6 +3,7 @@ import type { ProjectsListData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
 import { formatProjectLine, padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "List projects",
 	},
 	args: {
+		...outputArgs,
 		archived: {
 			type: "boolean",
 			description: "Include archived projects",
@@ -43,15 +45,17 @@ export default defineCommand({
 
 		const displayed = projects.slice(0, limit);
 
-		if (displayed.length === 0) {
-			consola.info("No projects found.");
-			return;
-		}
+		outputResult(displayed, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No projects found.");
+				return;
+			}
 
-		const header = `${padEnd("KEY", 16)}${padEnd("NAME", 30)}STATUS`;
-		consola.log(header);
-		for (const project of displayed) {
-			consola.log(formatProjectLine(project));
-		}
+			const header = `${padEnd("KEY", 16)}${padEnd("NAME", 30)}STATUS`;
+			consola.log(header);
+			for (const project of data) {
+				consola.log(formatProjectLine(project));
+			}
+		});
 	},
 });

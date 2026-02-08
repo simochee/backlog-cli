@@ -2,6 +2,7 @@ import type { BacklogWiki } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { formatDate } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { openUrl, wikiUrl } from "#utils/url.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "View a wiki page",
 	},
 	args: {
+		...outputArgs,
 		"wiki-id": {
 			type: "positional",
 			description: "Wiki page ID",
@@ -34,34 +36,36 @@ export default defineCommand({
 			return;
 		}
 
-		consola.log("");
-		consola.log(`  ${wiki.name}`);
-		consola.log("");
-		consola.log(`    ID:          ${wiki.id}`);
-		consola.log(`    Created by:  ${wiki.createdUser.name}`);
-		consola.log(`    Created:     ${formatDate(wiki.created)}`);
-		consola.log(`    Updated by:  ${wiki.updatedUser.name}`);
-		consola.log(`    Updated:     ${formatDate(wiki.updated)}`);
-
-		if (wiki.tags.length > 0) {
-			consola.log(`    Tags:        ${wiki.tags.map((t) => t.name).join(", ")}`);
-		}
-
-		if (wiki.attachments.length > 0) {
-			consola.log(`    Attachments: ${wiki.attachments.length} file(s)`);
-		}
-
-		if (wiki.content) {
+		outputResult(wiki, args, (data) => {
 			consola.log("");
-			consola.log("  Content:");
-			consola.log(
-				wiki.content
-					.split("\n")
-					.map((line: string) => `    ${line}`)
-					.join("\n"),
-			);
-		}
+			consola.log(`  ${data.name}`);
+			consola.log("");
+			consola.log(`    ID:          ${data.id}`);
+			consola.log(`    Created by:  ${data.createdUser.name}`);
+			consola.log(`    Created:     ${formatDate(data.created)}`);
+			consola.log(`    Updated by:  ${data.updatedUser.name}`);
+			consola.log(`    Updated:     ${formatDate(data.updated)}`);
 
-		consola.log("");
+			if (data.tags.length > 0) {
+				consola.log(`    Tags:        ${data.tags.map((t) => t.name).join(", ")}`);
+			}
+
+			if (data.attachments.length > 0) {
+				consola.log(`    Attachments: ${data.attachments.length} file(s)`);
+			}
+
+			if (data.content) {
+				consola.log("");
+				consola.log("  Content:");
+				consola.log(
+					data.content
+						.split("\n")
+						.map((line: string) => `    ${line}`)
+						.join("\n"),
+				);
+			}
+
+			consola.log("");
+		});
 	},
 });

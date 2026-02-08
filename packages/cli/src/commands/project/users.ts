@@ -2,6 +2,7 @@ import type { BacklogUser } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
 import { padEnd } from "#utils/format.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "List project users",
 	},
 	args: {
+		...outputArgs,
 		"project-key": {
 			type: "positional",
 			description: "Project key",
@@ -22,29 +24,31 @@ export default defineCommand({
 
 		const users = await client<BacklogUser[]>(`/projects/${args["project-key"]}/users`);
 
-		if (users.length === 0) {
-			consola.info("No users found.");
-			return;
-		}
+		outputResult(users, args, (data) => {
+			if (data.length === 0) {
+				consola.info("No users found.");
+				return;
+			}
 
-		const header = `${padEnd("ID", 10)}${padEnd("USER ID", 20)}${padEnd("NAME", 20)}ROLE`;
-		consola.log(header);
+			const header = `${padEnd("ID", 10)}${padEnd("USER ID", 20)}${padEnd("NAME", 20)}ROLE`;
+			consola.log(header);
 
-		const roleNames: Record<number, string> = {
-			1: "Admin",
-			2: "Normal",
-			3: "Reporter",
-			4: "Viewer",
-			5: "Guest Reporter",
-			6: "Guest Viewer",
-		};
+			const roleNames: Record<number, string> = {
+				1: "Admin",
+				2: "Normal",
+				3: "Reporter",
+				4: "Viewer",
+				5: "Guest Reporter",
+				6: "Guest Viewer",
+			};
 
-		for (const user of users) {
-			const id = padEnd(`${user.id}`, 10);
-			const userId = padEnd(user.userId, 20);
-			const name = padEnd(user.name, 20);
-			const role = roleNames[user.roleType] ?? `Role ${user.roleType}`;
-			consola.log(`${id}${userId}${name}${role}`);
-		}
+			for (const user of data) {
+				const id = padEnd(`${user.id}`, 10);
+				const userId = padEnd(user.userId, 20);
+				const name = padEnd(user.name, 20);
+				const role = roleNames[user.roleType] ?? `Role ${user.roleType}`;
+				consola.log(`${id}${userId}${name}${role}`);
+			}
+		});
 	},
 });
