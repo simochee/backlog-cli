@@ -40,6 +40,22 @@ describe("promptRequired", () => {
 		mockExit.mockRestore();
 	});
 
+	it("options が consola.prompt に渡される", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue("user-input" as never);
+
+		const result = await promptRequired("Label:", undefined, { placeholder: "xxx.backlog.com" });
+		expect(consola.prompt).toHaveBeenCalledWith("Label:", { type: "text", placeholder: "xxx.backlog.com" });
+		expect(result).toBe("user-input");
+	});
+
+	it("options が未指定の場合は type: text のみ渡される", async () => {
+		vi.mocked(consola.prompt).mockResolvedValue("user-input" as never);
+
+		const result = await promptRequired("Label:");
+		expect(consola.prompt).toHaveBeenCalledWith("Label:", { type: "text" });
+		expect(result).toBe("user-input");
+	});
+
 	it("ラベル末尾のコロンを除去してエラーメッセージを生成する", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
 		const mockExit = spyOnProcessExit();

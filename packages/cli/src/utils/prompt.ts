@@ -8,14 +8,19 @@ import consola from "consola";
  *
  * @param label - The prompt label shown to the user (e.g., "Project key:").
  * @param existing - The value already provided via CLI argument.
+ * @param options - Additional options passed to `consola.prompt` (e.g., `placeholder`).
  * @returns The resolved non-empty string value.
  */
-export default async function promptRequired(label: string, existing?: string): Promise<string> {
+export default async function promptRequired(
+	label: string,
+	existing?: string,
+	options?: { placeholder?: string },
+): Promise<string> {
 	if (existing) {
 		return existing;
 	}
 
-	const value = await consola.prompt(label, { type: "text" });
+	const value = await consola.prompt(label, { type: "text", ...options });
 
 	if (typeof value !== "string" || !value) {
 		consola.error(`${label.replace(/:$/, "")} is required.`);
