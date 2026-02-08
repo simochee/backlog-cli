@@ -16,7 +16,7 @@
 ### テストを書かない箇所
 
 - `packages/openapi-client` — 自動生成コード
-- `packages/backlog-api-typespec` — TypeSpec 定義
+- `packages/api-spec` — TypeSpec 定義
 - `packages/tsconfigs` — 設定ファイルのみ
 - CLI のインタラクティブプロンプト（consola.prompt）
 - 外部 API への実際のリクエスト（モックで代替）

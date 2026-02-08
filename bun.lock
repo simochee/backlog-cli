@@ -35,8 +35,8 @@
         "@repo/tsconfigs": "workspace:*",
       },
     },
-    "packages/backlog-api-typespec": {
-      "name": "@repo/backlog-api-typespec",
+    "packages/api-spec": {
+      "name": "@repo/api-spec",
       "version": "0.0.0",
       "devDependencies": {
         "@typespec/compiler": "~1.6.0",
@@ -84,7 +84,7 @@
       "name": "@repo/openapi-client",
       "version": "0.0.0",
       "dependencies": {
-        "@repo/backlog-api-typespec": "workspace:*",
+        "@repo/api-spec": "workspace:*",
       },
       "devDependencies": {
         "@hey-api/openapi-ts": "0.92.3",
@@ -361,7 +361,7 @@
 
     "@repo/api": ["@repo/api@workspace:packages/api"],
 
-    "@repo/backlog-api-typespec": ["@repo/backlog-api-typespec@workspace:packages/backlog-api-typespec"],
+    "@repo/api-spec": ["@repo/api-spec@workspace:packages/api-spec"],
 
     "@repo/config": ["@repo/config@workspace:packages/config"],
 

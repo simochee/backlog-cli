@@ -311,7 +311,7 @@ bun run test --filter=@repo/config      # 特定パッケージ
 ### テストを書かない箇所
 
 - `packages/openapi-client` — 自動生成コード
-- `packages/backlog-api-typespec` — TypeSpec 定義（コンパイル時に検証済み）
+- `packages/api-spec` — TypeSpec 定義（コンパイル時に検証済み）
 - `packages/tsconfigs` — 設定ファイルのみ
 - CLI のインタラクティブプロンプト（consola.prompt）— 統合テストの範囲
 - 外部 API への実際のリクエスト — モックで代替
