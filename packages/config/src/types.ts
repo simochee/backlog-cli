@@ -10,6 +10,8 @@ const OAuthAuth = type({
 	method: "'oauth'",
 	accessToken: "string",
 	refreshToken: "string",
+	clientId: type("string").optional(),
+	clientSecret: type("string").optional(),
 });
 
 export const RcAuth = ApiKeyAuth.or(OAuthAuth);
