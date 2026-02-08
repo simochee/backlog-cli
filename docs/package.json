@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"prebuild": "mkdir -p public/api && cp ../packages/api-spec/tsp-output/redoc.html public/api/index.html",
+		"prebuild": "mkdir -p public/openapi && cp ../packages/api-spec/tsp-output/redoc.html public/openapi/index.html && sed -i 's/<head>/<head><meta name=\"robots\" content=\"noindex, nofollow\">/' public/openapi/index.html",
 		"dev": "astro dev",
 		"build": "astro build"
 	},
