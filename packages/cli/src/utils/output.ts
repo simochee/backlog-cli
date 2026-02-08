@@ -57,7 +57,7 @@ function setNestedValue(obj: Record<string, unknown>, path: string, value: unkno
 		}
 		current = current[key] as Record<string, unknown>;
 	}
-	current[keys[keys.length - 1]] = value;
+	current[keys.at(-1)!] = value;
 }
 
 /**
