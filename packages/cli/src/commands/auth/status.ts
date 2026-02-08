@@ -1,6 +1,4 @@
-import type { BacklogUser } from "@repo/api";
-
-import { createClient } from "@repo/api";
+import { type BacklogUser, createClient } from "@repo/api";
 import { loadConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";

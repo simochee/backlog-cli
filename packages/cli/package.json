@@ -25,12 +25,12 @@
 	"files": [
 		"bin"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"type": "module",
 	"imports": {
 		"#*": "./src/*"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"scripts": {
 		"build": "bun build ./src/index.ts --outfile ./bin/backlog.mjs --target=node",

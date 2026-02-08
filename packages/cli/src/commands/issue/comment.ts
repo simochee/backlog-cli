@@ -1,7 +1,7 @@
 import type { BacklogComment } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -33,7 +33,7 @@ export default defineCommand({
 			for await (const chunk of process.stdin) {
 				chunks.push(chunk);
 			}
-			content = Buffer.concat(chunks).toString("utf-8").trim();
+			content = Buffer.concat(chunks).toString("utf8").trim();
 		}
 
 		// Prompt for body if not provided

@@ -10,7 +10,7 @@ import consola from "consola";
  * @param existing - The value already provided via CLI argument.
  * @returns The resolved non-empty string value.
  */
-export async function promptRequired(label: string, existing?: string): Promise<string> {
+export default async function promptRequired(label: string, existing?: string): Promise<string> {
 	if (existing) {
 		return existing;
 	}

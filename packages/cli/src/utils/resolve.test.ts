@@ -46,13 +46,13 @@ describe("resolveProjectArg", () => {
 
 	it("引数が未指定の場合は BACKLOG_PROJECT 環境変数を使う", () => {
 		process.env.BACKLOG_PROJECT = "ENV_PROJECT";
-		expect(resolveProjectArg(undefined)).toBe("ENV_PROJECT");
+		expect(resolveProjectArg()).toBe("ENV_PROJECT");
 	});
 
 	it("引数も環境変数も未指定の場合は process.exit(1) を呼ぶ", () => {
 		delete process.env.BACKLOG_PROJECT;
 		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
-		resolveProjectArg(undefined);
+		resolveProjectArg();
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();
 	});
