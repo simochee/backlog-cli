@@ -49,6 +49,27 @@ Format: `PROJECT_KEY-number` (e.g., `PROJ-123`). Since the key embeds the projec
 
 Specify with `--project` (`-p`) flag or `BACKLOG_PROJECT` env var.
 
+### JSON Output
+
+Most commands support `--json` flag for machine-readable output:
+
+- `--json` — output all fields in JSON format
+- `--json field1,field2` — output only specified fields (e.g., `--json issueKey,summary,status`)
+- Combine with `jq` for advanced filtering:
+
+```bash
+# Extract issue keys only
+backlog issue list -p PROJ --json | jq '.[].issueKey'
+
+# Filter by specific status
+backlog issue list -p PROJ --json | jq '[.[] | select(.status.name == "処理中")]'
+
+# Combine field filtering with jq
+backlog issue list -p PROJ --json issueKey,summary | jq '.[].summary'
+```
+
+**Always use `--json` in agent workflows** to parse output reliably.
+
 ## Common Workflows
 
 ### Issues
