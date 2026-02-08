@@ -3,11 +3,11 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({ resolveProjectArg: vi.fn(() => "PROJ") }));
-vi.mock("#utils/prompt.ts", () => ({ promptRequired: vi.fn(() => "prompted comment") }));
+vi.mock("#utils/prompt.ts", () => ({ default: vi.fn(() => "prompted comment") }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("pr comment", () => {

@@ -40,7 +40,7 @@ describe("project edit", () => {
 			}),
 		);
 		// Name と key が body に含まれないことを確認
-		const callBody = mockClient.mock.calls[0][1].body;
+		const callBody = mockClient.mock.calls[0]?.[1]?.body;
 		expect(callBody).not.toHaveProperty("name");
 		expect(callBody).not.toHaveProperty("key");
 	});

@@ -21,6 +21,7 @@ describe("auth logout", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 		vi.mocked(removeSpace).mockResolvedValue(undefined as never);
 
@@ -37,6 +38,7 @@ describe("auth logout", () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mod = await import("#commands/auth/logout.ts");
@@ -52,6 +54,7 @@ describe("auth logout", () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 		vi.mocked(removeSpace).mockRejectedValue(new Error("not found"));
 
@@ -76,6 +79,7 @@ describe("auth logout", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 		vi.mocked(removeSpace).mockResolvedValue(undefined as never);
 

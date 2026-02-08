@@ -25,7 +25,7 @@ describe("loadConfig", () => {
 
 		expect(config.defaultSpace).toBe("example.backlog.com");
 		expect(config.spaces).toHaveLength(1);
-		expect(config.spaces[0].host).toBe("example.backlog.com");
+		expect(config.spaces[0]?.host).toBe("example.backlog.com");
 	});
 
 	it("returns empty spaces array when rc file is empty", async () => {
@@ -61,10 +61,11 @@ describe("writeConfig", () => {
 			defaultSpace: "example.backlog.com",
 			spaces: [
 				{
-					host: "example.backlog.com" as const,
+					host: "example.backlog.com",
 					auth: { method: "api-key" as const, apiKey: "abc123" },
 				},
 			],
+			aliases: {} as Record<string, string>,
 		};
 
 		await writeConfig(config);

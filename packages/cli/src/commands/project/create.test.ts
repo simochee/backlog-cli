@@ -2,19 +2,16 @@ import { setupMockClient } from "@repo/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/prompt.ts", () => {
-	const fn = vi.fn();
-	return { default: fn, promptRequired: fn };
-});
+vi.mock("#utils/prompt.ts", () => ({ default: vi.fn() }));
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
-import { promptRequired } from "#utils/prompt.ts";
+import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("project create", () => {
 	beforeEach(() => {
-		vi.mocked(promptRequired).mockImplementation((_label, value) => Promise.resolve(value as string));
+		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
 
 	it("プロジェクトを作成する", async () => {

@@ -20,21 +20,23 @@ describe("auth switch", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mod = await import("#commands/auth/switch.ts");
 		const command = mod.default;
 
 		// Test that the command structure is correct
-		expect(command.meta?.name).toBe("switch");
-		expect(command.meta?.description).toBe("Switch active space");
-		expect(command.args?.hostname).toBeDefined();
+		expect((command.meta as Record<string, unknown>)?.["name"]).toBe("switch");
+		expect((command.meta as Record<string, unknown>)?.["description"]).toBe("Switch active space");
+		expect((command.args as Record<string, unknown>)?.["hostname"]).toBeDefined();
 	});
 
 	it("スペースが見つからない場合エラーを出す", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const exitSpy = spyOnProcessExit();
@@ -57,6 +59,7 @@ describe("auth switch", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mod = await import("#commands/auth/switch.ts");

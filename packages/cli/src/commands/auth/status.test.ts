@@ -18,6 +18,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: "example.backlog.com",
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockResolvedValue({
@@ -44,6 +45,7 @@ describe("auth status", () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mod = await import("#commands/auth/status.ts");
@@ -61,6 +63,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mod = await import("#commands/auth/status.ts");
@@ -81,6 +84,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockResolvedValue({
@@ -106,6 +110,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
@@ -131,6 +136,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockResolvedValue({
@@ -163,6 +169,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: undefined,
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockResolvedValue({
@@ -188,6 +195,7 @@ describe("auth status", () => {
 				},
 			],
 			defaultSpace: "other.backlog.com",
+			aliases: {},
 		});
 
 		const mockClient = vi.fn().mockResolvedValue({

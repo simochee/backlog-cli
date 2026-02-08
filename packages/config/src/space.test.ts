@@ -19,6 +19,7 @@ const makeSpace = (host: string) => ({
 const makeConfig = (spaces: ReturnType<typeof makeSpace>[], defaultSpace?: string) => ({
 	spaces,
 	defaultSpace,
+	aliases: {} as Record<string, string>,
 });
 
 describe("addSpace", () => {
@@ -28,9 +29,11 @@ describe("addSpace", () => {
 		const newSpace = makeSpace("new.backlog.com");
 		await addSpace(newSpace);
 
-		expect(mockWriteConfig).toHaveBeenCalledWith({
-			spaces: [newSpace],
-		});
+		expect(mockWriteConfig).toHaveBeenCalledWith(
+			expect.objectContaining({
+				spaces: [newSpace],
+			}),
+		);
 	});
 
 	it("throws if space with same host already exists", async () => {
