@@ -81,9 +81,22 @@ backlog issue list --project PROJ --space space-b.backlog.com
 
 ### スペース解決の優先順位
 
-1. `--space` フラグ
-2. `BACKLOG_SPACE` 環境変数
-3. 設定ファイルの `defaultSpace`
+1. `--space` フラグ / `BACKLOG_SPACE` 環境変数 / 設定ファイルの `defaultSpace` + 設定ファイルの認証情報
+2. `BACKLOG_API_KEY` + `BACKLOG_SPACE` 環境変数（フォールバック）
+
+## 環境変数による認証（CI/AI ワークフロー向け）
+
+`backlog auth login` を実行できない非インタラクティブ環境（CI パイプライン、AI エージェント等）では、環境変数のみで認証できます。
+
+```bash
+export BACKLOG_SPACE=your-space.backlog.com
+export BACKLOG_API_KEY=your-api-key
+
+# backlog auth login なしで利用可能
+backlog issue list --project YOUR_PROJECT
+```
+
+`BACKLOG_API_KEY` は設定ファイルの認証情報より優先度が低いため、`~/.backlogrc` にスペースが設定されている場合はそちらが使われます。
 
 ## 認証情報の保存場所
 
