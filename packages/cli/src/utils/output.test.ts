@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { filterFields, outputResult, pickFields } from "./output.ts";
+import { filterFields, getNestedValue, outputResult, pickFields } from "./output.ts";
 
 describe("pickFields", () => {
 	it("指定フィールドを抽出する", () => {
@@ -23,6 +23,65 @@ describe("pickFields", () => {
 		expect(pickFields(42, ["a"])).toEqual({});
 		expect(pickFields("str", ["a"])).toEqual({});
 	});
+
+	it("ドット記法でネストされたフィールドを抽出する", () => {
+		const obj = { updatedUser: { id: 1, name: "alice" }, summary: "test" };
+		expect(pickFields(obj, ["updatedUser.name"])).toEqual({ updatedUser: { name: "alice" } });
+	});
+
+	it("ドット記法で深いネストのフィールドを抽出する", () => {
+		const obj = { a: { b: { c: 42 } } };
+		expect(pickFields(obj, ["a.b.c"])).toEqual({ a: { b: { c: 42 } } });
+	});
+
+	it("ドット記法で存在しないネストパスを無視する", () => {
+		const obj = { a: { b: 1 } };
+		expect(pickFields(obj, ["a.x"])).toEqual({});
+	});
+
+	it("ドット記法で中間値が null の場合を無視する", () => {
+		const obj = { a: null };
+		expect(pickFields(obj, ["a.b"])).toEqual({});
+	});
+
+	it("トップレベルとネストのフィールドを混在して抽出する", () => {
+		const obj = { id: 1, updatedUser: { id: 10, name: "bob" }, extra: true };
+		expect(pickFields(obj, ["id", "updatedUser.name"])).toEqual({
+			id: 1,
+			updatedUser: { name: "bob" },
+		});
+	});
+});
+
+describe("getNestedValue", () => {
+	it("トップレベルの値を取得する", () => {
+		expect(getNestedValue({ a: 1 }, "a")).toBe(1);
+	});
+
+	it("ネストされた値を取得する", () => {
+		expect(getNestedValue({ a: { b: 2 } }, "a.b")).toBe(2);
+	});
+
+	it("深いネストの値を取得する", () => {
+		expect(getNestedValue({ a: { b: { c: 3 } } }, "a.b.c")).toBe(3);
+	});
+
+	it("存在しないキーで undefined を返す", () => {
+		expect(getNestedValue({ a: 1 }, "x")).toBeUndefined();
+	});
+
+	it("存在しないネストパスで undefined を返す", () => {
+		expect(getNestedValue({ a: { b: 1 } }, "a.x")).toBeUndefined();
+	});
+
+	it("中間値が null の場合 undefined を返す", () => {
+		expect(getNestedValue({ a: null }, "a.b")).toBeUndefined();
+	});
+
+	it("非オブジェクトの入力で undefined を返す", () => {
+		expect(getNestedValue(null, "a")).toBeUndefined();
+		expect(getNestedValue(42, "a")).toBeUndefined();
+	});
 });
 
 describe("filterFields", () => {
@@ -44,6 +103,17 @@ describe("filterFields", () => {
 
 	it("空配列をそのまま返す", () => {
 		expect(filterFields([], ["id"])).toEqual([]);
+	});
+
+	it("配列の各要素からネストフィールドを抽出する", () => {
+		const data = [
+			{ id: 1, createdUser: { id: 10, name: "alice" } },
+			{ id: 2, createdUser: { id: 20, name: "bob" } },
+		];
+		expect(filterFields(data, ["id", "createdUser.name"])).toEqual([
+			{ id: 1, createdUser: { name: "alice" } },
+			{ id: 2, createdUser: { name: "bob" } },
+		]);
 	});
 });
 

@@ -24,14 +24,53 @@ export const outputArgs = {
 } as const;
 
 /**
- * Picks specified top-level fields from a plain object.
+ * Resolves a dot-separated path to a nested value.
+ *
+ * @example
+ * ```ts
+ * getNestedValue({ a: { b: 1 } }, "a.b") // => 1
+ * getNestedValue({ a: { b: 1 } }, "a")   // => { b: 1 }
+ * getNestedValue({ a: null }, "a.b")      // => undefined
+ * ```
+ */
+export function getNestedValue(obj: unknown, path: string): unknown {
+	const keys = path.split(".");
+	let current: unknown = obj;
+	for (const key of keys) {
+		if (typeof current !== "object" || current === null) return undefined;
+		if (!(key in current)) return undefined;
+		current = (current as Record<string, unknown>)[key];
+	}
+	return current;
+}
+
+/**
+ * Sets a value at a dot-separated path in a nested object, creating intermediate objects as needed.
+ */
+function setNestedValue(obj: Record<string, unknown>, path: string, value: unknown): void {
+	const keys = path.split(".");
+	let current: Record<string, unknown> = obj;
+	for (let i = 0; i < keys.length - 1; i++) {
+		const key = keys[i];
+		if (!(key in current) || typeof current[key] !== "object" || current[key] === null) {
+			current[key] = {};
+		}
+		current = current[key] as Record<string, unknown>;
+	}
+	current[keys[keys.length - 1]] = value;
+}
+
+/**
+ * Picks specified fields from a plain object.
+ * Supports dot notation for nested field access (e.g. "updatedUser.name").
  */
 export function pickFields(obj: unknown, fields: string[]): Record<string, unknown> {
 	if (typeof obj !== "object" || obj === null) return {};
 	const result: Record<string, unknown> = {};
 	for (const field of fields) {
-		if (field in obj) {
-			result[field] = (obj as Record<string, unknown>)[field];
+		const value = getNestedValue(obj, field);
+		if (value !== undefined) {
+			setNestedValue(result, field, value);
 		}
 	}
 	return result;
