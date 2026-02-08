@@ -7,6 +7,8 @@ description: 課題種別を作成する
 backlog issue-type create [flags]
 ```
 
+対応する Backlog API については「[種別の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-issue-type/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

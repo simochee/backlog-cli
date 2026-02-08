@@ -9,6 +9,8 @@ backlog wiki list [flags]
 
 Wiki ページの一覧を取得します。
 
+対応する Backlog API については「[Wikiページ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-wiki-page-list/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

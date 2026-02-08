@@ -7,6 +7,8 @@ description: Wiki ページを作成する
 backlog wiki create [flags]
 ```
 
+対応する Backlog API については「[Wikiページの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-wiki-page/)」を参照してください。
+
 ## オプション
 
 `-p`, `--project <string>`

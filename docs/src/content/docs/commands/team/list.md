@@ -7,6 +7,8 @@ description: チームの一覧を表示する
 backlog team list [flags]
 ```
 
+対応する Backlog API については「[チーム一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-list-of-teams/)」を参照してください。
+
 ## オプション
 
 `--order <string>` (default "desc")

@@ -7,6 +7,8 @@ description: ウォッチを追加する
 backlog watching add [flags]
 ```
 
+対応する Backlog API については「[ウォッチの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-watching/)」を参照してください。
+
 ## オプション
 
 `--issue <string>`

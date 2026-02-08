@@ -9,6 +9,8 @@ backlog space activities [flags]
 
 スペース全体の最近のアクティビティを表示します。
 
+対応する Backlog API については「[最近の更新の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-recent-updates/)」を参照してください。
+
 ## オプション
 
 `-L`, `--limit <int>` (default 20)

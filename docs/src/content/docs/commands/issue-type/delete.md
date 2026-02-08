@@ -9,6 +9,8 @@ backlog issue-type delete <id> [flags]
 
 削除する種別に紐づく課題の移行先として、代替の種別 ID を指定してください。
 
+対応する Backlog API については「[種別の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-issue-type/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

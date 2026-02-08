@@ -9,6 +9,8 @@ backlog project list [flags]
 
 アクセス可能なプロジェクトの一覧を表示します。
 
+対応する Backlog API については「[プロジェクト一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-project-list/)」を参照してください。
+
 ## オプション
 
 `--archived`

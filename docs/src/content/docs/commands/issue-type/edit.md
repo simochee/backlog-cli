@@ -7,6 +7,8 @@ description: 課題種別を編集する
 backlog issue-type edit <id> [flags]
 ```
 
+対応する Backlog API については「[種別情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-issue-type/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

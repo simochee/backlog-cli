@@ -9,6 +9,8 @@ backlog pr comments <number> [flags]
 
 プルリクエストのコメント一覧を表示します。
 
+対応する Backlog API については「[プルリクエストコメントの取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-pull-request-comment/)」を参照してください。
+
 ## 引数
 
 `<number> <int>`

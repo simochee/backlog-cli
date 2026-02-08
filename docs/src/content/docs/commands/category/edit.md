@@ -7,6 +7,8 @@ description: カテゴリを編集する
 backlog category edit <id> [flags]
 ```
 
+対応する Backlog API については「[カテゴリー情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-category/)」を参照してください。
+
 ## 引数
 
 `<id> <int>`

@@ -9,6 +9,8 @@ backlog star add [flags]
 
 課題、コメント、Wiki ページ、PR コメントにスターを追加します。いずれか1つを指定してください。
 
+対応する Backlog API については「[スターの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-star/)」を参照してください。
+
 ## オプション
 
 `--issue <string>`

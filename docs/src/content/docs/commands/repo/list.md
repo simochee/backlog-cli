@@ -9,6 +9,8 @@ backlog repo list <project-key>
 
 プロジェクトの Git リポジトリ一覧を表示します。
 
+対応する Backlog API については「[Gitリポジトリ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-list-of-git-repositories/)」を参照してください。
+
 ## 引数
 
 `<project-key> <string>`

@@ -9,6 +9,8 @@ backlog project add-user <project-key> [flags]
 
 プロジェクトにメンバーを追加します。
 
+対応する Backlog API については「[プロジェクトユーザーの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-project-user/)」を参照してください。
+
 ## 引数
 
 `<project-key> <string>`

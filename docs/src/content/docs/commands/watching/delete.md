@@ -7,6 +7,8 @@ description: ウォッチを削除する
 backlog watching delete <watching-id> [flags]
 ```
 
+対応する Backlog API については「[ウォッチの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-watching/)」を参照してください。
+
 ## 引数
 
 `<watching-id> <int>`

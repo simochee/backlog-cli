@@ -7,6 +7,8 @@ description: スター数を表示する
 backlog star count [user-id] [flags]
 ```
 
+対応する Backlog API については「[ユーザーの受け取ったスターの数の取得](https://developer.nulab.com/ja/docs/backlog/api/2/count-user-received-stars/)」を参照してください。
+
 ## 引数
 
 `[user-id] <int>`

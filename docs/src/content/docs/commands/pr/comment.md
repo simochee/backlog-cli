@@ -9,6 +9,8 @@ backlog pr comment <number> [flags]
 
 プルリクエストにコメントを追加します。
 
+対応する Backlog API については「[プルリクエストコメントの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-pull-request-comment/)」を参照してください。
+
 ## 引数
 
 `<number> <int>`

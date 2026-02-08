@@ -9,6 +9,8 @@ backlog pr edit <number> [flags]
 
 プルリクエストの情報を編集します。
 
+対応する Backlog API については「[プルリクエストの更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-pull-request/)」を参照してください。
+
 ## 引数
 
 `<number> <int>`

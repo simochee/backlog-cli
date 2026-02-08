@@ -9,6 +9,8 @@ backlog space notification
 
 スペースのお知らせ通知を表示します。
 
+対応する Backlog API については「[スペースのお知らせの取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-space-notification/)」を参照してください。
+
 ## 使用例
 
 ```bash
