@@ -40,16 +40,14 @@
 		"test": "vitest run",
 		"type-check": "tsc --noEmit"
 	},
-	"dependencies": {
+	"devDependencies": {
 		"@repo/api": "workspace:*",
 		"@repo/config": "workspace:*",
 		"@repo/openapi-client": "workspace:*",
+		"@repo/test-utils": "workspace:*",
+		"@repo/tsconfigs": "workspace:*",
 		"citty": "^0.1.6",
 		"consola": "^3.4.2"
-	},
-	"devDependencies": {
-		"@repo/test-utils": "workspace:*",
-		"@repo/tsconfigs": "workspace:*"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
