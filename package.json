@@ -13,7 +13,7 @@
 		"build": "turbo build",
 		"dev": "turbo dev",
 		"postinstall": "lefthook install",
-		"lint": "turbo lint",
+		"lint": "oxlint",
 		"test": "turbo test",
 		"textlint": "textlint \"docs/**/*.md\" \"README.md\"",
 		"textlint:fix": "textlint --fix \"docs/**/*.md\" \"README.md\"",
