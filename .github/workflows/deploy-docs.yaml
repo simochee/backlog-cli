@@ -1,4 +1,4 @@
-name: Deploy Docs to Cloudflare Pages
+name: Deploy Docs to Cloudflare Workers
 
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
         working-directory: docs
         run: bun run build
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
