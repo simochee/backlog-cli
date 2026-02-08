@@ -1,20 +1,15 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("project edit", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("プロジェクトを更新する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ projectKey: "PROJ", name: "New Name" });
 
 		const mod = await import("#commands/project/edit.ts");
@@ -31,8 +26,7 @@ describe("project edit", () => {
 	});
 
 	it("指定フィールドのみ PATCH ボディに含める", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ projectKey: "PROJ", name: "Project" });
 
 		const mod = await import("#commands/project/edit.ts");

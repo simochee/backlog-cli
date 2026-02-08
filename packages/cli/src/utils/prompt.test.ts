@@ -1,20 +1,12 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
-vi.mock("consola", () => ({
-	default: {
-		prompt: vi.fn(),
-		error: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("promptRequired", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("既存の値がある場合はそのまま返す", async () => {
 		const result = await promptRequired("Label:", "existing-value");
 		expect(result).toBe("existing-value");
@@ -39,7 +31,7 @@ describe("promptRequired", () => {
 
 	it("プロンプトで空文字が入力された場合は process.exit(1) を呼ぶ", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOnProcessExit();
 
 		await promptRequired("Label:");
 
@@ -50,7 +42,7 @@ describe("promptRequired", () => {
 
 	it("ラベル末尾のコロンを除去してエラーメッセージを生成する", async () => {
 		vi.mocked(consola.prompt).mockResolvedValue("" as never);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOnProcessExit();
 
 		await promptRequired("Project key:");
 

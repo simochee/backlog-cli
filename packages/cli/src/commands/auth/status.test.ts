@@ -1,24 +1,14 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/api", () => ({ createClient: vi.fn() }));
 vi.mock("@repo/config", () => ({ loadConfig: vi.fn() }));
-vi.mock("consola", () => ({
-	default: {
-		debug: vi.fn(),
-		info: vi.fn(),
-		log: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { createClient } from "@repo/api";
 import { loadConfig } from "@repo/config";
 import consola from "consola";
 
 describe("auth status", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("認証済みスペースのステータスを表示する", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [

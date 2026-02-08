@@ -1,23 +1,16 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	resolveSpace: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		error: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { resolveSpace } from "@repo/config";
 import consola from "consola";
 
 describe("auth token", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("API キーを stdout に出力する", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue({
 			host: "example.backlog.com",
@@ -56,7 +49,7 @@ describe("auth token", () => {
 
 	it("スペース未設定で process.exit(1) が呼ばれる", async () => {
 		vi.mocked(resolveSpace).mockResolvedValue(null as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 
 		try {
 			const mod = await import("#commands/auth/token.ts");

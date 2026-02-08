@@ -13,7 +13,8 @@ import {
 	resolveStatusId,
 	resolveUserId,
 } from "#utils/resolve.ts";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { spyOnProcessExit } from "@repo/test-utils";
+import { afterEach, describe, expect, it } from "vitest";
 
 function createMockClient(responses: Record<string, unknown>): BacklogClient {
 	return ((url: string) => {
@@ -51,7 +52,7 @@ describe("resolveProjectArg", () => {
 
 	it("引数も環境変数も未指定の場合は process.exit(1) を呼ぶ", () => {
 		delete process.env.BACKLOG_PROJECT;
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOnProcessExit();
 		resolveProjectArg();
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();

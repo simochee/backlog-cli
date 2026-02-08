@@ -1,24 +1,15 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@repo/config", () => ({
 	loadConfig: vi.fn(),
 	writeConfig: vi.fn(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		success: vi.fn(),
-		error: vi.fn(),
-	},
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { loadConfig, writeConfig } from "@repo/config";
 
 describe("alias set", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("新しいエイリアスを設定する", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],

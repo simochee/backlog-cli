@@ -47,6 +47,7 @@
 		"consola": "^3.4.2"
 	},
 	"devDependencies": {
+		"@repo/test-utils": "workspace:*",
 		"@repo/tsconfigs": "workspace:*"
 	},
 	"peerDependencies": {

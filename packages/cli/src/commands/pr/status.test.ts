@@ -1,24 +1,18 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("pr status", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("自分のPRをステータス別に表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockImplementation((url: string) => {
 			if (url === "/users/myself") return Promise.resolve({ id: 1, name: "User" });
 			if (url.includes("/pullRequests"))
@@ -45,8 +39,7 @@ describe("pr status", () => {
 	});
 
 	it("0件の場合メッセージを表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockImplementation((url: string) => {
 			if (url === "/users/myself") return Promise.resolve({ id: 1, name: "User" });
 			if (url.includes("/pullRequests")) return Promise.resolve([]);
@@ -60,8 +53,7 @@ describe("pr status", () => {
 	});
 
 	it("複数ステータスでグルーピングする", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockImplementation((url: string) => {
 			if (url === "/users/myself") return Promise.resolve({ id: 1, name: "User" });
 			if (url.includes("/pullRequests"))

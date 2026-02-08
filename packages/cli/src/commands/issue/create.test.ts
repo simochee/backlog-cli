@@ -1,9 +1,8 @@
+import { setupMockClient } from "@repo/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn(), prompt: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/prompt.ts", () => {
 	const fn = vi.fn();
 	return { default: fn, promptRequired: fn };
@@ -32,13 +31,11 @@ const mockCreatedIssue = {
 
 describe("issue create", () => {
 	beforeEach(() => {
-		vi.clearAllMocks();
 		vi.mocked(promptRequired).mockImplementation((_label, value) => Promise.resolve(value as string));
 	});
 
 	it("必須引数で課題を作成する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockCreatedIssue);
 
 		const mod = await import("#commands/issue/create.ts");
@@ -65,8 +62,7 @@ describe("issue create", () => {
 	});
 
 	it("オプション引数を含めて課題を作成する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockCreatedIssue);
 
 		const mod = await import("#commands/issue/create.ts");
@@ -103,8 +99,7 @@ describe("issue create", () => {
 	});
 
 	it("--web で作成後にブラウザを開く", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockCreatedIssue);
 
 		const mod = await import("#commands/issue/create.ts");

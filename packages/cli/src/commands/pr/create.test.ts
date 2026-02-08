@@ -1,13 +1,12 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
 
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/resolve.ts", () => ({
 	resolveProjectArg: vi.fn(() => "PROJ"),
 	resolveUserId: vi.fn(() => Promise.resolve(999)),
 }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), error: vi.fn(), start: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/prompt.ts", () => {
 	const fn = vi.fn((_label: string, value: string) => Promise.resolve(value));
 	return { default: fn, promptRequired: fn };
@@ -27,13 +26,8 @@ const mockCreatedPr = {
 };
 
 describe("pr create", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("PRを作成する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockCreatedPr);
 
 		const mod = await import("#commands/pr/create.ts");
@@ -56,8 +50,7 @@ describe("pr create", () => {
 	});
 
 	it("assigneeを指定する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		vi.mocked(resolveUserId).mockResolvedValue(999);
 		mockClient.mockResolvedValue(mockCreatedPr);
 
@@ -86,8 +79,7 @@ describe("pr create", () => {
 	});
 
 	it("issueを関連付ける", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		// /issues/PROJ-1 の返却
 		mockClient
 			.mockResolvedValueOnce({ id: 42 })

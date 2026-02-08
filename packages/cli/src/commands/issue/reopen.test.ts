@@ -1,7 +1,8 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn(), warn: vi.fn(), error: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 vi.mock("#utils/resolve.ts", () => ({
 	extractProjectKey: vi.fn(() => "PROJ"),
 	resolveOpenStatusId: vi.fn(() => Promise.resolve(1)),
@@ -10,16 +11,10 @@ vi.mock("#utils/resolve.ts", () => ({
 import { getClient } from "#utils/client.ts";
 import { resolveOpenStatusId } from "#utils/resolve.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("issue reopen", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("課題を再オープンする", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ issueKey: "PROJ-1", summary: "Issue Title" });
 
 		const mod = await import("#commands/issue/reopen.ts");
@@ -37,8 +32,7 @@ describe("issue reopen", () => {
 	});
 
 	it("コメント付きで再オープンする", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ issueKey: "PROJ-1", summary: "Issue Title" });
 
 		const mod = await import("#commands/issue/reopen.ts");

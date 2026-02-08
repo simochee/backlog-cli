@@ -1,12 +1,12 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { formatBytes } from "#commands/space/disk-usage.ts";
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("formatBytes", () => {
 	it("0 バイトを正しくフォーマットする", () => {
@@ -55,13 +55,8 @@ describe("disk-usage run()", () => {
 		pullRequest: 1_048_576,
 	};
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("run() でディスク使用量を表示する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");
@@ -81,8 +76,7 @@ describe("disk-usage run()", () => {
 	});
 
 	it("run() で各項目が正しくフォーマットされる", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockUsage);
 
 		const mod = await import("#commands/space/disk-usage.ts");

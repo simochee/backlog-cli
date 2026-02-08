@@ -22,10 +22,6 @@ const makeConfig = (spaces: ReturnType<typeof makeSpace>[], defaultSpace?: strin
 });
 
 describe("addSpace", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("adds a new space to config", async () => {
 		mockLoadConfig.mockResolvedValue(makeConfig([]));
 
@@ -48,10 +44,6 @@ describe("addSpace", () => {
 });
 
 describe("removeSpace", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("removes an existing space", async () => {
 		const space1 = makeSpace("one.backlog.com");
 		const space2 = makeSpace("two.backlog.com");
@@ -101,10 +93,6 @@ describe("removeSpace", () => {
 });
 
 describe("updateSpaceAuth", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("updates auth for an existing space", async () => {
 		const space = makeSpace("target.backlog.com");
 		mockLoadConfig.mockResolvedValue(makeConfig([space]));
@@ -138,7 +126,6 @@ describe("updateSpaceAuth", () => {
 
 describe("resolveSpace", () => {
 	beforeEach(() => {
-		vi.clearAllMocks();
 		delete process.env["BACKLOG_SPACE"];
 	});
 

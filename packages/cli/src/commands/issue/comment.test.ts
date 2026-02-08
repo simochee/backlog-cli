@@ -1,13 +1,13 @@
+import { setupMockClient } from "@repo/test-utils";
+import { describe, expect, it, vi } from "vitest";
+
 vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
 vi.mock("#utils/prompt.ts", () => ({ promptRequired: vi.fn(() => "prompted comment") }));
-vi.mock("consola", () => ({
-	default: { log: vi.fn(), info: vi.fn(), success: vi.fn() },
-}));
+vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import { promptRequired } from "#utils/prompt.ts";
 import consola from "consola";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("issue comment", () => {
 	const mockComment = {
@@ -17,13 +17,8 @@ describe("issue comment", () => {
 		created: "2024-01-01T00:00:00Z",
 	};
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("課題にコメントを追加する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockComment);
 
 		const mod = await import("#commands/issue/comment.ts");
@@ -37,8 +32,7 @@ describe("issue comment", () => {
 	});
 
 	it("body 引数で直接指定する", async () => {
-		const mockClient = vi.fn();
-		vi.mocked(getClient).mockResolvedValue({ client: mockClient as never, host: "example.backlog.com" });
+		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue(mockComment);
 
 		const mod = await import("#commands/issue/comment.ts");

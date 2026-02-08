@@ -15,6 +15,7 @@
 		"ufo": "^1.5.4"
 	},
 	"devDependencies": {
+		"@repo/test-utils": "workspace:*",
 		"@repo/tsconfigs": "workspace:*"
 	}
 }
