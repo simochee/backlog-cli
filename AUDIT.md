@@ -8,25 +8,25 @@
 
 ## 1. テストが不足している箇所
 
-### 全体カバレッジ: 約14%（132ソースファイル中18テストファイル）
+### ~~全体カバレッジ: 約14%（132ソースファイル中18テストファイル）~~ → 約36%（48テストファイル）に改善
 
-### テストが全くないコマンド（107ファイル）
+### ~~テストが全くないコマンド（107ファイル）~~ → 高優先度は解決済み、残り約70ファイル
 
-| カテゴリ                                                                                 | ファイル数 | 優先度 |
-| ---------------------------------------------------------------------------------------- | ---------- | ------ |
-| `issue/*` (list, view, create, edit, close, reopen, comment, status)                     | 8          | 高     |
-| `pr/*` (list, view, create, edit, close, reopen, merge, comment, comments, status)       | 10         | 高     |
-| `project/*` (list, view, create, edit, delete, users, add-user, remove-user, activities) | 9          | 高     |
-| `auth/login`, `auth/logout`, `auth/status`, `auth/token`                                 | 4          | 高     |
-| `wiki/*`                                                                                 | 10         | 中     |
-| `webhook/*`                                                                              | 6          | 中     |
-| `team/*`                                                                                 | 6          | 中     |
-| `notification/*`                                                                         | 5          | 中     |
-| `user/*`                                                                                 | 5          | 中     |
-| `repo/*`                                                                                 | 4          | 中     |
-| `category/*`, `milestone/*`, `issue-type/*`, `status-type/*`                             | 20         | 中     |
-| `star/*`, `watching/*`                                                                   | 10         | 低     |
-| `browse.ts`, `status.ts`                                                                 | 2          | 中     |
+| カテゴリ                                                                                 | ファイル数 | 優先度 | 状態                       |
+| ---------------------------------------------------------------------------------------- | ---------- | ------ | -------------------------- |
+| ~~`issue/*` (list, view, create, edit, close, reopen, comment, status)~~                 | ~~8~~      | ~~高~~ | **解決済み（全8テスト）**  |
+| ~~`pr/*` (list, view, create, edit, close, reopen, merge, comment, comments, status)~~   | ~~10~~     | ~~高~~ | **解決済み（全11テスト）** |
+| ~~`project/*` (list, view, create, edit, delete, users, add-user, remove-user, activities)~~ | ~~9~~ | ~~高~~ | **解決済み（全9テスト）**  |
+| ~~`auth/login`, `auth/logout`, `auth/status`, `auth/token`~~                             | ~~4~~      | ~~高~~ | **解決済み（全6テスト）**  |
+| `wiki/*`                                                                                 | 10         | 中     | 未対応                     |
+| `webhook/*`                                                                              | 6          | 中     | 未対応                     |
+| `team/*`                                                                                 | 6          | 中     | 未対応                     |
+| `notification/*`                                                                         | 5          | 中     | 未対応                     |
+| `user/*`                                                                                 | 5          | 中     | 未対応                     |
+| `repo/*`                                                                                 | 4          | 中     | 未対応                     |
+| `category/*`, `milestone/*`, `issue-type/*`, `status-type/*`                             | 20         | 中     | 未対応                     |
+| `star/*`, `watching/*`                                                                   | 10         | 低     | 未対応                     |
+| `browse.ts`, `status.ts`                                                                 | 2          | 中     | 未対応                     |
 
 ### 既存テストの問題
 
@@ -101,7 +101,8 @@
 
 | 優先度 | 問題                                                        | 件数          | 状態                               |
 | ------ | ----------------------------------------------------------- | ------------- | ---------------------------------- |
-| 高     | コマンドのテスト不足（93%がテストなし）                     | 107ファイル   | **未対応**                         |
+| 高     | ~~コマンドのテスト不足（高優先度: issue, pr, project, auth）~~ | ~~31ファイル~~ | **解決済み（全34テスト）** |
+| 中     | コマンドのテスト不足（中〜低優先度: wiki, webhook, team 等） | 68ファイル    | **未対応**                         |
 | ~~高~~ | ~~`Record<string, unknown>` で型付きSDKを活用できていない~~ | ~~49箇所~~    | **解決済み（PR #26）**             |
 | ~~高~~ | ~~API クライアントのテストが実質ゼロ~~                      | ~~1ファイル~~ | **解決済み（PR #26: 3→10テスト）** |
 | ~~中~~ | ~~`unknown[]` の不適切な型定義~~                            | ~~10箇所~~    | **解決済み（PR #25）**             |
