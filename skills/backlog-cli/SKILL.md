@@ -1,101 +1,101 @@
 ---
 name: backlog-cli
 description: |
-  Backlog プロジェクト管理の CLI ツール。以下の操作を行うときに使用する:
-  (1) 課題の一覧取得・作成・編集・ステータス変更・コメント追加
-  (2) プルリクエストの作成・一覧・マージ・コメント
-  (3) Wiki ページの閲覧・作成・編集
-  (4) プロジェクト設定の参照（課題種別・ステータス・カテゴリ・マイルストーン・メンバー）
-  (5) 通知の確認、スター、ウォッチ等の補助操作
-  (6) backlog api コマンドによる汎用 API リクエスト
+  CLI for Backlog project management (by Nulab). Use this skill when:
+  (1) Listing, creating, editing, closing, or commenting on issues
+  (2) Creating, listing, merging, or commenting on pull requests
+  (3) Viewing, creating, or editing Wiki pages
+  (4) Querying project settings (issue types, statuses, categories, milestones, members)
+  (5) Checking notifications, stars, or watches
+  (6) Making raw API requests via `backlog api`
 ---
 
 # backlog-cli
 
-`backlog` コマンドで Backlog（Nulab）のプロジェクト管理操作を行う CLI。
+CLI tool for managing Backlog projects via the `backlog` command.
 
-## 認証
+## Authentication
 
-事前に `backlog auth login` で認証が必要。`backlog auth status` で確認できる。
-複数スペースは `--space <hostname>` または環境変数 `BACKLOG_SPACE` で切り替える。
+Run `backlog auth login` before use. Verify with `backlog auth status`.
+Switch between spaces with `--space <hostname>` or `BACKLOG_SPACE` env var.
 
-## 重要な概念
+## Key Concepts
 
-### 対話プロンプトの回避
+### Avoid Interactive Prompts
 
-一部コマンドは未指定の必須フィールドを対話的に問い合わせる。エージェント利用時は**必須フラグをすべて明示的に指定**すること。
+Some commands prompt interactively for missing required fields. **Always specify all required flags explicitly** to prevent hanging.
 
-### 名前解決
+### Name Resolution
 
-CLI はユーザーフレンドリーな名前を自動で ID に変換する:
+The CLI automatically resolves human-readable names to IDs:
 
-- ステータス名（`処理中`、`完了`）→ ID
-- 課題種別名（`バグ`、`タスク`）→ ID
-- 優先度名（`高`、`中`、`低`）→ ID
-- ユーザー名 → ID（`@me` で自分自身）
+- Status names → status ID
+- Issue type names → issue type ID
+- Priority names (`高`/`中`/`低`) → priority ID
+- Usernames → user ID (`@me` refers to the authenticated user)
 
-**ステータス名・種別名はプロジェクトごとに異なる。** 不明な場合は先に確認する:
+**Status and issue type names are project-specific.** Query them first if unknown:
 
 ```bash
 backlog issue-type list -p PROJECT_KEY
 backlog status-type list -p PROJECT_KEY
 ```
 
-### 課題キー
+### Issue Keys
 
-`PROJECT_KEY-数字` の形式（例: `PROJ-123`）。課題キーにプロジェクト情報を含むため、`issue view` / `issue edit` では `--project` 不要。
+Format: `PROJECT_KEY-number` (e.g., `PROJ-123`). Since the key embeds the project, `--project` is not needed for `issue view` / `issue edit`.
 
-### プロジェクトキーの指定
+### Project Key
 
-`--project`（`-p`）フラグまたは環境変数 `BACKLOG_PROJECT` で指定する。
+Specify with `--project` (`-p`) flag or `BACKLOG_PROJECT` env var.
 
-## 主要ワークフロー
+## Common Workflows
 
-### 課題操作
+### Issues
 
 ```bash
-# 一覧（自分の未完了課題）
+# List my open issues
 backlog issue list -p PROJ -a @me -S "未対応,処理中"
 
-# 詳細確認（コメント付き）
+# View details with comments
 backlog issue view PROJ-123 --comments
 
-# 作成（必須: -p, -t, -T, -P）
-backlog issue create -p PROJ -t "タイトル" -T "タスク" -P "中" -a @me -d "説明"
+# Create (required: -p, -t, -T, -P)
+backlog issue create -p PROJ -t "Title" -T "タスク" -P "中" -a @me -d "Description"
 
-# ステータス変更＋コメント
-backlog issue edit PROJ-123 -S "処理中" -c "対応開始"
+# Update status with comment
+backlog issue edit PROJ-123 -S "処理中" -c "Starting work"
 
-# クローズ
-backlog issue close PROJ-123 -c "完了"
+# Close
+backlog issue close PROJ-123 -c "Done"
 
-# コメント追加
-backlog issue comment PROJ-123 -b "進捗報告"
+# Add comment
+backlog issue comment PROJ-123 -b "Progress update"
 ```
 
-### プルリクエスト操作
+### Pull Requests
 
 ```bash
-# 作成（必須: -p, -R, -t, -B, --branch）
-backlog pr create -p PROJ -R repo -t "PRタイトル" -B main --branch feat/xxx --issue PROJ-123
+# Create (required: -p, -R, -t, -B, --branch)
+backlog pr create -p PROJ -R repo -t "PR title" -B main --branch feat/xxx --issue PROJ-123
 
-# 一覧
+# List open PRs
 backlog pr list -p PROJ -R repo
 
-# 詳細
+# View with comments
 backlog pr view -p PROJ -R repo 42 --comments
 
-# マージ
+# Merge
 backlog pr merge -p PROJ -R repo 42
 ```
 
-### プロジェクト情報
+### Project Info
 
 ```bash
-backlog project list                  # プロジェクト一覧
-backlog project users PROJECT_KEY     # メンバー一覧
-backlog category list -p PROJ         # カテゴリ一覧
-backlog milestone list -p PROJ        # マイルストーン一覧
+backlog project list                  # List projects
+backlog project users PROJECT_KEY     # List members
+backlog category list -p PROJ         # List categories
+backlog milestone list -p PROJ        # List milestones
 ```
 
 ### Wiki
@@ -103,20 +103,20 @@ backlog milestone list -p PROJ        # マイルストーン一覧
 ```bash
 backlog wiki list -p PROJ
 backlog wiki view <wiki-id>
-backlog wiki create -p PROJ -n "ページ名" -b "内容"
-backlog wiki edit <wiki-id> -b "更新内容"
+backlog wiki create -p PROJ -n "Page title" -b "Content"
+backlog wiki edit <wiki-id> -b "Updated content"
 ```
 
-### 汎用 API
+### Raw API
 
-CLI コマンドでカバーされない操作に使用。`/api/v2` プレフィックスは省略可。
+For operations not covered by CLI commands. The `/api/v2` prefix can be omitted.
 
 ```bash
-backlog api /issues -X POST -f "projectId=123" -f "summary=新規課題"
+backlog api /issues -X POST -f "projectId=123" -f "summary=New issue"
 backlog api /issues --paginate -f "projectId[]=123"
 ```
 
-## リファレンス
+## References
 
-- **全コマンド引数の詳細**: [references/commands.md](./references/commands.md)
-- **データモデル（スキーマ型）**: [references/schema.md](./references/schema.md)
+- **Full command options**: [references/commands.md](./references/commands.md)
+- **Data model schemas**: [references/schema.md](./references/schema.md)

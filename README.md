@@ -89,6 +89,16 @@ backlog api /api/v2/space
 
 各コマンドの詳細は `backlog <command> --help` または[コマンドリファレンス](https://simochee.github.io/backlog-cli/commands/issue/)で。
 
+## AI エージェント連携
+
+AI コーディングエージェント（Claude Code、Cursor、Codex など）から backlog-cli を使う場合、[Agent Skill](https://github.com/vercel-labs/skills) をインストールすると、エージェントが Backlog の操作方法を自動的に理解します。
+
+```bash
+npx skills add simochee/backlog-cli
+```
+
+> スキルをインストールすると、エージェントに backlog-cli の全コマンド・オプション・データモデルが提供され、ハウトゥーの説明なしに課題管理や PR 操作を指示できるようになります。
+
 ## ドキュメント
 
 **https://simochee.github.io/backlog-cli**

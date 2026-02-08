@@ -1,199 +1,199 @@
-# データモデル（スキーマ型参照）
+# Data Model Schema
 
-`--json` 出力や `backlog api` レスポンスで返されるデータ構造。
+Structures returned by `--json` output and `backlog api` responses.
 
-## Issue（課題）
+## Issue
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | 課題ID |
-| `projectId` | number | プロジェクトID |
-| `issueKey` | string | 課題キー（例: `PROJ-123`） |
-| `keyId` | number | 課題番号 |
-| `issueType` | IssueType | 課題種別 |
-| `summary` | string | タイトル |
-| `description` | string | 説明 |
-| `priority` | Priority | 優先度 |
-| `status` | Status | ステータス |
-| `assignee` | User \| null | 担当者 |
-| `category` | {id, name}[] | カテゴリ |
-| `versions` | {id, name}[] | 発生バージョン |
-| `milestone` | {id, name}[] | マイルストーン |
-| `startDate` | string \| null | 開始日 |
-| `dueDate` | string \| null | 期限日 |
-| `estimatedHours` | number \| null | 予定時間 |
-| `actualHours` | number \| null | 実績時間 |
-| `parentIssueId` | number \| null | 親課題ID |
-| `createdUser` | User | 作成者 |
-| `created` | string | 作成日時 |
-| `updatedUser` | User | 更新者 |
-| `updated` | string | 更新日時 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Issue ID |
+| `projectId` | number | Project ID |
+| `issueKey` | string | Issue key (e.g., `PROJ-123`) |
+| `keyId` | number | Issue number |
+| `issueType` | IssueType | Issue type |
+| `summary` | string | Title |
+| `description` | string | Description |
+| `priority` | Priority | Priority |
+| `status` | Status | Status |
+| `assignee` | User \| null | Assignee |
+| `category` | {id, name}[] | Categories |
+| `versions` | {id, name}[] | Affected versions |
+| `milestone` | {id, name}[] | Milestones |
+| `startDate` | string \| null | Start date |
+| `dueDate` | string \| null | Due date |
+| `estimatedHours` | number \| null | Estimated hours |
+| `actualHours` | number \| null | Actual hours |
+| `parentIssueId` | number \| null | Parent issue ID |
+| `createdUser` | User | Creator |
+| `created` | string | Created at |
+| `updatedUser` | User | Last updater |
+| `updated` | string | Updated at |
 
 ## PullRequest
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
+| Field | Type | Description |
+|-------|------|-------------|
 | `id` | number | PR ID |
-| `projectId` | number | プロジェクトID |
-| `repositoryId` | number | リポジトリID |
-| `number` | number | PR番号 |
-| `summary` | string | タイトル |
-| `description` | string | 説明 |
-| `base` | string | ベースブランチ |
-| `branch` | string | ソースブランチ |
-| `status` | {id, name} | ステータス（1: Open, 2: Closed, 3: Merged） |
-| `assignee` | User \| null | 担当者 |
-| `issue` | Issue \| null | 関連課題 |
-| `baseCommit` | string \| null | ベースコミットSHA |
-| `branchCommit` | string \| null | ブランチコミットSHA |
-| `mergeCommit` | string \| null | マージコミットSHA |
-| `closeAt` | string \| null | クローズ日時 |
-| `mergeAt` | string \| null | マージ日時 |
-| `createdUser` | User | 作成者 |
-| `created` | string | 作成日時 |
-| `updatedUser` | User | 更新者 |
-| `updated` | string | 更新日時 |
+| `projectId` | number | Project ID |
+| `repositoryId` | number | Repository ID |
+| `number` | number | PR number |
+| `summary` | string | Title |
+| `description` | string | Description |
+| `base` | string | Base branch |
+| `branch` | string | Source branch |
+| `status` | {id, name} | Status (1: Open, 2: Closed, 3: Merged) |
+| `assignee` | User \| null | Assignee |
+| `issue` | Issue \| null | Related issue |
+| `baseCommit` | string \| null | Base commit SHA |
+| `branchCommit` | string \| null | Branch commit SHA |
+| `mergeCommit` | string \| null | Merge commit SHA |
+| `closeAt` | string \| null | Closed at |
+| `mergeAt` | string \| null | Merged at |
+| `createdUser` | User | Creator |
+| `created` | string | Created at |
+| `updatedUser` | User | Last updater |
+| `updated` | string | Updated at |
 
 ## Project
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | プロジェクトID |
-| `projectKey` | string | プロジェクトキー |
-| `name` | string | プロジェクト名 |
-| `chartEnabled` | boolean | チャート有効 |
-| `subtaskingEnabled` | boolean | サブタスク有効 |
-| `textFormattingRule` | `"backlog"` \| `"markdown"` | テキスト書式 |
-| `archived` | boolean | アーカイブ済み |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Project ID |
+| `projectKey` | string | Project key |
+| `name` | string | Project name |
+| `chartEnabled` | boolean | Chart enabled |
+| `subtaskingEnabled` | boolean | Subtasking enabled |
+| `textFormattingRule` | `"backlog"` \| `"markdown"` | Text formatting |
+| `archived` | boolean | Archived |
 
 ## User
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | ユーザーID |
-| `userId` | string | ログインID |
-| `name` | string | 表示名 |
-| `roleType` | number | 権限（1: Admin, 2: 一般, 3: レポーター, 4: ビューアー, 5: ゲストレポーター, 6: ゲストビューアー） |
-| `lang` | string \| null | 言語 |
-| `mailAddress` | string | メールアドレス |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | User ID |
+| `userId` | string | Login ID |
+| `name` | string | Display name |
+| `roleType` | number | Role (1: Admin, 2: Normal, 3: Reporter, 4: Viewer, 5: Guest Reporter, 6: Guest Viewer) |
+| `lang` | string \| null | Language |
+| `mailAddress` | string | Email |
 
 ## Comment
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | コメントID |
-| `content` | string | 本文 |
-| `changeLog` | ChangeLog[] | 変更履歴 |
-| `createdUser` | User | 作成者 |
-| `created` | string | 作成日時 |
-| `updated` | string | 更新日時 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Comment ID |
+| `content` | string | Body |
+| `changeLog` | ChangeLog[] | Change history |
+| `createdUser` | User | Author |
+| `created` | string | Created at |
+| `updated` | string | Updated at |
 
 ## Status
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | ステータスID |
-| `projectId` | number | プロジェクトID |
-| `name` | string | ステータス名 |
-| `color` | string | 表示色 |
-| `displayOrder` | number | 表示順 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Status ID |
+| `projectId` | number | Project ID |
+| `name` | string | Status name |
+| `color` | string | Display color |
+| `displayOrder` | number | Display order |
 
-## IssueType（課題種別）
+## IssueType
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | 種別ID |
-| `projectId` | number | プロジェクトID |
-| `name` | string | 種別名 |
-| `color` | string | 表示色 |
-| `displayOrder` | number | 表示順 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Issue type ID |
+| `projectId` | number | Project ID |
+| `name` | string | Type name |
+| `color` | string | Display color |
+| `displayOrder` | number | Display order |
 
-## Priority（優先度）
+## Priority
 
-| フィールド | 型 |
-|-----------|-----|
+| Field | Type |
+|-------|------|
 | `id` | number |
 | `name` | string |
 
-標準値: `高`, `中`, `低`
+Built-in values: `高` (High), `中` (Normal), `低` (Low)
 
 ## Wiki
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | ページID |
-| `projectId` | number | プロジェクトID |
-| `name` | string | ページ名 |
-| `content` | string | 本文 |
-| `tags` | {id, name}[] | タグ |
-| `attachments` | Attachment[] | 添付ファイル |
-| `createdUser` | User | 作成者 |
-| `created` | string | 作成日時 |
-| `updatedUser` | User | 更新者 |
-| `updated` | string | 更新日時 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Page ID |
+| `projectId` | number | Project ID |
+| `name` | string | Page name |
+| `content` | string | Body |
+| `tags` | {id, name}[] | Tags |
+| `attachments` | Attachment[] | Attachments |
+| `createdUser` | User | Creator |
+| `created` | string | Created at |
+| `updatedUser` | User | Last updater |
+| `updated` | string | Updated at |
 
 ## Milestone
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | マイルストーンID |
-| `projectId` | number | プロジェクトID |
-| `name` | string | 名前 |
-| `description` | string | 説明 |
-| `startDate` | string \| null | 開始日 |
-| `releaseDueDate` | string \| null | リリース期限日 |
-| `archived` | boolean | アーカイブ済み |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Milestone ID |
+| `projectId` | number | Project ID |
+| `name` | string | Name |
+| `description` | string | Description |
+| `startDate` | string \| null | Start date |
+| `releaseDueDate` | string \| null | Release due date |
+| `archived` | boolean | Archived |
 
 ## Notification
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | 通知ID |
-| `alreadyRead` | boolean | 既読 |
-| `reason` | number | 通知理由 |
-| `project` | Project | プロジェクト |
-| `issue` | Issue? | 関連課題 |
-| `comment` | Comment? | 関連コメント |
-| `pullRequest` | PullRequest? | 関連PR |
-| `sender` | User | 送信者 |
-| `created` | string | 作成日時 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Notification ID |
+| `alreadyRead` | boolean | Read |
+| `reason` | number | Reason code |
+| `project` | Project | Project |
+| `issue` | Issue? | Related issue |
+| `comment` | Comment? | Related comment |
+| `pullRequest` | PullRequest? | Related PR |
+| `sender` | User | Sender |
+| `created` | string | Created at |
 
 ## Repository
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | リポジトリID |
-| `projectId` | number | プロジェクトID |
-| `name` | string | リポジトリ名 |
-| `description` | string \| null | 説明 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Repository ID |
+| `projectId` | number | Project ID |
+| `name` | string | Repository name |
+| `description` | string \| null | Description |
 | `httpUrl` | string | HTTP URL |
 | `sshUrl` | string | SSH URL |
-| `pushedAt` | string \| null | 最終プッシュ日時 |
+| `pushedAt` | string \| null | Last pushed at |
 
 ## Category
 
-| フィールド | 型 |
-|-----------|-----|
+| Field | Type |
+|-------|------|
 | `id` | number |
 | `name` | string |
 | `displayOrder` | number |
 
 ## Team
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | number | チームID |
-| `name` | string | チーム名 |
-| `members` | User[] | メンバー |
-| `createdUser` | User | 作成者 |
-| `created` | string | 作成日時 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | number | Team ID |
+| `name` | string | Team name |
+| `members` | User[] | Members |
+| `createdUser` | User | Creator |
+| `created` | string | Created at |
 
 ## Webhook
 
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
+| Field | Type | Description |
+|-------|------|-------------|
 | `id` | number | Webhook ID |
-| `name` | string | 名前 |
-| `hookUrl` | string | 通知URL |
-| `allEvent` | boolean | 全イベント対象 |
-| `activityTypeIds` | number[] | アクティビティタイプID |
+| `name` | string | Name |
+| `hookUrl` | string | Notification URL |
+| `allEvent` | boolean | All events targeted |
+| `activityTypeIds` | number[] | Activity type IDs |

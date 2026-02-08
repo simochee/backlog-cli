@@ -1,6 +1,6 @@
-# コマンドリファレンス
+# Command Reference
 
-凡例: `<arg>` 位置引数、`-X, --flag` オプション（`-X` はエイリアス）、**(必須)** 省略不可、`(env: VAR)` 環境変数対応、日付は `yyyy-MM-dd`
+Legend: `<arg>` positional argument, `-X, --flag` option (`-X` is alias), **(required)** must be specified, `(env: VAR)` supports env var fallback, dates use `yyyy-MM-dd`
 
 ## auth
 
@@ -25,24 +25,24 @@ backlog config list [--hostname <host>]
 
 ### issue list
 
-| フラグ | エイリアス | 説明 | デフォルト |
-|--------|-----------|------|-----------|
-| `--project` | `-p` | プロジェクトキー（カンマ区切り複数可）(env: BACKLOG_PROJECT) | |
-| `--assignee` | `-a` | 担当者（ユーザー名 or `@me`） | |
-| `--status` | `-S` | ステータス名（カンマ区切り複数可） | |
-| `--type` | `-T` | 課題種別名（カンマ区切り複数可） | |
-| `--priority` | `-P` | 優先度名 | |
-| `--keyword` | `-k` | キーワード検索 | |
-| `--created-since` | | 作成日の開始 | |
-| `--created-until` | | 作成日の終了 | |
-| `--updated-since` | | 更新日の開始 | |
-| `--updated-until` | | 更新日の終了 | |
-| `--due-since` | | 期限日の開始 | |
-| `--due-until` | | 期限日の終了 | |
-| `--sort` | | ソートキー | `updated` |
+| Flag | Alias | Description | Default |
+|------|-------|-------------|---------|
+| `--project` | `-p` | Project key (comma-separated for multiple) (env: BACKLOG_PROJECT) | |
+| `--assignee` | `-a` | Assignee (username or `@me`) | |
+| `--status` | `-S` | Status name (comma-separated for multiple) | |
+| `--type` | `-T` | Issue type name (comma-separated for multiple) | |
+| `--priority` | `-P` | Priority name | |
+| `--keyword` | `-k` | Keyword search | |
+| `--created-since` | | Created after date | |
+| `--created-until` | | Created before date | |
+| `--updated-since` | | Updated after date | |
+| `--updated-until` | | Updated before date | |
+| `--due-since` | | Due after date | |
+| `--due-until` | | Due before date | |
+| `--sort` | | Sort key | `updated` |
 | `--order` | | `asc` or `desc` | `desc` |
-| `--limit` | `-L` | 取得件数（1-100） | `20` |
-| `--offset` | | ページネーション | |
+| `--limit` | `-L` | Number of results (1-100) | `20` |
+| `--offset` | | Pagination offset | |
 
 ### issue view
 
@@ -52,17 +52,17 @@ backlog issue view <issueKey> [--comments] [--web]
 
 ### issue create
 
-| フラグ | エイリアス | 説明 |
-|--------|-----------|------|
-| `--project` | `-p` | **(必須)** プロジェクトキー (env: BACKLOG_PROJECT) |
-| `--title` | `-t` | **(必須)** 課題タイトル |
-| `--type` | `-T` | **(必須)** 課題種別名 |
-| `--priority` | `-P` | **(必須)** 優先度名 |
-| `--description` | `-d` | 説明（`-` でstdin） |
-| `--assignee` | `-a` | 担当者 |
-| `--start-date` | | 開始日 |
-| `--due-date` | | 期限日 |
-| `--web` | | 作成後ブラウザで開く |
+| Flag | Alias | Description |
+|------|-------|-------------|
+| `--project` | `-p` | **(required)** Project key (env: BACKLOG_PROJECT) |
+| `--title` | `-t` | **(required)** Issue title |
+| `--type` | `-T` | **(required)** Issue type name |
+| `--priority` | `-P` | **(required)** Priority name |
+| `--description` | `-d` | Description (`-` for stdin) |
+| `--assignee` | `-a` | Assignee username |
+| `--start-date` | | Start date |
+| `--due-date` | | Due date |
+| `--web` | | Open in browser after creation |
 
 ### issue edit
 
@@ -73,9 +73,9 @@ backlog issue edit <issueKey> [-t <title>] [-d <desc>] [-S <status>] [-T <type>]
 ### issue close / reopen / comment
 
 ```
-backlog issue close <issueKey> [-c <comment>] [-r <resolution>]   # -r デフォルト: 完了
+backlog issue close <issueKey> [-c <comment>] [-r <resolution>]   # -r default: 完了
 backlog issue reopen <issueKey> [-c <comment>]
-backlog issue comment <issueKey> -b <body>                        # -b - でstdin
+backlog issue comment <issueKey> -b <body>                        # -b - for stdin
 ```
 
 ### issue status
@@ -84,36 +84,36 @@ backlog issue comment <issueKey> -b <body>                        # -b - でstdi
 backlog issue status
 ```
 
-引数なし。自分に関連する課題のサマリ。
+No arguments. Shows summary of issues related to you.
 
 ## pr
 
 ### pr list
 
-| フラグ | エイリアス | 説明 | デフォルト |
-|--------|-----------|------|-----------|
-| `--repo` | `-R` | **(必須)** リポジトリ名 | |
-| `--project` | `-p` | プロジェクトキー (env: BACKLOG_PROJECT) | |
-| `--status` | `-S` | `open`, `closed`, `merged`（カンマ区切り） | `open` |
-| `--assignee` | `-a` | 担当者 | |
-| `--created-by` | | 作成者 | |
-| `--issue` | | 関連課題キー | |
-| `--limit` | `-L` | 取得件数 | `20` |
-| `--offset` | | ページネーション | |
+| Flag | Alias | Description | Default |
+|------|-------|-------------|---------|
+| `--repo` | `-R` | **(required)** Repository name | |
+| `--project` | `-p` | Project key (env: BACKLOG_PROJECT) | |
+| `--status` | `-S` | `open`, `closed`, `merged` (comma-separated) | `open` |
+| `--assignee` | `-a` | Assignee | |
+| `--created-by` | | Creator | |
+| `--issue` | | Related issue key | |
+| `--limit` | `-L` | Number of results | `20` |
+| `--offset` | | Pagination offset | |
 
 ### pr create
 
-| フラグ | エイリアス | 説明 |
-|--------|-----------|------|
-| `--repo` | `-R` | **(必須)** リポジトリ名 |
-| `--project` | `-p` | **(必須)** プロジェクトキー (env: BACKLOG_PROJECT) |
-| `--title` | `-t` | **(必須)** タイトル |
-| `--base` | `-B` | **(必須)** ベースブランチ |
-| `--branch` | | **(必須)** ソースブランチ |
-| `--body` | `-b` | 説明 |
-| `--assignee` | `-a` | 担当者 |
-| `--issue` | | 関連課題キー |
-| `--web` | | 作成後ブラウザで開く |
+| Flag | Alias | Description |
+|------|-------|-------------|
+| `--repo` | `-R` | **(required)** Repository name |
+| `--project` | `-p` | **(required)** Project key (env: BACKLOG_PROJECT) |
+| `--title` | `-t` | **(required)** Title |
+| `--base` | `-B` | **(required)** Base branch (merge target) |
+| `--branch` | | **(required)** Source branch |
+| `--body` | `-b` | Description |
+| `--assignee` | `-a` | Assignee |
+| `--issue` | | Related issue key |
+| `--web` | | Open in browser after creation |
 
 ### pr view / edit / close / reopen / merge / comment / comments / status
 
@@ -192,7 +192,7 @@ backlog team edit <team-id> [-n <name>] [--members <ids>]
 backlog team delete <team-id> [--confirm]
 ```
 
-## プロジェクト設定
+## Project Settings
 
 ### category
 
@@ -281,15 +281,15 @@ backlog alias delete <name>
 backlog api <endpoint> [-X <METHOD>] [-f <key=value>] [-H <header>] [-i] [--paginate] [--silent]
 ```
 
-| フラグ | エイリアス | 説明 | デフォルト |
-|--------|-----------|------|-----------|
-| `<endpoint>` | | **(必須)** APIパス（`/api/v2` 省略可） | |
-| `--method` | `-X` | HTTP メソッド | `GET` |
-| `--field` | `-f` | `key=value`（GETはクエリ、他はボディ） | |
-| `--header` | `-H` | 追加ヘッダー | |
-| `--include` | `-i` | レスポンスヘッダー表示 | |
-| `--paginate` | | 全件自動取得（GETのみ） | |
-| `--silent` | | 出力抑制 | |
+| Flag | Alias | Description | Default |
+|------|-------|-------------|---------|
+| `<endpoint>` | | **(required)** API path (`/api/v2` prefix optional) | |
+| `--method` | `-X` | HTTP method | `GET` |
+| `--field` | `-f` | `key=value` (query param for GET, body for others) | |
+| `--header` | `-H` | Additional header | |
+| `--include` | `-i` | Show response headers | |
+| `--paginate` | | Auto-paginate all results (GET only) | |
+| `--silent` | | Suppress output | |
 
 ## browse
 
