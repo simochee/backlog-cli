@@ -41,6 +41,10 @@
 		"test": "vitest run",
 		"type-check": "tsc --noEmit"
 	},
+	"dependencies": {
+		"ofetch": "^1.5.1",
+		"ufo": "^1.6.3"
+	},
 	"devDependencies": {
 		"@repo/api": "workspace:*",
 		"@repo/config": "workspace:*",

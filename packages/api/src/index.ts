@@ -1,4 +1,5 @@
-export { type BacklogClientConfig, createClient } from "#client.ts";
+export { type BacklogClientConfig, createClient, formatResetTime } from "#client.ts";
+export type { $Fetch } from "ofetch";
 export {
 	type ExchangeAuthorizationCodeParams,
 	type OAuthTokenResponse,
