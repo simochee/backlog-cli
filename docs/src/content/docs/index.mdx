@@ -3,8 +3,8 @@ title: Backlog CLI
 description: Backlog をコマンドラインから操作する非公式 CLI ツール
 template: splash
 hero:
-  title: 開発のリズムを、止めない。
-  tagline: 課題の確認、PR のマージ、通知のチェック — ブラウザに切り替えることなく、ターミナルから Backlog のすべてを操作できる非公式 CLI ツール。
+  title: Backlog をコマンドラインから。
+  tagline: ターミナルから課題や PR、Wiki、通知を操作できる非公式 CLI ツール。gh CLI のコマンド体系をベースに設計しています。
   image:
     file: ../../assets/logo.svg
     alt: Backlog CLI
@@ -29,20 +29,17 @@ import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem } from "@astrojs/
 ## 特徴
 
 <CardGrid>
-	<Card title="Backlog API をフルカバー" icon="rocket">
-		課題、プルリクエスト、Wiki、通知、Webhook、チーム管理まで — 99 のコマンドで Backlog
-		のほぼすべての機能にアクセスできます。
+	<Card title="99 コマンド" icon="rocket">
+		課題、PR、Wiki、通知、Webhook、チーム管理など、Backlog API の主要な機能を 99 のコマンドでカバーしています。
 	</Card>
-	<Card title="gh CLI ライクなインターフェース" icon="laptop">
-		GitHub CLI に慣れた開発者ならすぐに使いこなせる、直感的なコマンド体系。`list`・`view`・`create`・`edit`
-		の一貫した操作感で迷いません。
+	<Card title="gh CLI ベースの操作体系" icon="laptop">
+		`list`・`view`・`create`・`edit` を基本とした、gh CLI に倣ったコマンド構成です。
 	</Card>
 	<Card title="スクリプタブルな出力" icon="setting">
-		`--json` フラグでプログラムから扱いやすい JSON を出力。`jq` との組み合わせや CI/CD
-		パイプラインへの組み込みもスムーズです。
+		`--json` フラグで JSON を出力できます。`jq` と組み合わせたり、CI/CD パイプラインに組み込めます。
 	</Card>
 	<Card title="AI エージェント連携" icon="star">
-		Agent Skill を導入すれば、Claude Code や Cursor などの AI エージェントに自然言語で Backlog 操作を指示できます。
+		Agent Skill を導入すると、Claude Code や Cursor などの AI エージェントから Backlog を操作できます。
 	</Card>
 </CardGrid>
 

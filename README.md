@@ -10,13 +10,13 @@
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](./LICENSE)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in-VSCode-007ACC?logo=visualstudiocode)](https://vscode.dev/github/simochee/backlog-cli)
 
-**開発のリズムを、止めない。**
+**Backlog をコマンドラインから。**
 
 > **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
 
-ブラウザに切り替えることなく、ターミナルから [Backlog](https://backlog.com/) のすべてを操作できる CLI ツール。
+ターミナルから [Backlog](https://backlog.com/) の課題や PR、Wiki、通知を操作できる非公式 CLI ツール。
 <br>
-課題、プルリクエスト、Wiki、通知 — gh CLI ライクなインターフェースで、日常のワークフローをもっと速く。
+gh CLI のコマンド体系をベースに設計しています。
 
 [ドキュメント](https://backlog-cli.simochee.net) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [Issues](https://github.com/simochee/backlog-cli/issues)
 
@@ -41,11 +41,11 @@ $ backlog browse MYAPP-142
 
 ## ハイライト
 
-- **99 コマンド** — 課題、PR、Wiki、通知、Webhook、チーム管理まで Backlog API をフルカバー
-- **gh CLI ライク** — `list`・`view`・`create`・`edit` の一貫したコマンド体系で直感的に操作
+- **99 コマンド** — 課題、PR、Wiki、通知、Webhook、チーム管理など Backlog API の主要な機能をカバー
+- **gh CLI ベース** — `list`・`view`・`create`・`edit` を基本としたコマンド体系
 - **柔軟な出力** — テーブル / `--json` でパイプラインに組み込める
-- **対話 & 非対話** — 引数を省略すればプロンプト、CI ではフラグ指定でそのまま動く
-- **複数スペース** — `backlog auth switch` でスペースを瞬時に切り替え
+- **対話 & 非対話** — 引数を省略すればプロンプト、CI ではフラグ指定で動作
+- **複数スペース** — `backlog auth switch` でスペースを切り替え
 - **シェル補完** — Bash / Zsh / Fish 対応
 
 ## インストール
