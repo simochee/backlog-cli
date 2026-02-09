@@ -36,11 +36,6 @@ jobs:
         working-directory: packages/api-spec
         run: bun run build
 
-      - name: Copy ReDoc static HTML to docs
-        run: |
-          mkdir -p docs/public/openapi
-          cp packages/api-spec/tsp-output/redoc.html docs/public/openapi/index.html
-
       - name: Build docs
         working-directory: docs
         run: bun run build
