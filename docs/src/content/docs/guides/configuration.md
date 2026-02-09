@@ -1,21 +1,21 @@
 ---
 title: 設定
-description: Backlog CLI の設定管理
+description: Backlog CLI の設定管理と環境変数
 ---
 
-Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。設定ファイルの読み書きには [rc9](https://github.com/unjs/rc9) を使用しています。
+Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。`backlog config` コマンドで設定の確認と変更ができます。
 
 環境変数 `XDG_CONFIG_HOME` が設定されている場合、設定ファイルの場所は `$XDG_CONFIG_HOME/.backlogrc` になります。
 
-## 設定の表示
+## 設定の確認
 
-すべての設定を表示するには、次のコマンドを実行します。
+すべての設定を一覧表示します。
 
 ```bash
 backlog config list
 ```
 
-特定の値を取得するには、次のコマンドを実行します。
+特定の設定値を取得するには `config get` を使います。
 
 ```bash
 backlog config get default_space
@@ -35,7 +35,7 @@ backlog config set default_space your-space.backlog.com
 
 ## スペース固有の設定
 
-`--hostname` フラグで特定のスペースに対する設定を管理できます。
+`--hostname` フラグを使うと、スペースごとに異なる設定を管理できます。
 
 ```bash
 # スペース固有の設定を取得
@@ -50,14 +50,17 @@ backlog config list --hostname your-space.backlog.com
 
 ## 環境変数
 
-| 環境変数          | 説明                                                     |
-| ----------------- | -------------------------------------------------------- |
-| `BACKLOG_SPACE`   | 使用するスペースのホスト名（`--space` フラグと同等）     |
-| `BACKLOG_PROJECT` | デフォルトのプロジェクトキー（`--project` フラグと同等） |
+環境変数を使うと、設定ファイルやコマンドフラグを省略できます。
 
-### `BACKLOG_PROJECT`
+| 環境変数          | 説明                                                     | 対応するフラグ |
+| ----------------- | -------------------------------------------------------- | -------------- |
+| `BACKLOG_SPACE`   | 使用するスペースのホスト名                               | `--space`      |
+| `BACKLOG_PROJECT` | デフォルトのプロジェクトキー                             | `--project`    |
+| `BACKLOG_API_KEY` | API キー（CI / AI ワークフロー向けのフォールバック認証） | —              |
 
-`BACKLOG_PROJECT` 環境変数を設定すると、`--project` フラグを省略できます。
+### `BACKLOG_PROJECT` の活用
+
+`BACKLOG_PROJECT` を設定すると、プロジェクトを必要とするコマンドで `--project` フラグを省略できます。特定のプロジェクトを集中的に操作する場面で便利です。
 
 ```bash
 export BACKLOG_PROJECT=MY_PROJECT

@@ -10,13 +10,13 @@
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](./LICENSE)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in-VSCode-007ACC?logo=visualstudiocode)](https://vscode.dev/github/simochee/backlog-cli)
 
-**Backlog on the command line.**
+**開発のリズムを、止めない。**
 
 > **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
 
-ターミナルから離れずに [Backlog](https://backlog.com/) を操作する CLI ツール。
+ブラウザに切り替えることなく、ターミナルから [Backlog](https://backlog.com/) のすべてを操作できる CLI ツール。
 <br>
-課題、プルリクエスト、Wiki、通知 ── すべてをコマンドラインで。
+課題、プルリクエスト、Wiki、通知 — gh CLI ライクなインターフェースで、日常のワークフローをもっと速く。
 
 [ドキュメント](https://backlog-cli.simochee.net) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [Issues](https://github.com/simochee/backlog-cli/issues)
 
@@ -41,11 +41,12 @@ $ backlog browse MYAPP-142
 
 ## ハイライト
 
-- **99 コマンド** -- 課題、PR、Wiki、通知、Webhook まで Backlog API をフルカバー
-- **柔軟な出力** -- テーブル / `--json` でパイプラインに組み込める
-- **対話 & 非対話** -- 引数を省略すればプロンプト、CI ではフラグ指定でそのまま動く
-- **複数スペース** -- `backlog auth switch` でスペースを瞬時に切り替え
-- **シェル補完** -- Bash / Zsh / Fish 対応
+- **99 コマンド** — 課題、PR、Wiki、通知、Webhook、チーム管理まで Backlog API をフルカバー
+- **gh CLI ライク** — `list`・`view`・`create`・`edit` の一貫したコマンド体系で直感的に操作
+- **柔軟な出力** — テーブル / `--json` でパイプラインに組み込める
+- **対話 & 非対話** — 引数を省略すればプロンプト、CI ではフラグ指定でそのまま動く
+- **複数スペース** — `backlog auth switch` でスペースを瞬時に切り替え
+- **シェル補完** — Bash / Zsh / Fish 対応
 
 ## インストール
 
@@ -95,21 +96,23 @@ backlog api /api/v2/space
 
 ## AI エージェント連携
 
-backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) に対応しています。インストールすると、AI コーディングエージェントが Backlog の操作方法を自動的に理解します。
+Backlog CLI は [Agent Skill](https://github.com/vercel-labs/skills) に対応しています。インストールすると、AI コーディングエージェントが Backlog の操作方法を自動的に理解します。
 
 ```bash
 npx skills add simochee/backlog-cli
 ```
 
-> スキルをインストールすると、エージェントに backlog-cli の全コマンド・オプション・データモデルが提供され、ハウトゥーの説明なしに課題管理や PR 操作を指示できるようになります。
+> スキルをインストールすると、エージェントに Backlog CLI の全コマンド・オプション・データモデルが提供され、コマンドの説明なしに課題管理や PR 操作を指示できるようになります。
 
 ## ドキュメント
 
 **https://backlog-cli.simochee.net**
 
 - [クイックスタート](https://backlog-cli.simochee.net/getting-started/quickstart/)
+- [認証ガイド](https://backlog-cli.simochee.net/guides/authentication/)
 - [出力形式](https://backlog-cli.simochee.net/guides/output-formatting/)
 - [シェル補完](https://backlog-cli.simochee.net/guides/shell-completion/)
+- [CI での利用](https://backlog-cli.simochee.net/guides/ci/)
 - [設定](https://backlog-cli.simochee.net/guides/configuration/)
 
 ## コントリビュート

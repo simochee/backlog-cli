@@ -1,10 +1,10 @@
 ---
 title: Backlog CLI
-description: Backlog をコマンドラインから操作する CLI ツール
+description: Backlog をコマンドラインから操作する非公式 CLI ツール
 template: splash
 hero:
-  title: Backlog をコマンドラインから。
-  tagline: 課題管理、プルリクエスト、Wiki — Backlog のあらゆる操作をターミナルから実行できる非公式 CLI ツール。gh CLI ライクなインターフェースで、日常のワークフローをもっと速く。
+  title: 開発のリズムを、止めない。
+  tagline: 課題の確認、PR のマージ、通知のチェック — ブラウザに切り替えることなく、ターミナルから Backlog のすべてを操作できる非公式 CLI ツール。
   image:
     file: ../../assets/logo.svg
     alt: Backlog CLI
@@ -19,55 +19,36 @@ hero:
       variant: minimal
 ---
 
-import { Aside, Card, CardGrid, LinkCard, Steps } from "@astrojs/starlight/components";
+import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem } from "@astrojs/starlight/components";
 
 <Aside type="note">
 	このツールは非公式のコミュニティプロジェクトであり、[ヌーラボ社](https://nulab.com/)および
 	[Backlog](https://backlog.com/) チームとは一切関係がありません。
 </Aside>
 
-## インストール
-
-```bash
-# nypm (auto-detect)
-npx nypm install -g @simochee/backlog-cli
-
-# npm
-npm install -g @simochee/backlog-cli
-
-# yarn
-yarn global add @simochee/backlog-cli
-
-# pnpm
-pnpm add -g @simochee/backlog-cli
-
-# bun
-bun install -g @simochee/backlog-cli
-```
-
-## できること
+## 特徴
 
 <CardGrid>
-	<Card title="課題管理" icon="pencil">
-		課題の一覧表示、作成、編集、ステータス変更をコマンドひとつで。フィルタリングやソートも自在に操作できます。
+	<Card title="Backlog API をフルカバー" icon="rocket">
+		課題、プルリクエスト、Wiki、通知、Webhook、チーム管理まで — 99 のコマンドで Backlog のほぼすべての機能にアクセスできます。
 	</Card>
-	<Card title="プルリクエスト" icon="approve-check-circle">
-		PR の作成からレビュー、マージまで。ブラウザを開かずにコードレビューのワークフローを完結できます。
+	<Card title="gh CLI ライクなインターフェース" icon="laptop">
+		GitHub CLI に慣れた開発者ならすぐに使いこなせる、直感的なコマンド体系。`list`・`view`・`create`・`edit` の一貫した操作感で迷いません。
 	</Card>
-	<Card title="スクリプタブル" icon="setting">
-		`--json` 出力で他のツールと連携。CI/CD パイプラインやシェルスクリプトに組み込めます。
+	<Card title="スクリプタブルな出力" icon="setting">
+		`--json` フラグでプログラムから扱いやすい JSON を出力。`jq` との組み合わせや CI/CD パイプラインへの組み込みもスムーズです。
 	</Card>
 	<Card title="AI エージェント連携" icon="star">
-		Claude Code や Cursor などの AI エージェントから Backlog を直接操作。Agent Skill として簡単に導入できます。
+		Agent Skill を導入すれば、Claude Code や Cursor などの AI エージェントに自然言語で Backlog 操作を指示できます。
 	</Card>
 </CardGrid>
 
-## コマンドの使用例
+## こんな使い方ができます
 
 ### 課題を一覧表示する
 
 ```bash
-backlog issue list --project MY_PROJECT
+backlog issue list --project MY_PROJECT --assignee @me
 ```
 
 ```
@@ -119,15 +100,27 @@ backlog status
   MY_PROJECT-138  PR がマージされました
 ```
 
+### JSON 出力でスクリプトと連携する
+
+```bash
+# 高優先度の課題だけを抽出
+backlog issue list --project MY_PROJECT --json | jq '[.[] | select(.priority.name == "高")]'
+
+# 課題キーの一覧を取得してループ処理
+backlog issue list --project MY_PROJECT --json | jq -r '.[].issueKey' | while read key; do
+  echo "Processing $key"
+done
+```
+
 ### AI エージェントから使う
 
-[skills CLI](https://www.npmjs.com/package/skills) で AI エージェント向けのスキルを追加すると、自然言語で Backlog 操作を指示できるようになります。
+[skills CLI](https://www.npmjs.com/package/skills) で AI エージェント向けのスキルを追加すると、自然言語で Backlog 操作を指示できます。
 
 ```bash
 npx skills add simochee/backlog-cli
 ```
 
-たとえば Claude Code に「PROJ-123 を処理中にして」と指示するだけで、エージェントが適切な `backlog` コマンドを組み立てて実行します。詳しくは [AI エージェント連携ガイド](/guides/ai-agent/) をご覧ください。
+「PROJ-123 を処理中にして」「自分の未完了課題を一覧して」といった自然言語の指示を、エージェントが適切な `backlog` コマンドに変換して実行します。詳しくは [AI エージェント連携ガイド](/guides/ai-agent/) をご覧ください。
 
 ## クイックスタート
 
