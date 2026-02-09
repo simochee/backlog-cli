@@ -42,19 +42,21 @@ export async function getClient(hostname?: string): Promise<{
 		let currentAccessToken = oauthAuth.accessToken;
 		let refreshPromise: Promise<void> | null = null;
 
-		// Helper to refresh the token
-		const refreshTokenIfNeeded = async (): Promise<void> => {
+		// Helper to refresh the token. Returns true if refresh succeeded, false if it failed.
+		const refreshTokenIfNeeded = async (): Promise<boolean> => {
 			if (refreshPromise) {
 				await refreshPromise;
-				return;
+				return currentAccessToken !== oauthAuth.accessToken;
 			}
 
 			const { clientId, clientSecret, refreshToken } = oauthAuth;
 
 			if (!clientId || !clientSecret || !refreshToken) {
-				consola.error("OAuth credentials missing. Please re-authenticate with `backlog auth login -m oauth`.");
-				throw new Error("OAuth credentials missing");
+				consola.error("OAuth credentials are incomplete. Run `backlog auth login -m oauth` to re-authenticate.");
+				return false;
 			}
+
+			let succeeded = false;
 
 			refreshPromise = (async () => {
 				try {
@@ -76,16 +78,17 @@ export async function getClient(hostname?: string): Promise<{
 						clientSecret,
 					});
 
-					consola.success("Token refreshed successfully");
-				} catch (error) {
-					consola.error("Failed to refresh token. Please re-authenticate with `backlog auth login -m oauth`.");
-					throw error;
+					consola.success("Token refreshed successfully.");
+					succeeded = true;
+				} catch {
+					consola.error("OAuth session has expired. Run `backlog auth login -m oauth` to re-authenticate.");
 				} finally {
 					refreshPromise = null;
 				}
 			})();
 
 			await refreshPromise;
+			return succeeded;
 		};
 
 		// Create base client
@@ -115,7 +118,10 @@ export async function getClient(hostname?: string): Promise<{
 			} catch (error: unknown) {
 				// Check if it's a 401 error
 				if (error && typeof error === "object" && "status" in error && error.status === 401) {
-					await refreshTokenIfNeeded();
+					const refreshed = await refreshTokenIfNeeded();
+					if (!refreshed) {
+						return process.exit(1);
+					}
 					// Retry with new token
 					return await baseClient(url, options);
 				}

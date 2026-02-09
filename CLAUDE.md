@@ -204,6 +204,7 @@ const name = await promptRequired("Project name:", args.name);
 - HTTP 4xx/5xx エラーは Backlog API のエラーメッセージをそのまま表示
 - 認証エラーは `backlog auth login` を案内
 - レートリミットは自動リトライ（`Retry-After` ヘッダーを尊重）
+- OAuth トークン期限切れ（401）はリフレッシュトークンで自動更新し、成功すればリトライ。リフレッシュも失敗した場合はリトライせず再ログインを案内して `process.exit(1)`
 
 ## 開発ルール
 
