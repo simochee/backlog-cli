@@ -1,11 +1,11 @@
 <svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
 <style>
   .icon-path {
-    fill: #000;
+    fill: hsl(160, 100%, 32%);
   }
   @media (prefers-color-scheme: dark) {
     .icon-path {
-      fill: #fff;
+      fill: hsl(160, 55%, 78%);
     }
   }
 </style>

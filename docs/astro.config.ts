@@ -29,12 +29,10 @@ export default defineConfig({
 					},
 				]),
 			],
-			title: "Backlog CLI",
+			title: "backlog-cli",
 			customCss: ["./src/styles/custom.css"],
 			logo: {
-				light: "./src/assets/logo-light.svg",
-				dark: "./src/assets/logo-dark.svg",
-				replacesTitle: true,
+				src: "./src/assets/logo.svg",
 			},
 			head: [
 				{
