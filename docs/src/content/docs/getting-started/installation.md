@@ -5,6 +5,14 @@ description: Backlog CLI のインストール方法
 
 Backlog CLI は npm パッケージとして配布されています。お使いのパッケージマネージャーでグローバルインストールしてください。
 
+## nypm（推奨）
+
+[nypm](https://github.com/unjs/nypm) を使うと、環境のパッケージマネージャーを自動検出してインストールできます。
+
+```bash
+npx nypm install -g @simochee/backlog-cli
+```
+
 ## パッケージマネージャーごとのインストール
 
 ```bash
