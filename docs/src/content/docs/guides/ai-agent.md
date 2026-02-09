@@ -1,21 +1,21 @@
 ---
 title: AI エージェント連携
-description: Claude Code や Cursor 等の AI コーディングエージェントから backlog-cli を使う方法
+description: Claude Code や Cursor 等の AI コーディングエージェントから Backlog CLI を使う方法
 ---
 
-backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) を同梱しており、AI コーディングエージェントに backlog-cli の操作方法を自動的に教えることができます。
+Backlog CLI は [Agent Skill](https://github.com/vercel-labs/skills) を同梱しており、AI コーディングエージェントに Backlog CLI の操作方法を自動的に教えることができます。
 
-スキルをインストールすると、**ハウトゥーの説明なし**にエージェントへ直接「PROJ-123 の課題を処理中にして」「PR を作成して」といった指示を出せるようになります。
+スキルをインストールすると、コマンドの説明なしにエージェントへ直接「PROJ-123 の課題を処理中にして」「PR を作成して」といった指示を出せるようになります。
 
 ## 対応エージェント
 
-[skills CLI](https://www.npmjs.com/package/skills) は 35 以上のエージェントに対応しています。主な対応エージェントは次のとおりです。
+[skills CLI](https://www.npmjs.com/package/skills) は 35 以上のエージェントに対応しています。主な対応エージェントは以下のとおりです。
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 - [Cursor](https://cursor.sh/)
 - [OpenAI Codex](https://openai.com/index/openai-codex/)
 - [Windsurf](https://codeium.com/windsurf)
-- その他（Gemini CLI, GitHub Copilot, Roo, OpenCode など）
+- その他（Gemini CLI、GitHub Copilot、Roo、OpenCode など）
 
 ## インストール
 
@@ -25,7 +25,7 @@ backlog-cli は [Agent Skill](https://github.com/vercel-labs/skills) を同梱�
 npx skills add simochee/backlog-cli
 ```
 
-インタラクティブにインストール先のエージェントを選択できます。特定のエージェントも指定できます。
+インタラクティブにインストール先のエージェントを選択できます。特定のエージェントを指定することも可能です。
 
 ```bash
 # Claude Code にインストール
@@ -46,22 +46,22 @@ npx skills add simochee/backlog-cli -g
 リポジトリの `skills/backlog-cli/` ディレクトリを、エージェントのスキルディレクトリにコピーします。
 
 ```bash
-# Claude Code の場合
+# Claude Code の場合（グローバル）
 cp -r skills/backlog-cli/ ~/.claude/skills/backlog-cli/
 
-# プロジェクトローカルの場合
+# Claude Code の場合（プロジェクトローカル）
 cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 ```
 
 ## スキルの内容
 
-インストールされるスキルの内容は次のとおりです。
+インストールされるスキルには、エージェントが Backlog CLI を正しく使うための情報が含まれています。
 
 | ファイル                 | 内容                                                     |
 | ------------------------ | -------------------------------------------------------- |
 | `SKILL.md`               | コマンドの使い方、認証、名前解決、主要ワークフローの説明 |
 | `references/commands.md` | 全 99 コマンドのフラグ・オプション一覧                   |
-| `references/schema.md`   | `--json` 出力のデータモデル定義（Issue, PR, Project 等） |
+| `references/schema.md`   | `--json` 出力のデータモデル定義（Issue、PR、Project 等） |
 
 ## 使い方の例
 
@@ -73,13 +73,13 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 - 「PROJ-789 を処理中にしてコメントを追加して」
 - 「プロジェクト MYAPP の課題種別一覧を確認して」
 
-エージェントはスキルの情報をもとに、対応する `backlog` コマンドを組み立てて実行します。
+エージェントはスキルの情報をもとに、適切な `backlog` コマンドを組み立てて実行します。
 
 ## 前提条件
 
-エージェントが backlog-cli を利用するには、事前に次の準備が必要です。
+エージェントが Backlog CLI を利用するには、事前に次の準備が必要です。
 
-1. `@simochee/backlog-cli` がインストール済み（`npm install -g @simochee/backlog-cli`）
-2. `backlog auth login` で認証済み
+1. **Backlog CLI のインストール**: `npm install -g @simochee/backlog-cli`
+2. **認証の設定**: `backlog auth login` で認証済み、または環境変数（`BACKLOG_SPACE` + `BACKLOG_API_KEY`）を設定済み
 
 認証方法の詳細は [認証ガイド](/guides/authentication/) を参照してください。

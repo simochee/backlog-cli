@@ -12,9 +12,7 @@
 
 > **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
 
-A CLI tool to manage [Backlog](https://backlog.com/) from the terminal — inspired by [GitHub CLI (gh)](https://cli.github.com/).
-<br>
-Issues, pull requests, wikis, notifications — all from your command line.
+Manage [Backlog](https://backlog.com/) from your terminal without switching to the browser — issues, pull requests, wikis, notifications, and more. Inspired by [GitHub CLI (gh)](https://cli.github.com/).
 
 [Documentation](https://backlog-cli.simochee.net) · [npm](https://www.npmjs.com/package/@simochee/backlog-cli) · [GitHub](https://github.com/simochee/backlog-cli)
 
@@ -39,7 +37,8 @@ $ backlog browse MYAPP-142
 
 ## Highlights
 
-- **99 commands** — Full coverage of the Backlog API: issues, PRs, wikis, notifications, webhooks, and more
+- **99 commands** — Full coverage of the Backlog API: issues, PRs, wikis, notifications, webhooks, teams, and more
+- **gh CLI-inspired** — Consistent `list` / `view` / `create` / `edit` command structure for intuitive operation
 - **Flexible output** — Table (default) or `--json` for easy pipeline integration
 - **Interactive & non-interactive** — Omit arguments for interactive prompts, or pass flags for CI/scripts
 - **Multi-space support** — Switch between Backlog spaces instantly with `backlog auth switch`
@@ -143,8 +142,8 @@ Run `backlog <command> --help` for details, or visit the [command reference](htt
 
 | Variable          | Description                                                                                |
 | ----------------- | ------------------------------------------------------------------------------------------ |
-| `BACKLOG_SPACE`   | Default space hostname (equivalent to the `--space` flag)                                  |
-| `BACKLOG_PROJECT` | Default project key (equivalent to the `--project` flag)                                   |
+| `BACKLOG_SPACE`   | Default space hostname (equivalent to `--space`)                                           |
+| `BACKLOG_PROJECT` | Default project key (equivalent to `--project`)                                            |
 | `BACKLOG_API_KEY` | API key for authentication. Used as a fallback when no space is configured via config file |
 
 ```bash
@@ -167,7 +166,7 @@ export BACKLOG_API_KEY=your-api-key
 backlog issue list --project YOUR_PROJECT
 ```
 
-This is useful for CI pipelines, AI agent workflows, and other non-interactive environments where running `backlog auth login` is not practical.
+This is useful for CI pipelines, AI agent workflows, and other non-interactive environments.
 
 ## Output Formats
 
@@ -177,6 +176,16 @@ This is useful for CI pipelines, AI agent workflows, and other non-interactive e
 | `--json`               | JSON          | Programmatic access    |
 | `--json field1,field2` | Filtered JSON | Select specific fields |
 
+## AI Agent Integration
+
+Backlog CLI ships with [Agent Skill](https://github.com/vercel-labs/skills) support. Install the skill to let AI coding agents (Claude Code, Cursor, etc.) manage Backlog using natural language:
+
+```bash
+npx skills add simochee/backlog-cli
+```
+
+See the [AI Agent Integration guide](https://backlog-cli.simochee.net/guides/ai-agent/) for details.
+
 ## Documentation
 
 For full documentation, visit **https://backlog-cli.simochee.net**
@@ -185,6 +194,7 @@ For full documentation, visit **https://backlog-cli.simochee.net**
 - [Authentication Guide](https://backlog-cli.simochee.net/guides/authentication/)
 - [Output Formatting](https://backlog-cli.simochee.net/guides/output-formatting/)
 - [Shell Completion](https://backlog-cli.simochee.net/guides/shell-completion/)
+- [CI Integration](https://backlog-cli.simochee.net/guides/ci/)
 - [Configuration](https://backlog-cli.simochee.net/guides/configuration/)
 
 ## License
