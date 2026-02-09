@@ -14,5 +14,8 @@
 		"astro": "^5.16.6",
 		"remark-deflist": "^1.0.0",
 		"sharp": "^0.34.5"
+	},
+	"devDependencies": {
+		"@fontsource/line-seed-jp": "^5.2.1"
 	}
 }
