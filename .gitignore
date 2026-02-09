@@ -16,8 +16,6 @@ bin
 # generated code
 tsp-output
 **/src/generated
-docs/public/api/
-docs/public/openapi.yaml
 
 # code coverage
 coverage

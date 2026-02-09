@@ -2,6 +2,7 @@ import cloudflare from "@astrojs/cloudflare";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import remarkDeflist from "remark-deflist";
+import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi";
 
 export default defineConfig({
 	adapter: cloudflare(),
@@ -11,6 +12,18 @@ export default defineConfig({
 	},
 	integrations: [
 		starlight({
+			plugins: [
+				starlightOpenAPI([
+					{
+						base: "api",
+						schema: "../packages/api-spec/tsp-output/@typespec/openapi3/openapi.yaml",
+						sidebar: {
+							label: "API リファレンス",
+							collapsed: true,
+						},
+					},
+				]),
+			],
 			title: "Backlog CLI",
 			customCss: ["./src/styles/custom.css"],
 			logo: {
@@ -43,10 +56,7 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				{
-					label: "API リファレンス",
-					link: "/openapi/",
-				},
+				...openAPISidebarGroups,
 				{
 					label: "はじめに",
 					items: [
