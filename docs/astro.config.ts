@@ -1,5 +1,6 @@
 import cloudflare from "@astrojs/cloudflare";
 import starlight from "@astrojs/starlight";
+import catppuccin from "@catppuccin/starlight";
 import { defineConfig } from "astro/config";
 import remarkDeflist from "remark-deflist";
 import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi";
@@ -13,6 +14,10 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			plugins: [
+				catppuccin({
+					dark: { flavor: "mocha", accent: "teal" },
+					light: { flavor: "latte", accent: "teal" },
+				}),
 				starlightOpenAPI([
 					{
 						base: "api",

@@ -5,4 +5,16 @@
 :root {
 	--sl-font: "LINE Seed JP", system-ui, -apple-system, sans-serif;
 	--sl-font-system: "LINE Seed JP", system-ui, -apple-system, sans-serif;
+
+	/* Backlog ブランドカラー (#00bd7b) に寄せたアクセントカラー */
+	--sl-color-accent-low: hsl(160, 70%, 14%);
+	--sl-color-accent: hsl(160, 85%, 42%);
+	--sl-color-accent-high: hsl(160, 55%, 78%);
+}
+
+:root[data-theme="light"] {
+	/* ライトモード向け Backlog ブランドカラー */
+	--sl-color-accent-low: hsl(160, 45%, 85%);
+	--sl-color-accent: hsl(160, 100%, 32%);
+	--sl-color-accent-high: hsl(160, 100%, 22%);
 }
