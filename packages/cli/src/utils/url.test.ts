@@ -1,13 +1,20 @@
+import { describe, expect, it, vi } from "vitest";
+
+vi.mock("open", () => ({
+	default: vi.fn(),
+}));
+
 import {
 	buildBacklogUrl,
 	dashboardUrl,
 	issueUrl,
+	openUrl,
 	projectUrl,
 	pullRequestUrl,
 	repositoryUrl,
 	wikiUrl,
 } from "#utils/url.ts";
-import { describe, expect, it } from "vitest";
+import open from "open";
 
 describe("buildBacklogUrl", () => {
 	it("ホスト名とパスからURLを構築する", () => {
@@ -58,5 +65,12 @@ describe("wikiUrl", () => {
 describe("dashboardUrl", () => {
 	it("ダッシュボードのURLを構築する", () => {
 		expect(dashboardUrl("example.backlog.com")).toBe("https://example.backlog.com/dashboard");
+	});
+});
+
+describe("openUrl", () => {
+	it("open パッケージを使ってURLをブラウザで開く", async () => {
+		await openUrl("https://example.backlog.com/view/PROJ-1");
+		expect(open).toHaveBeenCalledWith("https://example.backlog.com/view/PROJ-1");
 	});
 });
