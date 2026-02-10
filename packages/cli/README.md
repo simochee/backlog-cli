@@ -37,11 +37,11 @@ $ backlog browse MYAPP-142
 
 ## Highlights
 
-- **99 commands** — Full coverage of the Backlog API: issues, PRs, wikis, notifications, webhooks, teams, and more
-- **gh CLI-inspired** — Consistent `list` / `view` / `create` / `edit` command structure for intuitive operation
-- **Flexible output** — Table (default) or `--json` for easy pipeline integration
+- **99 commands** — Issues, PRs, wikis, notifications, webhooks, teams, and more
+- **gh CLI-based** — `list` / `view` / `create` / `edit` command structure inspired by GitHub CLI
+- **Flexible output** — Table (default) or `--json` for pipeline integration
 - **Interactive & non-interactive** — Omit arguments for interactive prompts, or pass flags for CI/scripts
-- **Multi-space support** — Switch between Backlog spaces instantly with `backlog auth switch`
+- **Multi-space support** — Switch between Backlog spaces with `backlog auth switch`
 - **Shell completions** — Bash, Zsh, and Fish supported
 
 ## Installation

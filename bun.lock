@@ -70,6 +70,7 @@
       },
       "dependencies": {
         "ofetch": "^1.5.1",
+        "open": "^11.0.0",
         "ufo": "^1.6.3",
       },
       "devDependencies": {
