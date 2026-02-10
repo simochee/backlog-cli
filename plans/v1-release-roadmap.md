@@ -48,7 +48,7 @@ v1 以降は Semantic Versioning により、CLI のインターフェース変�
 
 ### 2.2 Node.js バージョンマトリクスでの CI テスト
 
-- [x] CI の test ジョブに Node.js 18, 20, 22, 24 のマトリクスを追加済み
+- [x] CI の test ジョブに Node.js 20, 22, 24 のマトリクスを追加済み
 - Codecov アップロードは Node.js 22 のみで実行（重複防止）
 
 ### 2.3 `process.exit()` の呼び出し箇所の監査
