@@ -8,7 +8,7 @@ _backlog() {
     cur="\${COMP_WORDS[COMP_CWORD]}"
     prev="\${COMP_WORDS[COMP_CWORD-1]}"
 
-    local commands="auth config issue project pr repo notification status browse api wiki user team category milestone issue-type status-type space webhook star watching alias completion"
+    local commands="auth config issue project pr repo notification dashboard browse api wiki user team category milestone issue-type status space webhook star watching alias completion"
 
     if [ "$COMP_CWORD" -eq 1 ]; then
         COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
@@ -29,7 +29,7 @@ _backlog() {
         'pr:Manage pull requests'
         'repo:Manage Git repositories'
         'notification:Manage notifications'
-        'status:Show dashboard summary'
+        'dashboard:Show dashboard summary'
         'browse:Open Backlog in browser'
         'api:Generic API request'
         'wiki:Manage wiki pages'
@@ -38,7 +38,7 @@ _backlog() {
         'category:Manage categories'
         'milestone:Manage milestones'
         'issue-type:Manage issue types'
-        'status-type:Manage status types'
+        'status:Manage issue statuses'
         'space:Manage Backlog space'
         'webhook:Manage webhooks'
         'star:Manage stars'
@@ -60,7 +60,7 @@ complete -c backlog -n "__fish_use_subcommand" -a project -d "Manage projects"
 complete -c backlog -n "__fish_use_subcommand" -a pr -d "Manage pull requests"
 complete -c backlog -n "__fish_use_subcommand" -a repo -d "Manage Git repositories"
 complete -c backlog -n "__fish_use_subcommand" -a notification -d "Manage notifications"
-complete -c backlog -n "__fish_use_subcommand" -a status -d "Show dashboard summary"
+complete -c backlog -n "__fish_use_subcommand" -a dashboard -d "Show dashboard summary"
 complete -c backlog -n "__fish_use_subcommand" -a browse -d "Open Backlog in browser"
 complete -c backlog -n "__fish_use_subcommand" -a api -d "Generic API request"
 complete -c backlog -n "__fish_use_subcommand" -a wiki -d "Manage wiki pages"
@@ -69,7 +69,7 @@ complete -c backlog -n "__fish_use_subcommand" -a team -d "Manage teams"
 complete -c backlog -n "__fish_use_subcommand" -a category -d "Manage categories"
 complete -c backlog -n "__fish_use_subcommand" -a milestone -d "Manage milestones"
 complete -c backlog -n "__fish_use_subcommand" -a issue-type -d "Manage issue types"
-complete -c backlog -n "__fish_use_subcommand" -a status-type -d "Manage status types"
+complete -c backlog -n "__fish_use_subcommand" -a status -d "Manage issue statuses"
 complete -c backlog -n "__fish_use_subcommand" -a space -d "Manage Backlog space"
 complete -c backlog -n "__fish_use_subcommand" -a webhook -d "Manage webhooks"
 complete -c backlog -n "__fish_use_subcommand" -a star -d "Manage stars"

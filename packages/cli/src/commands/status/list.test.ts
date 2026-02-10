@@ -13,7 +13,7 @@ vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
-describe("status-type list", () => {
+describe("status list", () => {
 	it("ステータス一覧を表示する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([
@@ -21,7 +21,7 @@ describe("status-type list", () => {
 			{ id: 2, name: "Closed", color: "#999999" },
 		]);
 
-		const mod = await import("#commands/status-type/list.ts");
+		const mod = await import("#commands/status/list.ts");
 		await mod.default.run?.({ args: { project: "PROJ" } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/projects/PROJ/statuses");
@@ -32,7 +32,7 @@ describe("status-type list", () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue([]);
 
-		const mod = await import("#commands/status-type/list.ts");
+		const mod = await import("#commands/status/list.ts");
 		await mod.default.run?.({ args: { project: "PROJ" } } as never);
 
 		expect(consola.info).toHaveBeenCalledWith("No statuses found.");
@@ -57,7 +57,7 @@ describe("status-type list", () => {
 			];
 			mockClient.mockResolvedValue(data);
 
-			const mod = await import("#commands/status-type/list.ts");
+			const mod = await import("#commands/status/list.ts");
 			await mod.default.run?.({ args: { project: "PROJ", json: "" } } as never);
 
 			expect(consola.log).not.toHaveBeenCalled();

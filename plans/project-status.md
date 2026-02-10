@@ -17,12 +17,12 @@
 - カテゴリ管理（category）
 - マイルストーン管理（milestone）
 - 課題種別管理（issue-type）
-- ステータス管理（status-type）
+- ステータス管理（status）
 - Webhook 管理（webhook）
 - スター（star）
 - ウォッチ（watching）
 - エイリアス（alias）
-- ユーティリティコマンド（api, browse, completion, status）
+- ユーティリティコマンド（api, browse, completion, dashboard）
 - 設定管理（config）
 
 ## 未実装コマンド

@@ -10,12 +10,12 @@ vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
-describe("status-type edit", () => {
+describe("status edit", () => {
 	it("ステータスを更新する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Done" });
 
-		const mod = await import("#commands/status-type/edit.ts");
+		const mod = await import("#commands/status/edit.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", name: "Done" } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith(
@@ -32,7 +32,7 @@ describe("status-type edit", () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Status" });
 
-		const mod = await import("#commands/status-type/edit.ts");
+		const mod = await import("#commands/status/edit.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", color: "#ffffff" } } as never);
 
 		const callBody = mockClient.mock.calls[0]?.[1]?.body;

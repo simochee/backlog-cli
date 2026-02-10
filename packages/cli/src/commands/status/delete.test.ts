@@ -10,12 +10,12 @@ vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
-describe("status-type delete", () => {
+describe("status delete", () => {
 	it("--confirm でステータスを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Old Status" });
 
-		const mod = await import("#commands/status-type/delete.ts");
+		const mod = await import("#commands/status/delete.ts");
 		await mod.default.run?.({
 			args: { id: "1", project: "PROJ", "substitute-status-id": "2", confirm: true },
 		} as never);
@@ -35,7 +35,7 @@ describe("status-type delete", () => {
 		setupMockClient(getClient);
 		vi.mocked(consola.prompt).mockResolvedValue(false as never);
 
-		const mod = await import("#commands/status-type/delete.ts");
+		const mod = await import("#commands/status/delete.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", "substitute-status-id": "2" } } as never);
 
 		expect(consola.prompt).toHaveBeenCalledOnce();

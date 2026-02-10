@@ -1,10 +1,10 @@
 ---
-title: backlog status-type create
+title: backlog status create
 description: ステータスを作成する
 ---
 
 ```
-backlog status-type create [flags]
+backlog status create [flags]
 ```
 
 対応する Backlog API については「[状態の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-status/)」を参照してください。
@@ -23,5 +23,5 @@ backlog status-type create [flags]
 ## 使用例
 
 ```bash
-backlog status-type create --project PROJ --name "レビュー中" --color "#0000ff"
+backlog status create --project PROJ --name "レビュー中" --color "#0000ff"
 ```

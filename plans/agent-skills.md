@@ -111,7 +111,7 @@ backlog pr merge -p PROJECT -R repo-name 42
 **スキルが教えること**:
 
 - `backlog issue-type list -p PROJECT` で利用可能な課題種別を確認
-- `backlog status-type list -p PROJECT` で利用可能なステータスを確認
+- `backlog status list -p PROJECT` で利用可能なステータスを確認
 - `backlog category list -p PROJECT` でカテゴリ一覧
 - `backlog milestone list -p PROJECT` でマイルストーン一覧
 - `backlog user list` / `backlog project users -p PROJECT` でメンバー一覧

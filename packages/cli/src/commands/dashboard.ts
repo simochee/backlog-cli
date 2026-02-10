@@ -7,7 +7,7 @@ import consola from "consola";
 
 export default defineCommand({
 	meta: {
-		name: "status",
+		name: "dashboard",
 		description: "Show your dashboard summary",
 	},
 	args: {

@@ -51,13 +51,13 @@ src/commands/
   category/       — カテゴリ管理（list, create, edit, delete）
   milestone/      — マイルストーン管理（list, create, edit, delete）
   issue-type/     — 課題種別管理（list, create, edit, delete）
-  status-type/    — ステータス管理（list, create, edit, delete）
+  status/         — ステータス管理（list, create, edit, delete）
   space/          — スペース管理（info, activities, disk-usage, notification）
   webhook/        — Webhook 管理（list, view, create, edit, delete）
   star/           — スター管理（add, list, count）
   watching/       — ウォッチ管理（list, add, view, delete, read）
   alias/          — エイリアス管理（set, list, delete）
-  status.ts       — ダッシュボード（自分の課題・通知・最近の更新サマリー）
+  dashboard.ts    — ダッシュボード（自分の課題・通知・最近の更新サマリー）
   browse.ts       — ブラウザで開く
   api.ts          — 汎用 API リクエスト
   completion.ts   — シェル補完スクリプト生成

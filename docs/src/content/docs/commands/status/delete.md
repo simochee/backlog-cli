@@ -1,10 +1,10 @@
 ---
-title: backlog status-type delete
+title: backlog status delete
 description: ステータスを削除する
 ---
 
 ```
-backlog status-type delete <id> [flags]
+backlog status delete <id> [flags]
 ```
 
 削除するステータスに紐づく課題の移行先として、代替のステータス ID を指定してください。
@@ -30,5 +30,5 @@ backlog status-type delete <id> [flags]
 ## 使用例
 
 ```bash
-backlog status-type delete 12345 --project PROJ --substitute-status-id 67890
+backlog status delete 12345 --project PROJ --substitute-status-id 67890
 ```

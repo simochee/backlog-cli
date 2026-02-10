@@ -1,10 +1,10 @@
 ---
-title: backlog status
+title: backlog dashboard
 description: ダッシュボードサマリーを表示する
 ---
 
 ```
-backlog status
+backlog dashboard
 ```
 
 自分に割り当てられた課題、未読通知、最近の更新のサマリーを表示します。
@@ -12,7 +12,7 @@ backlog status
 ## 使用例
 
 ```bash
-backlog status
+backlog dashboard
 ```
 
 ## 関連コマンド

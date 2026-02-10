@@ -581,7 +581,7 @@ gh CLI と同名のフラグを持つが、短縮エイリアスが不足して�
 | `category delete` | `--confirm` | — | |
 | `milestone delete` | `--confirm` | — | |
 | `issue-type delete` | `--confirm` | — | |
-| `status-type delete` | `--confirm` | — | |
+| `status delete` | `--confirm` | — | |
 | `webhook delete` | `--confirm` | — | |
 | `watching delete` | `--confirm` | — | |
 
