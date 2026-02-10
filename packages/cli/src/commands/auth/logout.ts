@@ -8,16 +8,15 @@ export default defineCommand({
 		description: "Remove authentication for a Backlog space",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
 			description: "Space hostname to log out from",
 		},
 	},
 	async run({ args }) {
 		const config = await loadConfig();
 
-		let hostname = args.hostname;
+		let hostname = args.space || process.env["BACKLOG_SPACE"];
 		if (!hostname) {
 			if (config.spaces.length === 0) {
 				consola.info("No spaces are currently authenticated.");

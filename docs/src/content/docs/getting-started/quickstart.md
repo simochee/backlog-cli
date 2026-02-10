@@ -13,21 +13,21 @@ import { Steps } from "@astrojs/starlight/components";
 
 1. **認証する**
 
-   まず Backlog スペースに認証します。対話形式でホスト名と認証方式を選択できます。
+   まず Backlog スペースに認証する。対話形式でホスト名と認証方式を選択できる。
 
    ```bash
    backlog auth login
    ```
 
-   API キーを使う場合は、ホスト名と認証方式を直接指定することもできます。
+   API キーを使う場合は、ホスト名と認証方式を直接指定できる。
 
    ```bash
-   backlog auth login --hostname your-space.backlog.com --method api-key
+   backlog auth login --space your-space.backlog.com --method api-key
    ```
 
 2. **認証状態を確認する**
 
-   認証が正しく設定されたことを確認します。
+   認証が正しく設定されたことを確認する。
 
    ```bash
    backlog auth status
@@ -35,7 +35,7 @@ import { Steps } from "@astrojs/starlight/components";
 
 3. **ダッシュボードを表示する**
 
-   ダッシュボードが表示されれば準備完了です。
+   ダッシュボードが表示されれば準備完了である。
 
    ```bash
    backlog status

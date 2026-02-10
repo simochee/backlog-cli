@@ -13,9 +13,8 @@ export default defineCommand({
 		description: "Authenticate with a Backlog space",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
 			description: "Space hostname (e.g., xxx.backlog.com)",
 		},
 		method: {
@@ -46,7 +45,7 @@ export default defineCommand({
 		}
 
 		// Resolve hostname
-		const hostname = await promptRequired("Backlog space hostname:", args.hostname, {
+		const hostname = await promptRequired("Backlog space hostname:", args.space || process.env["BACKLOG_SPACE"], {
 			placeholder: "xxx.backlog.com",
 		});
 

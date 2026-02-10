@@ -27,7 +27,7 @@ describe("auth logout", () => {
 
 		const mod = await import("#commands/auth/logout.ts");
 		await mod.default.run?.({
-			args: { hostname: "example.backlog.com" },
+			args: { space: "example.backlog.com" },
 		} as never);
 
 		expect(removeSpace).toHaveBeenCalledWith("example.backlog.com");
@@ -62,7 +62,7 @@ describe("auth logout", () => {
 
 		const mod = await import("#commands/auth/logout.ts");
 		await mod.default.run?.({
-			args: { hostname: "nonexistent.backlog.com" },
+			args: { space: "nonexistent.backlog.com" },
 		} as never);
 
 		expect(consola.error).toHaveBeenCalledWith('Space "nonexistent.backlog.com" is not configured.');
@@ -70,7 +70,7 @@ describe("auth logout", () => {
 		exitSpy.mockRestore();
 	});
 
-	it("hostname 省略で1件の場合、自動選択してログアウトする", async () => {
+	it("--space 省略で1件の場合、自動選択してログアウトする", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [
 				{

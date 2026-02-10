@@ -16,7 +16,7 @@ backlog config get <key> [flags]
 
 ## オプション
 
-`--hostname <string>`
+`--space <string>`
 : スペース固有の設定を取得
 
 ## 使用例
@@ -26,7 +26,7 @@ backlog config get <key> [flags]
 backlog config get default_space
 
 # スペース固有の設定を取得
-backlog config get pager --hostname your-space.backlog.com
+backlog config get pager --space your-space.backlog.com
 ```
 
 ## 関連コマンド

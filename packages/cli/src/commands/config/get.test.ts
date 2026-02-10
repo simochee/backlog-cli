@@ -94,7 +94,7 @@ describe("config get run()", () => {
 		expect(consola.log).toHaveBeenCalledWith(JSON.stringify(spaces));
 	});
 
-	it("hostname 指定時にスペース固有の値を取得する", async () => {
+	it("--space 指定時にスペース固有の値を取得する", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key123" } }],
 			defaultSpace: "example.backlog.com",
@@ -102,13 +102,13 @@ describe("config get run()", () => {
 
 		const mod = await import("#commands/config/get.ts");
 		await mod.default.run?.({
-			args: { key: "host", hostname: "example.backlog.com" },
+			args: { key: "host", space: "example.backlog.com" },
 		} as never);
 
 		expect(consola.log).toHaveBeenCalledWith("example.backlog.com");
 	});
 
-	it("hostname が見つからない場合 process.exit(1) を呼ぶ", async () => {
+	it("--space が見つからない場合 process.exit(1) を呼ぶ", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
@@ -118,7 +118,7 @@ describe("config get run()", () => {
 
 		const mod = await import("#commands/config/get.ts");
 		await mod.default.run?.({
-			args: { key: "host", hostname: "nonexistent.backlog.com" },
+			args: { key: "host", space: "nonexistent.backlog.com" },
 		} as never);
 
 		expect(consola.error).toHaveBeenCalledWith('Space "nonexistent.backlog.com" not found in configuration.');

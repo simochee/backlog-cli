@@ -20,7 +20,7 @@ describe("auth token", () => {
 
 		try {
 			const mod = await import("#commands/auth/token.ts");
-			await mod.default.run?.({ args: { hostname: undefined } } as never);
+			await mod.default.run?.({ args: { space: undefined } } as never);
 
 			expect(resolveSpace).toHaveBeenCalledWith(undefined);
 			expect(stdoutSpy).toHaveBeenCalledWith("my-api-key");
@@ -38,7 +38,7 @@ describe("auth token", () => {
 
 		try {
 			const mod = await import("#commands/auth/token.ts");
-			await mod.default.run?.({ args: { hostname: undefined } } as never);
+			await mod.default.run?.({ args: { space: undefined } } as never);
 
 			expect(resolveSpace).toHaveBeenCalledWith(undefined);
 			expect(stdoutSpy).toHaveBeenCalledWith("my-access-token");
@@ -53,7 +53,7 @@ describe("auth token", () => {
 
 		try {
 			const mod = await import("#commands/auth/token.ts");
-			await mod.default.run?.({ args: { hostname: undefined } } as never);
+			await mod.default.run?.({ args: { space: undefined } } as never);
 
 			expect(resolveSpace).toHaveBeenCalledWith(undefined);
 			expect(consola.error).toHaveBeenCalledWith("No space configured. Run `backlog auth login` to authenticate.");

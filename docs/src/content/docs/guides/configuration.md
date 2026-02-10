@@ -35,17 +35,17 @@ backlog config set default_space your-space.backlog.com
 
 ## スペース固有の設定
 
-`--hostname` フラグを使うと、スペースごとに異なる設定を管理できます。
+`--space` フラグを使うと、スペースごとに異なる設定を管理できます。
 
 ```bash
 # スペース固有の設定を取得
-backlog config get pager --hostname your-space.backlog.com
+backlog config get pager --space your-space.backlog.com
 
 # スペース固有の設定を変更
-backlog config set pager less --hostname your-space.backlog.com
+backlog config set pager less --space your-space.backlog.com
 
 # スペース固有の設定を一覧
-backlog config list --hostname your-space.backlog.com
+backlog config list --space your-space.backlog.com
 ```
 
 ## 環境変数

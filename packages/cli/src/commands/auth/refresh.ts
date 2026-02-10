@@ -9,14 +9,13 @@ export default defineCommand({
 		description: "Refresh OAuth token",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
 			description: "Target space hostname",
 		},
 	},
 	async run({ args }) {
-		const space = await resolveSpace(args.hostname);
+		const space = await resolveSpace(args.space);
 
 		if (!space) {
 			consola.error("No space configured. Run `backlog auth login` to authenticate.");

@@ -54,7 +54,7 @@ describe("auth status", () => {
 		expect(consola.info).toHaveBeenCalledWith("No spaces are authenticated. Run `backlog auth login` to get started.");
 	});
 
-	it("hostname でフィルタして該当なしの場合メッセージを表示する", async () => {
+	it("--space でフィルタして該当なしの場合メッセージを表示する", async () => {
 		vi.mocked(loadConfig).mockResolvedValue({
 			spaces: [
 				{
@@ -68,7 +68,7 @@ describe("auth status", () => {
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({
-			args: { hostname: "other.backlog.com" },
+			args: { space: "other.backlog.com" },
 		} as never);
 
 		expect(consola.info).toHaveBeenCalledWith("No authentication configured for other.backlog.com.");

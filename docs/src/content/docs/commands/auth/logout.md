@@ -11,7 +11,7 @@ backlog auth logout [flags]
 
 ## オプション
 
-`-h`, `--hostname <string>` (default "アクティブスペース")
+`--space <string>` (default "アクティブスペース")
 : 対象スペースのホスト名
 
 ## 使用例
@@ -21,7 +21,7 @@ backlog auth logout [flags]
 backlog auth logout
 
 # 特定のスペースからログアウト
-backlog auth logout --hostname your-space.backlog.com
+backlog auth logout --space your-space.backlog.com
 ```
 
 ## 関連コマンド

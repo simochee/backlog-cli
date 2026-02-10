@@ -19,7 +19,7 @@ backlog config set <key> <value> [flags]
 
 ## オプション
 
-`--hostname <string>`
+`--space <string>`
 : スペース固有の設定を変更
 
 ## 使用例
@@ -29,7 +29,7 @@ backlog config set <key> <value> [flags]
 backlog config set default_space your-space.backlog.com
 
 # スペース固有の設定を変更
-backlog config set pager less --hostname your-space.backlog.com
+backlog config set pager less --space your-space.backlog.com
 ```
 
 ## 関連コマンド

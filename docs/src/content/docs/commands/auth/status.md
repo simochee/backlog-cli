@@ -11,7 +11,7 @@ backlog auth status [flags]
 
 ## オプション
 
-`-h`, `--hostname <string>` (default "全スペース")
+`--space <string>` (default "全スペース")
 : 対象スペースのホスト名
 
 `--show-token`
@@ -24,7 +24,7 @@ backlog auth status [flags]
 backlog auth status
 
 # 特定のスペースの認証状態を表示
-backlog auth status --hostname your-space.backlog.com
+backlog auth status --space your-space.backlog.com
 
 # トークンを表示
 backlog auth status --show-token

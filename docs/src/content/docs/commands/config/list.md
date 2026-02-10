@@ -11,7 +11,7 @@ backlog config list [flags]
 
 ## オプション
 
-`--hostname <string>`
+`--space <string>`
 : スペース固有の設定のみ表示
 
 ## 使用例
@@ -21,7 +21,7 @@ backlog config list [flags]
 backlog config list
 
 # スペース固有の設定のみ表示
-backlog config list --hostname your-space.backlog.com
+backlog config list --space your-space.backlog.com
 ```
 
 ## 関連コマンド

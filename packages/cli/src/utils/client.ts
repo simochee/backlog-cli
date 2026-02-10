@@ -12,30 +12,30 @@ export type BacklogClient = ReturnType<typeof createClient>;
  * 1. Configured space (via --space flag, BACKLOG_SPACE env, or defaultSpace)
  * 2. BACKLOG_API_KEY + BACKLOG_SPACE environment variables (lowest priority fallback)
  *
- * @param hostname - Optional explicit space hostname (--space flag).
+ * @param space - Optional explicit space hostname (--space flag).
  * @returns The authenticated client and host string.
  */
-export async function getClient(hostname?: string): Promise<{
+export async function getClient(space?: string): Promise<{
 	client: BacklogClient;
 	host: string;
 }> {
-	const space = await resolveSpace(hostname);
+	const resolved = await resolveSpace(space);
 
-	if (space) {
+	if (resolved) {
 		const clientConfig =
-			space.auth.method === "api-key"
-				? { host: space.host, apiKey: space.auth.apiKey }
-				: { host: space.host, accessToken: space.auth.accessToken };
+			resolved.auth.method === "api-key"
+				? { host: resolved.host, apiKey: resolved.auth.apiKey }
+				: { host: resolved.host, accessToken: resolved.auth.accessToken };
 
 		return {
 			client: createClient(clientConfig),
-			host: space.host,
+			host: resolved.host,
 		};
 	}
 
 	// Fallback: BACKLOG_API_KEY + BACKLOG_SPACE environment variables
 	const envApiKey = process.env["BACKLOG_API_KEY"];
-	const envHost = hostname ?? process.env["BACKLOG_SPACE"];
+	const envHost = space ?? process.env["BACKLOG_SPACE"];
 
 	if (envApiKey && envHost) {
 		return {

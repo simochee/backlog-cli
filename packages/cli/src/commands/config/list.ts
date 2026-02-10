@@ -8,7 +8,7 @@ export default defineCommand({
 		description: "List all configuration values",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
 			description: "Filter by space hostname",
 		},
@@ -16,10 +16,11 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
-		if (args.hostname) {
-			const space = config.spaces.find((s) => s.host === args.hostname);
+		const filterSpace = args.space || process.env["BACKLOG_SPACE"];
+		if (filterSpace) {
+			const space = config.spaces.find((s) => s.host === filterSpace);
 			if (!space) {
-				consola.error(`Space "${args.hostname}" not found in configuration.`);
+				consola.error(`Space "${filterSpace}" not found in configuration.`);
 				return process.exit(1);
 			}
 

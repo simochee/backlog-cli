@@ -11,7 +11,7 @@ Backlog スペースに対して認証します。API キーまたは OAuth 2.0 
 
 ## オプション
 
-`-h`, `--hostname <string>`
+`--space <string>`
 : スペースホスト名（例: `xxx.backlog.com`）
 
 `-m`, `--method <string>` (default "api-key")
@@ -31,19 +31,19 @@ backlog auth login
 ### API キーで認証
 
 ```bash
-backlog auth login --hostname your-space.backlog.com --method api-key
+backlog auth login --space your-space.backlog.com --method api-key
 ```
 
 ### 標準入力からトークンを渡す
 
 ```bash
-echo "YOUR_API_KEY" | backlog auth login --hostname your-space.backlog.com --with-token
+echo "YOUR_API_KEY" | backlog auth login --space your-space.backlog.com --with-token
 ```
 
 ### OAuth 2.0 で認証
 
 ```bash
-backlog auth login --hostname your-space.backlog.com --method oauth
+backlog auth login --space your-space.backlog.com --method oauth
 ```
 
 ## 関連コマンド
