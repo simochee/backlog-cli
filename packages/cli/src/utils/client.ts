@@ -52,7 +52,7 @@ export async function getClient(hostname?: string): Promise<{
 			const { clientId, clientSecret, refreshToken } = oauthAuth;
 
 			if (!clientId || !clientSecret || !refreshToken) {
-				consola.error("OAuth credentials are incomplete. Run `backlog auth login -m oauth` to re-authenticate.");
+				consola.error("OAuth credentials are incomplete. Run `bl auth login -m oauth` to re-authenticate.");
 				return false;
 			}
 
@@ -81,7 +81,7 @@ export async function getClient(hostname?: string): Promise<{
 					consola.success("Token refreshed successfully.");
 					succeeded = true;
 				} catch {
-					consola.error("OAuth session has expired. Run `backlog auth login -m oauth` to re-authenticate.");
+					consola.error("OAuth session has expired. Run `bl auth login -m oauth` to re-authenticate.");
 				} finally {
 					refreshPromise = null;
 				}
@@ -146,6 +146,6 @@ export async function getClient(hostname?: string): Promise<{
 		};
 	}
 
-	consola.error("No space configured. Run `backlog auth login` to authenticate.");
+	consola.error("No space configured. Run `bl auth login` to authenticate.");
 	return process.exit(1);
 }

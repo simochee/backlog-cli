@@ -11,7 +11,7 @@ process.argv = cleanedArgv;
 
 const main = defineCommand({
 	meta: {
-		name: "backlog",
+		name: "bl",
 		version,
 		description,
 	},

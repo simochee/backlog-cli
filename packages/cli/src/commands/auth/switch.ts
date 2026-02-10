@@ -21,7 +21,7 @@ export default defineCommand({
 
 		if (!hostname) {
 			if (config.spaces.length === 0) {
-				consola.error("No spaces configured. Run `backlog auth login` to add a space.");
+				consola.error("No spaces configured. Run `bl auth login` to add a space.");
 				return process.exit(1);
 			}
 
