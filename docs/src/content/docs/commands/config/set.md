@@ -19,7 +19,7 @@ backlog config set <key> <value> [flags]
 
 ## オプション
 
-`--space <string>`
+`-s`, `--space <string>`
 : スペース固有の設定を変更
 
 ## 使用例

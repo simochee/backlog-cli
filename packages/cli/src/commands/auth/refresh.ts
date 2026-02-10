@@ -11,6 +11,7 @@ export default defineCommand({
 	args: {
 		space: {
 			type: "string",
+			alias: "s",
 			description: "Target space hostname",
 		},
 	},

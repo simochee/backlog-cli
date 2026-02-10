@@ -30,6 +30,7 @@ export default defineCommand({
 		},
 		space: {
 			type: "string",
+			alias: "s",
 			description: "Set space-specific config",
 		},
 	},

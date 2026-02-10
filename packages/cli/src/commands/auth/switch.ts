@@ -10,6 +10,7 @@ export default defineCommand({
 	args: {
 		space: {
 			type: "string",
+			alias: "s",
 			description: "Space hostname to switch to",
 		},
 	},

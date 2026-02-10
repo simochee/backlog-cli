@@ -11,7 +11,7 @@ backlog auth logout [flags]
 
 ## オプション
 
-`--space <string>` (default "アクティブスペース")
+`-s`, `--space <string>` (default "アクティブスペース")
 : 対象スペースのホスト名
 
 ## 使用例

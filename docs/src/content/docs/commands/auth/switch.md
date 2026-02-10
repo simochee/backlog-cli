@@ -11,7 +11,7 @@ backlog auth switch [flags]
 
 ## オプション
 
-`--space <string>`
+`-s`, `--space <string>`
 : 切り替え先のスペースホスト名
 
 ## 使用例

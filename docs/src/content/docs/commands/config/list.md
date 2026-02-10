@@ -11,7 +11,7 @@ backlog config list [flags]
 
 ## オプション
 
-`--space <string>`
+`-s`, `--space <string>`
 : スペース固有の設定のみ表示
 
 ## 使用例

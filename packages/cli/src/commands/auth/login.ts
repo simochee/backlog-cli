@@ -15,6 +15,7 @@ export default defineCommand({
 	args: {
 		space: {
 			type: "string",
+			alias: "s",
 			description: "Space hostname (e.g., xxx.backlog.com)",
 		},
 		method: {

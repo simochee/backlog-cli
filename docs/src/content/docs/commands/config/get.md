@@ -16,7 +16,7 @@ backlog config get <key> [flags]
 
 ## オプション
 
-`--space <string>`
+`-s`, `--space <string>`
 : スペース固有の設定を取得
 
 ## 使用例

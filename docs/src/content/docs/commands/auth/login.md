@@ -11,7 +11,7 @@ Backlog スペースに対して認証します。API キーまたは OAuth 2.0 
 
 ## オプション
 
-`--space <string>`
+`-s`, `--space <string>`
 : スペースホスト名（例: `xxx.backlog.com`）
 
 `-m`, `--method <string>` (default "api-key")

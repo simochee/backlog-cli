@@ -11,7 +11,7 @@ backlog auth status [flags]
 
 ## オプション
 
-`--space <string>` (default "全スペース")
+`-s`, `--space <string>` (default "全スペース")
 : 対象スペースのホスト名
 
 `--show-token`
