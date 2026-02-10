@@ -25,7 +25,7 @@ using TypeSpec.OpenAPI;
   > **This is an unofficial OpenAPI specification** and is not provided or endorsed by Nulab.
   > Complete compatibility with the actual Backlog API is not guaranteed.
 
-  This definition is maintained for [backlog-cli](https://github.com/simochee/backlog-cli).
+  This definition is maintained for backlog-cli.
   """)
 @service(#{ title: "Backlog API (UNOFFICIAL)" })
 @info(#{

@@ -12,7 +12,7 @@
 
 **Backlog をコマンドラインから。**
 
-> **Note:** This is an unofficial tool and is not affiliated with or endorsed by [Nulab, Inc.](https://nulab.com/) or the [Backlog](https://backlog.com/) team.
+> **Note:** This is an unofficial tool and is not affiliated with or endorsed by Nulab, Inc. or the Backlog team.
 
 ターミナルから [Backlog](https://backlog.com/) の課題や PR、Wiki、通知を操作できる非公式 CLI ツール。
 <br>
