@@ -16,29 +16,29 @@ export type BacklogClient = ReturnType<typeof createClient>;
  *
  * For OAuth authentication, automatically refreshes the access token when it expires (401 error).
  *
- * @param hostname - Optional explicit space hostname (--space flag).
+ * @param space - Optional explicit space hostname (--space flag).
  * @returns The authenticated client and host string.
  */
-export async function getClient(hostname?: string): Promise<{
+export async function getClient(space?: string): Promise<{
 	client: BacklogClient;
 	host: string;
 }> {
-	const space = await resolveSpace(hostname);
+	const resolved = await resolveSpace(space);
 
-	if (space) {
-		if (space.auth.method === "api-key") {
+	if (resolved) {
+		if (resolved.auth.method === "api-key") {
 			return {
-				client: createClient({ host: space.host, apiKey: space.auth.apiKey }),
-				host: space.host,
+				client: createClient({ host: resolved.host, apiKey: resolved.auth.apiKey }),
+				host: resolved.host,
 			};
 		}
 
 		// OAuth: Create client with automatic token refresh on 401
-		if (space.auth.method !== "oauth") {
+		if (resolved.auth.method !== "oauth") {
 			throw new Error("Expected OAuth authentication");
 		}
 
-		const oauthAuth = space.auth;
+		const oauthAuth = resolved.auth;
 		let currentAccessToken = oauthAuth.accessToken;
 		let refreshPromise: Promise<void> | null = null;
 
@@ -62,7 +62,7 @@ export async function getClient(hostname?: string): Promise<{
 				try {
 					consola.start("Access token expired. Refreshing...");
 					const tokenResponse = await refreshAccessToken({
-						host: space.host,
+						host: resolved.host,
 						refreshToken,
 						clientId,
 						clientSecret,
@@ -70,7 +70,7 @@ export async function getClient(hostname?: string): Promise<{
 
 					currentAccessToken = tokenResponse.access_token;
 
-					await updateSpaceAuth(space.host, {
+					await updateSpaceAuth(resolved.host, {
 						method: "oauth",
 						accessToken: tokenResponse.access_token,
 						refreshToken: tokenResponse.refresh_token,
@@ -93,7 +93,7 @@ export async function getClient(hostname?: string): Promise<{
 
 		// Create base client
 		const baseClient = ofetch.create({
-			baseURL: joinURL(`https://${space.host}`, "/api/v2"),
+			baseURL: joinURL(`https://${resolved.host}`, "/api/v2"),
 			headers: {
 				get Authorization() {
 					return `Bearer ${currentAccessToken}`;
@@ -131,13 +131,13 @@ export async function getClient(hostname?: string): Promise<{
 
 		return {
 			client,
-			host: space.host,
+			host: resolved.host,
 		};
 	}
 
 	// Fallback: BACKLOG_API_KEY + BACKLOG_SPACE environment variables
 	const envApiKey = process.env["BACKLOG_API_KEY"];
-	const envHost = hostname ?? process.env["BACKLOG_SPACE"];
+	const envHost = space ?? process.env["BACKLOG_SPACE"];
 
 	if (envApiKey && envHost) {
 		return {

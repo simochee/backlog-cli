@@ -11,7 +11,7 @@ backlog auth switch [flags]
 
 ## オプション
 
-`-h`, `--hostname <string>`
+`-s`, `--space <string>`
 : 切り替え先のスペースホスト名
 
 ## 使用例
@@ -21,7 +21,7 @@ backlog auth switch [flags]
 backlog auth switch
 
 # 特定のスペースに切り替え
-backlog auth switch --hostname other-space.backlog.com
+backlog auth switch --space other-space.backlog.com
 ```
 
 ## 関連コマンド

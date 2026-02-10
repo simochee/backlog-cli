@@ -43,10 +43,10 @@ backlog auth refresh
 backlog auth status
 ```
 
-特定のスペースの認証状態を確認したい場合は `--hostname` フラグを指定します。
+特定のスペースの認証状態を確認したい場合は `--space` フラグを指定します。
 
 ```bash
-backlog auth status --hostname your-space.backlog.com
+backlog auth status --space your-space.backlog.com
 ```
 
 トークンの値を確認する場合は `--show-token` フラグを付けます。
@@ -61,10 +61,10 @@ backlog auth status --show-token
 
 ```bash
 # スペース A に認証
-backlog auth login --hostname space-a.backlog.com
+backlog auth login --space space-a.backlog.com
 
 # スペース B に認証
-backlog auth login --hostname space-b.backlog.com
+backlog auth login --space space-b.backlog.com
 ```
 
 ### デフォルトスペースの切り替え
@@ -72,7 +72,7 @@ backlog auth login --hostname space-b.backlog.com
 普段使うスペースを切り替えるには `auth switch` を使います。
 
 ```bash
-backlog auth switch --hostname space-b.backlog.com
+backlog auth switch --space space-b.backlog.com
 ```
 
 ### コマンド実行時のスペース指定
@@ -123,5 +123,5 @@ CI 環境でのセットアップの詳細は [CI での利用ガイド](/guides
 backlog auth logout
 
 # 特定のスペースからログアウト
-backlog auth logout --hostname your-space.backlog.com
+backlog auth logout --space your-space.backlog.com
 ```

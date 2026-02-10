@@ -11,7 +11,7 @@ backlog auth token [flags]
 
 ## オプション
 
-`-h`, `--hostname <string>` (default "アクティブスペース")
+`-s`, `--space <string>` (default "アクティブスペース")
 : 対象スペースのホスト名
 
 ## 使用例
@@ -21,7 +21,7 @@ backlog auth token [flags]
 backlog auth token
 
 # 特定のスペースのトークンを表示
-backlog auth token --hostname your-space.backlog.com
+backlog auth token --space your-space.backlog.com
 
 # 他のコマンドにトークンを渡す
 curl -H "X-Api-Key: $(backlog auth token)" https://your-space.backlog.com/api/v2/users/myself

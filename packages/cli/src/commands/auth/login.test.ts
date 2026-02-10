@@ -31,7 +31,7 @@ import consola from "consola";
 
 describe("auth login", () => {
 	describe("api-key", () => {
-		it("hostname と API キーで新規スペースを認証する", async () => {
+		it("--space と API キーで新規スペースを認証する", async () => {
 			const mockClient = vi.fn().mockResolvedValue({
 				name: "Test User",
 				userId: "testuser",
@@ -47,7 +47,7 @@ describe("auth login", () => {
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
-				args: { hostname: "example.backlog.com", method: "api-key" },
+				args: { space: "example.backlog.com", method: "api-key" },
 			} as never);
 
 			expect(createClient).toHaveBeenCalledWith({
@@ -92,7 +92,7 @@ describe("auth login", () => {
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
-				args: { hostname: "example.backlog.com", method: "api-key" },
+				args: { space: "example.backlog.com", method: "api-key" },
 			} as never);
 
 			expect(updateSpaceAuth).toHaveBeenCalledWith("example.backlog.com", {
@@ -112,7 +112,7 @@ describe("auth login", () => {
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
-				args: { hostname: "example.backlog.com", method: "api-key" },
+				args: { space: "example.backlog.com", method: "api-key" },
 			} as never);
 
 			expect(consola.error).toHaveBeenCalledWith(
@@ -124,7 +124,7 @@ describe("auth login", () => {
 			exitSpy.mockRestore();
 		});
 
-		it("hostname 未指定時にプロンプトで入力を求める", async () => {
+		it("--space 未指定時にプロンプトで入力を求める", async () => {
 			const mockClient = vi.fn().mockResolvedValue({
 				name: "Test User",
 				userId: "testuser",
@@ -156,7 +156,7 @@ describe("auth login", () => {
 			expect(consola.success).toHaveBeenCalled();
 		});
 
-		it("hostname プロンプトで空入力の場合エラーを返す", async () => {
+		it("--space プロンプトで空入力の場合エラーを返す", async () => {
 			vi.mocked(consola.prompt).mockResolvedValue("" as never);
 			const exitSpy = spyOnProcessExit();
 
@@ -176,7 +176,7 @@ describe("auth login", () => {
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
-				args: { hostname: "example.backlog.com", method: "api-key" },
+				args: { space: "example.backlog.com", method: "api-key" },
 			} as never);
 
 			expect(consola.error).toHaveBeenCalledWith("API key is required.");
@@ -191,7 +191,7 @@ describe("auth login", () => {
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
-				args: { hostname: "example.backlog.com", method: "invalid" },
+				args: { space: "example.backlog.com", method: "invalid" },
 			} as never);
 
 			expect(consola.error).toHaveBeenCalledWith('Invalid auth method. Use "api-key" or "oauth".');
@@ -237,7 +237,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 					"client-secret": "my-client-secret",
@@ -282,7 +282,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 					"client-secret": "my-client-secret",
@@ -305,7 +305,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 					"client-secret": "my-client-secret",
@@ -324,7 +324,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-secret": "my-client-secret",
 				},
@@ -343,7 +343,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 				},
@@ -362,7 +362,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 				},
@@ -382,7 +382,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 					"client-secret": "my-client-secret",
@@ -426,7 +426,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 					"client-id": "my-client-id",
 					"client-secret": "my-client-secret",
@@ -451,7 +451,7 @@ describe("auth login", () => {
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
 				args: {
-					hostname: "example.backlog.com",
+					space: "example.backlog.com",
 					method: "oauth",
 				},
 			} as never);

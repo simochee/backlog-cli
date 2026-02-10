@@ -8,16 +8,16 @@ export default defineCommand({
 		description: "Switch active space",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
+			alias: "s",
 			description: "Space hostname to switch to",
 		},
 	},
 	async run({ args }) {
 		const config = await loadConfig();
 
-		let hostname = args.hostname;
+		let hostname = args.space || process.env["BACKLOG_SPACE"];
 
 		if (!hostname) {
 			if (config.spaces.length === 0) {

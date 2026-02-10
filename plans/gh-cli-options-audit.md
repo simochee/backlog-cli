@@ -51,7 +51,7 @@
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--with-token` | `--with-token` | 共通 | |
 | `--web` / `-w` | — | N/A | backlog は `--method` で認証方式を選択するため不要 |
 | `--git-protocol` / `-p` | — | N/A | Backlog Git は別途認証 |
@@ -67,14 +67,14 @@
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--user` / `-u` | — | gh のみ | gh は1ホストに複数アカウント可。backlog は1スペース1認証 |
 
 ### auth status
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--show-token` / `-t` | `--show-token` | 名称変更 | backlog は `-t` エイリアスなし |
 | `--active` / `-a` | — | gh のみ | gh は複数アカウント対応のため必要。backlog では不要 |
 | `--json` | — | gh のみ / 検討 | auth status の JSON 出力 |
@@ -85,14 +85,14 @@
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--user` / `-u` | — | gh のみ | 複数アカウント非対応のため不要 |
 
 ### auth refresh
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--scopes` / `-s` | — | N/A | Backlog OAuth にスコープ概念なし |
 | `--remove-scopes` / `-r` | — | N/A | |
 | `--reset-scopes` | — | N/A | |
@@ -103,7 +103,7 @@
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--hostname` / `-h` | `--hostname` / `-h` | 共通 | |
+| `--hostname` / `-h` | `--space` | 名称変更 | `-h` を廃止（help と競合するため） |
 | `--user` / `-u` | — | gh のみ | backlog は1スペース1認証のため不要 |
 
 ---
@@ -461,19 +461,19 @@
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--host` | `--hostname` | 名称変更 | フラグ名が異なる |
+| `--host` | `--space` | 名称変更 | フラグ名が異なる |
 
 ### config set
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--host` | `--hostname` | 名称変更 | フラグ名が異なる |
+| `--host` | `--space` | 名称変更 | フラグ名が異なる |
 
 ### config list
 
 | gh CLI | backlog CLI | 状態 | 備考 |
 | --- | --- | --- | --- |
-| `--host` | `--hostname` | 名称変更 | フラグ名が異なる |
+| `--host` | `--space` | 名称変更 | フラグ名が異なる |
 
 ---
 

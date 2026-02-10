@@ -11,7 +11,7 @@ OAuth 2.0 のアクセストークンをリフレッシュトークンを使っ�
 
 ## オプション
 
-`-h`, `--hostname <string>` (default "アクティブスペース")
+`-s`, `--space <string>` (default "アクティブスペース")
 : 対象スペースのホスト名
 
 ## 使用例
@@ -21,7 +21,7 @@ OAuth 2.0 のアクセストークンをリフレッシュトークンを使っ�
 backlog auth refresh
 
 # 特定のスペースのトークンをリフレッシュ
-backlog auth refresh --hostname your-space.backlog.com
+backlog auth refresh --space your-space.backlog.com
 ```
 
 ## 関連コマンド

@@ -28,13 +28,14 @@ export default defineCommand({
 			description: "Config value",
 			required: true,
 		},
-		hostname: {
+		space: {
 			type: "string",
+			alias: "s",
 			description: "Set space-specific config",
 		},
 	},
 	async run({ args }) {
-		if (args.hostname) {
+		if (args.space || process.env["BACKLOG_SPACE"]) {
 			consola.error("Space-specific config is managed by `bl auth` commands.");
 			return process.exit(1);
 		}

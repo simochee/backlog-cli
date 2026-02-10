@@ -71,7 +71,7 @@ backlog auth login
 An interactive prompt will guide you through selecting your hostname and authentication method. To use an API key directly:
 
 ```bash
-backlog auth login --hostname your-space.backlog.com --method api-key
+backlog auth login --space your-space.backlog.com --method api-key
 ```
 
 Verify your setup:

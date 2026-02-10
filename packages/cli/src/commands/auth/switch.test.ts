@@ -29,7 +29,7 @@ describe("auth switch", () => {
 		// Test that the command structure is correct
 		expect((command.meta as Record<string, unknown>)?.["name"]).toBe("switch");
 		expect((command.meta as Record<string, unknown>)?.["description"]).toBe("Switch active space");
-		expect((command.args as Record<string, unknown>)?.["hostname"]).toBeDefined();
+		expect((command.args as Record<string, unknown>)?.["space"]).toBeDefined();
 	});
 
 	it("スペースが見つからない場合エラーを出す", async () => {
@@ -43,7 +43,7 @@ describe("auth switch", () => {
 
 		const mod = await import("#commands/auth/switch.ts");
 		await mod.default.run?.({
-			args: { hostname: "missing.backlog.com" },
+			args: { space: "missing.backlog.com" },
 		} as never);
 
 		expect(exitSpy).toHaveBeenCalledWith(1);
@@ -64,7 +64,7 @@ describe("auth switch", () => {
 
 		const mod = await import("#commands/auth/switch.ts");
 		await mod.default.run?.({
-			args: { hostname: "target.backlog.com" },
+			args: { space: "target.backlog.com" },
 		} as never);
 
 		expect(writeConfig).toHaveBeenCalledWith(

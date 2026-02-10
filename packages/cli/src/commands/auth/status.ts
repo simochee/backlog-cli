@@ -9,9 +9,9 @@ export default defineCommand({
 		description: "Show authentication status",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
+			alias: "s",
 			description: "Filter by space hostname",
 		},
 		"show-token": {
@@ -22,14 +22,15 @@ export default defineCommand({
 	async run({ args }) {
 		const config = await loadConfig();
 
+		const filterSpace = args.space || process.env["BACKLOG_SPACE"];
 		let spaces = config.spaces;
-		if (args.hostname) {
-			spaces = spaces.filter((s) => s.host === args.hostname);
+		if (filterSpace) {
+			spaces = spaces.filter((s) => s.host === filterSpace);
 		}
 
 		if (spaces.length === 0) {
-			if (args.hostname) {
-				consola.info(`No authentication configured for ${args.hostname}.`);
+			if (filterSpace) {
+				consola.info(`No authentication configured for ${filterSpace}.`);
 			} else {
 				consola.info("No spaces are authenticated. Run `bl auth login` to get started.");
 			}

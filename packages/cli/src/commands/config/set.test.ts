@@ -65,12 +65,12 @@ describe("config set run()", () => {
 		exitSpy.mockRestore();
 	});
 
-	it("run() で hostname 指定時にエラーを返す", async () => {
+	it("run() で --space 指定時にエラーを返す", async () => {
 		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/set.ts");
 		await mod.default.run?.({
-			args: { key: "defaultSpace", value: "foo", hostname: "foo" },
+			args: { key: "defaultSpace", value: "foo", space: "foo" },
 		} as never);
 
 		expect(consola.error).toHaveBeenCalledWith("Space-specific config is managed by `bl auth` commands.");

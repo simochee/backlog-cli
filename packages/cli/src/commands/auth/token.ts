@@ -8,14 +8,14 @@ export default defineCommand({
 		description: "Print the auth token to stdout",
 	},
 	args: {
-		hostname: {
+		space: {
 			type: "string",
-			alias: "h",
+			alias: "s",
 			description: "Space hostname",
 		},
 	},
 	async run({ args }) {
-		const space = await resolveSpace(args.hostname);
+		const space = await resolveSpace(args.space);
 
 		if (!space) {
 			consola.error("No space configured. Run `bl auth login` to authenticate.");
