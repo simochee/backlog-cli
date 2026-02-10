@@ -31,5 +31,5 @@ backlog config get pager --hostname your-space.backlog.com
 
 ## 関連コマンド
 
-- [config set](/backlog-cli/commands/config/set/)
-- [config list](/backlog-cli/commands/config/list/)
+- [config set](/commands/config/set/)
+- [config list](/commands/config/list/)

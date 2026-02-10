@@ -9,8 +9,8 @@ Backlog のチームを管理するコマンド群です。
 
 | コマンド                                          | 説明                   |
 | ------------------------------------------------- | ---------------------- |
-| [team list](/backlog-cli/commands/team/list/)     | チームの一覧を表示する |
-| [team view](/backlog-cli/commands/team/view/)     | チームの詳細を表示する |
-| [team create](/backlog-cli/commands/team/create/) | チームを作成する       |
-| [team edit](/backlog-cli/commands/team/edit/)     | チームを編集する       |
-| [team delete](/backlog-cli/commands/team/delete/) | チームを削除する       |
+| [team list](/commands/team/list/)     | チームの一覧を表示する |
+| [team view](/commands/team/view/)     | チームの詳細を表示する |
+| [team create](/commands/team/create/) | チームを作成する       |
+| [team edit](/commands/team/edit/)     | チームを編集する       |
+| [team delete](/commands/team/delete/) | チームを削除する       |

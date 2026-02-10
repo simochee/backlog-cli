@@ -29,5 +29,5 @@ curl -H "X-Api-Key: $(backlog auth token)" https://your-space.backlog.com/api/v2
 
 ## 関連コマンド
 
-- [auth status](/backlog-cli/commands/auth/status/)
-- [auth login](/backlog-cli/commands/auth/login/)
+- [auth status](/commands/auth/status/)
+- [auth login](/commands/auth/login/)

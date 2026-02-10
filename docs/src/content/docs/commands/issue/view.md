@@ -39,5 +39,5 @@ backlog issue view PROJECT-123 --web
 
 ## 関連コマンド
 
-- [issue list](/backlog-cli/commands/issue/list/)
-- [issue edit](/backlog-cli/commands/issue/edit/)
+- [issue list](/commands/issue/list/)
+- [issue edit](/commands/issue/edit/)

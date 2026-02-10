@@ -9,6 +9,6 @@ description: スターを管理します
 
 | コマンド                                        | 説明                   |
 | ----------------------------------------------- | ---------------------- |
-| [star add](/backlog-cli/commands/star/add/)     | スターを追加する       |
-| [star list](/backlog-cli/commands/star/list/)   | スターの一覧を表示する |
-| [star count](/backlog-cli/commands/star/count/) | スター数を表示する     |
+| [star add](/commands/star/add/)     | スターを追加する       |
+| [star list](/commands/star/list/)   | スターの一覧を表示する |
+| [star count](/commands/star/count/) | スター数を表示する     |

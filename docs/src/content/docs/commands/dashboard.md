@@ -17,6 +17,6 @@ backlog dashboard
 
 ## 関連コマンド
 
-- [issue list](/backlog-cli/commands/issue/list/)
-- [issue status](/backlog-cli/commands/issue/status/)
-- [notification list](/backlog-cli/commands/notification/list/)
+- [issue list](/commands/issue/list/)
+- [issue status](/commands/issue/status/)
+- [notification list](/commands/notification/list/)

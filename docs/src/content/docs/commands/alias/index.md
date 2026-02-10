@@ -9,6 +9,6 @@ description: コマンドエイリアスを管理します
 
 | コマンド                                            | 説明                       |
 | --------------------------------------------------- | -------------------------- |
-| [alias set](/backlog-cli/commands/alias/set/)       | エイリアスを設定する       |
-| [alias list](/backlog-cli/commands/alias/list/)     | エイリアスの一覧を表示する |
-| [alias delete](/backlog-cli/commands/alias/delete/) | エイリアスを削除する       |
+| [alias set](/commands/alias/set/)       | エイリアスを設定する       |
+| [alias list](/commands/alias/list/)     | エイリアスの一覧を表示する |
+| [alias delete](/commands/alias/delete/) | エイリアスを削除する       |
