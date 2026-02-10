@@ -2,7 +2,7 @@ import { defineCommand } from "citty";
 
 export default defineCommand({
 	meta: {
-		name: "status-type",
+		name: "status",
 		description: "Manage issue statuses",
 	},
 	subCommands: {

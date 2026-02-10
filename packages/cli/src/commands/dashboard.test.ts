@@ -7,7 +7,7 @@ vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
-describe("status", () => {
+describe("dashboard", () => {
 	it("ダッシュボードサマリーを表示する", async () => {
 		const mockClient = setupMockClient(getClient);
 
@@ -21,7 +21,7 @@ describe("status", () => {
 		mockClient.mockResolvedValueOnce({ count: 3 });
 		mockClient.mockResolvedValueOnce([{ issue: { issueKey: "PROJ-3", summary: "Recent" } }]);
 
-		const mod = await import("#commands/status.ts");
+		const mod = await import("#commands/dashboard.ts");
 		await mod.default.run?.({ args: {} } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/users/myself");
@@ -37,7 +37,7 @@ describe("status", () => {
 		mockClient.mockResolvedValueOnce({ count: 0 });
 		mockClient.mockResolvedValueOnce([]);
 
-		const mod = await import("#commands/status.ts");
+		const mod = await import("#commands/dashboard.ts");
 		await mod.default.run?.({ args: {} } as never);
 
 		expect(consola.log).toHaveBeenCalledWith("  No issues assigned to you.");
@@ -62,7 +62,7 @@ describe("status", () => {
 			mockClient.mockResolvedValueOnce({ count: 3 });
 			mockClient.mockResolvedValueOnce([]);
 
-			const mod = await import("#commands/status.ts");
+			const mod = await import("#commands/dashboard.ts");
 			await mod.default.run?.({ args: { json: "" } } as never);
 
 			expect(consola.log).not.toHaveBeenCalled();
