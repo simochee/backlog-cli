@@ -14,18 +14,16 @@ export default defineCommand({
 			description: "Watching ID",
 			required: true,
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(
-			`Are you sure you want to delete watching ${args["watching-id"]}?`,
-			args.confirm,
-		);
+		const proceed = await confirmOrExit(`Are you sure you want to delete watching ${args["watching-id"]}?`, args.yes);
 		if (!proceed) return;
 
 		await client(`/watchings/${args["watching-id"]}`, {

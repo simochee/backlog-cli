@@ -19,12 +19,12 @@ backlog category delete <id> [flags]
 `-p`, `--project <string>`
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog category delete 12345 --project PROJ
-backlog category delete 12345 --project PROJ --confirm
+backlog category delete 12345 --project PROJ --yes
 ```

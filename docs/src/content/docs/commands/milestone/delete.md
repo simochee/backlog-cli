@@ -19,12 +19,12 @@ backlog milestone delete <id> [flags]
 `-p`, `--project <string>`
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog milestone delete 12345 --project PROJ
-backlog milestone delete 12345 --project PROJ --confirm
+backlog milestone delete 12345 --project PROJ --yes
 ```

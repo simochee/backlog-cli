@@ -1,3 +1,4 @@
+import { isNoInput } from "#utils/argv.ts";
 import { loadConfig, writeConfig } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -22,6 +23,11 @@ export default defineCommand({
 		if (!hostname) {
 			if (config.spaces.length === 0) {
 				consola.error("No spaces configured. Run `bl auth login` to add a space.");
+				return process.exit(1);
+			}
+
+			if (isNoInput()) {
+				consola.error("Hostname is required. Use --hostname to provide it in --no-input mode.");
 				return process.exit(1);
 			}
 

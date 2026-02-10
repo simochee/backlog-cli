@@ -24,7 +24,7 @@ backlog issue-type delete <id> [flags]
 `--substitute-issue-type-id <int>`
 : 代替種別 ID
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例

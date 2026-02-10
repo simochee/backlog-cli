@@ -115,6 +115,7 @@ export default defineConfig({
 								{ label: "issue edit", link: "/commands/issue/edit/" },
 								{ label: "issue close", link: "/commands/issue/close/" },
 								{ label: "issue reopen", link: "/commands/issue/reopen/" },
+								{ label: "issue delete", link: "/commands/issue/delete/" },
 								{ label: "issue comment", link: "/commands/issue/comment/" },
 								{ label: "issue status", link: "/commands/issue/status/" },
 							],

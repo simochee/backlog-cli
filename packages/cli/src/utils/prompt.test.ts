@@ -1,5 +1,5 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
 
@@ -7,6 +7,14 @@ import promptRequired, { confirmOrExit } from "#utils/prompt.ts";
 import consola from "consola";
 
 describe("promptRequired", () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
+
+	afterEach(() => {
+		delete process.env["BACKLOG_NO_INPUT"];
+	});
+
 	it("既存の値がある場合はそのまま返す", async () => {
 		const result = await promptRequired("Label:", "existing-value");
 		expect(result).toBe("existing-value");
@@ -65,9 +73,39 @@ describe("promptRequired", () => {
 		expect(consola.error).toHaveBeenCalledWith("Project key is required.");
 		mockExit.mockRestore();
 	});
+
+	it("--no-input モードで既存の値がある場合はそのまま返す", async () => {
+		process.env["BACKLOG_NO_INPUT"] = "1";
+
+		const result = await promptRequired("Label:", "existing-value");
+		expect(result).toBe("existing-value");
+		expect(consola.prompt).not.toHaveBeenCalled();
+	});
+
+	it("--no-input モードで値が未指定の場合はエラーで終了する", async () => {
+		process.env["BACKLOG_NO_INPUT"] = "1";
+		const mockExit = spyOnProcessExit();
+
+		await promptRequired("Project key:");
+
+		expect(consola.error).toHaveBeenCalledWith(
+			"Project key is required. Use arguments to provide it in --no-input mode.",
+		);
+		expect(mockExit).toHaveBeenCalledWith(1);
+		expect(consola.prompt).not.toHaveBeenCalled();
+		mockExit.mockRestore();
+	});
 });
 
 describe("confirmOrExit", () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
+
+	afterEach(() => {
+		delete process.env["BACKLOG_NO_INPUT"];
+	});
+
 	it("skipConfirm が true の場合、プロンプトを表示せず true を返す", async () => {
 		const result = await confirmOrExit("Are you sure?", true);
 		expect(result).toBeTruthy();
@@ -105,5 +143,25 @@ describe("confirmOrExit", () => {
 		const result = await confirmOrExit("Are you sure?", false);
 		expect(consola.prompt).toHaveBeenCalled();
 		expect(result).toBeTruthy();
+	});
+
+	it("--no-input モードで skipConfirm が true の場合はプロンプトなしで true を返す", async () => {
+		process.env["BACKLOG_NO_INPUT"] = "1";
+
+		const result = await confirmOrExit("Are you sure?", true);
+		expect(result).toBeTruthy();
+		expect(consola.prompt).not.toHaveBeenCalled();
+	});
+
+	it("--no-input モードで skipConfirm が未指定の場合はエラーで終了する", async () => {
+		process.env["BACKLOG_NO_INPUT"] = "1";
+		const mockExit = spyOnProcessExit();
+
+		await confirmOrExit("Are you sure?");
+
+		expect(consola.error).toHaveBeenCalledWith("Confirmation required. Use --yes to skip in --no-input mode.");
+		expect(mockExit).toHaveBeenCalledWith(1);
+		expect(consola.prompt).not.toHaveBeenCalled();
+		mockExit.mockRestore();
 	});
 });

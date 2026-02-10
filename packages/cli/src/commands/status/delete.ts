@@ -27,8 +27,9 @@ export default defineCommand({
 			description: "Substitute status ID (required)",
 			required: true,
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
@@ -37,7 +38,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(`Are you sure you want to delete status ${args.id}?`, args.confirm);
+		const proceed = await confirmOrExit(`Are you sure you want to delete status ${args.id}?`, args.yes);
 		if (!proceed) return;
 
 		const status = await client<BacklogStatus>(`/projects/${project}/statuses/${args.id}`, {

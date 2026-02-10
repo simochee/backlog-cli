@@ -11,12 +11,12 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("webhook delete", () => {
-	it("--confirm で Webhook を削除する", async () => {
+	it("--yes で Webhook を削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Delete Me" });
 
 		const mod = await import("#commands/webhook/delete.ts");
-		await mod.default.run?.({ args: { id: "1", project: "PROJ", confirm: true } } as never);
+		await mod.default.run?.({ args: { id: "1", project: "PROJ", yes: true } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/projects/PROJ/webhooks/1", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.prompt).not.toHaveBeenCalled();

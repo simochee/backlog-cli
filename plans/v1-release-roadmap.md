@@ -24,7 +24,7 @@ Phase 1〜4 の全 99 コマンド + `issue delete` の実装が完了し、CI/C
 
 - [x] `src/utils/argv.ts` — `extractSpaceArg` のテスト追加（12 テストケース）
 - [x] `src/utils/oauth-callback.ts` — OAuth コールバックサーバーのテスト追加（8 テストケース）
-- 全 112 ファイル・463 テスト合格
+- 全 112 ファイル・473 テスト合格
 
 ### 1.4 初回リリースバージョン戦略の決定
 
@@ -39,12 +39,12 @@ Phase 1〜4 の全 99 コマンド + `issue delete` の実装が完了し、CI/C
 
 v1 以降は Semantic Versioning により、CLI のインターフェース変更が破壊的変更となる。リリース前に以下を確認：
 
-- [ ] 全コマンドのフラグ名の一貫性（例: `--project` / `-p` が統一されているか）
+- [x] 全コマンドのフラグ名の一貫性（例: `--project` / `-p` が統一されているか）
 - [ ] `--json` 出力のフィールド名が API レスポンスと一致しているか
 - [ ] エラーメッセージの文言が統一されているか（日本語 / 英語の混在がないか）
 - [ ] `--help` テキストの品質（description が分かりやすいか、examples があるか）
 - [ ] exit code の一貫性（成功=0、認証エラー=1、引数エラー=1 等）
-- [ ] 削除確認フラグの統一: `issue delete` が `--yes` / `-y` だが、他の delete コマンドは `--confirm` を使用（要統一）
+- [x] 削除確認フラグの統一: 全 delete コマンドを `--yes` / `-y` に統一済み（gh CLI 準拠）
 
 ### 2.2 Node.js バージョンマトリクスでの CI テスト
 
@@ -69,17 +69,12 @@ v1 以降は Semantic Versioning により、CLI のインターフェース変�
 
 ### 2.5 `--no-input` フラグの実装（新規発見）
 
-**CLAUDE.md に記載されているが未実装**。CI/CD 環境での利用に必須。
-
-現状:
-- `promptRequired` を使う 13 コマンドでプロンプトをスキップする手段がない
-- `consola.prompt` を直接使う 2 コマンド（auth logout, auth switch）にもスキップ手段がない
-- 削除確認フラグが `--confirm`（9 コマンド）と `--yes`（1 コマンド: issue delete）で不統一
-
-対応案:
-- `promptRequired` にグローバルな `--no-input` チェックを追加し、値がない場合はエラー終了
-- `confirmOrExit` でも `--no-input` 時は `--confirm` なしでエラー終了
-- `issue delete` の `--yes` を `--confirm` に統一（破壊的変更なので 0.x のうちに対応）
+- [x] **実装完了**。`extractGlobalArgs` で `--no-input` を抽出し `BACKLOG_NO_INPUT=1` 環境変数で伝播
+- [x] `promptRequired` で `--no-input` 時は引数未指定でエラー終了（メッセージで引数指定を案内）
+- [x] `confirmOrExit` で `--no-input` 時は `--yes` なしでエラー終了
+- [x] `auth logout` / `auth switch` の直接 `consola.prompt` 呼び出しにも `isNoInput()` チェック追加
+- [x] 削除確認フラグを全コマンドで `--yes` / `-y` に統一（gh CLI 準拠）
+- [x] テスト追加: `argv.test.ts`（18 テスト）、`prompt.test.ts`（16 テスト）
 
 ---
 
@@ -118,7 +113,7 @@ v1 以降は Semantic Versioning により、CLI のインターフェース変�
 **要対応（発見された問題）:**
 
 - [ ] **内部リンクのパス修正**: 41 ファイル・141 箇所で `/backlog-cli/commands/...` を `/commands/...` に修正が必要（不要なベースパスプレフィックス）
-- [ ] **`issue delete` のドキュメント追加**: 実装済みだがドキュメントページが欠落
+- [x] **`issue delete` のドキュメント追加**: ドキュメントページ・サイドバーエントリ追加済み
 - [ ] OpenAPI 仕様ファイルの生成確認（ビルド時に自動生成されるが、初回は `tsp compile` が必要）
 
 ### 3.6 `--no-input` フラグの全コマンド対応確認

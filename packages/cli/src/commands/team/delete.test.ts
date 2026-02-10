@@ -8,12 +8,12 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("team delete", () => {
-	it("--confirm でチームを削除する", async () => {
+	it("--yes でチームを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Delete Team" });
 
 		const mod = await import("#commands/team/delete.ts");
-		await mod.default.run?.({ args: { "team-id": "1", confirm: true } } as never);
+		await mod.default.run?.({ args: { "team-id": "1", yes: true } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/teams/1", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.prompt).not.toHaveBeenCalled();

@@ -16,12 +16,12 @@ backlog team delete <team-id> [flags]
 
 ## オプション
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog team delete 12345
-backlog team delete 12345 --confirm
+backlog team delete 12345 --yes
 ```

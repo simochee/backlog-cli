@@ -18,12 +18,12 @@ backlog project delete <project-key> [flags]
 
 ## オプション
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog project delete PROJ
-backlog project delete PROJ --confirm
+backlog project delete PROJ --yes
 ```

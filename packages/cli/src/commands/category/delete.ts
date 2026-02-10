@@ -22,8 +22,9 @@ export default defineCommand({
 			alias: "p",
 			description: "Project key (env: BACKLOG_PROJECT)",
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
@@ -32,7 +33,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(`Are you sure you want to delete category ${args.id}?`, args.confirm);
+		const proceed = await confirmOrExit(`Are you sure you want to delete category ${args.id}?`, args.yes);
 		if (!proceed) return;
 
 		const category = await client<BacklogCategory>(`/projects/${project}/categories/${args.id}`, {
