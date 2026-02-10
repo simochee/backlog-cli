@@ -14,6 +14,7 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 - `packages/test-utils` — テスト共有ユーティリティ
 - `packages/tsconfigs` — 共有 TypeScript 設定
 - `docs` — ドキュメントサイト（Astro + Starlight）
+- `skills/backlog-cli` — AI エージェント向けスキル定義（SKILL.md + リファレンス）
 
 ## 技術スタック
 
@@ -206,15 +207,38 @@ const name = await promptRequired("Project name:", args.name);
 - レートリミットは自動リトライ（`Retry-After` ヘッダーを尊重）
 - OAuth トークン期限切れ（401）はリフレッシュトークンで自動更新し、成功すればリトライ。リフレッシュも失敗した場合はリトライせず再ログインを案内して `process.exit(1)`
 
+## CI/CD
+
+GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義は `.github/workflows/` に配置。
+
+### ワークフロー一覧
+
+| ワークフロー | ファイル | トリガー | 内容 |
+| --- | --- | --- | --- |
+| CI | `ci.yaml` | push（main）/ PR | Lint, Format check, Type check, Test（Node.js 20/22/24）, Bundle analysis |
+| Release | `release.yaml` | main push | release-please による自動リリース |
+| Deploy Docs | `deploy-docs.yaml` | main push | ドキュメントサイトの Cloudflare デプロイ |
+
+### CI パイプライン詳細
+
+- **Lint**: `oxfmt --check` + `oxlint`（フォーマットとリント）
+- **Type Check**: `bun run build` → `bun run type-check`
+- **Test**: Node.js 20/22/24 のマトリクスで `bun run test` + カバレッジ（`@vitest/coverage-v8`）
+- **Bundle Analysis**: Codecov にバンドルサイズを送信
+- **Concurrency**: 同一 ref のジョブは `cancel-in-progress: true` で重複排除
+
 ## 開発ルール
 
-- `bun install` で依存インストール
+- `bun install` で依存インストール（`postinstall` で `lefthook install` が自動実行される）
 - `bun run dev` で開発モード
 - `bun run build` でビルド
 - `bun run type-check` で型チェック
-- `bun run lint` でリント
-- `bun run test` でテスト
+- `bun run lint` でリント（oxlint）
+- `bun run test` でテスト（Vitest、全パッケージ一括）
+- `bun run textlint` でドキュメントの日本語校正（`docs/**/*.md` と `README.md`）
+- `bun run textlint:fix` でドキュメントの日本語校正を自動修正
 - Conventional Commits 形式でコミットメッセージを書く（詳細は後述の「コミットメッセージと release-please」セクションを参照）
+- ランタイムバージョンは `mise.toml` で管理（Bun 1.3.5）
 
 ### コミットメッセージと release-please
 
@@ -468,8 +492,10 @@ describe("addSpace", () => {
 - `plans/command-specifications.md` — 全コマンドの引数・オプション・API マッピング詳細
 - `plans/command-overview.md` — コマンドツリーと設計方針
 - `plans/gh-backlog-mapping.md` — gh CLI → backlog CLI のマッピング
+- `plans/gh-cli-options-audit.md` — gh CLI オプションとの比較監査
 - `plans/backlog-api-reference.md` — Backlog API エンドポイントリファレンス
 - `plans/agent-skills.md` — Agent Skills の設計構想
+- `plans/v1-release-roadmap.md` — v1.0.0 リリースロードマップ
 - `plans/unimplemented-commands.md` — 未実装コマンドの検討記録
 
 ### 更新ルール
@@ -478,3 +504,20 @@ describe("addSpace", () => {
 - 設計方針の変更があった場合は該当する `plans/` 配下のドキュメントを更新する
 - 未実装バックログから着手する場合は `plans/unimplemented-commands.md` を更新する
 - プロジェクトの完了状況が変わった場合は `plans/project-status.md` を更新する
+
+## skills/ ディレクトリの運用
+
+**`skills/backlog-cli/`** に AI エージェント（Vercel AI SDK 等）向けのスキル定義を管理。
+
+### ファイル構成
+
+- `skills/backlog-cli/SKILL.md` — スキルのメタデータ（名前・説明・トリガー条件）と使い方ガイド
+- `skills/backlog-cli/references/commands.md` — 全コマンドのオプションリファレンス
+- `skills/backlog-cli/references/schema.md` — データモデル・スキーマリファレンス
+
+### 設計方針
+
+- エージェントがインタラクティブプロンプトでハングしないよう、必須フラグの明示的指定を推奨
+- `--json` 出力を前提としたワークフロー設計
+- 名前解決のハマりどころ（ステータス名・課題種別名がプロジェクト固有であること）を明記
+- コマンド追加・変更時は `references/commands.md` も更新する
