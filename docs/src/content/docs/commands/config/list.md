@@ -26,5 +26,5 @@ backlog config list --space your-space.backlog.com
 
 ## 関連コマンド
 
-- [config get](/backlog-cli/commands/config/get/)
-- [config set](/backlog-cli/commands/config/set/)
+- [config get](/commands/config/get/)
+- [config set](/commands/config/set/)

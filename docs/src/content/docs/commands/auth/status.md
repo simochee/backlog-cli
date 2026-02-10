@@ -32,5 +32,5 @@ backlog auth status --show-token
 
 ## 関連コマンド
 
-- [auth login](/backlog-cli/commands/auth/login/)
-- [auth token](/backlog-cli/commands/auth/token/)
+- [auth login](/commands/auth/login/)
+- [auth token](/commands/auth/token/)

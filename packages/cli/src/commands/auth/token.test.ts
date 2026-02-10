@@ -56,7 +56,7 @@ describe("auth token", () => {
 			await mod.default.run?.({ args: { space: undefined } } as never);
 
 			expect(resolveSpace).toHaveBeenCalledWith(undefined);
-			expect(consola.error).toHaveBeenCalledWith("No space configured. Run `backlog auth login` to authenticate.");
+			expect(consola.error).toHaveBeenCalledWith("No space configured. Run `bl auth login` to authenticate.");
 			expect(exitSpy).toHaveBeenCalledWith(1);
 		} finally {
 			exitSpy.mockRestore();

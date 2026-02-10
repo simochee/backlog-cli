@@ -32,7 +32,7 @@ export default defineCommand({
 			if (filterSpace) {
 				consola.info(`No authentication configured for ${filterSpace}.`);
 			} else {
-				consola.info("No spaces are authenticated. Run `backlog auth login` to get started.");
+				consola.info("No spaces are authenticated. Run `bl auth login` to get started.");
 			}
 			return;
 		}

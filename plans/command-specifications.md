@@ -832,9 +832,9 @@
 
 ---
 
-### 3.8 `backlog status-type` — ステータス管理
+### 3.8 `backlog status` — ステータス管理
 
-#### `backlog status-type list`
+#### `backlog status list`
 
 | 引数/オプション | 短縮 | 型     | 必須  | 説明             |
 | --------------- | ---- | ------ | ----- | ---------------- |
@@ -842,7 +842,7 @@
 
 - **対応 API**: `GET /api/v2/projects/:key/statuses`
 
-#### `backlog status-type create`
+#### `backlog status create`
 
 | 引数/オプション | 短縮 | 型     | 必須  | 説明             | API パラメータ |
 | --------------- | ---- | ------ | ----- | ---------------- | -------------- |
@@ -852,7 +852,7 @@
 
 - **対応 API**: `POST /api/v2/projects/:key/statuses`
 
-#### `backlog status-type edit <id>`
+#### `backlog status edit <id>`
 
 | 引数/オプション | 短縮 | 型     | 必須 | 説明          | API パラメータ    |
 | --------------- | ---- | ------ | ---- | ------------- | ----------------- |
@@ -862,7 +862,7 @@
 
 - **対応 API**: `PATCH /api/v2/projects/:key/statuses/:statusId`
 
-#### `backlog status-type delete <id>`
+#### `backlog status delete <id>`
 
 | 引数/オプション          | 型      | 必須 | 説明              | API パラメータ       |
 | ------------------------ | ------- | ---- | ----------------- | -------------------- |
@@ -1075,6 +1075,7 @@
 | `--space`       | `-s` | string | No   | 対象スペース |
 
 - **対応 API**: OAuth 2.0 Token Refresh
+- **備考**: 通常はトークンリフレッシュは自動で行われる（API リクエスト時に 401 エラーが発生するとリフレッシュトークンで自動更新→リトライ）。リフレッシュトークンも失効している場合は再ログインを案内して終了する。
 
 #### `backlog auth switch`
 

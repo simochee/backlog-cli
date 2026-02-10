@@ -64,4 +64,4 @@ backlog api /api/v2/space -i
 
 ## 関連コマンド
 
-- [auth token](/backlog-cli/commands/auth/token/)
+- [auth token](/commands/auth/token/)

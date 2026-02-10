@@ -19,7 +19,7 @@ export default defineCommand({
 		const space = await resolveSpace(args.space);
 
 		if (!space) {
-			consola.error("No space configured. Run `backlog auth login` to authenticate.");
+			consola.error("No space configured. Run `bl auth login` to authenticate.");
 			return process.exit(1);
 		}
 
@@ -31,7 +31,7 @@ export default defineCommand({
 		const { clientId, clientSecret } = space.auth;
 		if (!clientId || !clientSecret) {
 			consola.error(
-				"Client ID and Client Secret are missing from the stored OAuth configuration. Please re-authenticate with `backlog auth login -m oauth`.",
+				"Client ID and Client Secret are missing from the stored OAuth configuration. Please re-authenticate with `bl auth login -m oauth`.",
 			);
 			return process.exit(1);
 		}
@@ -47,7 +47,7 @@ export default defineCommand({
 				clientSecret,
 			});
 		} catch {
-			consola.error("Failed to refresh OAuth token. Please re-authenticate with `backlog auth login -m oauth`.");
+			consola.error("Failed to refresh OAuth token. Please re-authenticate with `bl auth login -m oauth`.");
 			return process.exit(1);
 		}
 

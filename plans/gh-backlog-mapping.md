@@ -257,10 +257,10 @@ gh CLI の `label` に対応する Backlog の概念は3種類ある。
 
 | backlog CLI                       | Backlog API                                 |
 | --------------------------------- | ------------------------------------------- |
-| `backlog status-type list`        | `GET /api/v2/projects/:key/statuses`        |
-| `backlog status-type create`      | `POST /api/v2/projects/:key/statuses`       |
-| `backlog status-type edit <id>`   | `PATCH /api/v2/projects/:key/statuses/:id`  |
-| `backlog status-type delete <id>` | `DELETE /api/v2/projects/:key/statuses/:id` |
+| `backlog status list`        | `GET /api/v2/projects/:key/statuses`        |
+| `backlog status create`      | `POST /api/v2/projects/:key/statuses`       |
+| `backlog status edit <id>`   | `PATCH /api/v2/projects/:key/statuses/:id`  |
+| `backlog status delete <id>` | `DELETE /api/v2/projects/:key/statuses/:id` |
 
 ---
 

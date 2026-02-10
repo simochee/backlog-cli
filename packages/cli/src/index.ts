@@ -11,7 +11,7 @@ process.argv = cleanedArgv;
 
 const main = defineCommand({
 	meta: {
-		name: "backlog",
+		name: "bl",
 		version,
 		description,
 	},
@@ -23,7 +23,7 @@ const main = defineCommand({
 		pr: () => import("#commands/pr/index.ts").then((m) => m.default),
 		repo: () => import("#commands/repo/index.ts").then((m) => m.default),
 		notification: () => import("#commands/notification/index.ts").then((m) => m.default),
-		status: () => import("#commands/status.ts").then((m) => m.default),
+		dashboard: () => import("#commands/dashboard.ts").then((m) => m.default),
 		browse: () => import("#commands/browse.ts").then((m) => m.default),
 		api: () => import("#commands/api.ts").then((m) => m.default),
 		wiki: () => import("#commands/wiki/index.ts").then((m) => m.default),
@@ -32,7 +32,7 @@ const main = defineCommand({
 		category: () => import("#commands/category/index.ts").then((m) => m.default),
 		milestone: () => import("#commands/milestone/index.ts").then((m) => m.default),
 		"issue-type": () => import("#commands/issue-type/index.ts").then((m) => m.default),
-		"status-type": () => import("#commands/status-type/index.ts").then((m) => m.default),
+		status: () => import("#commands/status/index.ts").then((m) => m.default),
 		space: () => import("#commands/space/index.ts").then((m) => m.default),
 		webhook: () => import("#commands/webhook/index.ts").then((m) => m.default),
 		star: () => import("#commands/star/index.ts").then((m) => m.default),

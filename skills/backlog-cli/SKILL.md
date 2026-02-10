@@ -38,7 +38,7 @@ The CLI automatically resolves human-readable names to IDs:
 
 ```bash
 backlog issue-type list -p PROJECT_KEY
-backlog status-type list -p PROJECT_KEY
+backlog status list -p PROJECT_KEY
 ```
 
 ### Issue Keys
@@ -179,7 +179,7 @@ Status names and issue type names are **project-specific**. Always query them fi
 
 ```bash
 # Get available statuses for a project
-backlog status-type list -p PROJECT_KEY
+backlog status list -p PROJECT_KEY
 
 # Get available issue types for a project
 backlog issue-type list -p PROJECT_KEY
@@ -189,7 +189,7 @@ backlog issue-type list -p PROJECT_KEY
 ```
 
 **Before creating or editing issues:**
-1. Query status names: `backlog status-type list -p PROJECT`
+1. Query status names: `backlog status list -p PROJECT`
 2. Query issue types: `backlog issue-type list -p PROJECT`
 3. Use exact names from the query results
 

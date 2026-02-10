@@ -49,11 +49,10 @@ describe("getClient", () => {
 
 		const result = await getClient();
 
-		expect(createClient).toHaveBeenCalledWith({
-			host: "example.backlog.com",
-			accessToken: "access-token",
-		});
+		// OAuth の場合は createClient を使わず、ofetch.create を直接使用する
+		expect(createClient).not.toHaveBeenCalled();
 		expect(result.host).toBe("example.backlog.com");
+		expect(result.client).toBeTypeOf("function");
 	});
 
 	it("明示的なホスト名を resolveSpace に渡す", async () => {

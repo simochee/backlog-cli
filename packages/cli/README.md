@@ -77,7 +77,7 @@ backlog auth login --space your-space.backlog.com --method api-key
 Verify your setup:
 
 ```bash
-backlog status
+backlog dashboard
 ```
 
 If the dashboard appears, you're ready to go.
@@ -125,13 +125,13 @@ backlog api /api/v2/space
 | `backlog category`     | Manage categories          |
 | `backlog milestone`    | Manage milestones          |
 | `backlog issue-type`   | Manage issue types         |
-| `backlog status-type`  | Manage statuses            |
+| `backlog status`       | Manage statuses            |
 | `backlog space`        | Manage space settings      |
 | `backlog webhook`      | Manage webhooks            |
 | `backlog star`         | Manage stars               |
 | `backlog watching`     | Manage watches             |
 | `backlog alias`        | Manage command aliases     |
-| `backlog status`       | Show dashboard             |
+| `backlog dashboard`    | Show dashboard             |
 | `backlog browse`       | Open in browser            |
 | `backlog api`          | Call Backlog API directly  |
 | `backlog completion`   | Generate shell completions |

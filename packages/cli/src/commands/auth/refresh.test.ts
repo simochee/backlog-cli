@@ -25,7 +25,7 @@ describe("auth refresh", () => {
 		const mod = await import("#commands/auth/refresh.ts");
 		await mod.default.run?.({ args: {} } as never);
 
-		expect(consola.error).toHaveBeenCalledWith("No space configured. Run `backlog auth login` to authenticate.");
+		expect(consola.error).toHaveBeenCalledWith("No space configured. Run `bl auth login` to authenticate.");
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();
 	});
@@ -62,7 +62,7 @@ describe("auth refresh", () => {
 		await mod.default.run?.({ args: {} } as never);
 
 		expect(consola.error).toHaveBeenCalledWith(
-			"Client ID and Client Secret are missing from the stored OAuth configuration. Please re-authenticate with `backlog auth login -m oauth`.",
+			"Client ID and Client Secret are missing from the stored OAuth configuration. Please re-authenticate with `bl auth login -m oauth`.",
 		);
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();
@@ -133,7 +133,7 @@ describe("auth refresh", () => {
 		await mod.default.run?.({ args: {} } as never);
 
 		expect(consola.error).toHaveBeenCalledWith(
-			"Failed to refresh OAuth token. Please re-authenticate with `backlog auth login -m oauth`.",
+			"Failed to refresh OAuth token. Please re-authenticate with `bl auth login -m oauth`.",
 		);
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();

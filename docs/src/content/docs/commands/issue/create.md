@@ -67,5 +67,5 @@ cat description.md | backlog issue create --project PROJ --title "課題" --type
 
 ## 関連コマンド
 
-- [issue list](/backlog-cli/commands/issue/list/)
-- [issue edit](/backlog-cli/commands/issue/edit/)
+- [issue list](/commands/issue/list/)
+- [issue edit](/commands/issue/edit/)

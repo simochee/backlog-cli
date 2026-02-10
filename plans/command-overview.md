@@ -7,7 +7,7 @@
 ## コマンドツリー
 
 ```
-backlog
+bl (backlog)
 ├── auth                    # 認証管理
 │   ├── login
 │   ├── logout
@@ -119,7 +119,7 @@ backlog
 │   ├── edit
 │   └── delete
 │
-├── status-type             # ステータス管理
+├── status                  # ステータス管理
 │   ├── list
 │   ├── create
 │   ├── edit
@@ -157,7 +157,7 @@ backlog
 │   └── delete
 │
 ├── completion              # シェル補完
-└── status                  # 自分に関連する情報の概要表示
+└── dashboard               # 自分に関連する情報の概要表示
 ```
 
 ---

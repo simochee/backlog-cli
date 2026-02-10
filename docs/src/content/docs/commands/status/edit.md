@@ -1,10 +1,10 @@
 ---
-title: backlog status-type edit
+title: backlog status edit
 description: ステータスを編集する
 ---
 
 ```
-backlog status-type edit <id> [flags]
+backlog status edit <id> [flags]
 ```
 
 対応する Backlog API については「[状態情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-status/)」を参照してください。
@@ -28,5 +28,5 @@ backlog status-type edit <id> [flags]
 ## 使用例
 
 ```bash
-backlog status-type edit 12345 --project PROJ --name "確認待ち"
+backlog status edit 12345 --project PROJ --name "確認待ち"
 ```

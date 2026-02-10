@@ -15,7 +15,7 @@ import { getClient } from "#utils/client.ts";
 import promptRequired from "#utils/prompt.ts";
 import consola from "consola";
 
-describe("status-type create", () => {
+describe("status create", () => {
 	beforeEach(() => {
 		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
@@ -24,7 +24,7 @@ describe("status-type create", () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "In Progress" });
 
-		const mod = await import("#commands/status-type/create.ts");
+		const mod = await import("#commands/status/create.ts");
 		await mod.default.run?.({ args: { project: "PROJ", name: "In Progress", color: "#4488cc" } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith(

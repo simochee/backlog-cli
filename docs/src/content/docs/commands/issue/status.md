@@ -19,5 +19,5 @@ backlog issue status
 
 ## 関連コマンド
 
-- [issue list](/backlog-cli/commands/issue/list/)
-- [status](/backlog-cli/commands/status/)
+- [issue list](/commands/issue/list/)
+- [status](/commands/status/)

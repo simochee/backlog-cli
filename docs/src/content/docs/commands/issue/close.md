@@ -39,5 +39,5 @@ backlog issue close PROJECT-123 --resolution 対応済み
 
 ## 関連コマンド
 
-- [issue reopen](/backlog-cli/commands/issue/reopen/)
-- [issue edit](/backlog-cli/commands/issue/edit/)
+- [issue reopen](/commands/issue/reopen/)
+- [issue edit](/commands/issue/edit/)

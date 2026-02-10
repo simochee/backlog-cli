@@ -36,7 +36,7 @@ export default defineCommand({
 	},
 	async run({ args }) {
 		if (args.space || process.env["BACKLOG_SPACE"]) {
-			consola.error("Space-specific config is managed by `backlog auth` commands.");
+			consola.error("Space-specific config is managed by `bl auth` commands.");
 			return process.exit(1);
 		}
 
@@ -60,7 +60,7 @@ export default defineCommand({
 		if (resolvedKey === "defaultSpace") {
 			const space = config.spaces.find((s) => s.host === args.value);
 			if (!space) {
-				consola.error(`Space "${args.value}" is not authenticated. Run \`backlog auth login\` first.`);
+				consola.error(`Space "${args.value}" is not authenticated. Run \`bl auth login\` first.`);
 				return process.exit(1);
 			}
 			await writeConfig({ ...config, defaultSpace: args.value });

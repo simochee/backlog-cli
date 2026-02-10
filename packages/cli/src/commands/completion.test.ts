@@ -23,8 +23,8 @@ describe("completion", () => {
 
 		expect(writeSpy).toHaveBeenCalledTimes(1);
 		const output = writeSpy.mock.calls[0]?.[0] as string;
-		expect(output).toContain("_backlog");
-		expect(output).toContain("# backlog CLI bash completion");
+		expect(output).toContain("_bl");
+		expect(output).toContain("# bl CLI bash completion");
 
 		writeSpy.mockRestore();
 	});
@@ -37,7 +37,7 @@ describe("completion", () => {
 
 		expect(writeSpy).toHaveBeenCalledTimes(1);
 		const output = writeSpy.mock.calls[0]?.[0] as string;
-		expect(output).toContain("#compdef backlog");
+		expect(output).toContain("#compdef bl backlog");
 
 		writeSpy.mockRestore();
 	});

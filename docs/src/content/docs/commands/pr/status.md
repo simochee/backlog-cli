@@ -27,5 +27,5 @@ backlog pr status --project PROJ --repo my-repo
 
 ## 関連コマンド
 
-- [pr list](/backlog-cli/commands/pr/list/)
-- [status](/backlog-cli/commands/status/)
+- [pr list](/commands/pr/list/)
+- [status](/commands/status/)

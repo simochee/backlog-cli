@@ -20,7 +20,8 @@
 		"directory": "packages/cli"
 	},
 	"bin": {
-		"backlog": "./bin/backlog.mjs"
+		"backlog": "./bin/backlog.mjs",
+		"bl": "./bin/bl.mjs"
 	},
 	"files": [
 		"bin",
@@ -34,7 +35,7 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "bun build ./src/index.ts --outfile ./dist/backlog.mjs --target=node --minify --conditions=bun",
+		"build": "bun build ./src/index.ts --outfile ./dist/bl.mjs --target=node --minify --conditions=bun",
 		"build:compile": "bun build ./src/index.ts --compile --outfile ./out/$npm_package_name",
 		"dev": "bun ./src/index.ts",
 		"prepublishOnly": "bun run build",
@@ -42,7 +43,9 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"open": "^11.0.0"
+		"ofetch": "^1.5.1",
+		"open": "^11.0.0",
+		"ufo": "^1.6.3"
 	},
 	"devDependencies": {
 		"@repo/api": "workspace:*",

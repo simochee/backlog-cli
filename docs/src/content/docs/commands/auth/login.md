@@ -48,5 +48,5 @@ backlog auth login --space your-space.backlog.com --method oauth
 
 ## 関連コマンド
 
-- [auth logout](/backlog-cli/commands/auth/logout/)
-- [auth status](/backlog-cli/commands/auth/status/)
+- [auth logout](/commands/auth/logout/)
+- [auth status](/commands/auth/status/)
