@@ -33,5 +33,5 @@ backlog issue delete PROJECT-123 --yes
 
 ## 関連コマンド
 
-- [issue view](/backlog-cli/commands/issue/view/)
-- [issue close](/backlog-cli/commands/issue/close/)
+- [issue view](/commands/issue/view/)
+- [issue close](/commands/issue/close/)
