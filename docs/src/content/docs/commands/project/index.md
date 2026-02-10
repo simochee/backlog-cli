@@ -3,7 +3,7 @@ title: backlog project
 description: プロジェクトを管理します
 ---
 
-Backlog のプロジェクトを管理するコマンド群です。
+Backlogのプロジェクトを管理するコマンド群です。
 
 ## サブコマンド
 

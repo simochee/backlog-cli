@@ -7,12 +7,12 @@ description: Wiki ページを編集する
 backlog wiki edit <wiki-id> [flags]
 ```
 
-対応する Backlog API については「[Wikiページ情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-wiki-page/)」を参照してください。
+対応するBacklog APIについては「[Wikiページ情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-wiki-page/)」を参照してください。
 
 ## 引数
 
 `<wiki-id> <int>`
-: ページ ID
+: ページID
 
 ## オプション
 

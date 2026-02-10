@@ -7,7 +7,7 @@ description: Webhook を作成する
 backlog webhook create [flags]
 ```
 
-対応する Backlog API については「[Webhookの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-webhook/)」を参照してください。
+対応するBacklog APIについては「[Webhookの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-webhook/)」を参照してください。
 
 ## オプション
 
@@ -15,10 +15,10 @@ backlog webhook create [flags]
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
 `-n`, `--name <string>`
-: Webhook 名
+: Webhook名
 
 `--hook-url <string>`
-: 通知先 URL
+: 通知先URL
 
 `-d`, `--description <string>`
 : 説明
@@ -27,7 +27,7 @@ backlog webhook create [flags]
 : 全イベント対象
 
 `--activity-type-ids <string>`
-: 対象イベントタイプ ID（カンマ区切り）
+: 対象イベントタイプID（カンマ区切り）
 
 ## 使用例
 

@@ -3,7 +3,7 @@ title: backlog repo
 description: Git リポジトリを管理します
 ---
 
-Backlog Git のリポジトリを管理するコマンド群です。
+Backlog Gitのリポジトリを管理するコマンド群です。
 
 ## サブコマンド
 

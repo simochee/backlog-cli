@@ -3,7 +3,7 @@ title: backlog space
 description: スペースを管理します
 ---
 
-Backlog スペースの情報を管理するコマンド群です。
+Backlogスペースの情報を管理するコマンド群です。
 
 ## サブコマンド
 

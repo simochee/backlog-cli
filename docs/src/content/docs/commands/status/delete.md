@@ -7,14 +7,14 @@ description: ステータスを削除する
 backlog status delete <id> [flags]
 ```
 
-削除するステータスに紐づく課題の移行先として、代替のステータス ID を指定してください。
+削除するステータスに紐づく課題の移行先として、代替のステータスIDを指定してください。
 
-対応する Backlog API については「[状態の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-status/)」を参照してください。
+対応するBacklog APIについては「[状態の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-status/)」を参照してください。
 
 ## 引数
 
 `<id> <int>`
-: ステータス ID
+: ステータスID
 
 ## オプション
 
@@ -22,7 +22,7 @@ backlog status delete <id> [flags]
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
 `--substitute-status-id <int>`
-: 代替ステータス ID
+: 代替ステータスID
 
 `-y`, `--yes`
 : 確認プロンプトをスキップ

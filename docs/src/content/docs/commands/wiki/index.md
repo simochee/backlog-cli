@@ -3,7 +3,7 @@ title: backlog wiki
 description: Wiki ページを管理します
 ---
 
-Backlog の Wiki ページを管理するコマンド群です。
+BacklogのWikiページを管理するコマンド群です。
 
 ## サブコマンド
 

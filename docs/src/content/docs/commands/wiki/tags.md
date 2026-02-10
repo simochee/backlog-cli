@@ -7,9 +7,9 @@ description: Wiki タグの一覧を表示する
 backlog wiki tags [flags]
 ```
 
-プロジェクトの Wiki タグ一覧を表示します。
+プロジェクトのWikiタグ一覧を表示します。
 
-対応する Backlog API については「[Wikiページタグ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-wiki-page-tag-list/)」を参照してください。
+対応するBacklog APIについては「[Wikiページタグ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-wiki-page-tag-list/)」を参照してください。
 
 ## オプション
 

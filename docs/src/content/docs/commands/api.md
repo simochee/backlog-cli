@@ -7,17 +7,17 @@ description: 認証済み API リクエストを実行する
 backlog api <endpoint> [flags]
 ```
 
-Backlog API に対して認証済みのリクエストを送信します。任意のエンドポイントにアクセスできます。
+Backlog APIに対して認証済みのリクエストを送信します。任意のエンドポイントにアクセスできます。
 
 ## 引数
 
 `<endpoint> <string>`
-: API パス（例: `/api/v2/users/myself`）
+: APIパス（例: `/api/v2/users/myself`）
 
 ## オプション
 
 `-X`, `--method <string>` (default "GET")
-: HTTP メソッド
+: HTTPメソッド
 
 `-f`, `--field <string>`
 : リクエストフィールド（key=value、繰り返し可）

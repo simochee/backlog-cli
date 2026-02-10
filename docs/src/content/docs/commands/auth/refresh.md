@@ -7,7 +7,7 @@ description: OAuth トークンをリフレッシュする
 backlog auth refresh [flags]
 ```
 
-OAuth 2.0 のアクセストークンをリフレッシュトークンを使って更新します。
+OAuth 2.0のアクセストークンをリフレッシュトークンを使って更新します。
 
 ## オプション
 

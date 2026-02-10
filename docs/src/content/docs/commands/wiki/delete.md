@@ -7,12 +7,12 @@ description: Wiki ページを削除する
 backlog wiki delete <wiki-id> [flags]
 ```
 
-対応する Backlog API については「[Wikiページの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-wiki-page/)」を参照してください。
+対応するBacklog APIについては「[Wikiページの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-wiki-page/)」を参照してください。
 
 ## 引数
 
 `<wiki-id> <int>`
-: ページ ID
+: ページID
 
 ## オプション
 

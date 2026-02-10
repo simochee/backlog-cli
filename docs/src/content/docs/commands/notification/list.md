@@ -9,7 +9,7 @@ backlog notification list [flags]
 
 通知の一覧を表示します。
 
-対応する Backlog API については「[お知らせ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-notification/)」を参照してください。
+対応するBacklog APIについては「[お知らせ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-notification/)」を参照してください。
 
 ## オプション
 
@@ -17,10 +17,10 @@ backlog notification list [flags]
 : 取得件数
 
 `--min-id <int>`
-: 最小通知 ID
+: 最小通知ID
 
 `--max-id <int>`
-: 最大通知 ID
+: 最大通知ID
 
 `--order <string>` (default "desc")
 : 並び順: {asc|desc}

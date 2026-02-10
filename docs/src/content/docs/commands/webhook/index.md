@@ -3,7 +3,7 @@ title: backlog webhook
 description: Webhook を管理します
 ---
 
-プロジェクトの Webhook を管理するコマンド群です。
+プロジェクトのWebhookを管理するコマンド群です。
 
 ## サブコマンド
 

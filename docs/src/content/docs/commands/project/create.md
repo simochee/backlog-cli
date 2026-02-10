@@ -9,7 +9,7 @@ backlog project create [flags]
 
 新しいプロジェクトを作成します。
 
-対応する Backlog API については「[プロジェクトの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-project/)」を参照してください。
+対応するBacklog APIについては「[プロジェクトの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-project/)」を参照してください。
 
 ## オプション
 
@@ -26,7 +26,7 @@ backlog project create [flags]
 : サブタスク有効
 
 `--project-leader-can-edit-project-leader`
-: PL 変更権限
+: PL変更権限
 
 `--text-formatting-rule <string>`
 : 書式ルール: {markdown|backlog}

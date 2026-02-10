@@ -9,7 +9,7 @@ backlog issue comment <issue-key> [flags]
 
 課題にコメントを追加します。`--body` を省略するとエディタが起動します。
 
-対応する Backlog API については「[課題コメントの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-comment/)」を参照してください。
+対応するBacklog APIについては「[課題コメントの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-comment/)」を参照してください。
 
 ## 引数
 

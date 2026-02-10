@@ -7,7 +7,7 @@ description: Backlog をブラウザで開く
 backlog browse [target] [flags]
 ```
 
-Backlog のページをデフォルトブラウザで開きます。
+Backlogのページをデフォルトブラウザで開きます。
 
 ## 引数
 
@@ -23,10 +23,10 @@ Backlog のページをデフォルトブラウザで開きます。
 : 課題一覧を開く
 
 `--wiki`
-: Wiki を開く
+: Wikiを開く
 
 `--git`
-: Git リポジトリページを開く
+: Gitリポジトリページを開く
 
 `--settings`
 : プロジェクト設定を開く

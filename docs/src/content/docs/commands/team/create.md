@@ -7,7 +7,7 @@ description: チームを作成する
 backlog team create [flags]
 ```
 
-対応する Backlog API については「[チームの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-team/)」を参照してください。
+対応するBacklog APIについては「[チームの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-team/)」を参照してください。
 
 ## オプション
 

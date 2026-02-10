@@ -9,7 +9,7 @@ backlog pr list [flags]
 
 プルリクエストの一覧を取得します。
 
-対応する Backlog API については「[プルリクエスト一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-pull-request-list/)」を参照してください。
+対応するBacklog APIについては「[プルリクエスト一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-pull-request-list/)」を参照してください。
 
 ## オプション
 
@@ -23,7 +23,7 @@ backlog pr list [flags]
 : ステータス: {open|closed|merged}
 
 `-a`, `--assignee <string>`
-: 担当者（ユーザー名 or `@me`）
+: 担当者（ユーザー名or `@me`）
 
 `--created-by <string>`
 : 作成者

@@ -3,7 +3,7 @@ title: backlog team
 description: チームを管理します
 ---
 
-Backlog のチームを管理するコマンド群です。
+Backlogのチームを管理するコマンド群です。
 
 ## サブコマンド
 

@@ -3,9 +3,9 @@ title: シェル補完
 description: Backlog CLI のシェル補完の設定方法
 ---
 
-Backlog CLI はシェル補完に対応しています。コマンドやフラグをタブキーで補完できるようになるため、入力の手間を大幅に減らせます。
+Backlog CLIはシェル補完に対応しています。コマンドやフラグをタブキーで補完できるようになるため、入力の手間を減らせます。
 
-Bash、Zsh、Fish の 3 つのシェルに対応しています。
+Bash、Zsh、Fishの3つのシェルに対応しています。
 
 ## Bash
 
@@ -49,4 +49,4 @@ backlog completion fish > ~/.config/fish/completions/backlog.fish
 backlog completion fish | source
 ```
 
-Fish の場合、`~/.config/fish/completions/` に配置すれば自動的に読み込まれます。
+Fishの場合、`~/.config/fish/completions/` に配置すれば自動的に読み込まれます。

@@ -9,7 +9,7 @@ backlog issue close <issue-key> [flags]
 
 課題のステータスを「完了」に変更します。
 
-対応する Backlog API については「[課題情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-issue/)」を参照してください。
+対応するBacklog APIについては「[課題情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-issue/)」を参照してください。
 
 ## 引数
 

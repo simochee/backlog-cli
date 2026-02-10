@@ -9,7 +9,7 @@ backlog pr create [flags]
 
 新しいプルリクエストを作成します。
 
-対応する Backlog API については「[プルリクエストの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-pull-request/)」を参照してください。
+対応するBacklog APIについては「[プルリクエストの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-pull-request/)」を参照してください。
 
 ## オプション
 
@@ -20,10 +20,10 @@ backlog pr create [flags]
 : リポジトリ名
 
 `-t`, `--title <string>`
-: PR タイトル
+: PRタイトル
 
 `-b`, `--body <string>`
-: PR 説明
+: PR説明
 
 `-B`, `--base <string>`
 : マージ先ブランチ

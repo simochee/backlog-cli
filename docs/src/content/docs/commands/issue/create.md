@@ -9,7 +9,7 @@ backlog issue create [flags]
 
 新しい課題を作成します。必須オプションが省略された場合は対話形式で入力を求めます。
 
-対応する Backlog API については「[課題の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-issue/)」を参照してください。
+対応するBacklog APIについては「[課題の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-issue/)」を参照してください。
 
 ## オプション
 

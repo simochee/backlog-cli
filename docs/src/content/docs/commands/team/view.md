@@ -7,12 +7,12 @@ description: チームの詳細を表示する
 backlog team view <team-id>
 ```
 
-対応する Backlog API については「[チーム情報の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-team/)」を参照してください。
+対応するBacklog APIについては「[チーム情報の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-team/)」を参照してください。
 
 ## 引数
 
 `<team-id> <int>`
-: チーム ID
+: チームID
 
 ## 使用例
 

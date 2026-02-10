@@ -3,19 +3,19 @@ title: 認証
 description: Backlog CLI の認証設定と複数スペースの管理
 ---
 
-Backlog CLI を使うには、まず Backlog スペースへの認証が必要です。API キーと OAuth 2.0 の 2 つの認証方式に対応しています。
+Backlog CLIを使うには、まずBacklogスペースへの認証が必要です。APIキーとOAuth 2.0の2つの認証方式に対応しています。
 
 ## 認証方式
 
 ### API キー
 
-最もシンプルな認証方式です。Backlog の「個人設定 > API」ページから API キーを発行して使用します。
+最もシンプルな認証方式です。Backlogの「個人設定 > API」ページからAPIキーを発行して使用します。
 
 ```bash
 backlog auth login --method api-key
 ```
 
-対話形式でホスト名と API キーの入力を求められます。パイプで API キーを渡すことも可能です。
+対話形式でホスト名とAPIキーの入力を求められます。パイプでAPIキーを渡すことも可能です。
 
 ```bash
 echo "YOUR_API_KEY" | backlog auth login --with-token
@@ -23,7 +23,7 @@ echo "YOUR_API_KEY" | backlog auth login --with-token
 
 ### OAuth 2.0
 
-ブラウザベースの認証フローで、API キーの手動管理が不要な認証方式です。
+ブラウザベースの認証フローで、APIキーの手動管理が不要な認証方式です。
 
 ```bash
 backlog auth login --method oauth
@@ -57,7 +57,7 @@ backlog auth status --show-token
 
 ## 複数スペースの管理
 
-複数の Backlog スペースに認証し、切り替えながら使うことができます。
+複数のBacklogスペースに認証し、切り替えながら使うことができます。
 
 ```bash
 # スペース A に認証
@@ -85,14 +85,14 @@ backlog issue list --project PROJ --space space-b.backlog.com
 
 ### スペース解決の優先順位
 
-Backlog CLI は次の優先順位でスペースを決定します。
+Backlog CLIは次の優先順位でスペースを決定します。
 
 1. `--space` フラグ / `BACKLOG_SPACE` 環境変数 / 設定ファイルの `defaultSpace` + 設定ファイルの認証情報
 2. `BACKLOG_API_KEY` + `BACKLOG_SPACE` 環境変数（フォールバック）
 
 ## 環境変数による認証（CI / AI エージェント向け）
 
-`backlog auth login` を実行できない非インタラクティブ環境（CI パイプライン、AI エージェント等）では、環境変数だけで認証できます。
+`backlog auth login` を実行できない非インタラクティブ環境（CIパイプライン、AIエージェント等）では、環境変数だけで認証できます。
 
 ```bash
 export BACKLOG_SPACE=your-space.backlog.com
@@ -106,7 +106,7 @@ backlog issue list --project YOUR_PROJECT
 `BACKLOG_API_KEY` による認証は、設定ファイル（`~/.backlogrc`）の認証情報より優先度が低く設計されています。設定ファイルにスペースが登録されている場合はそちらが使われます。
 :::
 
-CI 環境でのセットアップの詳細は [CI での利用ガイド](/guides/ci/) を参照してください。
+CI環境でのセットアップの詳細は [CI での利用ガイド](/guides/ci/) を参照してください。
 
 ## 認証情報の保存場所
 

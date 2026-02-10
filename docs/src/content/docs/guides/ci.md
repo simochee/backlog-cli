@@ -3,11 +3,11 @@ title: CI での利用
 description: CI/CD パイプラインで Backlog CLI を使用する方法
 ---
 
-Backlog CLI は環境変数による認証に対応しているため、CI/CD パイプラインに組み込めます。デプロイ後の課題クローズやコメント追加など、Backlog の操作を自動化できます。
+Backlog CLIは環境変数による認証に対応しているため、CI/CDパイプラインに組み込めます。デプロイ後の課題クローズやコメント追加など、Backlogの操作を自動化できます。
 
 ## 必要な環境変数
 
-CI 環境では次の環境変数を設定してください。
+CI環境では次の環境変数を設定してください。
 
 | 環境変数          | 必須 | 説明                                                       |
 | ----------------- | ---- | ---------------------------------------------------------- |
@@ -15,15 +15,15 @@ CI 環境では次の環境変数を設定してください。
 | `BACKLOG_API_KEY` | Yes  | Backlog の API キー                                        |
 | `BACKLOG_PROJECT` | No   | デフォルトのプロジェクトキー                               |
 
-API キーは Backlog の「個人設定 > API」ページから発行できます。認証の詳細は[認証ガイド](/guides/authentication/)を参照してください。
+APIキーはBacklogの「個人設定 > API」ページから発行できます。認証の詳細は[認証ガイド](/guides/authentication/)を参照してください。
 
 :::caution
-API キーをソースコードに直接記述しないでください。各 CI サービスのシークレット管理機能を使って安全に設定してください。
+APIキーをソースコードに直接記述しないでください。各CIサービスのシークレット管理機能を使って安全に設定してください。
 :::
 
 ## 前提条件
 
-Backlog CLI は npm パッケージとして配布されているため、CI 環境に **Node.js ランタイム**が必要です。Node.js のセットアップ後に `npm install -g @simochee/backlog-cli` でインストールしてください。
+Backlog CLIはnpmパッケージとして配布されているため、CI環境に **Node.js ランタイム**が必要です。Node.jsのセットアップ後に `npm install -g @simochee/backlog-cli` でインストールしてください。
 
 ## CI サービス別のセットアップ
 
@@ -121,7 +121,7 @@ pipelines:
           - backlog issue close PROJ-123
 ```
 
-**Repository settings > Pipelines > Repository variables** から `BACKLOG_SPACE`、`BACKLOG_API_KEY`、`BACKLOG_PROJECT` を設定できます。
+**Repository settings > Pipelines > Repository variables** から環境変数を設定できます。`BACKLOG_SPACE`、`BACKLOG_API_KEY`、`BACKLOG_PROJECT` を追加してください。
 
 ### AWS CodeBuild
 
@@ -139,11 +139,11 @@ phases:
       - backlog issue close PROJ-123
 ```
 
-環境変数のセクションまたは AWS Systems Manager Parameter Store からシークレット変数を設定できます。
+環境変数のセクションまたはAWS Systems Manager Parameter Storeからシークレット変数を設定できます。
 
 ## 活用例
 
-CI パイプラインでの代表的なユースケースを紹介します。
+CIパイプラインでの代表的なユースケースを紹介します。
 
 ### デプロイ後に課題をクローズする
 

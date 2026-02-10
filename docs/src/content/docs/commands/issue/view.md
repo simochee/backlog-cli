@@ -9,7 +9,7 @@ backlog issue view <issue-key> [flags]
 
 指定した課題の詳細情報を表示します。
 
-対応する Backlog API については「[課題情報の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue/)」を参照してください。
+対応するBacklog APIについては「[課題情報の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue/)」を参照してください。
 
 ## 引数
 

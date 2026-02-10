@@ -7,7 +7,7 @@ description: リポジトリをクローンする
 backlog repo clone <repo-name> [flags]
 ```
 
-Backlog Git リポジトリをローカルにクローンします。
+Backlog Gitリポジトリをローカルにクローンします。
 
 ## 引数
 
