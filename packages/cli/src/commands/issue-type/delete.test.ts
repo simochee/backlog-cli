@@ -11,13 +11,13 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("issue-type delete", () => {
-	it("--confirm で課題種別を削除する", async () => {
+	it("--yes で課題種別を削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Old Type" });
 
 		const mod = await import("#commands/issue-type/delete.ts");
 		await mod.default.run?.({
-			args: { id: "1", project: "PROJ", "substitute-issue-type-id": "2", confirm: true },
+			args: { id: "1", project: "PROJ", "substitute-issue-type-id": "2", yes: true },
 		} as never);
 
 		expect(mockClient).toHaveBeenCalledWith(

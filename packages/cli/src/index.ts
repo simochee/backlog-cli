@@ -1,11 +1,14 @@
-import { extractSpaceArg } from "#utils/argv.ts";
+import { extractGlobalArgs } from "#utils/argv.ts";
 import { defineCommand, runMain } from "citty";
 
 import { version, description } from "../package.json";
 
-const { space, argv: cleanedArgv } = extractSpaceArg(process.argv);
+const { space, noInput, argv: cleanedArgv } = extractGlobalArgs(process.argv);
 if (space) {
 	process.env["BACKLOG_SPACE"] = space;
+}
+if (noInput) {
+	process.env["BACKLOG_NO_INPUT"] = "1";
 }
 process.argv = cleanedArgv;
 

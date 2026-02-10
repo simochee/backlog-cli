@@ -11,13 +11,13 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("status delete", () => {
-	it("--confirm でステータスを削除する", async () => {
+	it("--yes でステータスを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Old Status" });
 
 		const mod = await import("#commands/status/delete.ts");
 		await mod.default.run?.({
-			args: { id: "1", project: "PROJ", "substitute-status-id": "2", confirm: true },
+			args: { id: "1", project: "PROJ", "substitute-status-id": "2", yes: true },
 		} as never);
 
 		expect(mockClient).toHaveBeenCalledWith(

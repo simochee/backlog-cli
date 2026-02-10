@@ -16,12 +16,12 @@ backlog watching delete <watching-id> [flags]
 
 ## オプション
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog watching delete 12345
-backlog watching delete 12345 --confirm
+backlog watching delete 12345 --yes
 ```

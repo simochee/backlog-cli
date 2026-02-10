@@ -1,3 +1,4 @@
+import { isNoInput } from "#utils/argv.ts";
 import { loadConfig, removeSpace } from "@repo/config";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -27,6 +28,9 @@ export default defineCommand({
 			const firstSpace = config.spaces[0];
 			if (config.spaces.length === 1 && firstSpace) {
 				hostname = firstSpace.host;
+			} else if (isNoInput()) {
+				consola.error("Hostname is required. Use --hostname to provide it in --no-input mode.");
+				return process.exit(1);
 			} else {
 				hostname = await consola.prompt("Select a space to log out from:", {
 					type: "select",

@@ -11,12 +11,12 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("milestone delete", () => {
-	it("--confirm でマイルストーンを削除する", async () => {
+	it("--yes でマイルストーンを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "v1.0" });
 
 		const mod = await import("#commands/milestone/delete.ts");
-		await mod.default.run?.({ args: { id: "1", project: "PROJ", confirm: true } } as never);
+		await mod.default.run?.({ args: { id: "1", project: "PROJ", yes: true } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/projects/PROJ/versions/1", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.prompt).not.toHaveBeenCalled();

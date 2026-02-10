@@ -22,8 +22,9 @@ export default defineCommand({
 			alias: "p",
 			description: "Project key (env: BACKLOG_PROJECT)",
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
@@ -32,7 +33,7 @@ export default defineCommand({
 
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(`Are you sure you want to delete webhook ${args.id}?`, args.confirm);
+		const proceed = await confirmOrExit(`Are you sure you want to delete webhook ${args.id}?`, args.yes);
 		if (!proceed) return;
 
 		const webhook = await client<BacklogWebhook>(`/projects/${project}/webhooks/${args.id}`, {

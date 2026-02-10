@@ -16,8 +16,9 @@ export default defineCommand({
 			description: "Project key",
 			required: true,
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
@@ -26,7 +27,7 @@ export default defineCommand({
 
 		const proceed = await confirmOrExit(
 			`Are you sure you want to delete project ${args["project-key"]}? This cannot be undone.`,
-			args.confirm,
+			args.yes,
 		);
 		if (!proceed) return;
 

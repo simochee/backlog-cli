@@ -1,12 +1,19 @@
+interface ExtractedArgs {
+	space: string | undefined;
+	noInput: boolean;
+	argv: string[];
+}
+
 /**
- * Pre-extract `--space` / `-s` from argv before citty processes it.
+ * Pre-extract global flags from argv before citty processes it.
  *
  * citty does not pass parent command args to subcommands, so we extract
- * `--space` early and inject it via `process.env.BACKLOG_SPACE`.
+ * `--space` and `--no-input` early and inject them via environment variables.
  */
-export function extractSpaceArg(argv: string[]): { space: string | undefined; argv: string[] } {
+export function extractGlobalArgs(argv: string[]): ExtractedArgs {
 	const result: string[] = [];
 	let space: string | undefined;
+	let noInput = false;
 
 	for (let i = 0; i < argv.length; i++) {
 		const arg = argv[i] as string;
@@ -17,10 +24,19 @@ export function extractSpaceArg(argv: string[]): { space: string | undefined; ar
 			space = arg.slice("--space=".length);
 		} else if (arg.startsWith("-s=")) {
 			space = arg.slice("-s=".length);
+		} else if (arg === "--no-input") {
+			noInput = true;
 		} else {
 			result.push(arg);
 		}
 	}
 
-	return { space, argv: result };
+	return { space, noInput, argv: result };
+}
+
+/**
+ * Returns `true` if `--no-input` flag was passed or `BACKLOG_NO_INPUT` is set.
+ */
+export function isNoInput(): boolean {
+	return process.env["BACKLOG_NO_INPUT"] === "1";
 }

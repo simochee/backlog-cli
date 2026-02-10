@@ -16,15 +16,16 @@ export default defineCommand({
 			description: "Team ID",
 			required: true,
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(`Are you sure you want to delete team ${args["team-id"]}?`, args.confirm);
+		const proceed = await confirmOrExit(`Are you sure you want to delete team ${args["team-id"]}?`, args.yes);
 		if (!proceed) return;
 
 		const team = await client<BacklogTeam>(`/teams/${args["team-id"]}`, {

@@ -11,12 +11,12 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("category delete", () => {
-	it("--confirm でカテゴリを削除する", async () => {
+	it("--yes でカテゴリを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({ id: 1, name: "Delete Me" });
 
 		const mod = await import("#commands/category/delete.ts");
-		await mod.default.run?.({ args: { id: "1", project: "PROJ", confirm: true } } as never);
+		await mod.default.run?.({ args: { id: "1", project: "PROJ", yes: true } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith(
 			"/projects/PROJ/categories/1",

@@ -16,12 +16,12 @@ backlog wiki delete <wiki-id> [flags]
 
 ## オプション
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog wiki delete 12345
-backlog wiki delete 12345 --confirm
+backlog wiki delete 12345 --yes
 ```

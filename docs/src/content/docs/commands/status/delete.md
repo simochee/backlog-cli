@@ -24,7 +24,7 @@ backlog status delete <id> [flags]
 `--substitute-status-id <int>`
 : 代替ステータス ID
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例

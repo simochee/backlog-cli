@@ -19,12 +19,12 @@ backlog webhook delete <id> [flags]
 `-p`, `--project <string>`
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
-`--confirm`
+`-y`, `--yes`
 : 確認プロンプトをスキップ
 
 ## 使用例
 
 ```bash
 backlog webhook delete 12345 --project PROJ
-backlog webhook delete 12345 --project PROJ --confirm
+backlog webhook delete 12345 --project PROJ --yes
 ```

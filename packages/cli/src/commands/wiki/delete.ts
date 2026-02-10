@@ -16,15 +16,16 @@ export default defineCommand({
 			description: "Wiki page ID",
 			required: true,
 		},
-		confirm: {
+		yes: {
 			type: "boolean",
+			alias: "y",
 			description: "Skip confirmation prompt",
 		},
 	},
 	async run({ args }) {
 		const { client } = await getClient();
 
-		const proceed = await confirmOrExit(`Are you sure you want to delete wiki page ${args["wiki-id"]}?`, args.confirm);
+		const proceed = await confirmOrExit(`Are you sure you want to delete wiki page ${args["wiki-id"]}?`, args.yes);
 		if (!proceed) return;
 
 		const wiki = await client<BacklogWiki>(`/wikis/${args["wiki-id"]}`, {

@@ -8,12 +8,12 @@ import { getClient } from "#utils/client.ts";
 import consola from "consola";
 
 describe("watching delete", () => {
-	it("--confirm でウォッチを削除する", async () => {
+	it("--yes でウォッチを削除する", async () => {
 		const mockClient = setupMockClient(getClient);
 		mockClient.mockResolvedValue({});
 
 		const mod = await import("#commands/watching/delete.ts");
-		await mod.default.run?.({ args: { "watching-id": "42", confirm: true } } as never);
+		await mod.default.run?.({ args: { "watching-id": "42", yes: true } } as never);
 
 		expect(mockClient).toHaveBeenCalledWith("/watchings/42", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.prompt).not.toHaveBeenCalled();
