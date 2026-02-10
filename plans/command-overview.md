@@ -7,7 +7,7 @@
 ## コマンドツリー
 
 ```
-backlog
+bl (backlog)
 ├── auth                    # 認証管理
 │   ├── login
 │   ├── logout

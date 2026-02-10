@@ -18,7 +18,7 @@ export default defineCommand({
 		const space = await resolveSpace(args.hostname);
 
 		if (!space) {
-			consola.error("No space configured. Run `backlog auth login` to authenticate.");
+			consola.error("No space configured. Run `bl auth login` to authenticate.");
 			return process.exit(1);
 		}
 

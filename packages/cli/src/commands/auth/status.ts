@@ -31,7 +31,7 @@ export default defineCommand({
 			if (args.hostname) {
 				consola.info(`No authentication configured for ${args.hostname}.`);
 			} else {
-				consola.info("No spaces are authenticated. Run `backlog auth login` to get started.");
+				consola.info("No spaces are authenticated. Run `bl auth login` to get started.");
 			}
 			return;
 		}

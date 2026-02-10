@@ -51,7 +51,7 @@ describe("auth status", () => {
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({ args: {} } as never);
 
-		expect(consola.info).toHaveBeenCalledWith("No spaces are authenticated. Run `backlog auth login` to get started.");
+		expect(consola.info).toHaveBeenCalledWith("No spaces are authenticated. Run `bl auth login` to get started.");
 	});
 
 	it("hostname でフィルタして該当なしの場合メッセージを表示する", async () => {

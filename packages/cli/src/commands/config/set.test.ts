@@ -73,7 +73,7 @@ describe("config set run()", () => {
 			args: { key: "defaultSpace", value: "foo", hostname: "foo" },
 		} as never);
 
-		expect(consola.error).toHaveBeenCalledWith("Space-specific config is managed by `backlog auth` commands.");
+		expect(consola.error).toHaveBeenCalledWith("Space-specific config is managed by `bl auth` commands.");
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		exitSpy.mockRestore();
 	});
@@ -104,7 +104,7 @@ describe("config set run()", () => {
 		} as never);
 
 		expect(consola.error).toHaveBeenCalledWith(
-			'Space "nonexistent.backlog.com" is not authenticated. Run `backlog auth login` first.',
+			'Space "nonexistent.backlog.com" is not authenticated. Run `bl auth login` first.',
 		);
 		expect(exitSpy).toHaveBeenCalledWith(1);
 		expect(writeConfig).not.toHaveBeenCalled();
