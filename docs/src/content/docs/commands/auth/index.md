@@ -3,7 +3,7 @@ title: backlog auth
 description: Backlog スペースの認証を管理します
 ---
 
-Backlog スペースの認証を管理するコマンド群です。
+Backlogスペースの認証を管理するコマンド群です。
 
 ## サブコマンド
 

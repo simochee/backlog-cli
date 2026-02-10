@@ -3,7 +3,7 @@ title: backlog user
 description: ユーザーを管理します
 ---
 
-Backlog のユーザー情報を管理するコマンド群です。
+Backlogのユーザー情報を管理するコマンド群です。
 
 ## サブコマンド
 

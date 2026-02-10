@@ -7,7 +7,7 @@ description: Webhook を編集する
 backlog webhook edit <id> [flags]
 ```
 
-対応する Backlog API については「[Webhookの更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-webhook/)」を参照してください。
+対応するBacklog APIについては「[Webhookの更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-webhook/)」を参照してください。
 
 ## 引数
 
@@ -20,10 +20,10 @@ backlog webhook edit <id> [flags]
 : プロジェクトキー（env: `BACKLOG_PROJECT`）
 
 `-n`, `--name <string>`
-: Webhook 名
+: Webhook名
 
 `--hook-url <string>`
-: 通知先 URL
+: 通知先URL
 
 `-d`, `--description <string>`
 : 説明
@@ -32,7 +32,7 @@ backlog webhook edit <id> [flags]
 : 全イベント対象
 
 `--activity-type-ids <string>`
-: イベントタイプ ID（カンマ区切り）
+: イベントタイプID（カンマ区切り）
 
 ## 使用例
 

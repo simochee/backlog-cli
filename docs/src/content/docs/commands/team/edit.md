@@ -7,12 +7,12 @@ description: チームを編集する
 backlog team edit <team-id> [flags]
 ```
 
-対応する Backlog API については「[チーム情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-team/)」を参照してください。
+対応するBacklog APIについては「[チーム情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-team/)」を参照してください。
 
 ## 引数
 
 `<team-id> <int>`
-: チーム ID
+: チームID
 
 ## オプション
 

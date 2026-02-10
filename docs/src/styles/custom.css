@@ -5,6 +5,7 @@
 :root {
 	--sl-font: "LINE Seed JP", system-ui, -apple-system, sans-serif;
 	--sl-font-system: "LINE Seed JP", system-ui, -apple-system, sans-serif;
+	text-autospace: normal;
 
 	/* Backlog ブランドカラー (#00bd7b) に寄せたアクセントカラー */
 	--sl-color-accent-low: hsl(160, 70%, 14%);

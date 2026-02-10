@@ -7,7 +7,7 @@ description: マイルストーンを作成する
 backlog milestone create [flags]
 ```
 
-対応する Backlog API については「[バージョン(マイルストーン)の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-version-milestone/)」を参照してください。
+対応するBacklog APIについては「[バージョン(マイルストーン)の追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-version-milestone/)」を参照してください。
 
 ## オプション
 

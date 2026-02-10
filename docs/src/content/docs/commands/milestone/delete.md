@@ -7,12 +7,12 @@ description: マイルストーンを削除する
 backlog milestone delete <id> [flags]
 ```
 
-対応する Backlog API については「[バージョン(マイルストーン)の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-version/)」を参照してください。
+対応するBacklog APIについては「[バージョン(マイルストーン)の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-version/)」を参照してください。
 
 ## 引数
 
 `<id> <int>`
-: マイルストーン ID
+: マイルストーンID
 
 ## オプション
 

@@ -7,9 +7,9 @@ description: スターを追加する
 backlog star add [flags]
 ```
 
-課題、コメント、Wiki ページ、PR コメントにスターを追加します。いずれか1つを指定してください。
+課題、コメント、Wikiページ、PRコメントにスターを追加します。いずれか1つを指定してください。
 
-対応する Backlog API については「[スターの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-star/)」を参照してください。
+対応するBacklog APIについては「[スターの追加](https://developer.nulab.com/ja/docs/backlog/api/2/add-star/)」を参照してください。
 
 ## オプション
 
@@ -17,13 +17,13 @@ backlog star add [flags]
 : 課題キー
 
 `--comment <int>`
-: コメント ID
+: コメントID
 
 `--wiki <int>`
 : Wiki ID
 
 `--pr-comment <int>`
-: PR コメント ID
+: PRコメントID
 
 ## 使用例
 

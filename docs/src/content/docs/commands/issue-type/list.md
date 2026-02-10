@@ -7,7 +7,7 @@ description: 課題種別の一覧を表示する
 backlog issue-type list [flags]
 ```
 
-対応する Backlog API については「[種別一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue-type-list/)」を参照してください。
+対応するBacklog APIについては「[種別一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue-type-list/)」を参照してください。
 
 ## オプション
 

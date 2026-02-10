@@ -9,7 +9,7 @@ backlog project remove-user <project-key> [flags]
 
 プロジェクトからメンバーを削除します。
 
-対応する Backlog API については「[プロジェクトユーザーの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-project-user/)」を参照してください。
+対応するBacklog APIについては「[プロジェクトユーザーの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-project-user/)」を参照してください。
 
 ## 引数
 

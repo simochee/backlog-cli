@@ -3,7 +3,7 @@ title: backlog pr
 description: プルリクエストを管理します
 ---
 
-Backlog Git のプルリクエストを管理するコマンド群です。
+Backlog Gitのプルリクエストを管理するコマンド群です。
 
 ## サブコマンド
 

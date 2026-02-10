@@ -3,7 +3,7 @@ title: 設定
 description: Backlog CLI の設定管理と環境変数
 ---
 
-Backlog CLI の設定は `~/.backlogrc` ファイルで管理されます。`backlog config` コマンドで設定の確認と変更ができます。
+Backlog CLIの設定は `~/.backlogrc` ファイルで管理されます。`backlog config` コマンドで設定の確認と変更ができます。
 
 環境変数 `XDG_CONFIG_HOME` が設定されている場合、設定ファイルの場所は `$XDG_CONFIG_HOME/.backlogrc` になります。
 

@@ -9,7 +9,7 @@ backlog project edit <project-key> [flags]
 
 プロジェクトの設定を編集します。
 
-対応する Backlog API については「[プロジェクト情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-project/)」を参照してください。
+対応するBacklog APIについては「[プロジェクト情報の更新](https://developer.nulab.com/ja/docs/backlog/api/2/update-project/)」を参照してください。
 
 ## 引数
 

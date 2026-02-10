@@ -9,7 +9,7 @@ backlog issue list [flags]
 
 条件を指定して課題の一覧を取得します。
 
-対応する Backlog API については「[課題一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue-list/)」を参照してください。
+対応するBacklog APIについては「[課題一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-issue-list/)」を参照してください。
 
 ## オプション
 
@@ -17,7 +17,7 @@ backlog issue list [flags]
 : プロジェクトキー（カンマ区切りで複数可）（env: `BACKLOG_PROJECT`）
 
 `-a`, `--assignee <string>`
-: 担当者（ユーザー名 or `@me`）
+: 担当者（ユーザー名or `@me`）
 
 `-S`, `--status <string>`
 : ステータス名（カンマ区切りで複数可）
@@ -32,22 +32,22 @@ backlog issue list [flags]
 : キーワード検索
 
 `--created-since <string>`
-: 作成日 FROM（`yyyy-MM-dd`）
+: 作成日FROM（`yyyy-MM-dd`）
 
 `--created-until <string>`
-: 作成日 TO（`yyyy-MM-dd`）
+: 作成日TO（`yyyy-MM-dd`）
 
 `--updated-since <string>`
-: 更新日 FROM（`yyyy-MM-dd`）
+: 更新日FROM（`yyyy-MM-dd`）
 
 `--updated-until <string>`
-: 更新日 TO（`yyyy-MM-dd`）
+: 更新日TO（`yyyy-MM-dd`）
 
 `--due-since <string>`
-: 期限日 FROM（`yyyy-MM-dd`）
+: 期限日FROM（`yyyy-MM-dd`）
 
 `--due-until <string>`
-: 期限日 TO（`yyyy-MM-dd`）
+: 期限日TO（`yyyy-MM-dd`）
 
 `--sort <string>` (default "updated")
 : ソートキー

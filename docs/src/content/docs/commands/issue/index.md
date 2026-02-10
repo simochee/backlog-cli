@@ -3,7 +3,7 @@ title: backlog issue
 description: 課題を管理します
 ---
 
-Backlog の課題を管理するコマンド群です。
+Backlogの課題を管理するコマンド群です。
 
 ## サブコマンド
 

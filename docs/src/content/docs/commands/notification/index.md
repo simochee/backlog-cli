@@ -3,7 +3,7 @@ title: backlog notification
 description: 通知を管理します
 ---
 
-Backlog の通知を管理するコマンド群です。
+Backlogの通知を管理するコマンド群です。
 
 ## サブコマンド
 

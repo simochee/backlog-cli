@@ -9,7 +9,7 @@ backlog project delete <project-key> [flags]
 
 プロジェクトを削除します。この操作は元に戻せません。
 
-対応する Backlog API については「[プロジェクトの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-project/)」を参照してください。
+対応するBacklog APIについては「[プロジェクトの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-project/)」を参照してください。
 
 ## 引数
 

@@ -3,7 +3,7 @@ title: backlog config
 description: CLI の設定を管理します
 ---
 
-CLI の設定を管理するコマンド群です。設定は `~/.backlogrc` ファイルに保存されます。
+CLIの設定を管理するコマンド群です。設定は `~/.backlogrc` ファイルに保存されます。
 
 ## サブコマンド
 

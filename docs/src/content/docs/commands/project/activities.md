@@ -9,7 +9,7 @@ backlog project activities <project-key> [flags]
 
 プロジェクトの最近のアクティビティを表示します。
 
-対応する Backlog API については「[プロジェクトの最近の活動の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-project-recent-updates/)」を参照してください。
+対応するBacklog APIについては「[プロジェクトの最近の活動の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-project-recent-updates/)」を参照してください。
 
 ## 引数
 
@@ -22,7 +22,7 @@ backlog project activities <project-key> [flags]
 : 取得件数
 
 `--activity-type <string>`
-: アクティビティタイプ ID（カンマ区切り）
+: アクティビティタイプID（カンマ区切り）
 
 ## 使用例
 

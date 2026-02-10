@@ -7,7 +7,7 @@ description: ウォッチの一覧を表示する
 backlog watching list [user-id] [flags]
 ```
 
-対応する Backlog API については「[ウォッチ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-watching-list/)」を参照してください。
+対応するBacklog APIについては「[ウォッチ一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-watching-list/)」を参照してください。
 
 ## 引数
 

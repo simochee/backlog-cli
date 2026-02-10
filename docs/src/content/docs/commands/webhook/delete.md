@@ -7,7 +7,7 @@ description: Webhook を削除する
 backlog webhook delete <id> [flags]
 ```
 
-対応する Backlog API については「[Webhookの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-webhook/)」を参照してください。
+対応するBacklog APIについては「[Webhookの削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-webhook/)」を参照してください。
 
 ## 引数
 

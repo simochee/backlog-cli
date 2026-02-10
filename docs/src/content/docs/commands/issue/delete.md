@@ -9,7 +9,7 @@ backlog issue delete <issue-key> [flags]
 
 課題を削除します。この操作は元に戻せません。
 
-対応する Backlog API については「[課題の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-issue/)」を参照してください。
+対応するBacklog APIについては「[課題の削除](https://developer.nulab.com/ja/docs/backlog/api/2/delete-issue/)」を参照してください。
 
 ## 引数
 

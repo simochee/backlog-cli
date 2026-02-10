@@ -7,7 +7,7 @@ description: マイルストーンの一覧を表示する
 backlog milestone list [flags]
 ```
 
-対応する Backlog API については「[バージョン(マイルストーン)一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-version-milestone-list/)」を参照してください。
+対応するBacklog APIについては「[バージョン(マイルストーン)一覧の取得](https://developer.nulab.com/ja/docs/backlog/api/2/get-version-milestone-list/)」を参照してください。
 
 ## オプション
 
