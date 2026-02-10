@@ -7,8 +7,8 @@ description: Webhook を管理します
 
 ## サブコマンド
 
-| コマンド                                                | 説明                     |
-| ------------------------------------------------------- | ------------------------ |
+| コマンド                                    | 説明                     |
+| ------------------------------------------- | ------------------------ |
 | [webhook list](/commands/webhook/list/)     | Webhook の一覧を表示する |
 | [webhook view](/commands/webhook/view/)     | Webhook の詳細を表示する |
 | [webhook create](/commands/webhook/create/) | Webhook を作成する       |

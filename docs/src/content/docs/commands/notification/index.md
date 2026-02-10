@@ -7,8 +7,8 @@ Backlog の通知を管理するコマンド群です。
 
 ## サブコマンド
 
-| コマンド                                                              | 説明                     |
-| --------------------------------------------------------------------- | ------------------------ |
+| コマンド                                                  | 説明                     |
+| --------------------------------------------------------- | ------------------------ |
 | [notification list](/commands/notification/list/)         | 通知の一覧を表示する     |
 | [notification count](/commands/notification/count/)       | 未読通知数を表示する     |
 | [notification read](/commands/notification/read/)         | 通知を既読にする         |

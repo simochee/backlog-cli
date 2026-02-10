@@ -7,9 +7,9 @@ description: 課題ステータスを管理します
 
 ## サブコマンド
 
-| コマンド                                              | 説明                       |
-| ----------------------------------------------------- | -------------------------- |
-| [status list](/backlog-cli/commands/status/list/)     | ステータスの一覧を表示する |
-| [status create](/backlog-cli/commands/status/create/) | ステータスを作成する       |
-| [status edit](/backlog-cli/commands/status/edit/)     | ステータスを編集する       |
-| [status delete](/backlog-cli/commands/status/delete/) | ステータスを削除する       |
+| コマンド                                  | 説明                       |
+| ----------------------------------------- | -------------------------- |
+| [status list](/commands/status/list/)     | ステータスの一覧を表示する |
+| [status create](/commands/status/create/) | ステータスを作成する       |
+| [status edit](/commands/status/edit/)     | ステータスを編集する       |
+| [status delete](/commands/status/delete/) | ステータスを削除する       |
