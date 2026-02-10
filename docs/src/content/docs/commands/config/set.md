@@ -34,5 +34,5 @@ backlog config set pager less --hostname your-space.backlog.com
 
 ## 関連コマンド
 
-- [config get](/backlog-cli/commands/config/get/)
-- [config list](/backlog-cli/commands/config/list/)
+- [config get](/commands/config/get/)
+- [config list](/commands/config/list/)

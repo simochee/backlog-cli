@@ -82,5 +82,5 @@ backlog issue list --project PROJ --sort updated --order desc --limit 20
 
 ## 関連コマンド
 
-- [issue view](/backlog-cli/commands/issue/view/)
-- [issue create](/backlog-cli/commands/issue/create/)
+- [issue view](/commands/issue/view/)
+- [issue create](/commands/issue/create/)

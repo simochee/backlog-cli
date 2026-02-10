@@ -27,4 +27,4 @@ backlog completion zsh > "${fpath[1]}/_backlog"
 backlog completion fish > ~/.config/fish/completions/backlog.fish
 ```
 
-詳しいセットアップ方法は[シェル補完ガイド](/backlog-cli/guides/shell-completion/)を参照してください。
+詳しいセットアップ方法は[シェル補完ガイド](/guides/shell-completion/)を参照してください。

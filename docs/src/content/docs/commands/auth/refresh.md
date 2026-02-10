@@ -26,5 +26,5 @@ backlog auth refresh --hostname your-space.backlog.com
 
 ## 関連コマンド
 
-- [auth login](/backlog-cli/commands/auth/login/)
-- [auth status](/backlog-cli/commands/auth/status/)
+- [auth login](/commands/auth/login/)
+- [auth status](/commands/auth/status/)

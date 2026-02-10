@@ -54,5 +54,5 @@ backlog issue edit PROJECT-123 --status 処理済み --comment "対応完了し�
 
 ## 関連コマンド
 
-- [issue view](/backlog-cli/commands/issue/view/)
-- [issue close](/backlog-cli/commands/issue/close/)
+- [issue view](/commands/issue/view/)
+- [issue close](/commands/issue/close/)

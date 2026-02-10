@@ -33,5 +33,5 @@ echo "対応中です" | backlog issue comment PROJECT-123 --body -
 
 ## 関連コマンド
 
-- [issue view](/backlog-cli/commands/issue/view/)
-- [issue edit](/backlog-cli/commands/issue/edit/)
+- [issue view](/commands/issue/view/)
+- [issue edit](/commands/issue/edit/)

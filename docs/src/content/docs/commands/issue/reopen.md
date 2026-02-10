@@ -33,5 +33,5 @@ backlog issue reopen PROJECT-123 --comment "再現しました"
 
 ## 関連コマンド
 
-- [issue close](/backlog-cli/commands/issue/close/)
-- [issue edit](/backlog-cli/commands/issue/edit/)
+- [issue close](/commands/issue/close/)
+- [issue edit](/commands/issue/edit/)
