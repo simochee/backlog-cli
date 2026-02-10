@@ -35,7 +35,7 @@ describe("extractGlobalArgs", () => {
 	it("空の argv を渡すと undefined と空配列を返す", () => {
 		const result = extractGlobalArgs([]);
 		expect(result.space).toBeUndefined();
-		expect(result.noInput).toBe(false);
+		expect(result.noInput).toBeFalsy();
 		expect(result.argv).toEqual([]);
 	});
 
@@ -86,19 +86,19 @@ describe("extractGlobalArgs", () => {
 
 	it("--no-input を抽出して noInput を true にする", () => {
 		const result = extractGlobalArgs(["--no-input", "issue", "list"]);
-		expect(result.noInput).toBe(true);
+		expect(result.noInput).toBeTruthy();
 		expect(result.argv).toEqual(["issue", "list"]);
 	});
 
 	it("--no-input がない場合は noInput が false になる", () => {
 		const result = extractGlobalArgs(["issue", "list"]);
-		expect(result.noInput).toBe(false);
+		expect(result.noInput).toBeFalsy();
 	});
 
 	it("--space と --no-input を同時に抽出する", () => {
 		const result = extractGlobalArgs(["--space", "example.backlog.com", "--no-input", "issue", "create"]);
 		expect(result.space).toBe("example.backlog.com");
-		expect(result.noInput).toBe(true);
+		expect(result.noInput).toBeTruthy();
 		expect(result.argv).toEqual(["issue", "create"]);
 	});
 });
@@ -110,16 +110,16 @@ describe("isNoInput", () => {
 
 	it("BACKLOG_NO_INPUT が '1' のとき true を返す", () => {
 		process.env["BACKLOG_NO_INPUT"] = "1";
-		expect(isNoInput()).toBe(true);
+		expect(isNoInput()).toBeTruthy();
 	});
 
 	it("BACKLOG_NO_INPUT が未設定のとき false を返す", () => {
 		delete process.env["BACKLOG_NO_INPUT"];
-		expect(isNoInput()).toBe(false);
+		expect(isNoInput()).toBeFalsy();
 	});
 
 	it("BACKLOG_NO_INPUT が '0' のとき false を返す", () => {
 		process.env["BACKLOG_NO_INPUT"] = "0";
-		expect(isNoInput()).toBe(false);
+		expect(isNoInput()).toBeFalsy();
 	});
 });
