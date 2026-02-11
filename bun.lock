@@ -100,6 +100,15 @@
         "@repo/tsconfigs": "workspace:*",
       },
     },
+    "packages/integration-tests": {
+      "name": "@repo/integration-tests",
+      "devDependencies": {
+        "@repo/tsconfigs": "workspace:*",
+      },
+      "peerDependencies": {
+        "vitest": "^4",
+      },
+    },
     "packages/openapi-client": {
       "name": "@repo/openapi-client",
       "version": "0.0.0",
@@ -469,6 +478,8 @@
     "@repo/config": ["@repo/config@workspace:packages/config"],
 
     "@repo/docs": ["@repo/docs@workspace:docs"],
+
+    "@repo/integration-tests": ["@repo/integration-tests@workspace:packages/integration-tests"],
 
     "@repo/openapi-client": ["@repo/openapi-client@workspace:packages/openapi-client"],
 

@@ -10,6 +10,9 @@
 			"cache": false
 		},
 		"test": {},
+		"test:integration": {
+			"cache": false
+		},
 		"type-check": {
 			"dependsOn": ["^build", "^type-check"]
 		}

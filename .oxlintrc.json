@@ -59,6 +59,13 @@
 			"rules": {
 				"import/prefer-default-export": "off"
 			}
+		},
+		{
+			"files": ["packages/integration-tests/src/helpers/**", "packages/integration-tests/src/setup.ts"],
+			"rules": {
+				"import/prefer-default-export": "off",
+				"no-console": "off"
+			}
 		}
 	]
 }
