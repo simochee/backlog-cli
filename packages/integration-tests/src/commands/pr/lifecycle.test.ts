@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { requirePrEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -39,6 +39,7 @@ describe.skipIf(!canRunPrTests)("pr lifecycle", () => {
 	});
 
 	it("PR 詳細を表示する", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliJsonWithRetry<{ number: number; summary: string }>([
 			"pr",
 			"view",
@@ -53,6 +54,7 @@ describe.skipIf(!canRunPrTests)("pr lifecycle", () => {
 	});
 
 	it("PR を編集する", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry([
 			"pr",
 			"edit",
@@ -68,6 +70,7 @@ describe.skipIf(!canRunPrTests)("pr lifecycle", () => {
 	});
 
 	it("PR にコメントする", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry([
 			"pr",
 			"comment",
@@ -83,21 +86,25 @@ describe.skipIf(!canRunPrTests)("pr lifecycle", () => {
 	});
 
 	it("PR のコメント一覧を取得する", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry(["pr", "comments", prNumber, "-p", env.project, "--repo", env.repo, "--json"]);
 		expectSuccess(result);
 	});
 
 	it("PR をクローズする", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry(["pr", "close", prNumber, "-p", env.project, "--repo", env.repo]);
 		expectSuccess(result);
 	});
 
 	it("PR をリオープンする", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry(["pr", "reopen", prNumber, "-p", env.project, "--repo", env.repo]);
 		expectSuccess(result);
 	});
 
 	it("PR を再度クローズする", async () => {
+		requireDep(prNumber, "prNumber");
 		const result = await runCliWithRetry(["pr", "close", prNumber, "-p", env.project, "--repo", env.repo]);
 		expectSuccess(result);
 	});

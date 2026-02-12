@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -29,6 +29,7 @@ describe("milestone lifecycle", () => {
 	});
 
 	it("マイルストーンを編集する", async () => {
+		requireDep(milestoneId, "milestoneId");
 		const result = await runCliWithRetry([
 			"milestone",
 			"edit",
@@ -44,6 +45,7 @@ describe("milestone lifecycle", () => {
 	});
 
 	it("マイルストーンを削除する", async () => {
+		requireDep(milestoneId, "milestoneId");
 		const result = await runCliWithRetry(["milestone", "delete", milestoneId, "-p", project, "--yes"]);
 		expectSuccess(result);
 		tracker.cleanupAll();

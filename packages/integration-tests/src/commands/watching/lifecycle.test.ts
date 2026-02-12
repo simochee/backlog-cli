@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -22,6 +22,7 @@ describe("watching lifecycle", () => {
 	});
 
 	it("ウォッチ対象の課題を作成する", async () => {
+		requireDep(issueTypeName, "issueTypeName");
 		const result = await runCliJsonWithRetry<{ issueKey: string }>([
 			"issue",
 			"create",
@@ -43,6 +44,7 @@ describe("watching lifecycle", () => {
 	});
 
 	it("課題をウォッチに追加する", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliJsonWithRetry<{ id: number }>(["watching", "add", "--issue", issueKey]);
 		expectSuccess(result);
 		expect(result.data.id).toBeDefined();
@@ -50,17 +52,20 @@ describe("watching lifecycle", () => {
 	});
 
 	it("ウォッチ詳細を表示する", async () => {
+		requireDep(watchingId, "watchingId");
 		const result = await runCliJsonWithRetry<{ id: number }>(["watching", "view", watchingId]);
 		expectSuccess(result);
 		expect(result.data.id).toBe(Number(watchingId));
 	});
 
 	it("ウォッチを既読にする", async () => {
+		requireDep(watchingId, "watchingId");
 		const result = await runCliWithRetry(["watching", "read", watchingId]);
 		expectSuccess(result);
 	});
 
 	it("ウォッチを削除する", async () => {
+		requireDep(watchingId, "watchingId");
 		const result = await runCliWithRetry(["watching", "delete", watchingId, "--yes"]);
 		expectSuccess(result);
 	});

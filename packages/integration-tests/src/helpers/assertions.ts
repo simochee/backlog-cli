@@ -20,3 +20,13 @@ export function expectJsonArray(result: CliResult): unknown[] {
 	expect(Array.isArray(data), `Expected JSON array but got: ${typeof data}`).toBeTruthy();
 	return data as unknown[];
 }
+
+/**
+ * 前のテストで設定されるべき値が存在するか検証する。
+ * undefined の場合は即座に失敗し、カスケード失敗であることを明示する。
+ */
+export function requireDep<T>(value: T | undefined, name: string): asserts value is T {
+	if (value === undefined) {
+		throw new Error(`前のテストで ${name} が設定されていません（カスケード失敗）`);
+	}
+}

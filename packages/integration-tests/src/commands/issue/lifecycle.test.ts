@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -22,6 +22,7 @@ describe("issue lifecycle", () => {
 	});
 
 	it("課題を作成する", async () => {
+		requireDep(issueTypeName, "issueTypeName");
 		const result = await runCliJsonWithRetry<{ issueKey: string }>([
 			"issue",
 			"create",
@@ -39,6 +40,7 @@ describe("issue lifecycle", () => {
 	});
 
 	it("課題詳細を表示する", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliJsonWithRetry<{ issueKey: string; summary: string }>(["issue", "view", issueKey]);
 		expectSuccess(result);
 		expect(result.data.issueKey).toBe(issueKey);
@@ -46,26 +48,31 @@ describe("issue lifecycle", () => {
 	});
 
 	it("課題を編集する", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "edit", issueKey, "--title", `${testTitle}-edited`]);
 		expectSuccess(result);
 	});
 
 	it("課題にコメントする", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "comment", issueKey, "--body", "integration test comment"]);
 		expectSuccess(result);
 	});
 
 	it("課題を完了にする", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "close", issueKey]);
 		expectSuccess(result);
 	});
 
 	it("課題を再開する", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "reopen", issueKey]);
 		expectSuccess(result);
 	});
 
 	it("課題を削除する", async () => {
+		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "delete", issueKey, "--yes"]);
 		expectSuccess(result);
 		tracker.cleanupAll();

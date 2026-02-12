@@ -1,3 +1,5 @@
+import { spawn } from "node:child_process";
+
 const CLI_ENTRY = `${import.meta.dirname}/../../../cli/src/index.ts`;
 
 export interface RunOptions {
@@ -18,38 +20,45 @@ export interface CliJsonResult<T = unknown> {
 	data: T;
 }
 
-export async function runCli(args: string[], options?: RunOptions): Promise<CliResult> {
+export function runCli(args: string[], options?: RunOptions): Promise<CliResult> {
 	const timeout = options?.timeout ?? 30_000;
 
-	const proc = Bun.spawn(["bun", CLI_ENTRY, "--no-input", ...args], {
-		env: { ...process.env, ...options?.env },
-		stdin: "ignore",
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+	return new Promise<CliResult>((resolve, reject) => {
+		const proc = spawn("bun", [CLI_ENTRY, "--no-input", ...args], {
+			env: { ...process.env, ...options?.env },
+			stdio: ["ignore", "pipe", "pipe"],
+		});
 
-	let timer: Timer;
-	const timeoutPromise = new Promise<never>((_, reject) => {
-		timer = setTimeout(() => {
+		let stdout = "";
+		let stderr = "";
+
+		proc.stdout.on("data", (chunk: Buffer) => {
+			stdout += chunk.toString();
+		});
+
+		proc.stderr.on("data", (chunk: Buffer) => {
+			stderr += chunk.toString();
+		});
+
+		const timer = setTimeout(() => {
 			proc.kill();
 			reject(new Error(`CLI timed out after ${timeout}ms: bl ${args.join(" ")}`));
 		}, timeout);
+
+		proc.on("close", (exitCode) => {
+			clearTimeout(timer);
+			resolve({
+				stdout: stdout.trim(),
+				stderr: stderr.trim(),
+				exitCode: exitCode ?? 1,
+			});
+		});
+
+		proc.on("error", (error) => {
+			clearTimeout(timer);
+			reject(error);
+		});
 	});
-
-	try {
-		const [stdout, stderr, exitCode] = await Promise.race([
-			Promise.all([new Response(proc.stdout).text(), new Response(proc.stderr).text(), proc.exited]),
-			timeoutPromise,
-		]);
-
-		return {
-			stdout: stdout.trim(),
-			stderr: stderr.trim(),
-			exitCode,
-		};
-	} finally {
-		clearTimeout(timer!);
-	}
 }
 
 export async function runCliJson<T = unknown>(args: string[], options?: RunOptions): Promise<CliJsonResult<T>> {
