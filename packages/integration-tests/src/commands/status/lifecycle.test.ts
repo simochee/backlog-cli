@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, it } from "vitest";
 
 import { expectSuccess } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
@@ -17,8 +17,11 @@ describe("status lifecycle", () => {
 	it("ステータス一覧を取得する", async () => {
 		const result = await runCliJsonWithRetry<{ id: number; name: string }[]>(["status", "list", "-p", project]);
 		expectSuccess(result);
-		expect(result.data.length).toBeGreaterThan(0);
-		substituteStatusId = String(result.data[0]!.id);
+		const firstStatus = result.data[0];
+		if (!firstStatus) {
+			throw new Error("Expected at least one status");
+		}
+		substituteStatusId = String(firstStatus.id);
 	});
 
 	it("ステータスを作成する", async () => {
@@ -26,8 +29,10 @@ describe("status lifecycle", () => {
 		expectSuccess(result);
 		const listResult = await runCliJsonWithRetry<{ id: number; name: string }[]>(["status", "list", "-p", project]);
 		const created = listResult.data.find((s) => s.name === testName);
-		expect(created).toBeDefined();
-		statusId = String(created!.id);
+		if (!created) {
+			throw new Error(`Expected status "${testName}" to be in list`);
+		}
+		statusId = String(created.id);
 		tracker.trackStatus(project, statusId, substituteStatusId);
 	});
 

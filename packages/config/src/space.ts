@@ -85,8 +85,9 @@ export const findSpace = (spaces: readonly (typeof RcSpace.infer)[], host: strin
 
 	const prefixMatches = spaces.filter((s) => s.host.startsWith(`${host}.`));
 
-	if (prefixMatches.length === 1) {
-		return prefixMatches[0]!;
+	const [singleMatch] = prefixMatches;
+	if (singleMatch && prefixMatches.length === 1) {
+		return singleMatch;
 	}
 
 	if (prefixMatches.length > 1) {
