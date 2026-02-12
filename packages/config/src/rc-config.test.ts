@@ -1,18 +1,53 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, mock, spyOn } from "bun:test";
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
+
+// Create mock functions for rc9 (shared via closure with the #config.ts factory below)
+const readUser = mock();
+const writeUser = mock();
 
 mock.module("rc9", () => ({
-	readUser: mock(),
-	writeUser: mock(),
+	readUser,
+	writeUser,
 }));
-// Use relative path instead of #config.ts to avoid mock.module interference from space.test.ts
-const { loadConfig, writeConfig } = await import("./config.ts");
+
+// Override any existing #config.ts mock from other test files (e.g. space.test.ts).
+// Provides a factory that re-creates config.ts logic using our mocked rc9.
+// Required because bun:test runs all files in the same process and
+// `mock.module` leaks across test files.
+mock.module("#config.ts", async () => {
+	const { Rc } = await import("#types.ts");
+	const { type } = await import("arktype");
+	const { default: consola } = await import("consola");
+	const rc9 = await import("rc9");
+
+	return {
+		loadConfig: () => {
+			const rc = rc9.readUser({ name: "backlog" });
+			const result = Rc(rc);
+			if (result instanceof type.errors) {
+				consola.error("Configuration Error:");
+				consola.error(result.summary);
+				process.exit(1);
+			}
+			return result;
+		},
+		writeConfig: (config: typeof Rc.infer) => {
+			rc9.writeUser(config, { name: "backlog" });
+		},
+	};
+});
+
+const { loadConfig, writeConfig } = await import("#config.ts");
 const { default: consola } = await import("consola");
-const { readUser, writeUser } = await import("rc9");
 
 describe("loadConfig", () => {
+	beforeEach(() => {
+		readUser.mockReset();
+		writeUser.mockReset();
+	});
+
 	it("returns validated config when rc file is valid", async () => {
-		(readUser as any).mockReturnValue({
+		readUser.mockReturnValue({
 			defaultSpace: "example.backlog.com",
 			spaces: [
 				{
@@ -30,7 +65,7 @@ describe("loadConfig", () => {
 	});
 
 	it("returns empty spaces array when rc file is empty", async () => {
-		(readUser as any).mockReturnValue({});
+		readUser.mockReturnValue({});
 
 		const config = await loadConfig();
 
@@ -42,7 +77,7 @@ describe("loadConfig", () => {
 		const exitSpy = spyOnProcessExit();
 		const errorSpy = spyOn(consola, "error").mockImplementation((() => {}) as unknown as typeof consola.error);
 
-		(readUser as any).mockReturnValue({
+		readUser.mockReturnValue({
 			spaces: [{ host: "invalid", auth: { method: "bad" } }],
 		});
 
