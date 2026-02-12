@@ -11,7 +11,15 @@
 		},
 		"test": {},
 		"test:integration": {
-			"cache": false
+			"cache": false,
+			"passThroughEnv": [
+				"BACKLOG_SPACE",
+				"BACKLOG_API_KEY",
+				"BACKLOG_PROJECT",
+				"BACKLOG_REPO",
+				"BACKLOG_PR_BASE_BRANCH",
+				"BACKLOG_PR_SOURCE_BRANCH"
+			]
 		},
 		"type-check": {
 			"dependsOn": ["^build", "^type-check"]
