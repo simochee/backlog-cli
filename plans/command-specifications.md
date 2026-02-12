@@ -1096,3 +1096,29 @@
 | `<shell>`       | string | Yes  | シェル種別（`bash`/`zsh`/`fish`） |
 
 - **対応 API**: ローカル処理
+
+---
+
+### 4.8 `backlog document` — ドキュメント管理
+
+#### `backlog document create`
+
+| 引数/オプション | 短縮 | 型      | 必須  | 説明                                         | API パラメータ |
+| --------------- | ---- | ------- | ----- | -------------------------------------------- | -------------- |
+| `--project`     | `-p` | string  | Yes\* | プロジェクトキー                             | `projectId`    |
+| `--title`       | `-t` | string  | No    | ドキュメントタイトル                         | `title`        |
+| `--body`        | `-b` | string  | No    | ドキュメント内容（Markdown。`-` で stdin）   | `content`      |
+| `--emoji`       |      | string  | No    | タイトル横に表示する絵文字                   | `emoji`        |
+| `--parent-id`   |      | string  | No    | 親ドキュメントID                             | `parentId`     |
+| `--add-last`    |      | boolean | No    | 兄弟ドキュメントの末尾に追加（デフォルト先頭） | `addLast`      |
+
+- **対応 API**: `POST /api/v2/documents`
+
+#### `backlog document delete <document-id>`
+
+| 引数/オプション  | 短縮 | 型      | 必須 | 説明                   |
+| ---------------- | ---- | ------- | ---- | ---------------------- |
+| `<document-id>`  |      | string  | Yes  | ドキュメントID         |
+| `--yes`          | `-y` | boolean | No   | 確認プロンプトをスキップ |
+
+- **対応 API**: `DELETE /api/v2/documents/:documentId`

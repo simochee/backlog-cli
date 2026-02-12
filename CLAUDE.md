@@ -47,6 +47,7 @@ src/commands/
   repo/           — Git リポジトリ管理（list, view, clone）
   notification/   — 通知管理（list, count, read, read-all）
   wiki/           — Wiki 管理（list, view, create, edit, delete, count, tags, history, attachments）
+  document/       — ドキュメント管理（create, delete）
   user/           — ユーザー管理（list, view, me, activities）
   team/           — チーム管理（list, view, create, edit, delete）
   category/       — カテゴリ管理（list, create, edit, delete）
@@ -142,6 +143,7 @@ import {
 	pullRequestUrl,
 	repositoryUrl,
 	wikiUrl,
+	documentUrl,
 	dashboardUrl,
 	buildBacklogUrl,
 } from "#utils/url.ts";
@@ -151,6 +153,7 @@ projectUrl(host, "PROJ"); // → https://host/projects/PROJ
 pullRequestUrl(host, "PROJ", "repo", 42); // → https://host/git/PROJ/repo/pullRequests/42
 wikiUrl(host, 999); // → https://host/alias/wiki/999
 repositoryUrl(host, "PROJ", "repo"); // → https://host/git/PROJ/repo
+documentUrl(host, "PROJ", "abc-123"); // → https://host/projects/PROJ/document/abc-123
 dashboardUrl(host); // → https://host/dashboard
 buildBacklogUrl(host, "/custom/path"); // → https://host/custom/path
 ```

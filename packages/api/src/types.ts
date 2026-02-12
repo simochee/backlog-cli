@@ -408,3 +408,18 @@ export interface BacklogWatching {
 export interface BacklogWatchingCount {
 	count: number;
 }
+
+/** Backlog document object. */
+export interface BacklogDocument {
+	id: string;
+	projectId: number;
+	title: string;
+	json: unknown | null;
+	plain: string | null;
+	statusId: number;
+	emoji: string;
+	createdUserId: number;
+	created: string;
+	updatedUserId: number;
+	updated: string;
+}

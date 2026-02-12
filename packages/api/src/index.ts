@@ -12,6 +12,7 @@ export type {
 	BacklogCategory,
 	BacklogChangeLog,
 	BacklogComment,
+	BacklogDocument,
 	BacklogCommentNotification,
 	BacklogIssue,
 	BacklogIssueType,

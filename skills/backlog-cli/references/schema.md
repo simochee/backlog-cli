@@ -153,6 +153,24 @@ type Wiki = {
 };
 ```
 
+## Document
+
+```typescript
+type Document = {
+  id: string;                    // Document ID
+  projectId: number;             // Project ID
+  title: string;                 // Title
+  json: unknown | null;          // Structured content
+  plain: string | null;          // Plain text content
+  statusId: number;              // Status ID
+  emoji: string;                 // Emoji
+  createdUserId: number;         // Creator user ID
+  created: string;               // Created at (ISO 8601)
+  updatedUserId: number;         // Last updater user ID
+  updated: string;               // Updated at (ISO 8601)
+};
+```
+
 ## Milestone
 
 ```typescript

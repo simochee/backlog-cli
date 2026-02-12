@@ -76,6 +76,10 @@ bl (backlog)
 │   ├── history
 │   └── attachments
 │
+├── document                # ドキュメント管理
+│   ├── create
+│   └── delete
+│
 ├── notification            # 通知管理
 │   ├── list
 │   ├── count
