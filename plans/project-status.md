@@ -2,7 +2,7 @@
 
 ## 実装完了状況
 
-**Phase 1〜4 の全 99 コマンド + `issue delete` の実装が完了**
+**Phase 1〜4 の全 99 コマンド + `issue delete` + `document` (create/delete) の実装が完了**
 
 - 認証管理（auth）
 - 課題管理（issue）— delete 含む
@@ -10,6 +10,7 @@
 - プロジェクト管理（project）
 - Git リポジトリ（repo）
 - Wiki 管理（wiki）
+- ドキュメント管理（document）
 - 通知管理（notification）
 - ユーザー管理（user）
 - チーム管理（team）

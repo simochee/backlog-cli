@@ -1096,3 +1096,72 @@
 | `<shell>`       | string | Yes  | シェル種別（`bash`/`zsh`/`fish`） |
 
 - **対応 API**: ローカル処理
+
+---
+
+### 4.8 `backlog document` — ドキュメント管理
+
+#### `backlog document list`
+
+| 引数/オプション | 短縮 | 型     | 必須  | 説明                   | API パラメータ |
+| --------------- | ---- | ------ | ----- | ---------------------- | -------------- |
+| `--project`     | `-p` | string | Yes\* | プロジェクトキー       | `projectId[]`  |
+| `--keyword`     | `-k` | string | No    | キーワード検索         | `keyword`      |
+| `--sort`        |      | string | No    | ソートキー（デフォルト: updated） | `sort` |
+| `--order`       |      | string | No    | ソート順: asc or desc（デフォルト: desc） | `order` |
+| `--offset`      |      | string | No    | ページネーションオフセット | `offset`   |
+| `--limit`       | `-L` | string | No    | 取得件数（デフォルト: 20）| `count`      |
+| `--json`        |      | string | No    | JSON 出力              |                |
+
+- **対応 API**: `GET /api/v2/documents`
+
+#### `backlog document view <document-id>`
+
+| 引数/オプション  | 短縮 | 型      | 必須 | 説明                           |
+| ---------------- | ---- | ------- | ---- | ------------------------------ |
+| `<document-id>`  |      | string  | Yes  | ドキュメントID                 |
+| `--web`          |      | boolean | No   | ブラウザで開く                 |
+| `--project`      | `-p` | string  | No   | プロジェクトキー（--web 時必須）|
+| `--json`         |      | string  | No   | JSON 出力                      |
+
+- **対応 API**: `GET /api/v2/documents/:documentId`
+
+#### `backlog document create`
+
+| 引数/オプション | 短縮 | 型      | 必須  | 説明                                         | API パラメータ |
+| --------------- | ---- | ------- | ----- | -------------------------------------------- | -------------- |
+| `--project`     | `-p` | string  | Yes\* | プロジェクトキー                             | `projectId`    |
+| `--title`       | `-t` | string  | No    | ドキュメントタイトル                         | `title`        |
+| `--body`        | `-b` | string  | No    | ドキュメント内容（Markdown。`-` で stdin）   | `content`      |
+| `--emoji`       |      | string  | No    | タイトル横に表示する絵文字                   | `emoji`        |
+| `--parent-id`   |      | string  | No    | 親ドキュメントID                             | `parentId`     |
+| `--add-last`    |      | boolean | No    | 兄弟ドキュメントの末尾に追加（デフォルト先頭） | `addLast`      |
+
+- **対応 API**: `POST /api/v2/documents`
+
+#### `backlog document delete <document-id>`
+
+| 引数/オプション  | 短縮 | 型      | 必須 | 説明                   |
+| ---------------- | ---- | ------- | ---- | ---------------------- |
+| `<document-id>`  |      | string  | Yes  | ドキュメントID         |
+| `--yes`          | `-y` | boolean | No   | 確認プロンプトをスキップ |
+
+- **対応 API**: `DELETE /api/v2/documents/:documentId`
+
+#### `backlog document tree`
+
+| 引数/オプション | 短縮 | 型     | 必須  | 説明             | API パラメータ   |
+| --------------- | ---- | ------ | ----- | ---------------- | ---------------- |
+| `--project`     | `-p` | string | Yes\* | プロジェクトキー | `projectIdOrKey` |
+| `--json`        |      | string | No    | JSON 出力        |                  |
+
+- **対応 API**: `GET /api/v2/documents/tree`
+
+#### `backlog document attachments <document-id>`
+
+| 引数/オプション  | 短縮 | 型     | 必須 | 説明             |
+| ---------------- | ---- | ------ | ---- | ---------------- |
+| `<document-id>`  |      | string | Yes  | ドキュメントID   |
+| `--json`         |      | string | No   | JSON 出力        |
+
+- **対応 API**: `GET /api/v2/documents/:documentId`（レスポンスの attachments フィールドを表示）

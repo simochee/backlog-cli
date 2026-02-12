@@ -29,13 +29,13 @@ describe("webhook create", () => {
 			args: { project: "PROJ", name: "New Hook", "hook-url": "https://example.com" },
 		} as never);
 
-		expect(mockClient).toHaveBeenCalledWith(
-			"/projects/PROJ/webhooks",
-			expect.objectContaining({
-				method: "POST",
-				body: expect.objectContaining({ name: "New Hook", hookUrl: "https://example.com" }),
-			}),
-		);
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/projects/PROJ/webhooks");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
+		expect(body).toBeInstanceOf(URLSearchParams);
+		expect(body.get("name")).toBe("New Hook");
+		expect(body.get("hookUrl")).toBe("https://example.com");
 		expect(consola.success).toHaveBeenCalledWith("Created webhook #1: New Hook");
 	});
 
@@ -54,15 +54,12 @@ describe("webhook create", () => {
 			},
 		} as never);
 
-		expect(mockClient).toHaveBeenCalledWith(
-			"/projects/PROJ/webhooks",
-			expect.objectContaining({
-				method: "POST",
-				body: expect.objectContaining({
-					allEvent: true,
-					"activityTypeIds[]": [1, 2, 3],
-				}),
-			}),
-		);
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/projects/PROJ/webhooks");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
+		expect(body).toBeInstanceOf(URLSearchParams);
+		expect(body.get("allEvent")).toBe("true");
+		expect(body.getAll("activityTypeIds[]")).toEqual(["1", "2", "3"]);
 	});
 });

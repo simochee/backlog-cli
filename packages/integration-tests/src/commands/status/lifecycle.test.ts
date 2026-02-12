@@ -1,6 +1,6 @@
 import { afterAll, describe, it } from "vitest";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -25,6 +25,7 @@ describe("status lifecycle", () => {
 	});
 
 	it("ステータスを作成する", async () => {
+		requireDep(substituteStatusId, "substituteStatusId");
 		const result = await runCliWithRetry(["status", "create", "-p", project, "-n", testName, "--color", "#e30000"]);
 		expectSuccess(result);
 		const listResult = await runCliJsonWithRetry<{ id: number; name: string }[]>(["status", "list", "-p", project]);
@@ -37,11 +38,13 @@ describe("status lifecycle", () => {
 	});
 
 	it("ステータスを編集する", async () => {
+		requireDep(statusId, "statusId");
 		const result = await runCliWithRetry(["status", "edit", statusId, "-p", project, "-n", `${testName}-edited`]);
 		expectSuccess(result);
 	});
 
 	it("ステータスを削除する", async () => {
+		requireDep(statusId, "statusId");
 		const result = await runCliWithRetry([
 			"status",
 			"delete",
