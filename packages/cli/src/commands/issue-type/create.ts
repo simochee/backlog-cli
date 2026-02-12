@@ -1,6 +1,7 @@
 import type { BacklogIssueType } from "@repo/api";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
@@ -12,6 +13,7 @@ export default defineCommand({
 		description: "Create an issue type",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -37,9 +39,11 @@ export default defineCommand({
 
 		const issueType = await client<BacklogIssueType>(`/projects/${project}/issueTypes`, {
 			method: "POST",
-			body: { name, color },
+			body: new URLSearchParams({ name, color }),
 		});
 
-		consola.success(`Created issue type #${issueType.id}: ${issueType.name}`);
+		outputResult(issueType, args, (data) => {
+			consola.success(`Created issue type #${data.id}: ${data.name}`);
+		});
 	},
 });

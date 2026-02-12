@@ -1,7 +1,7 @@
 import type { BacklogTeam } from "@repo/api";
-import type { TeamsCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
@@ -12,6 +12,7 @@ export default defineCommand({
 		description: "Create a team",
 	},
 	args: {
+		...outputArgs,
 		name: {
 			type: "string",
 			alias: "n",
@@ -27,10 +28,13 @@ export default defineCommand({
 
 		const name = await promptRequired("Team name:", args.name);
 
-		const body: TeamsCreateData["body"] & Record<string, unknown> = { name };
+		const body = new URLSearchParams();
+		body.append("name", name);
 
 		if (args.members) {
-			body["members[]"] = args.members.split(",").map((id) => Number.parseInt(id.trim(), 10));
+			for (const id of args.members.split(",")) {
+				body.append("members[]", id.trim());
+			}
 		}
 
 		const team = await client<BacklogTeam>("/teams", {
@@ -38,6 +42,8 @@ export default defineCommand({
 			body,
 		});
 
-		consola.success(`Created team #${team.id}: ${team.name}`);
+		outputResult(team, args, (data) => {
+			consola.success(`Created team #${data.id}: ${data.name}`);
+		});
 	},
 });
