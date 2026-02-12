@@ -1,22 +1,23 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn(() => "PROJ"),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock(() => "PROJ"),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/format.ts", () => ({
-	formatDate: vi.fn(() => "2024-01-01"),
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/format.ts", () => ({
+	formatDate: mock(() => "2024-01-01"),
 }));
-vi.mock("#utils/url.ts", () => ({
-	openUrl: vi.fn(),
-	pullRequestUrl: vi.fn(() => "https://example.backlog.com/git/PROJ/repo/pullRequests/1"),
+mock.module("#utils/url.ts", () => ({
+	openUrl: mock(),
+	pullRequestUrl: mock(() => "https://example.backlog.com/git/PROJ/repo/pullRequests/1"),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { openUrl, pullRequestUrl } from "#utils/url.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { openUrl, pullRequestUrl } = await import("#utils/url.ts");
+const { default: consola } = await import("consola");
 
 const mockPr = {
 	number: 1,
@@ -92,10 +93,10 @@ describe("pr view", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

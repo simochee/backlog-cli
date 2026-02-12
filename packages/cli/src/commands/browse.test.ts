@@ -1,19 +1,20 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/url.ts", () => ({
-	openUrl: vi.fn(),
-	issueUrl: vi.fn((_host: string, key: string) => `https://example.backlog.com/view/${key}`),
-	projectUrl: vi.fn((_host: string, key: string) => `https://example.backlog.com/projects/${key}`),
-	dashboardUrl: vi.fn(() => "https://example.backlog.com/dashboard"),
-	buildBacklogUrl: vi.fn((_host: string, path: string) => `https://example.backlog.com${path}`),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/url.ts", () => ({
+	openUrl: mock(),
+	issueUrl: mock((_host: string, key: string) => `https://example.backlog.com/view/${key}`),
+	projectUrl: mock((_host: string, key: string) => `https://example.backlog.com/projects/${key}`),
+	dashboardUrl: mock(() => "https://example.backlog.com/dashboard"),
+	buildBacklogUrl: mock((_host: string, path: string) => `https://example.backlog.com${path}`),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import { openUrl } from "#utils/url.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { openUrl } = await import("#utils/url.ts");
+const { default: consola } = await import("consola");
 
 describe("browse", () => {
 	it("課題キーを指定すると課題ページを開く", async () => {

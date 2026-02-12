@@ -1,9 +1,10 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import consola from "consola";
+const { default: consola } = await import("consola");
 
 describe("completion", () => {
 	it("メタデータが正しく設定されている", async () => {
@@ -16,7 +17,7 @@ describe("completion", () => {
 	});
 
 	it("run() で bash 補完スクリプトを stdout に出力する", async () => {
-		const writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		const writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "bash" } } as never);
@@ -30,7 +31,7 @@ describe("completion", () => {
 	});
 
 	it("run() で zsh 補完スクリプトを stdout に出力する", async () => {
-		const writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		const writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "zsh" } } as never);

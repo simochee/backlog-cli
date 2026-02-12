@@ -1,5 +1,5 @@
 import { type CallbackServer, startCallbackServer } from "#utils/oauth-callback.ts";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "bun:test";
 
 const BASE_URL = "http://localhost:5033";
 

@@ -1,18 +1,24 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
-	writeConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { loadConfig, writeConfig } from "@repo/config";
+const { loadConfig, writeConfig } = await import("@repo/config");
 
 describe("auth switch", () => {
 	it("指定したホスト名に切り替える", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -33,7 +39,7 @@ describe("auth switch", () => {
 	});
 
 	it("スペースが見つからない場合エラーを出す", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: {},
@@ -51,7 +57,7 @@ describe("auth switch", () => {
 	});
 
 	it("正常に切り替えた場合 writeConfig が呼ばれる", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "target.backlog.com",

@@ -16,7 +16,7 @@ import {
 	getActivityLabel,
 	padEnd,
 } from "#utils/format.ts";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 describe("formatDate", () => {
 	it("returns empty string for null", () => {

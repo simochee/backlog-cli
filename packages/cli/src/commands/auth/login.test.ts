@@ -1,45 +1,79 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/api", () => ({
-	createClient: vi.fn(),
-	exchangeAuthorizationCode: vi.fn(),
+mock.module("@repo/api", () => ({
+	createClient: mock(),
+	formatResetTime: mock(),
+	exchangeAuthorizationCode: mock(),
+	refreshAccessToken: mock(),
+	DEFAULT_PRIORITY_ID: 3,
+	PR_STATUS: { Open: 1, Closed: 2, Merged: 3 },
+	PRIORITY: { High: 2, Normal: 3, Low: 4 },
+	RESOLUTION: { Fixed: 0, WontFix: 1, Invalid: 2, Duplicate: 3, CannotReproduce: 4 },
 }));
 
-vi.mock("@repo/config", () => ({
-	addSpace: vi.fn(),
-	loadConfig: vi.fn(),
-	resolveSpace: vi.fn(),
-	updateSpaceAuth: vi.fn(),
-	writeConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-vi.mock("#utils/oauth-callback.ts", () => ({
-	startCallbackServer: vi.fn(),
+mock.module("#utils/oauth-callback.ts", () => ({
+	startCallbackServer: mock(),
 }));
 
-vi.mock("#utils/url.ts", () => ({
-	openUrl: vi.fn(),
+mock.module("#utils/url.ts", () => ({
+	openUrl: mock(),
 }));
 
-import { startCallbackServer } from "#utils/oauth-callback.ts";
-import { createClient, exchangeAuthorizationCode } from "@repo/api";
-import { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } from "@repo/config";
-import consola from "consola";
+// Provide real-like promptRequired behavior (delegates to consola.prompt)
+// Needed because other test files mock #utils/prompt.ts globally in bun:test
+mock.module("#utils/prompt.ts", () => ({
+	default: mock(async (label: string, existing?: string, options?: { placeholder?: string }) => {
+		if (existing) return existing;
+		const { default: c } = await import("consola");
+		const value = await c.prompt(label, { type: "text", ...options });
+		if (typeof value !== "string" || !value) {
+			c.error(`${label.replace(/:$/, "")} is required.`);
+			return process.exit(1);
+		}
+		return value;
+	}),
+	confirmOrExit: mock(async (_msg: string, skip?: boolean) => {
+		if (skip) return true;
+		const { default: c } = await import("consola");
+		const confirmed = await c.prompt(_msg, { type: "confirm" });
+		if (!confirmed) {
+			c.info("Cancelled.");
+			return false;
+		}
+		return true;
+	}),
+}));
+
+const { startCallbackServer } = await import("#utils/oauth-callback.ts");
+const { createClient, exchangeAuthorizationCode } = await import("@repo/api");
+const { addSpace, loadConfig, resolveSpace, updateSpaceAuth, writeConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("auth login", () => {
 	describe("api-key", () => {
 		it("--space と API キーで新規スペースを認証する", async () => {
-			const mockClient = vi.fn().mockResolvedValue({
+			const mockClient = mock().mockResolvedValue({
 				name: "Test User",
 				userId: "testuser",
 			});
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
-			vi.mocked(consola.prompt).mockResolvedValue("test-api-key" as never);
-			vi.mocked(resolveSpace).mockResolvedValue(null as never);
-			vi.mocked(loadConfig).mockResolvedValue({
+			(createClient as any).mockReturnValue(mockClient as never);
+			(consola.prompt as any).mockResolvedValue("test-api-key" as never);
+			(resolveSpace as any).mockResolvedValue(null as never);
+			(loadConfig as any).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
 				aliases: {},
@@ -69,17 +103,17 @@ describe("auth login", () => {
 		});
 
 		it("既存スペースの認証情報を更新する", async () => {
-			const mockClient = vi.fn().mockResolvedValue({
+			const mockClient = mock().mockResolvedValue({
 				name: "Test User",
 				userId: "testuser",
 			});
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
-			vi.mocked(consola.prompt).mockResolvedValue("new-api-key" as never);
-			vi.mocked(resolveSpace).mockResolvedValue({
+			(createClient as any).mockReturnValue(mockClient as never);
+			(consola.prompt as any).mockResolvedValue("new-api-key" as never);
+			(resolveSpace as any).mockResolvedValue({
 				host: "example.backlog.com",
 				auth: { method: "api-key" as const, apiKey: "old-api-key" },
 			});
-			vi.mocked(loadConfig).mockResolvedValue({
+			(loadConfig as any).mockResolvedValue({
 				spaces: [
 					{
 						host: "example.backlog.com",
@@ -105,9 +139,9 @@ describe("auth login", () => {
 		});
 
 		it("認証失敗時にエラーを返す", async () => {
-			const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
-			vi.mocked(consola.prompt).mockResolvedValue("bad-key" as never);
+			const mockClient = mock().mockRejectedValue(new Error("Unauthorized"));
+			(createClient as any).mockReturnValue(mockClient as never);
+			(consola.prompt as any).mockResolvedValue("bad-key" as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -125,16 +159,16 @@ describe("auth login", () => {
 		});
 
 		it("--space 未指定時にプロンプトで入力を求める", async () => {
-			const mockClient = vi.fn().mockResolvedValue({
+			const mockClient = mock().mockResolvedValue({
 				name: "Test User",
 				userId: "testuser",
 			});
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
-			vi.mocked(consola.prompt)
+			(createClient as any).mockReturnValue(mockClient as never);
+			(consola.prompt as any)
 				.mockResolvedValueOnce("prompted.backlog.com" as never)
 				.mockResolvedValueOnce("test-api-key" as never);
-			vi.mocked(resolveSpace).mockResolvedValue(null as never);
-			vi.mocked(loadConfig).mockResolvedValue({
+			(resolveSpace as any).mockResolvedValue(null as never);
+			(loadConfig as any).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
 				aliases: {},
@@ -157,7 +191,7 @@ describe("auth login", () => {
 		});
 
 		it("--space プロンプトで空入力の場合エラーを返す", async () => {
-			vi.mocked(consola.prompt).mockResolvedValue("" as never);
+			(consola.prompt as any).mockResolvedValue("" as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -171,7 +205,7 @@ describe("auth login", () => {
 		});
 
 		it("API key プロンプトで空入力の場合エラーを返す", async () => {
-			vi.mocked(consola.prompt).mockResolvedValue("" as never);
+			(consola.prompt as any).mockResolvedValue("" as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -202,27 +236,27 @@ describe("auth login", () => {
 
 	describe("oauth", () => {
 		const setupOAuthMocks = () => {
-			const mockClient = vi.fn().mockResolvedValue({
+			const mockClient = mock().mockResolvedValue({
 				name: "OAuth User",
 				userId: "oauthuser",
 			});
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
-			vi.mocked(resolveSpace).mockResolvedValue(null as never);
-			vi.mocked(loadConfig).mockResolvedValue({
+			(createClient as any).mockReturnValue(mockClient as never);
+			(resolveSpace as any).mockResolvedValue(null as never);
+			(loadConfig as any).mockResolvedValue({
 				spaces: [],
 				defaultSpace: undefined,
 				aliases: {},
 			});
-			vi.mocked(exchangeAuthorizationCode).mockResolvedValue({
+			(exchangeAuthorizationCode as any).mockResolvedValue({
 				access_token: "new-access-token",
 				token_type: "Bearer",
 				expires_in: 3600,
 				refresh_token: "new-refresh-token",
 			});
 
-			const mockStop = vi.fn();
-			const mockWaitForCallback = vi.fn().mockResolvedValue("auth-code-123");
-			vi.mocked(startCallbackServer).mockReturnValue({
+			const mockStop = mock();
+			const mockWaitForCallback = mock().mockResolvedValue("auth-code-123");
+			(startCallbackServer as any).mockReturnValue({
 				port: 5033,
 				waitForCallback: mockWaitForCallback,
 				stop: mockStop,
@@ -271,10 +305,10 @@ describe("auth login", () => {
 		});
 
 		it("コールバック待機中にエラーが発生した場合 process.exit(1) を呼ぶ", async () => {
-			const mockStop = vi.fn();
-			vi.mocked(startCallbackServer).mockReturnValue({
+			const mockStop = mock();
+			(startCallbackServer as any).mockReturnValue({
 				port: 5033,
-				waitForCallback: vi.fn().mockRejectedValue(new Error("OAuth callback timed out after 5 minutes")),
+				waitForCallback: mock().mockRejectedValue(new Error("OAuth callback timed out after 5 minutes")),
 				stop: mockStop,
 			});
 			const exitSpy = spyOnProcessExit();
@@ -299,7 +333,7 @@ describe("auth login", () => {
 
 		it("トークン交換に失敗した場合 process.exit(1) を呼ぶ", async () => {
 			setupOAuthMocks();
-			vi.mocked(exchangeAuthorizationCode).mockRejectedValue(new Error("invalid_grant"));
+			(exchangeAuthorizationCode as any).mockRejectedValue(new Error("invalid_grant"));
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -319,7 +353,7 @@ describe("auth login", () => {
 
 		it("client-id 未指定時にプロンプトで入力を求める", async () => {
 			setupOAuthMocks();
-			vi.mocked(consola.prompt).mockResolvedValueOnce("prompted-client-id" as never);
+			(consola.prompt as any).mockResolvedValueOnce("prompted-client-id" as never);
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
@@ -338,7 +372,7 @@ describe("auth login", () => {
 
 		it("client-secret 未指定時にプロンプトで入力を求める", async () => {
 			setupOAuthMocks();
-			vi.mocked(consola.prompt).mockResolvedValueOnce("prompted-client-secret" as never);
+			(consola.prompt as any).mockResolvedValueOnce("prompted-client-secret" as never);
 
 			const mod = await import("#commands/auth/login.ts");
 			await mod.default.run?.({
@@ -356,7 +390,7 @@ describe("auth login", () => {
 		});
 
 		it("client-secret プロンプトで空入力の場合エラーを返す", async () => {
-			vi.mocked(consola.prompt).mockResolvedValueOnce("" as never);
+			(consola.prompt as any).mockResolvedValueOnce("" as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -375,8 +409,8 @@ describe("auth login", () => {
 
 		it("トークン検証に失敗した場合 process.exit(1) を呼ぶ", async () => {
 			setupOAuthMocks();
-			const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
-			vi.mocked(createClient).mockReturnValue(mockClient as never);
+			const mockClient = mock().mockRejectedValue(new Error("Unauthorized"));
+			(createClient as any).mockReturnValue(mockClient as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");
@@ -396,7 +430,7 @@ describe("auth login", () => {
 
 		it("既存スペースの OAuth 認証情報を更新する", async () => {
 			setupOAuthMocks();
-			vi.mocked(resolveSpace).mockResolvedValue({
+			(resolveSpace as any).mockResolvedValue({
 				host: "example.backlog.com",
 				auth: {
 					method: "oauth" as const,
@@ -406,7 +440,7 @@ describe("auth login", () => {
 					clientSecret: "old-client-secret",
 				},
 			});
-			vi.mocked(loadConfig).mockResolvedValue({
+			(loadConfig as any).mockResolvedValue({
 				spaces: [
 					{
 						host: "example.backlog.com",
@@ -445,7 +479,7 @@ describe("auth login", () => {
 		});
 
 		it("client-id プロンプトで空入力の場合エラーを返す", async () => {
-			vi.mocked(consola.prompt).mockResolvedValueOnce("" as never);
+			(consola.prompt as any).mockResolvedValueOnce("" as never);
 			const exitSpy = spyOnProcessExit();
 
 			const mod = await import("#commands/auth/login.ts");

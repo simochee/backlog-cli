@@ -1,23 +1,24 @@
 import { setupMockClient } from "@repo/test-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn((v: string) => v),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock((v: string) => v),
 }));
-vi.mock("#utils/prompt.ts", () => {
-	const fn = vi.fn();
+mock.module("#utils/prompt.ts", () => {
+	const fn = mock();
 	return { default: fn, promptRequired: fn };
 });
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import promptRequired from "#utils/prompt.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: promptRequired } = await import("#utils/prompt.ts");
+const { default: consola } = await import("consola");
 
 describe("milestone create", () => {
 	beforeEach(() => {
-		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
+		(promptRequired as any).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
 
 	it("マイルストーンを作成する", async () => {

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 import { filterFields, outputResult, pickFields } from "./output.ts";
 
@@ -48,11 +48,11 @@ describe("filterFields", () => {
 });
 
 describe("outputResult", () => {
-	let writeSpy: ReturnType<typeof vi.spyOn>;
+	let writeSpy: ReturnType<typeof spyOn>;
 	let originalIsTTY: boolean | undefined;
 
 	beforeEach(() => {
-		writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		originalIsTTY = process.stdout.isTTY;
 	});
 
@@ -62,7 +62,7 @@ describe("outputResult", () => {
 	});
 
 	it("--json なしの場合 defaultFormat を呼ぶ", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = [{ id: 1 }];
 
 		outputResult(data, {}, format);
@@ -72,7 +72,7 @@ describe("outputResult", () => {
 	});
 
 	it("--json (空文字) で全フィールドを JSON 出力する", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = [{ id: 1, name: "test" }];
 		Object.defineProperty(process.stdout, "isTTY", { value: false, writable: true });
 
@@ -83,7 +83,7 @@ describe("outputResult", () => {
 	});
 
 	it("--json field1,field2 で指定フィールドのみ出力する", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = [{ id: 1, name: "test", extra: true }];
 		Object.defineProperty(process.stdout, "isTTY", { value: false, writable: true });
 
@@ -93,7 +93,7 @@ describe("outputResult", () => {
 	});
 
 	it("空配列を [] として JSON 出力する", () => {
-		const format = vi.fn();
+		const format = mock();
 		Object.defineProperty(process.stdout, "isTTY", { value: false, writable: true });
 
 		outputResult([], { json: "" }, format);
@@ -102,7 +102,7 @@ describe("outputResult", () => {
 	});
 
 	it("TTY 接続時に pretty-print する", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = { id: 1 };
 		Object.defineProperty(process.stdout, "isTTY", { value: true, writable: true });
 
@@ -112,7 +112,7 @@ describe("outputResult", () => {
 	});
 
 	it("非 TTY 時に compact 出力する", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = { id: 1 };
 		Object.defineProperty(process.stdout, "isTTY", { value: false, writable: true });
 
@@ -122,7 +122,7 @@ describe("outputResult", () => {
 	});
 
 	it("単一オブジェクトのフィールドフィルタリング", () => {
-		const format = vi.fn();
+		const format = mock();
 		const data = { id: 1, name: "test", secret: "hidden" };
 		Object.defineProperty(process.stdout, "isTTY", { value: false, writable: true });
 

@@ -71,14 +71,16 @@
 		"bin",
 		"tsp-output",
 		"docs",
-		"vitest.workspace.ts",
-		"packages/integration-tests/vitest.config.ts"
+		"scripts"
 	],
 	"overrides": [
 		{
 			"files": ["**/*.test.ts"],
 			"rules": {
-				"no-console": "off"
+				"no-console": "off",
+				"typescript/no-explicit-any": "off",
+				"typescript/no-floating-promises": "off",
+				"typescript/await-thenable": "off"
 			}
 		},
 		{
@@ -89,9 +91,15 @@
 			}
 		},
 		{
-			"files": ["packages/test-utils/src/mock-client.ts", "packages/test-utils/src/process.ts"],
+			"files": [
+				"packages/test-utils/src/mock-client.ts",
+				"packages/test-utils/src/process.ts",
+				"packages/cli/src/test-preload.ts"
+			],
 			"rules": {
-				"import/prefer-default-export": "off"
+				"import/prefer-default-export": "off",
+				"typescript/no-explicit-any": "off",
+				"typescript/no-floating-promises": "off"
 			}
 		},
 		{

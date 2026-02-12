@@ -1,11 +1,11 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("ofetch", () => ({
-	ofetch: vi.fn(),
+mock.module("ofetch", () => ({
+	ofetch: mock(),
 }));
 
-import { exchangeAuthorizationCode, refreshAccessToken } from "#oauth.ts";
-import { ofetch } from "ofetch";
+const { exchangeAuthorizationCode, refreshAccessToken } = await import("#oauth.ts");
+const { ofetch } = await import("ofetch");
 
 describe("exchangeAuthorizationCode", () => {
 	it("正しいパラメータで POST リクエストを送信する", async () => {
@@ -15,7 +15,7 @@ describe("exchangeAuthorizationCode", () => {
 			expires_in: 3600,
 			refresh_token: "new-refresh-token",
 		};
-		vi.mocked(ofetch).mockResolvedValue(mockResponse);
+		(ofetch as any).mockResolvedValue(mockResponse);
 
 		const result = await exchangeAuthorizationCode({
 			host: "example.backlog.com",
@@ -40,7 +40,7 @@ describe("exchangeAuthorizationCode", () => {
 	});
 
 	it("ofetch がエラーを投げた場合そのまま伝播する", async () => {
-		vi.mocked(ofetch).mockRejectedValue(new Error("invalid_grant"));
+		(ofetch as any).mockRejectedValue(new Error("invalid_grant"));
 
 		await expect(
 			exchangeAuthorizationCode({
@@ -62,7 +62,7 @@ describe("refreshAccessToken", () => {
 			expires_in: 3600,
 			refresh_token: "refreshed-refresh-token",
 		};
-		vi.mocked(ofetch).mockResolvedValue(mockResponse);
+		(ofetch as any).mockResolvedValue(mockResponse);
 
 		const result = await refreshAccessToken({
 			host: "example.backlog.com",
@@ -85,7 +85,7 @@ describe("refreshAccessToken", () => {
 	});
 
 	it("ofetch がエラーを投げた場合そのまま伝播する", async () => {
-		vi.mocked(ofetch).mockRejectedValue(new Error("invalid_grant"));
+		(ofetch as any).mockRejectedValue(new Error("invalid_grant"));
 
 		await expect(
 			refreshAccessToken({

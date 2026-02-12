@@ -1,11 +1,11 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/format.ts", () => ({
-	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/format.ts", () => ({
+	padEnd: mock((s: string, n: number) => s.padEnd(n)),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
@@ -39,10 +39,10 @@ describe("document attachments", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

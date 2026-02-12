@@ -1,5 +1,5 @@
 import { extractGlobalArgs, isNoInput } from "#utils/argv.ts";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "bun:test";
 
 describe("extractGlobalArgs", () => {
 	it("--space value 形式でスペースを抽出する", () => {

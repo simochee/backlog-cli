@@ -1,16 +1,34 @@
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/api", () => ({ createClient: vi.fn() }));
-vi.mock("@repo/config", () => ({ loadConfig: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("@repo/api", () => ({
+	createClient: mock(),
+	formatResetTime: mock(),
+	exchangeAuthorizationCode: mock(),
+	refreshAccessToken: mock(),
+	DEFAULT_PRIORITY_ID: 3,
+	PR_STATUS: { Open: 1, Closed: 2, Merged: 3 },
+	PRIORITY: { High: 2, Normal: 3, Low: 4 },
+	RESOLUTION: { Fixed: 0, WontFix: 1, Invalid: 2, Duplicate: 3, CannotReproduce: 4 },
+}));
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
+}));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { createClient } from "@repo/api";
-import { loadConfig } from "@repo/config";
-import consola from "consola";
+const { createClient } = await import("@repo/api");
+const { loadConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("auth status", () => {
 	it("認証済みスペースのステータスを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -21,11 +39,11 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "Test User",
 			userId: "testuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -42,7 +60,7 @@ describe("auth status", () => {
 	});
 
 	it("スペース未登録の場合メッセージを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: {},
@@ -55,7 +73,7 @@ describe("auth status", () => {
 	});
 
 	it("--space でフィルタして該当なしの場合メッセージを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -76,7 +94,7 @@ describe("auth status", () => {
 	});
 
 	it("--show-token でトークンを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -87,11 +105,11 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "Test User",
 			userId: "testuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({
@@ -102,7 +120,7 @@ describe("auth status", () => {
 	});
 
 	it("トークン検証が失敗した場合 Authentication failed を表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -113,8 +131,8 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		const mockClient = mock().mockRejectedValue(new Error("Unauthorized"));
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -124,7 +142,7 @@ describe("auth status", () => {
 	});
 
 	it("OAuth 認証のスペースで正しいクライアント設定を使用する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -139,11 +157,11 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "OAuth User",
 			userId: "oauthuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -157,7 +175,7 @@ describe("auth status", () => {
 	});
 
 	it("--show-token で OAuth トークンを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -172,11 +190,11 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "OAuth User",
 			userId: "oauthuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({
@@ -187,7 +205,7 @@ describe("auth status", () => {
 	});
 
 	it("デフォルトでないスペースはホスト名のみ表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -198,11 +216,11 @@ describe("auth status", () => {
 			aliases: {},
 		});
 
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "Test User",
 			userId: "testuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/status.ts");
 		await mod.default.run?.({ args: {} } as never);

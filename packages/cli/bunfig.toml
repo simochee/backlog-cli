@@ -1,0 +1,2 @@
+[test]
+preload = ["@repo/test-utils/setup", "./src/test-preload.ts"]

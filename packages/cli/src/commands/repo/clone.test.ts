@@ -1,18 +1,19 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn((v: string) => v),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock((v: string) => v),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("node:child_process", () => ({
-	spawn: vi.fn(),
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("node:child_process", () => ({
+	spawn: mock(),
 }));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
-import { spawn } from "node:child_process";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
+const { spawn } = await import("node:child_process");
 
 describe("repo clone", () => {
 	it("リポジトリ情報を取得して git clone を実行する", async () => {
@@ -22,10 +23,10 @@ describe("repo clone", () => {
 			httpUrl: "https://example.backlog.com/git/PROJ/my-repo.git",
 		});
 
-		const mockOn = vi.fn((event: string, cb: (code: number) => void) => {
+		const mockOn = mock((event: string, cb: (code: number) => void) => {
 			if (event === "close") cb(0);
 		});
-		vi.mocked(spawn).mockReturnValue({ on: mockOn } as never);
+		(spawn as any).mockReturnValue({ on: mockOn } as never);
 
 		const mod = await import("#commands/repo/clone.ts");
 		await mod.default.run?.({ args: { repoName: "my-repo", project: "PROJ" } } as never);

@@ -1,16 +1,17 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn(() => "PROJ"),
-	resolveUserId: vi.fn(() => Promise.resolve(999)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock(() => "PROJ"),
+	resolveUserId: mock(() => Promise.resolve(999)),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { resolveUserId } from "#utils/resolve.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { resolveUserId } = await import("#utils/resolve.ts");
+const { default: consola } = await import("consola");
 
 describe("pr edit", () => {
 	it("PRを更新する", async () => {

@@ -1,14 +1,14 @@
-import { vi } from "vitest";
+import { mock } from "bun:test";
 
 const mockConsola = {
-	log: vi.fn(),
-	info: vi.fn(),
-	success: vi.fn(),
-	warn: vi.fn(),
-	error: vi.fn(),
-	start: vi.fn(),
-	prompt: vi.fn(),
-	debug: vi.fn(),
+	log: mock(),
+	info: mock(),
+	success: mock(),
+	warn: mock(),
+	error: mock(),
+	start: mock(),
+	prompt: mock(),
+	debug: mock(),
 };
 
 export default mockConsola;

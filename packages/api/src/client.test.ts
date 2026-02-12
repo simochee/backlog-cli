@@ -1,12 +1,11 @@
-import { createClient, formatResetTime } from "#client.ts";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "bun:test";
 
 // Mock ofetch to inspect how client is configured
-vi.mock("ofetch", () => {
-	const mockFetch = vi.fn();
+mock.module("ofetch", () => {
+	const mockFetch = mock();
 	return {
 		ofetch: {
-			create: vi.fn((config: Record<string, unknown>) => {
+			create: mock((config: Record<string, unknown>) => {
 				// Store config on the mock for inspection
 				const fn = Object.assign(mockFetch, { _config: config });
 				return fn;
@@ -14,6 +13,7 @@ vi.mock("ofetch", () => {
 		},
 	};
 });
+const { createClient, formatResetTime } = await import("#client.ts");
 
 describe("createClient", () => {
 	it("creates a client with API key authentication", () => {
@@ -113,7 +113,7 @@ describe("createClient", () => {
 			apiKey: "key",
 		}) as unknown as { _config: Record<string, unknown> };
 
-		expect(client._config["onResponseError"]).toBeTypeOf("function");
+		expect(typeof client._config["onResponseError"]).toBe("function");
 	});
 
 	describe("onResponseError", () => {

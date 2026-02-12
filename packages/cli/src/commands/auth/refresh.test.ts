@@ -1,25 +1,37 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/api", () => ({
-	createClient: vi.fn(),
-	refreshAccessToken: vi.fn(),
+mock.module("@repo/api", () => ({
+	createClient: mock(),
+	formatResetTime: mock(),
+	exchangeAuthorizationCode: mock(),
+	refreshAccessToken: mock(),
+	DEFAULT_PRIORITY_ID: 3,
+	PR_STATUS: { Open: 1, Closed: 2, Merged: 3 },
+	PRIORITY: { High: 2, Normal: 3, Low: 4 },
+	RESOLUTION: { Fixed: 0, WontFix: 1, Invalid: 2, Duplicate: 3, CannotReproduce: 4 },
 }));
 
-vi.mock("@repo/config", () => ({
-	resolveSpace: vi.fn(),
-	updateSpaceAuth: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { createClient, refreshAccessToken } from "@repo/api";
-import { resolveSpace, updateSpaceAuth } from "@repo/config";
-import consola from "consola";
+const { createClient, refreshAccessToken } = await import("@repo/api");
+const { resolveSpace, updateSpaceAuth } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("auth refresh", () => {
 	it("スペースが未設定の場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null as never);
+		(resolveSpace as any).mockResolvedValue(null as never);
 		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/refresh.ts");
@@ -31,7 +43,7 @@ describe("auth refresh", () => {
 	});
 
 	it("API Key 認証の場合エラーを出す", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: { method: "api-key" as const, apiKey: "key" },
 		});
@@ -48,7 +60,7 @@ describe("auth refresh", () => {
 	});
 
 	it("clientId/clientSecret が欠落している場合エラーを出す", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: {
 				method: "oauth" as const,
@@ -69,7 +81,7 @@ describe("auth refresh", () => {
 	});
 
 	it("正常にトークンをリフレッシュする", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: {
 				method: "oauth" as const,
@@ -79,17 +91,17 @@ describe("auth refresh", () => {
 				clientSecret: "client-secret",
 			},
 		});
-		vi.mocked(refreshAccessToken).mockResolvedValue({
+		(refreshAccessToken as any).mockResolvedValue({
 			access_token: "new-access",
 			token_type: "Bearer",
 			expires_in: 3600,
 			refresh_token: "new-refresh",
 		});
-		const mockClient = vi.fn().mockResolvedValue({
+		const mockClient = mock().mockResolvedValue({
 			name: "Test User",
 			userId: "testuser",
 		});
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		(createClient as any).mockReturnValue(mockClient as never);
 
 		const mod = await import("#commands/auth/refresh.ts");
 		await mod.default.run?.({ args: {} } as never);
@@ -116,7 +128,7 @@ describe("auth refresh", () => {
 	});
 
 	it("リフレッシュ失敗時にエラーを出す", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: {
 				method: "oauth" as const,
@@ -126,7 +138,7 @@ describe("auth refresh", () => {
 				clientSecret: "client-secret",
 			},
 		});
-		vi.mocked(refreshAccessToken).mockRejectedValue(new Error("invalid_grant"));
+		(refreshAccessToken as any).mockRejectedValue(new Error("invalid_grant"));
 		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/refresh.ts");
@@ -140,7 +152,7 @@ describe("auth refresh", () => {
 	});
 
 	it("トークン検証に失敗した場合エラーを出す", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: {
 				method: "oauth" as const,
@@ -150,14 +162,14 @@ describe("auth refresh", () => {
 				clientSecret: "client-secret",
 			},
 		});
-		vi.mocked(refreshAccessToken).mockResolvedValue({
+		(refreshAccessToken as any).mockResolvedValue({
 			access_token: "bad-access",
 			token_type: "Bearer",
 			expires_in: 3600,
 			refresh_token: "new-refresh",
 		});
-		const mockClient = vi.fn().mockRejectedValue(new Error("Unauthorized"));
-		vi.mocked(createClient).mockReturnValue(mockClient as never);
+		const mockClient = mock().mockRejectedValue(new Error("Unauthorized"));
+		(createClient as any).mockReturnValue(mockClient as never);
 		const exitSpy = spyOnProcessExit();
 
 		const mod = await import("#commands/auth/refresh.ts");

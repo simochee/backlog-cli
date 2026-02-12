@@ -1,13 +1,23 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({ resolveProjectArg: vi.fn(() => "PROJ") }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("@repo/api", () => ({ PR_STATUS: { Open: 1, Closed: 2, Merged: 3 } }));
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({ resolveProjectArg: mock(() => "PROJ") }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("@repo/api", () => ({
+	createClient: mock(),
+	formatResetTime: mock(),
+	exchangeAuthorizationCode: mock(),
+	refreshAccessToken: mock(),
+	DEFAULT_PRIORITY_ID: 3,
+	PR_STATUS: { Open: 1, Closed: 2, Merged: 3 },
+	PRIORITY: { High: 2, Normal: 3, Low: 4 },
+	RESOLUTION: { Fixed: 0, WontFix: 1, Invalid: 2, Duplicate: 3, CannotReproduce: 4 },
+}));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("pr merge", () => {
 	it("PRをマージする", async () => {

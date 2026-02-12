@@ -1,19 +1,25 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
-	removeSpace: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { loadConfig, removeSpace } from "@repo/config";
-import consola from "consola";
+const { loadConfig, removeSpace } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("auth logout", () => {
 	it("指定ホストをログアウトする", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "example.backlog.com",
@@ -23,7 +29,7 @@ describe("auth logout", () => {
 			defaultSpace: undefined,
 			aliases: {},
 		});
-		vi.mocked(removeSpace).mockResolvedValue(undefined as never);
+		(removeSpace as any).mockResolvedValue(undefined as never);
 
 		const mod = await import("#commands/auth/logout.ts");
 		await mod.default.run?.({
@@ -35,7 +41,7 @@ describe("auth logout", () => {
 	});
 
 	it("スペースが0件の場合メッセージを表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: {},
@@ -51,12 +57,12 @@ describe("auth logout", () => {
 	});
 
 	it("存在しないスペースでエラーを出す", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: {},
 		});
-		vi.mocked(removeSpace).mockRejectedValue(new Error("not found"));
+		(removeSpace as any).mockRejectedValue(new Error("not found"));
 
 		const exitSpy = spyOnProcessExit();
 
@@ -71,7 +77,7 @@ describe("auth logout", () => {
 	});
 
 	it("--space 省略で1件の場合、自動選択してログアウトする", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{
 					host: "only.backlog.com",
@@ -81,7 +87,7 @@ describe("auth logout", () => {
 			defaultSpace: undefined,
 			aliases: {},
 		});
-		vi.mocked(removeSpace).mockResolvedValue(undefined as never);
+		(removeSpace as any).mockResolvedValue(undefined as never);
 
 		const mod = await import("#commands/auth/logout.ts");
 		await mod.default.run?.({

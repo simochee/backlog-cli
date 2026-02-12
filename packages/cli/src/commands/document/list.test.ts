@@ -1,16 +1,16 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn((v: string) => v),
-	resolveProjectId: vi.fn(() => Promise.resolve(100)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock((v: string) => v),
+	resolveProjectId: mock(() => Promise.resolve(100)),
 }));
-vi.mock("#utils/format.ts", () => ({
-	formatDate: vi.fn(() => "2024-01-01"),
-	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
+mock.module("#utils/format.ts", () => ({
+	formatDate: mock(() => "2024-01-01"),
+	padEnd: mock((s: string, n: number) => s.padEnd(n)),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => import("@repo/test-utils/mock-consola"));
 
 import { getClient } from "#utils/client.ts";
 import consola from "consola";
@@ -59,10 +59,10 @@ describe("document list", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

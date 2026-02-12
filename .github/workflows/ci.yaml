@@ -36,11 +36,8 @@ jobs:
         run: bunx oxlint --type-aware --type-check .
 
   test:
-    name: Test (Node.js ${{ matrix.node-version }})
+    name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20, 22, 24]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -50,32 +47,19 @@ jobs:
         with:
           bun-version: 1.3.5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Install dependencies
         run: bun install
 
       - name: Build
-        run: bun run build
+        run: bun run build -F @simochee/backlog-cli
 
       - name: Run tests with coverage
-        run: bun run test -- -- --coverage --coverage.reporter=lcov --reporter=default --reporter=junit --outputFile.junit=junit.xml
+        run: bun run test -- -- --coverage --coverage-reporter=lcov
 
       - name: Upload coverage to Codecov
-        if: matrix.node-version == 22
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() && matrix.node-version == 22 }}
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          report_type: test_results
 
   bundle-analysis:
     name: Bundle Analysis

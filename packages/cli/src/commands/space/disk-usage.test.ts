@@ -1,12 +1,13 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { formatBytes } from "#commands/space/disk-usage.ts";
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { formatBytes } = await import("#commands/space/disk-usage.ts");
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("formatBytes", () => {
 	it("0 バイトを正しくフォーマットする", () => {
@@ -101,10 +102,10 @@ describe("disk-usage run()", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

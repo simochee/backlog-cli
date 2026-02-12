@@ -1,17 +1,18 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/resolve.ts", () => ({
-	extractProjectKey: vi.fn(() => "PROJ"),
-	resolveClosedStatusId: vi.fn(() => Promise.resolve(4)),
-	resolveResolutionId: vi.fn(() => Promise.resolve(1)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/resolve.ts", () => ({
+	extractProjectKey: mock(() => "PROJ"),
+	resolveClosedStatusId: mock(() => Promise.resolve(4)),
+	resolveResolutionId: mock(() => Promise.resolve(1)),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { resolveClosedStatusId, resolveResolutionId } from "#utils/resolve.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { resolveClosedStatusId, resolveResolutionId } = await import("#utils/resolve.ts");
+const { default: consola } = await import("consola");
 
 describe("issue close", () => {
 	it("課題をクローズする（resolution 省略時は resolutionId を送らない）", async () => {

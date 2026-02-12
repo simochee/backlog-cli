@@ -1,5 +1,5 @@
 import { extractGlobalArgs } from "#utils/argv.ts";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 describe("extractGlobalArgs", () => {
 	it("--space value 形式でスペースを抽出し argv から除去する", () => {

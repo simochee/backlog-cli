@@ -1,17 +1,24 @@
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { loadConfig } from "@repo/config";
-import consola from "consola";
+const { loadConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("alias list", () => {
 	it("エイリアスが存在する場合はテーブル形式で表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: { il: "issue list", pv: "pr view" },
@@ -29,7 +36,7 @@ describe("alias list", () => {
 	});
 
 	it("エイリアスが空の場合は 'No aliases configured.' を表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 			aliases: {},

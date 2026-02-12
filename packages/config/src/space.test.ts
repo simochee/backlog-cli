@@ -1,15 +1,14 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock } from "bun:test";
 
-vi.mock("#config.ts", () => ({
-	loadConfig: vi.fn(),
-	writeConfig: vi.fn(),
+mock.module("#config.ts", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
 }));
 
-import { loadConfig, writeConfig } from "#config.ts";
-import { addSpace, findSpace, removeSpace, resolveSpace, updateSpaceAuth } from "#space.ts";
-
-const mockLoadConfig = vi.mocked(loadConfig);
-const mockWriteConfig = vi.mocked(writeConfig);
+const { loadConfig, writeConfig } = await import("#config.ts");
+const { addSpace, findSpace, removeSpace, resolveSpace, updateSpaceAuth } = await import("#space.ts");
+const mockLoadConfig = loadConfig as any;
+const mockWriteConfig = writeConfig as any;
 
 const makeSpace = (host: string) => ({
 	host: host as `${string}.backlog.${"com" | "jp"}`,

@@ -1,22 +1,27 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { loadConfig } from "@repo/config";
-import consola from "consola";
+const { loadConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("config list", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
+	beforeEach(() => {});
 
 	it("--space 指定で特定スペースの情報を表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key123" } }],
 			defaultSpace: "example.backlog.com",
 		} as never);
@@ -31,7 +36,7 @@ describe("config list", () => {
 	});
 
 	it("--space 指定で存在しないスペースの場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 		} as never);
@@ -49,7 +54,7 @@ describe("config list", () => {
 	});
 
 	it("デフォルトスペースと認証済みスペース一覧を表示する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [
 				{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key123" } },
 				{ host: "other.backlog.com", auth: { method: "oauth", accessToken: "token", refreshToken: "refresh" } },
@@ -69,7 +74,7 @@ describe("config list", () => {
 	});
 
 	it("スペースが空の場合はデフォルトスペースもスペース一覧も表示しない", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 		} as never);

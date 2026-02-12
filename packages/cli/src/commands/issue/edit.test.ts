@@ -1,19 +1,20 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/resolve.ts", () => ({
-	extractProjectKey: vi.fn(() => "PROJ"),
-	resolveStatusId: vi.fn(() => Promise.resolve(1)),
-	resolveIssueTypeId: vi.fn(() => Promise.resolve(100)),
-	resolvePriorityId: vi.fn(() => Promise.resolve(2)),
-	resolveUserId: vi.fn(() => Promise.resolve(999)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/resolve.ts", () => ({
+	extractProjectKey: mock(() => "PROJ"),
+	resolveStatusId: mock(() => Promise.resolve(1)),
+	resolveIssueTypeId: mock(() => Promise.resolve(100)),
+	resolvePriorityId: mock(() => Promise.resolve(2)),
+	resolveUserId: mock(() => Promise.resolve(999)),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { resolveStatusId } from "#utils/resolve.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { resolveStatusId } = await import("#utils/resolve.ts");
+const { default: consola } = await import("consola");
 
 describe("issue edit", () => {
 	it("課題を更新する", async () => {

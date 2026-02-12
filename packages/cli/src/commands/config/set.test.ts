@@ -1,21 +1,21 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
-	writeConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		success: vi.fn(),
-		error: vi.fn(),
-		info: vi.fn(),
-	},
-}));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { resolveKey, WRITABLE_KEYS } from "#commands/config/set.ts";
-import { loadConfig, writeConfig } from "@repo/config";
-import consola from "consola";
+const { resolveKey, WRITABLE_KEYS } = await import("#commands/config/set.ts");
+const { loadConfig, writeConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("resolveKey", () => {
 	it("snake_case エイリアスを camelCase に変換する", () => {
@@ -42,15 +42,13 @@ describe("WRITABLE_KEYS", () => {
 });
 
 describe("config set run()", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
+	beforeEach(() => {});
 
 	it("run() で defaultSpace を設定する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } }],
 		} as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/set.ts");
 		await mod.default.run?.({
@@ -66,7 +64,7 @@ describe("config set run()", () => {
 	});
 
 	it("run() で --space 指定時にエラーを返す", async () => {
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/set.ts");
 		await mod.default.run?.({
@@ -79,7 +77,7 @@ describe("config set run()", () => {
 	});
 
 	it("run() で書き込み不可のキーでエラーを返す", async () => {
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/set.ts");
 		await mod.default.run?.({
@@ -93,10 +91,10 @@ describe("config set run()", () => {
 	});
 
 	it("run() で存在しないスペースを defaultSpace に設定しようとするとエラー", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } }],
 		} as never);
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/set.ts");
 		await mod.default.run?.({

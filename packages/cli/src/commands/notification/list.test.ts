@@ -1,15 +1,16 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/format.ts", () => ({
-	formatNotificationLine: vi.fn(() => "  1           ASSIGNED          User A        PROJ-1 Test"),
-	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/format.ts", () => ({
+	formatNotificationLine: mock(() => "  1           ASSIGNED          User A        PROJ-1 Test"),
+	padEnd: mock((s: string, n: number) => s.padEnd(n)),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("notification list", () => {
 	it("通知一覧を表示する", async () => {
@@ -53,10 +54,10 @@ describe("notification list", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

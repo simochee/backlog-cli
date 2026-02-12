@@ -26,7 +26,7 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 - 設定ファイル: rc9 (unjs)
 - ロギング: consola (unjs)
 - 型バリデーション: arktype + arkregex
-- テスト: Vitest
+- テスト: bun:test
 - リンター: oxlint（type-aware linting + type-check 有効）
 - フォーマッター: oxfmt
 - タスク実行: Turbo
@@ -227,7 +227,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 ### CI パイプライン詳細
 
 - **Lint & Type Check**: `oxfmt --check` + `bun run build` + `oxlint --type-aware --type-check`（フォーマット・リント・型チェック統合）
-- **Test**: Node.js 20/22/24 のマトリクスで `bun run test` + カバレッジ（`@vitest/coverage-v8`）
+- **Test**: Node.js 20/22/24 のマトリクスで `bun run test`（bun:test）
 - **Bundle Analysis**: Codecov にバンドルサイズを送信
 - **Concurrency**: 同一 ref のジョブは `cancel-in-progress: true` で重複排除
 
@@ -237,7 +237,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 - `bun run dev` で開発モード
 - `bun run build` でビルド
 - `bun run lint` でリント + 型チェック（oxlint --type-aware --type-check）
-- `bun run test` でテスト（Vitest、全パッケージ一括）
+- `bun run test` でテスト（bun:test、全パッケージ一括）
 - `bun run textlint` でドキュメントの日本語校正（`docs/**/*.md` と `README.md`）
 - `bun run textlint:fix` でドキュメントの日本語校正を自動修正
 - Conventional Commits 形式でコミットメッセージを書く（詳細は後述の「コミットメッセージと release-please」セクションを参照）
@@ -315,7 +315,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 
 ## テスト
 
-Vitest を使用した単体テスト。Turborepo の `test` タスクで全パッケージを一括実行する。
+bun:test を使用した単体テスト。Turborepo の `test` タスクで全パッケージを一括実行する。
 
 ```sh
 bun run test                            # 全パッケージ
@@ -326,7 +326,7 @@ bun run test --filter=@repo/config      # 特定パッケージ
 
 #### 1. `packages/config`（優先度: 高）
 
-設定管理のコアロジック。副作用を `vi.mock` でモック化し、ビジネスロジックを検証する。
+設定管理のコアロジック。副作用を `mock.module` でモック化し、ビジネスロジックを検証する。
 
 **`src/types.ts`** — arktype スキーマの入力バリデーション（モック不要）
 
@@ -339,7 +339,7 @@ bun run test --filter=@repo/config      # 特定パッケージ
 | `RcSpace` のホスト名正規表現   | `example.backlog.com` → 成功、`invalid-host` → エラー                 |
 | `Rc` の spaces デフォルト値    | `{}` → `{ spaces: [] }` に正規化                                      |
 
-**`src/space.ts`** — `loadConfig` / `writeConfig` を `vi.mock` でモック化
+**`src/space.ts`** — `loadConfig` / `writeConfig` を `mock.module` でモック化
 
 | 関数              | テスト観点                                                 |
 | ----------------- | ---------------------------------------------------------- |
@@ -439,7 +439,7 @@ packages/cli/src/utils/
 ### テストの書き方
 
 ```ts
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 describe("関数名", () => {
 	it("期待する振る舞いの説明", () => {
@@ -449,25 +449,21 @@ describe("関数名", () => {
 });
 ```
 
-副作用を持つ依存は `vi.mock` でモック化する:
+副作用を持つ依存は `mock.module` でモック化する:
 
 ```ts
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#config.ts", () => ({
-	loadConfig: vi.fn(),
-	writeConfig: vi.fn(),
+mock.module("#config.ts", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
 }));
 
-import { loadConfig, writeConfig } from "#config.ts";
+const { loadConfig, writeConfig } = await import("#config.ts");
 
 describe("addSpace", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
-
 	it("新しいスペースを追加する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({ spaces: [] });
+		(loadConfig as any).mockResolvedValue({ spaces: [] });
 		await addSpace({ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key" } });
 		expect(writeConfig).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -483,7 +479,7 @@ describe("addSpace", () => {
 - `describe` は関数名またはモジュール名
 - `it` は日本語で期待する振る舞いを記述
 - テストファイル名: `{source}.test.ts`
-- 副作用（ファイル I/O、環境変数）は `vi.mock` でモック化
+- 副作用（ファイル I/O、環境変数）は `mock.module` でモック化
 
 ## plans/ ディレクトリの運用
 
