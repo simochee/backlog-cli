@@ -54,8 +54,8 @@ export default defineCommand({
 
 		const query: NonNullable<DocumentsListData["query"]> & Record<string, unknown> = {
 			"projectId[]": [projectId],
-			sort: args.sort,
-			order: args.order,
+			sort: args.sort as "created" | "updated",
+			order: args.order as "asc" | "desc",
 			count: Number.parseInt(args.limit, 10),
 		};
 

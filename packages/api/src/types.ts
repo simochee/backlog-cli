@@ -417,7 +417,7 @@ export interface BacklogDocument {
 	json: unknown | null;
 	plain: string | null;
 	statusId: number;
-	emoji: string;
+	emoji: string | null;
 	createdUserId: number;
 	created: string;
 	updatedUserId: number;
@@ -432,8 +432,8 @@ export interface BacklogDocumentDetail {
 	json: unknown | null;
 	plain: string | null;
 	statusId: number;
-	emoji: string;
-	attachments: { id: number; name: string; size: number }[];
+	emoji: string | null;
+	attachments: { id: number; name: string; size: number; createdUser: BacklogUser; created: string }[];
 	tags: { id: number; name: string }[];
 	createdUser: BacklogUser;
 	created: string;
@@ -445,7 +445,7 @@ export interface BacklogDocumentDetail {
 export interface BacklogDocumentTreeNode {
 	id: string;
 	name: string;
-	emoji: string;
+	emoji: string | null;
 	children: BacklogDocumentTreeNode[];
 }
 

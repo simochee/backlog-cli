@@ -14,11 +14,20 @@ model Document {
   json: unknown | null;
   plain: string | null;
   statusId: int64;
-  emoji: string;
+  emoji: string | null;
   createdUserId: int64;
   created: utcDateTime;
   updatedUserId: int64;
   updated: utcDateTime;
+}
+
+/** Attachment info with creator details (used in document responses). */
+model DocumentAttachmentInfo {
+  id: int64;
+  name: string;
+  size: int64;
+  createdUser: User;
+  created: utcDateTime;
 }
 
 /** Document detail (full response from list/get). */
@@ -29,8 +38,8 @@ model DocumentDetail {
   json: unknown | null;
   plain: string | null;
   statusId: int64;
-  emoji: string;
-  attachments: AttachmentInfo[];
+  emoji: string | null;
+  attachments: DocumentAttachmentInfo[];
   tags: IdName[];
   createdUser: User;
   created: utcDateTime;
@@ -42,7 +51,7 @@ model DocumentDetail {
 model DocumentTreeNode {
   id: string;
   name: string;
-  emoji: string;
+  emoji: string | null;
   children: DocumentTreeNode[];
 }
 
@@ -70,8 +79,8 @@ interface Documents {
   @get op list(
     @query("projectId[]") projectId?: int64[],
     @query keyword?: string,
-    @query sort?: string,
-    @query order?: string,
+    @query sort?: "created" | "updated",
+    @query order?: Order,
     @query offset?: int32,
     @query count?: int32,
   ): DocumentDetail[] | BacklogErrorResponse;

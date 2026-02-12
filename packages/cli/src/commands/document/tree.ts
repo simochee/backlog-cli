@@ -7,8 +7,7 @@ import { defineCommand } from "citty";
 import consola from "consola";
 
 function printTree(nodes: BacklogDocumentTreeNode[], prefix: string, isLast: boolean[]): void {
-	for (let i = 0; i < nodes.length; i++) {
-		const node = nodes[i];
+	for (const [i, node] of nodes.entries()) {
 		const last = i === nodes.length - 1;
 		const connector = last ? "└── " : "├── ";
 		const emoji = node.emoji ? `${node.emoji} ` : "";
