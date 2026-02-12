@@ -5,7 +5,8 @@ mock.module("rc9", () => ({
 	readUser: mock(),
 	writeUser: mock(),
 }));
-const { loadConfig, writeConfig } = await import("#config.ts");
+// Use relative path instead of #config.ts to avoid mock.module interference from space.test.ts
+const { loadConfig, writeConfig } = await import("./config.ts");
 const { default: consola } = await import("consola");
 const { readUser, writeUser } = await import("rc9");
 
