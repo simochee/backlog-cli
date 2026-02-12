@@ -414,7 +414,7 @@ export interface BacklogDocument {
 	id: string;
 	projectId: number;
 	title: string;
-	json: unknown | null;
+	json: unknown;
 	plain: string | null;
 	statusId: number;
 	emoji: string | null;
@@ -429,7 +429,7 @@ export interface BacklogDocumentDetail {
 	id: string;
 	projectId: number;
 	title: string;
-	json: unknown | null;
+	json: unknown;
 	plain: string | null;
 	statusId: number;
 	emoji: string | null;
