@@ -1,0 +1,27 @@
+name: Actionlint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: actionlint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actionlint:
+    name: Lint GitHub Actions Workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: error
+          fail_level: error

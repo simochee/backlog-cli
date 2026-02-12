@@ -93,7 +93,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          report-type: test_results
+          report_type: test_results
 
   bundle-analysis:
     name: Bundle Analysis
@@ -116,4 +116,4 @@ jobs:
       - name: Upload bundle analysis to Codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bunx @codecov/bundle-analyzer ./packages/cli/bin --bundle-name=backlog-cli --upload-token=$CODECOV_TOKEN
+        run: bunx @codecov/bundle-analyzer ./packages/cli/bin --bundle-name=backlog-cli --upload-token="$CODECOV_TOKEN"
