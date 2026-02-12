@@ -17,8 +17,11 @@ describe("issue lifecycle", () => {
 	it("課題種別一覧から種別名を取得する", async () => {
 		const result = await runCliJsonWithRetry<{ id: number; name: string }[]>(["issue-type", "list", "-p", project]);
 		expectSuccess(result);
-		expect(result.data.length).toBeGreaterThan(0);
-		issueTypeName = result.data[0]!.name;
+		const firstIssueType = result.data[0];
+		if (!firstIssueType) {
+			throw new Error("Expected at least one issue type");
+		}
+		issueTypeName = firstIssueType.name;
 	});
 
 	it("課題を作成する", async () => {
@@ -75,6 +78,6 @@ describe("issue lifecycle", () => {
 		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "delete", issueKey, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

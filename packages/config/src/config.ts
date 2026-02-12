@@ -12,7 +12,7 @@ const APP_NAME = "backlog";
  * @throws Exits process with code 1 if configuration validation fails.
  */
 export const loadConfig = async (): Promise<typeof Rc.infer> => {
-	const rc = await readUser({ name: APP_NAME });
+	const rc = readUser({ name: APP_NAME });
 	const result = Rc(rc);
 
 	if (result instanceof type.errors) {
@@ -31,5 +31,5 @@ export const loadConfig = async (): Promise<typeof Rc.infer> => {
  * @param config - The configuration object to persist.
  */
 export const writeConfig = async (config: typeof Rc.infer): Promise<void> => {
-	await writeUser(config, { name: APP_NAME });
+	writeUser(config, { name: APP_NAME });
 };

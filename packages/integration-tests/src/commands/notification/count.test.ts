@@ -10,7 +10,7 @@ describe("notification count", () => {
 	});
 
 	it("--json で通知数を JSON 出力する", async () => {
-		const result = await runCliJsonWithRetry(["notification", "count"]);
+		const result = await runCliJsonWithRetry<{ count: number }>(["notification", "count"]);
 		expect(result.data).toHaveProperty("count");
 		expect(typeof result.data.count).toBe("number");
 	});

@@ -32,7 +32,10 @@ export async function runCliWithRetry(args: string[], options?: RunOptions): Pro
 		}
 	}
 
-	return lastResult!;
+	if (!lastResult) {
+		throw new Error(`Unexpected: no result after ${MAX_RETRIES + 1} attempts`);
+	}
+	return lastResult;
 }
 
 export async function runCliJsonWithRetry<T = unknown>(

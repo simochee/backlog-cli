@@ -27,7 +27,7 @@ Turborepo ベースのモノレポ。ライブラリは unjs エコシステム�
 - ロギング: consola (unjs)
 - 型バリデーション: arktype + arkregex
 - テスト: bun:test
-- リンター: oxlint
+- リンター: oxlint（type-aware linting + type-check 有効）
 - フォーマッター: oxfmt
 - タスク実行: Turbo
 - Git フック: Lefthook
@@ -226,8 +226,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 
 ### CI パイプライン詳細
 
-- **Lint**: `oxfmt --check` + `oxlint`（フォーマットとリント）
-- **Type Check**: `bun run build` → `bun run type-check`
+- **Lint & Type Check**: `oxfmt --check` + `bun run build` + `oxlint --type-aware --type-check`（フォーマット・リント・型チェック統合）
 - **Test**: Node.js 20/22/24 のマトリクスで `bun run test`（bun:test）
 - **Bundle Analysis**: Codecov にバンドルサイズを送信
 - **Concurrency**: 同一 ref のジョブは `cancel-in-progress: true` で重複排除
@@ -237,8 +236,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 - `bun install` で依存インストール（`postinstall` で `lefthook install` が自動実行される）
 - `bun run dev` で開発モード
 - `bun run build` でビルド
-- `bun run type-check` で型チェック
-- `bun run lint` でリント（oxlint）
+- `bun run lint` でリント + 型チェック（oxlint --type-aware --type-check）
 - `bun run test` でテスト（bun:test、全パッケージ一括）
 - `bun run textlint` でドキュメントの日本語校正（`docs/**/*.md` と `README.md`）
 - `bun run textlint:fix` でドキュメントの日本語校正を自動修正

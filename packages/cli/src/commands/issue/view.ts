@@ -40,7 +40,9 @@ export default defineCommand({
 			return;
 		}
 
-		outputResult(issue, args, async (data) => {
+		const comments = args.comments ? await client<BacklogComment[]>(`/issues/${args.issueKey}/comments`) : [];
+
+		outputResult(issue, args, (data) => {
 			consola.log("");
 			consola.log(`  ${data.issueKey}: ${data.summary}`);
 			consola.log("");
@@ -85,23 +87,19 @@ export default defineCommand({
 				);
 			}
 
-			if (args.comments) {
-				const comments = await client<BacklogComment[]>(`/issues/${args.issueKey}/comments`);
-
-				if (comments.length > 0) {
+			if (comments.length > 0) {
+				consola.log("");
+				consola.log("  Comments:");
+				for (const comment of comments) {
+					if (!comment.content) continue;
 					consola.log("");
-					consola.log("  Comments:");
-					for (const comment of comments) {
-						if (!comment.content) continue;
-						consola.log("");
-						consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
-						consola.log(
-							comment.content
-								.split("\n")
-								.map((line: string) => `      ${line}`)
-								.join("\n"),
-						);
-					}
+					consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
+					consola.log(
+						comment.content
+							.split("\n")
+							.map((line: string) => `      ${line}`)
+							.join("\n"),
+					);
 				}
 			}
 

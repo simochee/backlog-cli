@@ -25,10 +25,10 @@ describe("team create", () => {
 		const mod = await import("#commands/team/create.ts");
 		await mod.default.run?.({ args: { name: "New Team" } } as never);
 
-		const callArgs = mockClient.mock.calls[0]!;
-		expect(callArgs[0]).toBe("/teams");
-		expect(callArgs[1]).toMatchObject({ method: "POST" });
-		const body = callArgs[1]!.body as URLSearchParams;
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/teams");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
 		expect(body).toBeInstanceOf(URLSearchParams);
 		expect(body.get("name")).toBe("New Team");
 		expect(consola.success).toHaveBeenCalledWith("Created team #1: New Team");
@@ -41,10 +41,10 @@ describe("team create", () => {
 		const mod = await import("#commands/team/create.ts");
 		await mod.default.run?.({ args: { name: "Team Members", members: "1,2,3" } } as never);
 
-		const callArgs = mockClient.mock.calls[0]!;
-		expect(callArgs[0]).toBe("/teams");
-		expect(callArgs[1]).toMatchObject({ method: "POST" });
-		const body = callArgs[1]!.body as URLSearchParams;
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/teams");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
 		expect(body).toBeInstanceOf(URLSearchParams);
 		expect(body.get("name")).toBe("Team Members");
 		expect(body.getAll("members[]")).toEqual(["1", "2", "3"]);

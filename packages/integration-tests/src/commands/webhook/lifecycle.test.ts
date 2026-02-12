@@ -58,6 +58,6 @@ describe("webhook lifecycle", () => {
 		requireDep(webhookId, "webhookId");
 		const result = await runCliWithRetry(["webhook", "delete", webhookId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });
