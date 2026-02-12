@@ -1,20 +1,12 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("open", () => ({
-	default: vi.fn(),
+mock.module("open", () => ({
+	default: mock(),
 }));
 
-import {
-	buildBacklogUrl,
-	dashboardUrl,
-	issueUrl,
-	openUrl,
-	projectUrl,
-	pullRequestUrl,
-	repositoryUrl,
-	wikiUrl,
-} from "#utils/url.ts";
-import open from "open";
+const { buildBacklogUrl, dashboardUrl, issueUrl, openUrl, projectUrl, pullRequestUrl, repositoryUrl, wikiUrl } =
+	await import("#utils/url.ts");
+const { default: open } = await import("open");
 
 describe("buildBacklogUrl", () => {
 	it("ホスト名とパスからURLを構築する", () => {

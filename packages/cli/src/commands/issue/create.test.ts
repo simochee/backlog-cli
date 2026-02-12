@@ -1,26 +1,27 @@
-import { DEFAULT_PRIORITY_ID } from "@repo/api";
 import { setupMockClient } from "@repo/test-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/prompt.ts", () => ({ default: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectId: vi.fn(() => 1),
-	resolveIssueTypeId: vi.fn(() => 100),
-	resolvePriorityId: vi.fn(() => 2),
-	resolveUserId: vi.fn(() => 999),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/prompt.ts", () => ({ default: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectId: mock(() => 1),
+	resolveIssueTypeId: mock(() => 100),
+	resolvePriorityId: mock(() => 2),
+	resolveUserId: mock(() => 999),
 }));
-vi.mock("#utils/url.ts", () => ({
-	issueUrl: vi.fn(() => "https://example.backlog.com/view/PROJ-1"),
-	openUrl: vi.fn(),
+mock.module("#utils/url.ts", () => ({
+	issueUrl: mock(() => "https://example.backlog.com/view/PROJ-1"),
+	openUrl: mock(),
 }));
+const { DEFAULT_PRIORITY_ID } = await import("@repo/api");
 
-import { getClient } from "#utils/client.ts";
-import promptRequired from "#utils/prompt.ts";
-import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
-import { issueUrl, openUrl } from "#utils/url.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: promptRequired } = await import("#utils/prompt.ts");
+const { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } = await import("#utils/resolve.ts");
+const { issueUrl, openUrl } = await import("#utils/url.ts");
+const { default: consola } = await import("consola");
 
 const mockCreatedIssue = {
 	issueKey: "PROJ-1",
@@ -29,7 +30,7 @@ const mockCreatedIssue = {
 
 describe("issue create", () => {
 	beforeEach(() => {
-		vi.mocked(promptRequired).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
+		(promptRequired as any).mockImplementation((_label: string, value?: string) => Promise.resolve(value as string));
 	});
 
 	it("必須引数で課題を作成する", async () => {

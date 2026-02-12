@@ -1,24 +1,25 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectArg: vi.fn(() => "PROJ"),
-	resolveUserId: vi.fn(() => Promise.resolve(999)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectArg: mock(() => "PROJ"),
+	resolveUserId: mock(() => Promise.resolve(999)),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/prompt.ts", () => {
-	const fn = vi.fn((_label: string, value: string) => Promise.resolve(value));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/prompt.ts", () => {
+	const fn = mock((_label: string, value: string) => Promise.resolve(value));
 	return { default: fn, promptRequired: fn };
 });
-vi.mock("#utils/url.ts", () => ({
-	openUrl: vi.fn(),
-	pullRequestUrl: vi.fn(() => "https://example.backlog.com/git/PROJ/repo/pullRequests/1"),
+mock.module("#utils/url.ts", () => ({
+	openUrl: mock(),
+	pullRequestUrl: mock(() => "https://example.backlog.com/git/PROJ/repo/pullRequests/1"),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { resolveUserId } from "#utils/resolve.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { resolveUserId } = await import("#utils/resolve.ts");
+const { default: consola } = await import("consola");
 
 const mockCreatedPr = {
 	number: 1,
@@ -51,7 +52,7 @@ describe("pr create", () => {
 
 	it("assigneeを指定する", async () => {
 		const mockClient = setupMockClient(getClient);
-		vi.mocked(resolveUserId).mockResolvedValue(999);
+		(resolveUserId as any).mockResolvedValue(999);
 		mockClient.mockResolvedValue(mockCreatedPr);
 
 		const mod = await import("#commands/pr/create.ts");

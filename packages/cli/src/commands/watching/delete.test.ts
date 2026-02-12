@@ -1,11 +1,12 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("watching delete", () => {
 	it("--yes でウォッチを削除する", async () => {
@@ -22,7 +23,7 @@ describe("watching delete", () => {
 
 	it("確認キャンセルで削除しない", async () => {
 		const mockClient = setupMockClient(getClient);
-		vi.mocked(consola.prompt).mockResolvedValue(false as never);
+		(consola.prompt as any).mockResolvedValue(false as never);
 
 		const mod = await import("#commands/watching/delete.ts");
 		await mod.default.run?.({ args: { "watching-id": "42" } } as never);
@@ -34,7 +35,7 @@ describe("watching delete", () => {
 
 	it("確認承認で削除する", async () => {
 		const mockClient = setupMockClient(getClient);
-		vi.mocked(consola.prompt).mockResolvedValue(true as never);
+		(consola.prompt as any).mockResolvedValue(true as never);
 		mockClient.mockResolvedValue({});
 
 		const mod = await import("#commands/watching/delete.ts");

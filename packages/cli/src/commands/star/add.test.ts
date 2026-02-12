@@ -1,11 +1,12 @@
 import { setupMockClient } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("star add", () => {
 	it("課題にスターを付ける", async () => {
@@ -78,7 +79,7 @@ describe("star add", () => {
 
 	it("無効なコメント ID でエラー終了する", async () => {
 		setupMockClient(getClient);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/star/add.ts");
 		await mod.default.run?.({ args: { comment: "abc" } } as never);
@@ -90,7 +91,7 @@ describe("star add", () => {
 
 	it("無効な Wiki ID でエラー終了する", async () => {
 		setupMockClient(getClient);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/star/add.ts");
 		await mod.default.run?.({ args: { wiki: "xyz" } } as never);
@@ -102,7 +103,7 @@ describe("star add", () => {
 
 	it("無効な PR コメント ID でエラー終了する", async () => {
 		setupMockClient(getClient);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/star/add.ts");
 		await mod.default.run?.({ args: { "pr-comment": "bad" } } as never);
@@ -114,7 +115,7 @@ describe("star add", () => {
 
 	it("ターゲット未指定でエラー終了する", async () => {
 		setupMockClient(getClient);
-		const mockExit = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const mockExit = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/star/add.ts");
 		await mod.default.run?.({ args: {} } as never);

@@ -14,7 +14,7 @@ import {
 	resolveUserId,
 } from "#utils/resolve.ts";
 import { spyOnProcessExit } from "@repo/test-utils";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "bun:test";
 
 function createMockClient(responses: Record<string, unknown>): BacklogClient {
 	return ((url: string) => {

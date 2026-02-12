@@ -1,19 +1,21 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	loadConfig: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => ({
-	default: {
-		log: vi.fn(),
-		error: vi.fn(),
-	},
-}));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getNestedValue, resolveKey } from "#commands/config/get.ts";
-import { loadConfig } from "@repo/config";
-import consola from "consola";
+const { getNestedValue, resolveKey } = await import("#commands/config/get.ts");
+const { loadConfig } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("getNestedValue", () => {
 	it("浅いキーで値を取得する", () => {
@@ -61,12 +63,10 @@ describe("resolveKey", () => {
 });
 
 describe("config get run()", () => {
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
+	beforeEach(() => {});
 
 	it("グローバル設定値を取得する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: "example.backlog.com",
 		} as never);
@@ -81,7 +81,7 @@ describe("config get run()", () => {
 
 	it("ネストした設定値をJSON出力する", async () => {
 		const spaces = [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key123" } }];
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces,
 			defaultSpace: "example.backlog.com",
 		} as never);
@@ -95,7 +95,7 @@ describe("config get run()", () => {
 	});
 
 	it("--space 指定時にスペース固有の値を取得する", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [{ host: "example.backlog.com", auth: { method: "api-key", apiKey: "key123" } }],
 			defaultSpace: "example.backlog.com",
 		} as never);
@@ -109,12 +109,12 @@ describe("config get run()", () => {
 	});
 
 	it("--space が見つからない場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 		} as never);
 
-		const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => undefined as never);
+		const exitSpy = spyOn(process, "exit").mockImplementation(() => undefined as never);
 
 		const mod = await import("#commands/config/get.ts");
 		await mod.default.run?.({
@@ -128,7 +128,7 @@ describe("config get run()", () => {
 	});
 
 	it("未定義キーは何も出力しない", async () => {
-		vi.mocked(loadConfig).mockResolvedValue({
+		(loadConfig as any).mockResolvedValue({
 			spaces: [],
 			defaultSpace: undefined,
 		} as never);

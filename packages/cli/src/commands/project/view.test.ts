@@ -1,16 +1,17 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/url.ts", () => ({
-	openUrl: vi.fn(),
-	projectUrl: vi.fn(() => "https://example.backlog.com/projects/PROJ"),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/url.ts", () => ({
+	openUrl: mock(),
+	projectUrl: mock(() => "https://example.backlog.com/projects/PROJ"),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import { openUrl, projectUrl } from "#utils/url.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { openUrl, projectUrl } = await import("#utils/url.ts");
+const { default: consola } = await import("consola");
 
 describe("project view", () => {
 	const mockProject = {
@@ -51,10 +52,10 @@ describe("project view", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

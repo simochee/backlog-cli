@@ -1,29 +1,42 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { beforeEach, describe, expect, it, mock } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	resolveSpace: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("@repo/api", () => ({
-	createClient: vi.fn(() => (() => {}) as unknown),
+mock.module("@repo/api", () => ({
+	createClient: mock(),
+	formatResetTime: mock(),
+	exchangeAuthorizationCode: mock(),
+	refreshAccessToken: mock(),
+	DEFAULT_PRIORITY_ID: 3,
+	PR_STATUS: { Open: 1, Closed: 2, Merged: 3 },
+	PRIORITY: { High: 2, Normal: 3, Low: 4 },
+	RESOLUTION: { Fixed: 0, WontFix: 1, Invalid: 2, Duplicate: 3, CannotReproduce: 4 },
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import { createClient } from "@repo/api";
-import { resolveSpace } from "@repo/config";
+const { getClient } = await import("#utils/client.ts");
+const { createClient } = await import("@repo/api");
+const { resolveSpace } = await import("@repo/config");
 
 describe("getClient", () => {
 	beforeEach(() => {
-		vi.clearAllMocks();
 		delete process.env["BACKLOG_API_KEY"];
 		delete process.env["BACKLOG_SPACE"];
 	});
 
 	it("API Key 認証でクライアントを作成する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: { method: "api-key" as const, apiKey: "test-key" },
 		});
@@ -38,7 +51,7 @@ describe("getClient", () => {
 	});
 
 	it("OAuth 認証でクライアントを作成する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: {
 				method: "oauth" as const,
@@ -52,11 +65,11 @@ describe("getClient", () => {
 		// OAuth の場合は createClient を使わず、ofetch.create を直接使用する
 		expect(createClient).not.toHaveBeenCalled();
 		expect(result.host).toBe("example.backlog.com");
-		expect(result.client).toBeTypeOf("function");
+		expect(typeof result.client).toBe("function");
 	});
 
 	it("明示的なホスト名を resolveSpace に渡す", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "custom.backlog.com",
 			auth: { method: "api-key" as const, apiKey: "key" },
 		});
@@ -67,7 +80,7 @@ describe("getClient", () => {
 	});
 
 	it("設定ファイルのスペースが BACKLOG_API_KEY より優先される", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "configured.backlog.com",
 			auth: { method: "api-key" as const, apiKey: "configured-key" },
 		});
@@ -84,7 +97,7 @@ describe("getClient", () => {
 	});
 
 	it("BACKLOG_API_KEY と BACKLOG_SPACE でフォールバック認証する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null);
+		(resolveSpace as any).mockResolvedValue(null);
 		process.env["BACKLOG_API_KEY"] = "env-api-key";
 		process.env["BACKLOG_SPACE"] = "env.backlog.com";
 
@@ -98,7 +111,7 @@ describe("getClient", () => {
 	});
 
 	it("BACKLOG_API_KEY と明示的ホスト名でフォールバック認証する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null);
+		(resolveSpace as any).mockResolvedValue(null);
 		process.env["BACKLOG_API_KEY"] = "env-api-key";
 
 		const result = await getClient("explicit.backlog.com");
@@ -111,7 +124,7 @@ describe("getClient", () => {
 	});
 
 	it("BACKLOG_API_KEY のみで BACKLOG_SPACE がない場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null);
+		(resolveSpace as any).mockResolvedValue(null);
 		process.env["BACKLOG_API_KEY"] = "env-api-key";
 		const mockExit = spyOnProcessExit();
 
@@ -122,7 +135,7 @@ describe("getClient", () => {
 	});
 
 	it("スペースが未設定で環境変数もない場合 process.exit(1) を呼ぶ", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null);
+		(resolveSpace as any).mockResolvedValue(null);
 		const mockExit = spyOnProcessExit();
 
 		await getClient();

@@ -1,5 +1,5 @@
 import { DEFAULT_PRIORITY_ID, PRIORITY, PR_STATUS, RESOLUTION } from "#types.ts";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 describe("PRIORITY", () => {
 	it("固定の優先度 ID を持つ", () => {

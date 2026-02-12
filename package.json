@@ -23,7 +23,6 @@
 	},
 	"devDependencies": {
 		"@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
-		"@vitest/coverage-v8": "^4.0.18",
 		"bun-types": "^1.3.5",
 		"lefthook": "^2.0.12",
 		"oxfmt": "^0.28.0",
@@ -31,8 +30,7 @@
 		"textlint": "^15.5.1",
 		"textlint-rule-ja-space-between-half-and-full-width": "^2.4.2",
 		"textlint-rule-preset-ja-technical-writing": "^12.0.2",
-		"turbo": "^2.7.0",
-		"vitest": "^4.0.18"
+		"turbo": "^2.7.0"
 	},
 	"packageManager": "bun@1.3.5"
 }

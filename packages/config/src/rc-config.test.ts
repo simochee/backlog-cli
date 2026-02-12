@@ -1,13 +1,13 @@
-import { loadConfig, writeConfig } from "#config.ts";
 import { spyOnProcessExit } from "@repo/test-utils";
-import consola from "consola";
-import { readUser, writeUser } from "rc9";
-import { describe, expect, it, type Mock, vi } from "vitest";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("rc9", () => ({
-	readUser: vi.fn(),
-	writeUser: vi.fn(),
+mock.module("rc9", () => ({
+	readUser: mock(),
+	writeUser: mock(),
 }));
+const { loadConfig, writeConfig } = await import("#config.ts");
+const { default: consola } = await import("consola");
+const { readUser, writeUser } = await import("rc9");
 
 describe("loadConfig", () => {
 	it("returns validated config when rc file is valid", async () => {
@@ -39,7 +39,7 @@ describe("loadConfig", () => {
 
 	it("exits process when config validation fails", async () => {
 		const exitSpy = spyOnProcessExit();
-		const errorSpy = vi.spyOn(consola, "error").mockImplementation(() => {});
+		const errorSpy = spyOn(consola, "error").mockImplementation(() => {});
 
 		(readUser as Mock).mockResolvedValue({
 			spaces: [{ host: "invalid", auth: { method: "bad" } }],

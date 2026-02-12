@@ -1,14 +1,15 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("#utils/format.ts", () => ({
-	formatDate: vi.fn(() => "2024-01-01"),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("#utils/format.ts", () => ({
+	formatDate: mock(() => "2024-01-01"),
 }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { getClient } from "#utils/client.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { default: consola } = await import("consola");
 
 describe("user view", () => {
 	it("ユーザー詳細を表示する", async () => {
@@ -32,10 +33,10 @@ describe("user view", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {

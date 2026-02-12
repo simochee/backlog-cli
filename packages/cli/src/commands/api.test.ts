@@ -1,5 +1,5 @@
 import { parseField } from "#commands/api.ts";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 describe("parseField", () => {
 	it("key=value 形式の文字列をパースする", () => {

@@ -1,22 +1,29 @@
 import { spyOnProcessExit } from "@repo/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("@repo/config", () => ({
-	resolveSpace: vi.fn(),
+mock.module("@repo/config", () => ({
+	loadConfig: mock(),
+	writeConfig: mock(),
+	addSpace: mock(),
+	findSpace: mock(),
+	removeSpace: mock(),
+	resolveSpace: mock(),
+	updateSpaceAuth: mock(),
 }));
 
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
+mock.module("consola", () => ({ default: mockConsola }));
 
-import { resolveSpace } from "@repo/config";
-import consola from "consola";
+const { resolveSpace } = await import("@repo/config");
+const { default: consola } = await import("consola");
 
 describe("auth token", () => {
 	it("API キーを stdout に出力する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: { method: "api-key", apiKey: "my-api-key" },
 		});
-		const stdoutSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		const stdoutSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 
 		try {
 			const mod = await import("#commands/auth/token.ts");
@@ -30,11 +37,11 @@ describe("auth token", () => {
 	});
 
 	it("OAuth トークンを stdout に出力する", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue({
+		(resolveSpace as any).mockResolvedValue({
 			host: "example.backlog.com",
 			auth: { method: "oauth", accessToken: "my-access-token", refreshToken: "my-refresh-token" },
 		});
-		const stdoutSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+		const stdoutSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 
 		try {
 			const mod = await import("#commands/auth/token.ts");
@@ -48,7 +55,7 @@ describe("auth token", () => {
 	});
 
 	it("スペース未設定で process.exit(1) が呼ばれる", async () => {
-		vi.mocked(resolveSpace).mockResolvedValue(null as never);
+		(resolveSpace as any).mockResolvedValue(null as never);
 		const exitSpy = spyOnProcessExit();
 
 		try {

@@ -1,22 +1,23 @@
 import { setupMockClient } from "@repo/test-utils";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import mockConsola from "@repo/test-utils/mock-consola";
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
-vi.mock("#utils/client.ts", () => ({ getClient: vi.fn() }));
-vi.mock("consola", () => import("@repo/test-utils/mock-consola"));
-vi.mock("#utils/format.ts", () => ({
-	formatIssueLine: vi.fn(() => "PROJ-1  Open  Bug  High  user  Summary"),
-	padEnd: vi.fn((s: string, n: number) => s.padEnd(n)),
+mock.module("#utils/client.ts", () => ({ getClient: mock() }));
+mock.module("consola", () => ({ default: mockConsola }));
+mock.module("#utils/format.ts", () => ({
+	formatIssueLine: mock(() => "PROJ-1  Open  Bug  High  user  Summary"),
+	padEnd: mock((s: string, n: number) => s.padEnd(n)),
 }));
-vi.mock("#utils/resolve.ts", () => ({
-	resolveProjectId: vi.fn(),
-	resolveUserId: vi.fn(),
-	resolvePriorityId: vi.fn(),
+mock.module("#utils/resolve.ts", () => ({
+	resolveProjectId: mock(),
+	resolveUserId: mock(),
+	resolvePriorityId: mock(),
 }));
 
-import { getClient } from "#utils/client.ts";
-import { formatIssueLine } from "#utils/format.ts";
-import { resolveProjectId, resolveUserId } from "#utils/resolve.ts";
-import consola from "consola";
+const { getClient } = await import("#utils/client.ts");
+const { formatIssueLine } = await import("#utils/format.ts");
+const { resolveProjectId, resolveUserId } = await import("#utils/resolve.ts");
+const { default: consola } = await import("consola");
 
 describe("issue list", () => {
 	it("課題一覧を表示する", async () => {
@@ -48,7 +49,7 @@ describe("issue list", () => {
 
 	it("--project でプロジェクトを指定する", async () => {
 		const mockClient = setupMockClient(getClient);
-		vi.mocked(resolveProjectId).mockResolvedValue(12_345);
+		(resolveProjectId as any).mockResolvedValue(12_345);
 		mockClient.mockResolvedValue([{ issueKey: "PROJ-1", summary: "Issue 1" }]);
 
 		const mod = await import("#commands/issue/list.ts");
@@ -65,7 +66,7 @@ describe("issue list", () => {
 
 	it("--assignee で担当者フィルタを適用する", async () => {
 		const mockClient = setupMockClient(getClient);
-		vi.mocked(resolveUserId).mockResolvedValue(999);
+		(resolveUserId as any).mockResolvedValue(999);
 		mockClient.mockResolvedValue([{ issueKey: "PROJ-1", summary: "Issue 1" }]);
 
 		const mod = await import("#commands/issue/list.ts");
@@ -81,10 +82,10 @@ describe("issue list", () => {
 	});
 
 	describe("--json", () => {
-		let writeSpy: ReturnType<typeof vi.spyOn>;
+		let writeSpy: ReturnType<typeof spyOn>;
 
 		beforeEach(() => {
-			writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+			writeSpy = spyOn(process.stdout, "write").mockImplementation(() => true);
 		});
 
 		afterEach(() => {
