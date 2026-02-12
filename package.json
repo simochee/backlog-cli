@@ -1,5 +1,6 @@
 {
 	"private": true,
+	"homepage": "https://backlog-cli.simochee.net",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
