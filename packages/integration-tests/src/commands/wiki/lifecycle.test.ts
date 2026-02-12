@@ -73,6 +73,6 @@ describe("wiki lifecycle", () => {
 	it("Wiki ページを削除する", async () => {
 		const result = await runCliWithRetry(["wiki", "delete", wikiId, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

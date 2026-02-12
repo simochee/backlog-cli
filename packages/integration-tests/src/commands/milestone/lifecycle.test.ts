@@ -46,6 +46,6 @@ describe("milestone lifecycle", () => {
 	it("マイルストーンを削除する", async () => {
 		const result = await runCliWithRetry(["milestone", "delete", milestoneId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

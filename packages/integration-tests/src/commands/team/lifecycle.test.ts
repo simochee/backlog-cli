@@ -38,6 +38,6 @@ describe("team lifecycle", () => {
 	it("チームを削除する", async () => {
 		const result = await runCliWithRetry(["team", "delete", teamId, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

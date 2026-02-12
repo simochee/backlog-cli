@@ -38,6 +38,6 @@ describe("category lifecycle", () => {
 	it("カテゴリを削除する", async () => {
 		const result = await runCliWithRetry(["category", "delete", categoryId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

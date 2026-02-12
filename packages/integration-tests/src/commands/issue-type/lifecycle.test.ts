@@ -57,6 +57,6 @@ describe("issue-type lifecycle", () => {
 			"--yes",
 		]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

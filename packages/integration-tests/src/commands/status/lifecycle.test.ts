@@ -48,6 +48,6 @@ describe("status lifecycle", () => {
 			"--yes",
 		]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

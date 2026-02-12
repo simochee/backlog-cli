@@ -68,6 +68,6 @@ describe("issue lifecycle", () => {
 	it("課題を削除する", async () => {
 		const result = await runCliWithRetry(["issue", "delete", issueKey, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

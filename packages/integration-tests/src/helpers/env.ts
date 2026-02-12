@@ -22,12 +22,12 @@ export interface Env {
 
 export function getEnv(): Env {
 	return {
-		space: process.env.BACKLOG_SPACE!,
-		apiKey: process.env.BACKLOG_API_KEY!,
-		project: process.env.BACKLOG_PROJECT!,
-		repo: process.env.BACKLOG_REPO,
-		prBaseBranch: process.env.BACKLOG_PR_BASE_BRANCH,
-		prSourceBranch: process.env.BACKLOG_PR_SOURCE_BRANCH,
+		space: process.env["BACKLOG_SPACE"]!,
+		apiKey: process.env["BACKLOG_API_KEY"]!,
+		project: process.env["BACKLOG_PROJECT"]!,
+		repo: process.env["BACKLOG_REPO"],
+		prBaseBranch: process.env["BACKLOG_PR_BASE_BRANCH"],
+		prSourceBranch: process.env["BACKLOG_PR_SOURCE_BRANCH"],
 	};
 }
 

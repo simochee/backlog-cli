@@ -55,6 +55,6 @@ describe("webhook lifecycle", () => {
 	it("Webhook を削除する", async () => {
 		const result = await runCliWithRetry(["webhook", "delete", webhookId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

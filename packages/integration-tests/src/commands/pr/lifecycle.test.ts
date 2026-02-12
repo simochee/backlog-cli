@@ -6,7 +6,7 @@ import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
 
 const canRunPrTests = Boolean(
-	process.env.BACKLOG_REPO && process.env.BACKLOG_PR_BASE_BRANCH && process.env.BACKLOG_PR_SOURCE_BRANCH,
+	process.env["BACKLOG_REPO"] && process.env["BACKLOG_PR_BASE_BRANCH"] && process.env["BACKLOG_PR_SOURCE_BRANCH"],
 );
 
 describe.skipIf(!canRunPrTests)("pr lifecycle", () => {

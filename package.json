@@ -14,12 +14,11 @@
 		"build": "turbo build",
 		"dev": "turbo dev",
 		"postinstall": "lefthook install",
-		"lint": "oxlint",
+		"lint": "oxlint --type-aware --type-check",
 		"test": "turbo test",
 		"test:integration": "turbo test:integration --filter=@repo/integration-tests",
 		"textlint": "textlint \"docs/**/*.md\" \"README.md\"",
-		"textlint:fix": "textlint --fix \"docs/**/*.md\" \"README.md\"",
-		"type-check": "turbo type-check"
+		"textlint:fix": "textlint --fix \"docs/**/*.md\" \"README.md\""
 	},
 	"devDependencies": {
 		"@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
@@ -28,6 +27,7 @@
 		"lefthook": "^2.0.12",
 		"oxfmt": "^0.28.0",
 		"oxlint": "^1.43.0",
+		"oxlint-tsgolint": "^0.12.1",
 		"textlint": "^15.5.1",
 		"textlint-rule-ja-space-between-half-and-full-width": "^2.4.2",
 		"textlint-rule-preset-ja-technical-writing": "^12.0.2",
