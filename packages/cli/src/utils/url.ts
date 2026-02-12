@@ -42,6 +42,11 @@ export function wikiUrl(host: string, wikiId: number): string {
 	return buildBacklogUrl(host, `/alias/wiki/${wikiId}`);
 }
 
+/** Returns the URL for a document page. */
+export function documentUrl(host: string, projectKey: string, documentId: string): string {
+	return buildBacklogUrl(host, `/projects/${projectKey}/document/${documentId}`);
+}
+
 /** Returns the URL for the dashboard. */
 export function dashboardUrl(host: string): string {
 	return buildBacklogUrl(host, "/dashboard");

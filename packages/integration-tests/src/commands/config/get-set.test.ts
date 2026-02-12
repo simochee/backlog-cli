@@ -14,19 +14,15 @@ describe("config get/set", () => {
 		expectSuccess(result);
 	});
 
-	it("設定値を設定して取得できる", async () => {
-		// Set a test value
-		const result = await runCli(["config", "set", "default_space", "test-space.backlog.com"], {
-			env: envWithoutSpace,
-		});
-		expectSuccess(result);
+	it("未認証のスペースを default_space に設定するとエラーになる", async () => {
+		const result = await runCli(["config", "set", "default_space", "test-space.backlog.com"]);
+		expect(result.exitCode).toBe(1);
+		expect(result.stderr).toContain("not authenticated");
+	});
 
-		// Read it back
-		const getResult = await runCli(["config", "get", "default_space"], { env: envWithoutSpace });
-		expectSuccess(getResult);
-		expect(getResult.stdout).toContain("test-space.backlog.com");
-
-		// Reset - set to empty to clean up
-		await runCli(["config", "set", "default_space", ""], { env: envWithoutSpace });
+	it("不明な設定キーを設定するとエラーになる", async () => {
+		const result = await runCli(["config", "set", "unknown_key", "value"]);
+		expect(result.exitCode).toBe(1);
+		expect(result.stderr).toContain("Unknown or read-only config key");
 	});
 });

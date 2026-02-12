@@ -9,6 +9,7 @@ import "./teams.tsp";
 import "./projects";
 import "./issues";
 import "./wiki";
+import "./documents";
 import "./notifications.tsp";
 import "./git";
 import "./watching.tsp";
@@ -62,6 +63,7 @@ using TypeSpec.OpenAPI;
 @tagMetadata("Wikis", #{ description: "Wiki page management: list, create, update, delete pages." })
 @tagMetadata("Wiki Attachments", #{ description: "Attachments on wiki pages." })
 @tagMetadata("Wiki Shared Files", #{ description: "Shared files linked to wiki pages." })
+@tagMetadata("Documents", #{ description: "Document management: create and delete documents." })
 @tagMetadata("Watching", #{ description: "Watching (follow) management for issues." })
 @tagMetadata("Webhooks", #{ description: "Webhook management within projects." })
 @tagMetadata("Stars", #{ description: "Star (favorite) operations for issues, comments, wikis, and pull requests." })

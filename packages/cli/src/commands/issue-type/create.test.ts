@@ -32,7 +32,7 @@ describe("issue-type create", () => {
 			"/projects/PROJ/issueTypes",
 			expect.objectContaining({
 				method: "POST",
-				body: { name: "Bug", color: "#e30000" },
+				body: new URLSearchParams({ name: "Bug", color: "#e30000" }),
 			}),
 		);
 		expect(consola.success).toHaveBeenCalledWith("Created issue type #1: Bug");

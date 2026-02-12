@@ -1,7 +1,7 @@
 import type { BacklogWebhook } from "@repo/api";
-import type { WebhooksCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
@@ -13,6 +13,7 @@ export default defineCommand({
 		description: "Create a webhook",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -49,21 +50,22 @@ export default defineCommand({
 		const name = await promptRequired("Webhook name:", args.name);
 		const hookUrl = await promptRequired("Hook URL:", args["hook-url"]);
 
-		const body: WebhooksCreateData["body"] & Record<string, unknown> = {
-			name,
-			hookUrl,
-		};
+		const body = new URLSearchParams();
+		body.append("name", name);
+		body.append("hookUrl", hookUrl);
 
 		if (args.description) {
-			body.description = args.description;
+			body.append("description", args.description);
 		}
 
 		if (args["all-event"]) {
-			body.allEvent = true;
+			body.append("allEvent", "true");
 		}
 
 		if (args["activity-type-ids"]) {
-			body["activityTypeIds[]"] = args["activity-type-ids"].split(",").map((id) => Number.parseInt(id.trim(), 10));
+			for (const id of args["activity-type-ids"].split(",")) {
+				body.append("activityTypeIds[]", id.trim());
+			}
 		}
 
 		const webhook = await client<BacklogWebhook>(`/projects/${project}/webhooks`, {
@@ -71,6 +73,8 @@ export default defineCommand({
 			body,
 		});
 
-		consola.success(`Created webhook #${webhook.id}: ${webhook.name}`);
+		outputResult(webhook, args, (data) => {
+			consola.success(`Created webhook #${data.id}: ${data.name}`);
+		});
 	},
 });

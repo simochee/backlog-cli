@@ -32,7 +32,7 @@ describe("status create", () => {
 			"/projects/PROJ/statuses",
 			expect.objectContaining({
 				method: "POST",
-				body: { name: "In Progress", color: "#4488cc" },
+				body: new URLSearchParams({ name: "In Progress", color: "#4488cc" }),
 			}),
 		);
 		expect(consola.success).toHaveBeenCalledWith("Created status #1: In Progress");
