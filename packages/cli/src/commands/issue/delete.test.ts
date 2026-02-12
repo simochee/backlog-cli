@@ -28,7 +28,7 @@ describe("issue delete", () => {
 		const mod = await import("#commands/issue/delete.ts");
 		await mod.default.run?.({ args: { issueKey: "PROJ-1" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 		expect(mockClient).not.toHaveBeenCalledWith("/issues/PROJ-1", expect.objectContaining({ method: "DELETE" }));
 	});
@@ -41,7 +41,7 @@ describe("issue delete", () => {
 		const mod = await import("#commands/issue/delete.ts");
 		await mod.default.run?.({ args: { issueKey: "PROJ-2" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(mockClient).toHaveBeenCalledWith("/issues/PROJ-2", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.success).toHaveBeenCalledWith("Deleted PROJ-2: Another Issue");
 	});

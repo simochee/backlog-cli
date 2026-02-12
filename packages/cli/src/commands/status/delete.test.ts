@@ -56,7 +56,7 @@ describe("status delete", () => {
 		const mod = await import("#commands/status/delete.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", "substitute-status-id": "2" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 	});
 });

@@ -56,7 +56,7 @@ describe("issue-type delete", () => {
 		const mod = await import("#commands/issue-type/delete.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ", "substitute-issue-type-id": "2" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 	});
 });

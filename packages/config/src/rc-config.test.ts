@@ -11,7 +11,7 @@ const { readUser, writeUser } = await import("rc9");
 
 describe("loadConfig", () => {
 	it("returns validated config when rc file is valid", async () => {
-		(readUser as Mock).mockResolvedValue({
+		(readUser as any).mockResolvedValue({
 			defaultSpace: "example.backlog.com",
 			spaces: [
 				{
@@ -29,7 +29,7 @@ describe("loadConfig", () => {
 	});
 
 	it("returns empty spaces array when rc file is empty", async () => {
-		(readUser as Mock).mockResolvedValue({});
+		(readUser as any).mockResolvedValue({});
 
 		const config = await loadConfig();
 
@@ -39,9 +39,9 @@ describe("loadConfig", () => {
 
 	it("exits process when config validation fails", async () => {
 		const exitSpy = spyOnProcessExit();
-		const errorSpy = spyOn(consola, "error").mockImplementation(() => {});
+		const errorSpy = spyOn(consola, "error").mockImplementation((() => {}) as unknown as typeof consola.error);
 
-		(readUser as Mock).mockResolvedValue({
+		(readUser as any).mockResolvedValue({
 			spaces: [{ host: "invalid", auth: { method: "bad" } }],
 		});
 

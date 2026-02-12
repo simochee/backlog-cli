@@ -28,7 +28,7 @@ describe("project delete", () => {
 		const mod = await import("#commands/project/delete.ts");
 		await mod.default.run?.({ args: { "project-key": "PROJ" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 		// DELETE リクエストが送信されないことを確認
 		expect(mockClient).not.toHaveBeenCalledWith("/projects/PROJ", expect.objectContaining({ method: "DELETE" }));

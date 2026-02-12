@@ -28,7 +28,7 @@ describe("team delete", () => {
 		const mod = await import("#commands/team/delete.ts");
 		await mod.default.run?.({ args: { "team-id": "1" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 	});
 });

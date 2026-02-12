@@ -31,7 +31,7 @@ describe("webhook delete", () => {
 		const mod = await import("#commands/webhook/delete.ts");
 		await mod.default.run?.({ args: { id: "1", project: "PROJ" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 	});
 });

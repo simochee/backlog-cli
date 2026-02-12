@@ -45,7 +45,7 @@ describe("wiki delete", () => {
 		const mod = await import("#commands/wiki/delete.ts");
 		await mod.default.run?.({ args: { "wiki-id": "1" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 	});
 });

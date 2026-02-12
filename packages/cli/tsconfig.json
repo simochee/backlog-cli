@@ -1,7 +1,4 @@
 {
 	"extends": "@repo/tsconfigs/bun.json",
-	"include": ["src", "../openapi-client/src/globals.d.ts"],
-	"compilerOptions": {
-		"types": ["bun-types"]
-	}
+	"include": ["src", "../openapi-client/src/globals.d.ts"]
 }

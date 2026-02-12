@@ -28,7 +28,7 @@ describe("watching delete", () => {
 		const mod = await import("#commands/watching/delete.ts");
 		await mod.default.run?.({ args: { "watching-id": "42" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(consola.info).toHaveBeenCalledWith("Cancelled.");
 		expect(mockClient).not.toHaveBeenCalledWith("/watchings/42", expect.objectContaining({ method: "DELETE" }));
 	});
@@ -41,7 +41,7 @@ describe("watching delete", () => {
 		const mod = await import("#commands/watching/delete.ts");
 		await mod.default.run?.({ args: { "watching-id": "55" } } as never);
 
-		expect(consola.prompt).toHaveBeenCalledOnce();
+		expect(consola.prompt).toHaveBeenCalledTimes(1);
 		expect(mockClient).toHaveBeenCalledWith("/watchings/55", expect.objectContaining({ method: "DELETE" }));
 		expect(consola.success).toHaveBeenCalledWith("Deleted watching 55.");
 	});
