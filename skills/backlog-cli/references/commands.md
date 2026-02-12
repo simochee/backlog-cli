@@ -9,7 +9,7 @@ $ backlog --help
 
 Backlog CLI — manage Backlog from the command line (backlog v0.0.0)
 
-USAGE backlog auth|config|issue|project|pr|repo|notification|dashboard|browse|api|wiki|user|team|category|milestone|issue-type|status|space|webhook|star|watching|alias|completion
+USAGE backlog auth|config|issue|project|pr|repo|notification|dashboard|browse|api|wiki|document|user|team|category|milestone|issue-type|status|space|webhook|star|watching|alias|completion
 
 COMMANDS
 
@@ -24,6 +24,7 @@ COMMANDS
         browse    Open Backlog in the browser
            api    Make an authenticated API request
           wiki    Manage wiki pages
+      document    Manage documents
           user    Manage users
           team    Manage teams
       category    Manage issue categories
@@ -402,6 +403,137 @@ COMMANDS
   attachments    List wiki page attachments
 
 Use backlog wiki <command> --help for more information about a command.
+```
+
+## document
+
+```
+$ backlog document --help
+
+Manage documents (backlog document v0.0.0)
+
+USAGE backlog document list|view|create|delete|tree|attachments
+
+COMMANDS
+
+         list    List documents
+         view    View a document
+       create    Create a document
+       delete    Delete a document
+         tree    Show document tree
+  attachments    List document attachments
+
+Use backlog document <command> --help for more information about a command.
+```
+
+### document list
+
+```
+$ backlog document list --help
+
+List documents (backlog document list v0.0.0)
+
+USAGE backlog document list [OPTIONS]
+
+OPTIONS
+
+  -p, --project    Project key (env: BACKLOG_PROJECT)
+  -k, --keyword    Keyword search
+      --sort       Sort key: created or updated (default: updated)
+      --order      Sort order: asc or desc (default: desc)
+      --offset     Offset for pagination
+  -L, --limit      Number of results (default: 20)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
+```
+
+### document view
+
+```
+$ backlog document view --help
+
+View a document (backlog document view v0.0.0)
+
+USAGE backlog document view DOCUMENT-ID [OPTIONS]
+
+ARGUMENTS
+
+  DOCUMENT-ID    Document ID (required)
+
+OPTIONS
+
+      --web        Open in browser
+  -p, --project    Project key (required for --web)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
+```
+
+### document create
+
+```
+$ backlog document create --help
+
+Create a document (backlog document create v0.0.0)
+
+USAGE backlog document create [OPTIONS]
+
+OPTIONS
+
+  -p, --project      Project key (env: BACKLOG_PROJECT)
+  -t, --title        Document title
+  -b, --body         Document content (Markdown)
+      --emoji        Emoji displayed next to the title
+      --parent-id    Parent document ID
+      --add-last     Add to the end of siblings (default: add to beginning)
+```
+
+### document delete
+
+```
+$ backlog document delete --help
+
+Delete a document (backlog document delete v0.0.0)
+
+USAGE backlog document delete DOCUMENT-ID [OPTIONS]
+
+ARGUMENTS
+
+  DOCUMENT-ID    Document ID (required)
+
+OPTIONS
+
+  -y, --yes    Skip confirmation prompt
+```
+
+### document tree
+
+```
+$ backlog document tree --help
+
+Show document tree (backlog document tree v0.0.0)
+
+USAGE backlog document tree [OPTIONS]
+
+OPTIONS
+
+  -p, --project    Project key (env: BACKLOG_PROJECT)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
+```
+
+### document attachments
+
+```
+$ backlog document attachments --help
+
+List document attachments (backlog document attachments v0.0.0)
+
+USAGE backlog document attachments DOCUMENT-ID [OPTIONS]
+
+ARGUMENTS
+
+  DOCUMENT-ID    Document ID (required)
+
+OPTIONS
+
+      --json    Output as JSON (optionally filter by field names, comma-separated)
 ```
 
 ## user
