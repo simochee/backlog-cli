@@ -1,6 +1,7 @@
 import type { IssuesCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveIssueTypeId, resolvePriorityId, resolveProjectId, resolveUserId } from "#utils/resolve.ts";
 import readStdin from "#utils/stdin.ts";
@@ -15,6 +16,7 @@ export default defineCommand({
 		description: "Create a new issue",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -106,7 +108,9 @@ export default defineCommand({
 			body,
 		});
 
-		consola.success(`Created ${issue.issueKey}: ${issue.summary}`);
+		outputResult(issue, args, (data) => {
+			consola.success(`Created ${data.issueKey}: ${data.summary}`);
+		});
 
 		if (args.web) {
 			const url = issueUrl(host, issue.issueKey);

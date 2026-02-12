@@ -2,6 +2,7 @@ import type { BacklogPullRequest } from "@repo/api";
 import type { PullRequestsCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg, resolveUserId } from "#utils/resolve.ts";
 import { openUrl, pullRequestUrl } from "#utils/url.ts";
@@ -14,6 +15,7 @@ export default defineCommand({
 		description: "Create a pull request",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -89,7 +91,9 @@ export default defineCommand({
 			body,
 		});
 
-		consola.success(`Created PR #${pr.number}: ${pr.summary}`);
+		outputResult(pr, args, (data) => {
+			consola.success(`Created PR #${data.number}: ${data.summary}`);
+		});
 
 		if (args.web) {
 			const url = pullRequestUrl(host, project, args.repo, pr.number);

@@ -2,6 +2,7 @@ import type { BacklogWatching } from "@repo/api";
 import type { WatchingsCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import { defineCommand } from "citty";
 import consola from "consola";
 
@@ -11,6 +12,7 @@ export default defineCommand({
 		description: "Add a watching",
 	},
 	args: {
+		...outputArgs,
 		issue: {
 			type: "string",
 			description: "Issue key to watch",
@@ -37,6 +39,8 @@ export default defineCommand({
 			body,
 		});
 
-		consola.success(`Added watching #${watching.id} for ${args.issue}.`);
+		outputResult(watching, args, (data) => {
+			consola.success(`Added watching #${data.id} for ${args.issue}.`);
+		});
 	},
 });
