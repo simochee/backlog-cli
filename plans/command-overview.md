@@ -77,8 +77,12 @@ bl (backlog)
 │   └── attachments
 │
 ├── document                # ドキュメント管理
+│   ├── list
+│   ├── view
 │   ├── create
-│   └── delete
+│   ├── delete
+│   ├── tree
+│   └── attachments
 │
 ├── notification            # 通知管理
 │   ├── list

@@ -47,7 +47,7 @@ src/commands/
   repo/           — Git リポジトリ管理（list, view, clone）
   notification/   — 通知管理（list, count, read, read-all）
   wiki/           — Wiki 管理（list, view, create, edit, delete, count, tags, history, attachments）
-  document/       — ドキュメント管理（create, delete）
+  document/       — ドキュメント管理（list, view, create, delete, tree, attachments）
   user/           — ユーザー管理（list, view, me, activities）
   team/           — チーム管理（list, view, create, edit, delete）
   category/       — カテゴリ管理（list, create, edit, delete）

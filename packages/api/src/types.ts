@@ -409,7 +409,7 @@ export interface BacklogWatchingCount {
 	count: number;
 }
 
-/** Backlog document object. */
+/** Backlog document object (lightweight, returned from create/delete). */
 export interface BacklogDocument {
 	id: string;
 	projectId: number;
@@ -422,4 +422,36 @@ export interface BacklogDocument {
 	created: string;
 	updatedUserId: number;
 	updated: string;
+}
+
+/** Backlog document detail (full, returned from list/get). */
+export interface BacklogDocumentDetail {
+	id: string;
+	projectId: number;
+	title: string;
+	json: unknown | null;
+	plain: string | null;
+	statusId: number;
+	emoji: string;
+	attachments: { id: number; name: string; size: number }[];
+	tags: { id: number; name: string }[];
+	createdUser: BacklogUser;
+	created: string;
+	updatedUser: BacklogUser;
+	updated: string;
+}
+
+/** Backlog document tree node. */
+export interface BacklogDocumentTreeNode {
+	id: string;
+	name: string;
+	emoji: string;
+	children: BacklogDocumentTreeNode[];
+}
+
+/** Backlog document tree response. */
+export interface BacklogDocumentTree {
+	projectId: number;
+	activeTree: { id: string; children: BacklogDocumentTreeNode[] };
+	trashTree: { id: string; children: BacklogDocumentTreeNode[] };
 }

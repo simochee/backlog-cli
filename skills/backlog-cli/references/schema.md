@@ -156,6 +156,7 @@ type Wiki = {
 ## Document
 
 ```typescript
+// Lightweight response (from create/delete)
 type Document = {
   id: string;                    // Document ID
   projectId: number;             // Project ID
@@ -168,6 +169,40 @@ type Document = {
   created: string;               // Created at (ISO 8601)
   updatedUserId: number;         // Last updater user ID
   updated: string;               // Updated at (ISO 8601)
+};
+
+// Full response (from list/get)
+type DocumentDetail = {
+  id: string;                    // Document ID
+  projectId: number;             // Project ID
+  title: string;                 // Title
+  json: unknown | null;          // Structured content
+  plain: string | null;          // Plain text content
+  statusId: number;              // Status ID
+  emoji: string;                 // Emoji
+  attachments: Attachment[];     // Attachments
+  tags: Array<{id: number; name: string}>;  // Tags
+  createdUser: User;             // Creator
+  created: string;               // Created at (ISO 8601)
+  updatedUser: User;             // Last updater
+  updated: string;               // Updated at (ISO 8601)
+};
+```
+
+## DocumentTree
+
+```typescript
+type DocumentTree = {
+  projectId: number;
+  activeTree: { id: string; children: DocumentTreeNode[] };
+  trashTree: { id: string; children: DocumentTreeNode[] };
+};
+
+type DocumentTreeNode = {
+  id: string;                    // Document ID
+  name: string;                  // Document title
+  emoji: string;                 // Emoji
+  children: DocumentTreeNode[];  // Nested children
 };
 ```
 

@@ -1101,6 +1101,31 @@
 
 ### 4.8 `backlog document` — ドキュメント管理
 
+#### `backlog document list`
+
+| 引数/オプション | 短縮 | 型     | 必須  | 説明                   | API パラメータ |
+| --------------- | ---- | ------ | ----- | ---------------------- | -------------- |
+| `--project`     | `-p` | string | Yes\* | プロジェクトキー       | `projectId[]`  |
+| `--keyword`     | `-k` | string | No    | キーワード検索         | `keyword`      |
+| `--sort`        |      | string | No    | ソートキー（デフォルト: updated） | `sort` |
+| `--order`       |      | string | No    | ソート順: asc or desc（デフォルト: desc） | `order` |
+| `--offset`      |      | string | No    | ページネーションオフセット | `offset`   |
+| `--limit`       | `-L` | string | No    | 取得件数（デフォルト: 20）| `count`      |
+| `--json`        |      | string | No    | JSON 出力              |                |
+
+- **対応 API**: `GET /api/v2/documents`
+
+#### `backlog document view <document-id>`
+
+| 引数/オプション  | 短縮 | 型      | 必須 | 説明                           |
+| ---------------- | ---- | ------- | ---- | ------------------------------ |
+| `<document-id>`  |      | string  | Yes  | ドキュメントID                 |
+| `--web`          |      | boolean | No   | ブラウザで開く                 |
+| `--project`      | `-p` | string  | No   | プロジェクトキー（--web 時必須）|
+| `--json`         |      | string  | No   | JSON 出力                      |
+
+- **対応 API**: `GET /api/v2/documents/:documentId`
+
 #### `backlog document create`
 
 | 引数/オプション | 短縮 | 型      | 必須  | 説明                                         | API パラメータ |
@@ -1122,3 +1147,21 @@
 | `--yes`          | `-y` | boolean | No   | 確認プロンプトをスキップ |
 
 - **対応 API**: `DELETE /api/v2/documents/:documentId`
+
+#### `backlog document tree`
+
+| 引数/オプション | 短縮 | 型     | 必須  | 説明             | API パラメータ   |
+| --------------- | ---- | ------ | ----- | ---------------- | ---------------- |
+| `--project`     | `-p` | string | Yes\* | プロジェクトキー | `projectIdOrKey` |
+| `--json`        |      | string | No    | JSON 出力        |                  |
+
+- **対応 API**: `GET /api/v2/documents/tree`
+
+#### `backlog document attachments <document-id>`
+
+| 引数/オプション  | 短縮 | 型     | 必須 | 説明             |
+| ---------------- | ---- | ------ | ---- | ---------------- |
+| `<document-id>`  |      | string | Yes  | ドキュメントID   |
+| `--json`         |      | string | No   | JSON 出力        |
+
+- **対応 API**: `GET /api/v2/documents/:documentId`（レスポンスの attachments フィールドを表示）

@@ -412,14 +412,58 @@ $ backlog document --help
 
 Manage documents (backlog document v0.0.0)
 
-USAGE backlog document create|delete
+USAGE backlog document list|view|create|delete|tree|attachments
 
 COMMANDS
 
-  create    Create a document
-  delete    Delete a document
+         list    List documents
+         view    View a document
+       create    Create a document
+       delete    Delete a document
+         tree    Show document tree
+  attachments    List document attachments
 
 Use backlog document <command> --help for more information about a command.
+```
+
+### document list
+
+```
+$ backlog document list --help
+
+List documents (backlog document list v0.0.0)
+
+USAGE backlog document list [OPTIONS]
+
+OPTIONS
+
+  -p, --project    Project key (env: BACKLOG_PROJECT)
+  -k, --keyword    Keyword search
+      --sort       Sort key: created or updated (default: updated)
+      --order      Sort order: asc or desc (default: desc)
+      --offset     Offset for pagination
+  -L, --limit      Number of results (default: 20)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
+```
+
+### document view
+
+```
+$ backlog document view --help
+
+View a document (backlog document view v0.0.0)
+
+USAGE backlog document view DOCUMENT-ID [OPTIONS]
+
+ARGUMENTS
+
+  DOCUMENT-ID    Document ID (required)
+
+OPTIONS
+
+      --web        Open in browser
+  -p, --project    Project key (required for --web)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
 ```
 
 ### document create
@@ -457,6 +501,39 @@ ARGUMENTS
 OPTIONS
 
   -y, --yes    Skip confirmation prompt
+```
+
+### document tree
+
+```
+$ backlog document tree --help
+
+Show document tree (backlog document tree v0.0.0)
+
+USAGE backlog document tree [OPTIONS]
+
+OPTIONS
+
+  -p, --project    Project key (env: BACKLOG_PROJECT)
+      --json       Output as JSON (optionally filter by field names, comma-separated)
+```
+
+### document attachments
+
+```
+$ backlog document attachments --help
+
+List document attachments (backlog document attachments v0.0.0)
+
+USAGE backlog document attachments DOCUMENT-ID [OPTIONS]
+
+ARGUMENTS
+
+  DOCUMENT-ID    Document ID (required)
+
+OPTIONS
+
+      --json    Output as JSON (optionally filter by field names, comma-separated)
 ```
 
 ## user
