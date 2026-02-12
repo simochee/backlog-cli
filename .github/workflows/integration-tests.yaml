@@ -30,7 +30,7 @@ jobs:
         run: bun install
 
       - name: Build
-        run: bun run build
+        run: bun run build -F @simochee/backlog-cli
 
       - name: Run integration tests
         env:

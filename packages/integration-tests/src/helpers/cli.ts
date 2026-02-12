@@ -1,3 +1,5 @@
+import { spawn } from "node:child_process";
+
 const CLI_ENTRY = `${import.meta.dirname}/../../../cli/src/index.ts`;
 
 export interface RunOptions {
@@ -21,28 +23,40 @@ export interface CliJsonResult<T = unknown> {
 export async function runCli(args: string[], options?: RunOptions): Promise<CliResult> {
 	const timeout = options?.timeout ?? 30_000;
 
-	const proc = Bun.spawn(["bun", CLI_ENTRY, "--no-input", ...args], {
-		env: {
-			...process.env,
-			...options?.env,
-		},
-		stdout: "pipe",
-		stderr: "pipe",
-	});
+	return new Promise<CliResult>((resolve, reject) => {
+		const proc = spawn("bun", [CLI_ENTRY, "--no-input", ...args], {
+			env: {
+				...process.env,
+				...options?.env,
+			},
+			stdio: ["ignore", "pipe", "pipe"],
+		});
 
-	const timeoutPromise = new Promise<never>((_, reject) => {
-		setTimeout(() => {
+		const stdoutChunks: Buffer[] = [];
+		const stderrChunks: Buffer[] = [];
+
+		proc.stdout.on("data", (chunk: Buffer) => stdoutChunks.push(chunk));
+		proc.stderr.on("data", (chunk: Buffer) => stderrChunks.push(chunk));
+
+		const timer = setTimeout(() => {
 			proc.kill();
 			reject(new Error(`CLI timed out after ${timeout}ms: bl ${args.join(" ")}`));
 		}, timeout);
+
+		proc.on("close", (code) => {
+			clearTimeout(timer);
+			resolve({
+				stdout: Buffer.concat(stdoutChunks).toString().trim(),
+				stderr: Buffer.concat(stderrChunks).toString().trim(),
+				exitCode: code ?? 1,
+			});
+		});
+
+		proc.on("error", (err) => {
+			clearTimeout(timer);
+			reject(err);
+		});
 	});
-
-	const [exitCode, stdout, stderr] = await Promise.race([
-		Promise.all([proc.exited, new Response(proc.stdout).text(), new Response(proc.stderr).text()]),
-		timeoutPromise,
-	]);
-
-	return { stdout: stdout.trim(), stderr: stderr.trim(), exitCode };
 }
 
 export async function runCliJson<T = unknown>(args: string[], options?: RunOptions): Promise<CliJsonResult<T>> {
