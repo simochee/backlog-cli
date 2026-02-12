@@ -216,6 +216,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 | ワークフロー | ファイル | トリガー | 内容 |
 | --- | --- | --- | --- |
 | CI | `ci.yaml` | push（main）/ PR | Lint, Format check, Type check, Test（Node.js 20/22/24）, Bundle analysis |
+| PR Title Check | `pr-title-check.yaml` | PR（opened/edited/synchronize/reopened） | PRタイトルがConventional Commits形式に準拠しているか検証 |
 | Release | `release.yaml` | main push | release-please による自動リリース |
 | Deploy Docs | `deploy-docs.yaml` | main push | ドキュメントサイトの Cloudflare デプロイ |
 
