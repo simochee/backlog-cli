@@ -1,6 +1,6 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -30,12 +30,14 @@ describe("category lifecycle", () => {
 	});
 
 	it("カテゴリ名を変更する", async () => {
+		requireDep(categoryId, "categoryId");
 		const newName = `${testName}-edited`;
 		const result = await runCliWithRetry(["category", "edit", categoryId, "-p", project, "-n", newName]);
 		expectSuccess(result);
 	});
 
 	it("カテゴリを削除する", async () => {
+		requireDep(categoryId, "categoryId");
 		const result = await runCliWithRetry(["category", "delete", categoryId, "-p", project, "--yes"]);
 		expectSuccess(result);
 		tracker.cleanupAll();

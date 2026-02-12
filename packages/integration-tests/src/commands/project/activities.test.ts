@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, it } from "bun:test";
 
 import { expectJsonArray, expectSuccess } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";

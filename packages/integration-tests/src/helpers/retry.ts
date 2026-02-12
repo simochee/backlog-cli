@@ -1,4 +1,4 @@
-import { type CliJsonResult, type CliResult, type RunOptions, runCli, runCliJson } from "./cli.ts";
+import { type CliJsonResult, type CliResult, type RunOptions, runCli } from "./cli.ts";
 
 const MAX_RETRIES = 3;
 const BASE_DELAY_MS = 5000;
@@ -39,27 +39,19 @@ export async function runCliJsonWithRetry<T = unknown>(
 	args: string[],
 	options?: RunOptions,
 ): Promise<CliJsonResult<T>> {
-	let lastError: Error | undefined;
+	const jsonArgs = args.includes("--json") ? args : [...args, "--json"];
 
-	for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-		try {
-			const result = await runCliJson<T>(args, options);
-			if (!isRateLimited(result)) {
-				return result;
-			}
-			if (attempt < MAX_RETRIES) {
-				const delay = BASE_DELAY_MS * 2 ** attempt;
-				await sleep(delay);
-			}
-			lastError = new Error(`Rate limited after ${MAX_RETRIES} retries: bl ${args.join(" ")}`);
-		} catch (error) {
-			lastError = error as Error;
-			if (attempt < MAX_RETRIES) {
-				const delay = BASE_DELAY_MS * 2 ** attempt;
-				await sleep(delay);
-			}
-		}
+	// Rate limit リトライのみ行い、JSON パースエラーはリトライしない
+	const result = await runCliWithRetry(jsonArgs, options);
+
+	let data: T;
+	try {
+		data = JSON.parse(result.stdout) as T;
+	} catch {
+		throw new Error(
+			`Failed to parse JSON from CLI output.\nCommand: bl ${jsonArgs.join(" ")}\nExit code: ${result.exitCode}\nStdout: ${result.stdout}\nStderr: ${result.stderr}`,
+		);
 	}
 
-	throw lastError ?? new Error(`Failed after ${MAX_RETRIES} retries: bl ${args.join(" ")}`);
+	return { ...result, data };
 }

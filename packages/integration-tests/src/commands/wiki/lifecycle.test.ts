@@ -1,6 +1,6 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -37,12 +37,14 @@ describe("wiki lifecycle", () => {
 	});
 
 	it("Wiki ページを表示する", async () => {
+		requireDep(wikiId, "wikiId");
 		const result = await runCliJsonWithRetry<{ id: number; name: string }>(["wiki", "view", wikiId]);
 		expectSuccess(result);
 		expect(result.data.name).toBe(testName);
 	});
 
 	it("Wiki ページを編集する", async () => {
+		requireDep(wikiId, "wikiId");
 		const result = await runCliWithRetry([
 			"wiki",
 			"edit",
@@ -56,6 +58,7 @@ describe("wiki lifecycle", () => {
 	});
 
 	it("Wiki ページの更新履歴を取得する", async () => {
+		requireDep(wikiId, "wikiId");
 		const result = await runCliWithRetry(["wiki", "history", wikiId, "--json"]);
 		expectSuccess(result);
 	});
@@ -66,11 +69,13 @@ describe("wiki lifecycle", () => {
 	});
 
 	it("Wiki ページの添付ファイル一覧を取得する", async () => {
+		requireDep(wikiId, "wikiId");
 		const result = await runCliWithRetry(["wiki", "attachments", wikiId, "--json"]);
 		expectSuccess(result);
 	});
 
 	it("Wiki ページを削除する", async () => {
+		requireDep(wikiId, "wikiId");
 		const result = await runCliWithRetry(["wiki", "delete", wikiId, "--yes"]);
 		expectSuccess(result);
 		tracker.cleanupAll();
