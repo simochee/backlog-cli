@@ -16,6 +16,7 @@
 		"postinstall": "lefthook install",
 		"lint": "oxlint",
 		"test": "turbo test",
+		"test:integration": "turbo test:integration --filter=@repo/integration-tests",
 		"textlint": "textlint \"docs/**/*.md\" \"README.md\"",
 		"textlint:fix": "textlint --fix \"docs/**/*.md\" \"README.md\"",
 		"type-check": "turbo type-check"

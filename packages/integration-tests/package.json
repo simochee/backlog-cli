@@ -1,0 +1,14 @@
+{
+	"name": "@repo/integration-tests",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"test:integration": "vitest run"
+	},
+	"devDependencies": {
+		"@repo/tsconfigs": "workspace:*"
+	},
+	"peerDependencies": {
+		"vitest": "^4"
+	}
+}
