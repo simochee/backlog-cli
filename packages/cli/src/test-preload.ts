@@ -17,7 +17,8 @@ function clearModuleMocks(mod: Record<string, unknown>) {
 const moduleCache = new Map<string, Record<string, unknown>>();
 
 async function getModule(specifier: string): Promise<Record<string, unknown> | null> {
-	if (moduleCache.has(specifier)) return moduleCache.get(specifier)!;
+	const cached = moduleCache.get(specifier);
+	if (cached) return cached;
 	try {
 		const mod = await import(specifier);
 		moduleCache.set(specifier, mod);
