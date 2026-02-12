@@ -7,9 +7,7 @@
 		"./setup": "./src/setup.ts",
 		"./mock-consola": "./src/mock-consola.ts"
 	},
-	"scripts": {
-		"type-check": "tsc --noEmit"
-	},
+	"scripts": {},
 	"devDependencies": {
 		"@repo/tsconfigs": "workspace:*"
 	},

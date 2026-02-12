@@ -55,7 +55,7 @@ export default defineCommand({
 				const user = activity.createdUser.name;
 				const summary =
 					(activity.content["summary"] as string) ??
-					(activity.content["key_id"] ? `${activity.project.projectKey}-${activity.content["key_id"]}` : "");
+					(activity.content["key_id"] ? `${activity.project.projectKey}-${String(activity.content["key_id"])}` : "");
 
 				consola.log(`${date}  ${label.padEnd(22)}  ${user.padEnd(14)}  ${summary}`);
 			}

@@ -41,6 +41,6 @@ describe("team lifecycle", () => {
 		requireDep(teamId, "teamId");
 		const result = await runCliWithRetry(["team", "delete", teamId, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

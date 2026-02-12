@@ -78,6 +78,6 @@ describe("issue lifecycle", () => {
 		requireDep(issueKey, "issueKey");
 		const result = await runCliWithRetry(["issue", "delete", issueKey, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

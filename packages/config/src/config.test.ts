@@ -11,7 +11,7 @@ vi.mock("rc9", () => ({
 
 describe("loadConfig", () => {
 	it("returns validated config when rc file is valid", async () => {
-		(readUser as Mock).mockResolvedValue({
+		(readUser as Mock).mockReturnValue({
 			defaultSpace: "example.backlog.com",
 			spaces: [
 				{
@@ -29,7 +29,7 @@ describe("loadConfig", () => {
 	});
 
 	it("returns empty spaces array when rc file is empty", async () => {
-		(readUser as Mock).mockResolvedValue({});
+		(readUser as Mock).mockReturnValue({});
 
 		const config = await loadConfig();
 
@@ -41,7 +41,7 @@ describe("loadConfig", () => {
 		const exitSpy = spyOnProcessExit();
 		const errorSpy = vi.spyOn(consola, "error").mockImplementation(() => {});
 
-		(readUser as Mock).mockResolvedValue({
+		(readUser as Mock).mockReturnValue({
 			spaces: [{ host: "invalid", auth: { method: "bad" } }],
 		});
 

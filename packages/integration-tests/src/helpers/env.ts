@@ -21,9 +21,9 @@ export interface Env {
 }
 
 export function getEnv(): Env {
-	const space = process.env.BACKLOG_SPACE;
-	const apiKey = process.env.BACKLOG_API_KEY;
-	const project = process.env.BACKLOG_PROJECT;
+	const space = process.env["BACKLOG_SPACE"];
+	const apiKey = process.env["BACKLOG_API_KEY"];
+	const project = process.env["BACKLOG_PROJECT"];
 
 	if (!space || !apiKey || !project) {
 		throw new Error("Required environment variables are not set. Call validateEnv() first.");
@@ -33,9 +33,9 @@ export function getEnv(): Env {
 		space,
 		apiKey,
 		project,
-		repo: process.env.BACKLOG_REPO,
-		prBaseBranch: process.env.BACKLOG_PR_BASE_BRANCH,
-		prSourceBranch: process.env.BACKLOG_PR_SOURCE_BRANCH,
+		repo: process.env["BACKLOG_REPO"],
+		prBaseBranch: process.env["BACKLOG_PR_BASE_BRANCH"],
+		prSourceBranch: process.env["BACKLOG_PR_SOURCE_BRANCH"],
 	};
 }
 

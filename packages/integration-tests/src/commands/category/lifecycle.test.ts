@@ -42,6 +42,6 @@ describe("category lifecycle", () => {
 		requireDep(categoryId, "categoryId");
 		const result = await runCliWithRetry(["category", "delete", categoryId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

@@ -7,8 +7,7 @@
 	},
 	"exports": "./src/index.ts",
 	"scripts": {
-		"test": "vitest run",
-		"type-check": "tsc --noEmit"
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"arkregex": "^0.0.5",

@@ -78,6 +78,6 @@ describe("wiki lifecycle", () => {
 		requireDep(wikiId, "wikiId");
 		const result = await runCliWithRetry(["wiki", "delete", wikiId, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });

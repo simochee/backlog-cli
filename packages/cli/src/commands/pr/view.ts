@@ -55,7 +55,11 @@ export default defineCommand({
 			return;
 		}
 
-		outputResult(pr, args, async (data) => {
+		const comments = args.comments
+			? await client<BacklogPullRequestComment[]>(`${basePath}/${args.number}/comments`)
+			: [];
+
+		outputResult(pr, args, (data) => {
 			consola.log("");
 			consola.log(`  #${data.number}: ${data.summary}`);
 			consola.log("");
@@ -87,23 +91,19 @@ export default defineCommand({
 				);
 			}
 
-			if (args.comments) {
-				const comments = await client<BacklogPullRequestComment[]>(`${basePath}/${args.number}/comments`);
-
-				if (comments.length > 0) {
+			if (comments.length > 0) {
+				consola.log("");
+				consola.log("  Comments:");
+				for (const comment of comments) {
+					if (!comment.content) continue;
 					consola.log("");
-					consola.log("  Comments:");
-					for (const comment of comments) {
-						if (!comment.content) continue;
-						consola.log("");
-						consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
-						consola.log(
-							comment.content
-								.split("\n")
-								.map((line: string) => `      ${line}`)
-								.join("\n"),
-						);
-					}
+					consola.log(`    ${comment.createdUser.name} (${formatDate(comment.created)}):`);
+					consola.log(
+						comment.content
+							.split("\n")
+							.map((line: string) => `      ${line}`)
+							.join("\n"),
+					);
 				}
 			}
 

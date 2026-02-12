@@ -50,6 +50,6 @@ describe("milestone lifecycle", () => {
 		requireDep(milestoneId, "milestoneId");
 		const result = await runCliWithRetry(["milestone", "delete", milestoneId, "-p", project, "--yes"]);
 		expectSuccess(result);
-		tracker.cleanupAll();
+		void tracker.cleanupAll();
 	});
 });
