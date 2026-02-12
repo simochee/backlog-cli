@@ -16,6 +16,7 @@ export default defineCommand({
 		"user-id": {
 			type: "positional",
 			description: "User ID (omit for yourself)",
+			required: false,
 		},
 		since: {
 			type: "string",

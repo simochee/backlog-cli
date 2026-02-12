@@ -1,6 +1,6 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
 
@@ -25,17 +25,20 @@ describe("team lifecycle", () => {
 	});
 
 	it("チーム詳細を表示する", async () => {
+		requireDep(teamId, "teamId");
 		const result = await runCliJsonWithRetry<{ id: number; name: string }>(["team", "view", teamId]);
 		expectSuccess(result);
 		expect(result.data.name).toBe(testName);
 	});
 
 	it("チーム名を変更する", async () => {
+		requireDep(teamId, "teamId");
 		const result = await runCliWithRetry(["team", "edit", teamId, "-n", `${testName}-edited`]);
 		expectSuccess(result);
 	});
 
 	it("チームを削除する", async () => {
+		requireDep(teamId, "teamId");
 		const result = await runCliWithRetry(["team", "delete", teamId, "--yes"]);
 		expectSuccess(result);
 		void tracker.cleanupAll();

@@ -1,6 +1,6 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "bun:test";
 
-import { expectSuccess } from "../../helpers/assertions.ts";
+import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
@@ -36,6 +36,7 @@ describe("webhook lifecycle", () => {
 	});
 
 	it("Webhook 詳細を表示する", async () => {
+		requireDep(webhookId, "webhookId");
 		const result = await runCliJsonWithRetry<{ id: number; name: string }>([
 			"webhook",
 			"view",
@@ -48,11 +49,13 @@ describe("webhook lifecycle", () => {
 	});
 
 	it("Webhook を編集する", async () => {
+		requireDep(webhookId, "webhookId");
 		const result = await runCliWithRetry(["webhook", "edit", webhookId, "-p", project, "-n", `${testName}-edited`]);
 		expectSuccess(result);
 	});
 
 	it("Webhook を削除する", async () => {
+		requireDep(webhookId, "webhookId");
 		const result = await runCliWithRetry(["webhook", "delete", webhookId, "-p", project, "--yes"]);
 		expectSuccess(result);
 		void tracker.cleanupAll();

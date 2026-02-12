@@ -80,9 +80,11 @@ export function startCallbackServer(): CallbackServer {
 
 				resolveCode = (codeAndState: string) => {
 					clearTimeout(timeout);
-					const [code, state] = codeAndState.split(":");
+					const separatorIndex = codeAndState.indexOf(":");
+					const code = codeAndState.slice(0, separatorIndex);
+					const state = codeAndState.slice(separatorIndex + 1);
 					if (state === expectedState) {
-						resolve(code!);
+						resolve(code);
 					} else {
 						reject(new Error("OAuth state mismatch — possible CSRF attack"));
 					}

@@ -30,6 +30,7 @@ const main = defineCommand({
 		browse: () => import("#commands/browse.ts").then((m) => m.default),
 		api: () => import("#commands/api.ts").then((m) => m.default),
 		wiki: () => import("#commands/wiki/index.ts").then((m) => m.default),
+		document: () => import("#commands/document/index.ts").then((m) => m.default),
 		user: () => import("#commands/user/index.ts").then((m) => m.default),
 		team: () => import("#commands/team/index.ts").then((m) => m.default),
 		category: () => import("#commands/category/index.ts").then((m) => m.default),

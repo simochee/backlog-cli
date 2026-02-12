@@ -7,6 +7,7 @@ vi.mock("open", () => ({
 import {
 	buildBacklogUrl,
 	dashboardUrl,
+	documentUrl,
 	issueUrl,
 	openUrl,
 	projectUrl,
@@ -59,6 +60,14 @@ describe("repositoryUrl", () => {
 describe("wikiUrl", () => {
 	it("WikiページIDからURLを構築する", () => {
 		expect(wikiUrl("example.backlog.com", 999)).toBe("https://example.backlog.com/alias/wiki/999");
+	});
+});
+
+describe("documentUrl", () => {
+	it("ドキュメントのURLを構築する", () => {
+		expect(documentUrl("example.backlog.com", "PROJ", "abc-123")).toBe(
+			"https://example.backlog.com/projects/PROJ/document/abc-123",
+		);
 	});
 });
 

@@ -2,6 +2,7 @@ import type { BacklogWiki } from "@repo/api";
 import type { WikisCreateData } from "@repo/openapi-client";
 
 import { getClient } from "#utils/client.ts";
+import { outputArgs, outputResult } from "#utils/output.ts";
 import promptRequired from "#utils/prompt.ts";
 import { resolveProjectArg, resolveProjectId } from "#utils/resolve.ts";
 import { defineCommand } from "citty";
@@ -13,6 +14,7 @@ export default defineCommand({
 		description: "Create a wiki page",
 	},
 	args: {
+		...outputArgs,
 		project: {
 			type: "string",
 			alias: "p",
@@ -58,6 +60,8 @@ export default defineCommand({
 			body: requestBody,
 		});
 
-		consola.success(`Created wiki page #${wiki.id}: ${wiki.name}`);
+		outputResult(wiki, args, (data) => {
+			consola.success(`Created wiki page #${data.id}: ${data.name}`);
+		});
 	},
 });
