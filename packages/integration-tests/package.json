@@ -3,12 +3,9 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"test:integration": "vitest run"
+		"test:integration": "bun test --timeout 30000"
 	},
 	"devDependencies": {
 		"@repo/tsconfigs": "workspace:*"
-	},
-	"peerDependencies": {
-		"vitest": "^4"
 	}
 }

@@ -1,6 +1,5 @@
 import { getClient } from "#utils/client.ts";
 import { defineCommand } from "citty";
-import consola from "consola";
 
 /**
  * Parses a `key=value` field string. Values are auto-converted:
@@ -145,13 +144,15 @@ export default defineCommand({
 			}
 
 			if (!args.silent) {
-				consola.log(JSON.stringify(allResults, null, 2));
+				const json = process.stdout.isTTY ? JSON.stringify(allResults, null, 2) : JSON.stringify(allResults);
+				process.stdout.write(`${json}\n`);
 			}
 		} else {
 			const result = await client<unknown>(endpoint, fetchOptions);
 
 			if (!args.silent) {
-				consola.log(JSON.stringify(result, null, 2));
+				const json = process.stdout.isTTY ? JSON.stringify(result, null, 2) : JSON.stringify(result);
+				process.stdout.write(`${json}\n`);
 			}
 		}
 	},

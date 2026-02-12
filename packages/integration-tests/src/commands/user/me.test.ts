@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 import { expectSuccess } from "../../helpers/assertions.ts";
 import { runCliJsonWithRetry, runCliWithRetry } from "../../helpers/retry.ts";
