@@ -3,8 +3,8 @@ name: Integration Tests
 on:
   workflow_dispatch:
   schedule:
-    # 毎週月曜 09:00 JST (日曜 24:00 UTC)
-    - cron: "0 0 * * 1"
+    # 毎週日曜 02:00 JST (土曜 17:00 UTC)
+    - cron: "0 17 * * 6"
 
 concurrency:
   group: integration-tests-${{ github.ref }}
