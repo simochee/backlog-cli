@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "bun:test";
+import { afterAll, describe, it } from "vitest";
 
 import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
@@ -23,8 +23,10 @@ describe("milestone lifecycle", () => {
 		expectSuccess(result);
 		const listResult = await runCliJsonWithRetry<{ id: number; name: string }[]>(["milestone", "list", "-p", project]);
 		const created = listResult.data.find((m) => m.name === testName);
-		expect(created).toBeDefined();
-		milestoneId = String(created!.id);
+		if (!created) {
+			throw new Error(`Expected milestone "${testName}" to be in list`);
+		}
+		milestoneId = String(created.id);
 		tracker.trackMilestone(project, milestoneId);
 	});
 

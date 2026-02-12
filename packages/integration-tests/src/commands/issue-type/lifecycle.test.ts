@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "bun:test";
+import { afterAll, describe, it } from "vitest";
 
 import { expectSuccess, requireDep } from "../../helpers/assertions.ts";
 import { getEnv } from "../../helpers/env.ts";
@@ -18,8 +18,11 @@ describe("issue-type lifecycle", () => {
 		const result = await runCliJsonWithRetry<{ id: number; name: string }[]>(["issue-type", "list", "-p", project]);
 		expectSuccess(result);
 		// Save first existing issue type as substitute for delete
-		expect(result.data.length).toBeGreaterThan(0);
-		substituteIssueTypeId = String(result.data[0]!.id);
+		const firstIssueType = result.data[0];
+		if (!firstIssueType) {
+			throw new Error("Expected at least one issue type");
+		}
+		substituteIssueTypeId = String(firstIssueType.id);
 	});
 
 	it("課題種別を作成する", async () => {
@@ -28,8 +31,10 @@ describe("issue-type lifecycle", () => {
 		expectSuccess(result);
 		const listResult = await runCliJsonWithRetry<{ id: number; name: string }[]>(["issue-type", "list", "-p", project]);
 		const created = listResult.data.find((t) => t.name === testName);
-		expect(created).toBeDefined();
-		issueTypeId = String(created!.id);
+		if (!created) {
+			throw new Error(`Expected issue type "${testName}" to be in list`);
+		}
+		issueTypeId = String(created.id);
 		tracker.trackIssueType(project, issueTypeId, substituteIssueTypeId);
 	});
 

@@ -18,7 +18,11 @@ describe("watching lifecycle", () => {
 	it("課題種別を取得する", async () => {
 		const result = await runCliJsonWithRetry<{ name: string }[]>(["issue-type", "list", "-p", project]);
 		expectSuccess(result);
-		issueTypeName = result.data[0]!.name;
+		const firstIssueType = result.data[0];
+		if (!firstIssueType) {
+			throw new Error("Expected at least one issue type");
+		}
+		issueTypeName = firstIssueType.name;
 	});
 
 	it("ウォッチ対象の課題を作成する", async () => {

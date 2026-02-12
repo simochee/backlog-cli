@@ -29,10 +29,10 @@ describe("webhook create", () => {
 			args: { project: "PROJ", name: "New Hook", "hook-url": "https://example.com" },
 		} as never);
 
-		const callArgs = mockClient.mock.calls[0]!;
-		expect(callArgs[0]).toBe("/projects/PROJ/webhooks");
-		expect(callArgs[1]).toMatchObject({ method: "POST" });
-		const body = callArgs[1]!.body as URLSearchParams;
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/projects/PROJ/webhooks");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
 		expect(body).toBeInstanceOf(URLSearchParams);
 		expect(body.get("name")).toBe("New Hook");
 		expect(body.get("hookUrl")).toBe("https://example.com");
@@ -54,10 +54,10 @@ describe("webhook create", () => {
 			},
 		} as never);
 
-		const callArgs = mockClient.mock.calls[0]!;
-		expect(callArgs[0]).toBe("/projects/PROJ/webhooks");
-		expect(callArgs[1]).toMatchObject({ method: "POST" });
-		const body = callArgs[1]!.body as URLSearchParams;
+		const callArgs = mockClient.mock.calls[0];
+		expect(callArgs?.[0]).toBe("/projects/PROJ/webhooks");
+		expect(callArgs?.[1]).toMatchObject({ method: "POST" });
+		const body = callArgs?.[1]?.body as URLSearchParams;
 		expect(body).toBeInstanceOf(URLSearchParams);
 		expect(body.get("allEvent")).toBe("true");
 		expect(body.getAll("activityTypeIds[]")).toEqual(["1", "2", "3"]);
