@@ -219,6 +219,7 @@ GitHub Actions で CI/CD パイプラインを構成。ワークフロー定義�
 | PR Title Check | `pr-title-check.yaml` | PR（opened/edited/synchronize/reopened） | PRタイトルがConventional Commits形式に準拠しているか検証 |
 | Release | `release.yaml` | main push | release-please による自動リリース |
 | Deploy Docs | `deploy-docs.yaml` | main push | ドキュメントサイトの Cloudflare デプロイ |
+| Scorecard | `scorecard.yaml` | main push / 週次スケジュール / branch protection rule 変更 | OpenSSF Scorecard によるセキュリティスコア分析・GitHub Security tab への SARIF アップロード |
 
 ### CI パイプライン詳細
 
