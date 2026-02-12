@@ -1,9 +1,11 @@
 import { describe, expect, it } from "bun:test";
 
-// Note: openUrl is not tested here because bun:test runs all files in the same
-// process and mock.module leaks across test files. 10+ command test files mock
-// "#utils/url.ts", making it impossible to get the real openUrl in this file.
-// openUrl is a trivial `await open(url)` wrapper already covered by command tests.
+/*
+ * NOTE: openUrl is not tested here because bun:test runs all files in the
+ * same process and mock.module leaks across test files. Command test files
+ * mock "#utils/url.ts", making it impossible to get the real openUrl here.
+ * It is a trivial `await open(url)` wrapper already covered by command tests.
+ */
 const { buildBacklogUrl, dashboardUrl, documentUrl, issueUrl, projectUrl, pullRequestUrl, repositoryUrl, wikiUrl } =
 	await import("#utils/url.ts");
 
