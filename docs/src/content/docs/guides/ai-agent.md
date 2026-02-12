@@ -86,9 +86,9 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 
 ## Backlog MCP Server との違い
 
-Nulab が公式に提供する [Backlog MCP Server](https://github.com/nulab/backlog-mcp-server) は、[Model Context Protocol（MCP）](https://modelcontextprotocol.io/)を通じて AI エージェントに Backlog API のツールを直接公開するサーバーです。
+Nulabが公式に提供する [Backlog MCP Server](https://github.com/nulab/backlog-mcp-server) は、[Model Context Protocol（MCP）](https://modelcontextprotocol.io/)を通じてAIエージェントにBacklog APIのツールを直接公開するサーバーです。
 
-Backlog CLI + Agent Skills も AI エージェントから Backlog を操作できますが、アーキテクチャや特性が異なります。用途に応じて選択してください。
+Backlog CLI + Agent SkillsもAIエージェントからBacklogを操作できますが、アーキテクチャや特性が異なります。用途に応じて選択してください。
 
 |                      | Backlog CLI + Skills                                     | Backlog MCP Server                                                                |
 | -------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------- |
@@ -104,18 +104,18 @@ Backlog CLI + Agent Skills も AI エージェントから Backlog を操作で�
 
 ### Backlog CLI + Skills が向いているケース
 
-- **コーディングエージェント**（Claude Code、Cursor、Codex 等）のワークフローに組み込みたい
+- **コーディングエージェント**（Claude Code、Cursor、Codex等）のワークフローに組み込みたい
 - シェルのパイプやスクリプトと組み合わせて柔軟に操作したい
-- CI/CD パイプラインでも同じコマンドを使いたい
-- OAuth 2.0 認証が必要
-- 人間と AI エージェントが同じツールを共有したい
+- CI/CDパイプラインでも同じコマンドを使いたい
+- OAuth 2.0認証が必要
+- 人間とAIエージェントが同じツールを共有したい
 
 ### Backlog MCP Server が向いているケース
 
-- **チャット型エージェント**（Claude Desktop 等）から Backlog を操作したい
-- MCP エコシステムの他のサーバーと統合したい
+- **チャット型エージェント**（Claude Desktop等）からBacklogを操作したい
+- MCPエコシステムの他のサーバーと統合したい
 - レスポンスのトークン数を細かく制御したい
 
 ### 併用について
 
-両者は競合せず、併用できます。たとえば、Claude Desktop では MCP Server を使い、Claude Code や CI 環境では Backlog CLI + Skills を使うといった構成が可能です。
+両者は競合せず、併用できます。たとえば、Claude DesktopではMCP Serverを使い、Claude CodeやCI環境ではBacklog CLI + Skillsを使うといった構成が可能です。
