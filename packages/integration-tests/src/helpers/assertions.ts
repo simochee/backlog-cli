@@ -1,6 +1,6 @@
 import type { CliResult } from "./cli.ts";
 
-import { expect } from "vitest";
+import { expect } from "bun:test";
 
 export function expectSuccess(result: CliResult): void {
 	expect(result.exitCode, `Command failed.\nStdout: ${result.stdout}\nStderr: ${result.stderr}`).toBe(0);

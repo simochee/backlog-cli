@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "bun:test";
 
 import { expectSuccess } from "../../helpers/assertions.ts";
 import { ResourceTracker } from "../../helpers/resource.ts";
