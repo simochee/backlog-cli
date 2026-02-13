@@ -7,7 +7,16 @@
 [![npm version](https://img.shields.io/npm/v/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@simochee/backlog-cli)](https://bundlephobia.com/package/@simochee/backlog-cli)
 [![npm downloads](https://img.shields.io/npm/dm/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
+[![npm types](https://img.shields.io/npm/types/@simochee/backlog-cli)](https://www.npmjs.com/package/@simochee/backlog-cli)
 [![License: MIT](https://img.shields.io/github/license/simochee/backlog-cli)](./LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/simochee/backlog-cli)](https://github.com/simochee/backlog-cli/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/simochee/backlog-cli)](https://github.com/simochee/backlog-cli/commits/main)
+[![GitHub issues](https://img.shields.io/github/issues/simochee/backlog-cli)](https://github.com/simochee/backlog-cli/issues)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?logo=conventionalcommits)](https://conventionalcommits.org)
+[![Bun](https://img.shields.io/badge/runtime-Bun-f9f1e1?logo=bun)](https://bun.sh)
+[![Turborepo](https://img.shields.io/badge/monorepo-Turborepo-EF4444?logo=turborepo)](https://turbo.build)
+[![Vitest](https://img.shields.io/badge/testing-Vitest-6E9F18?logo=vitest)](https://vitest.dev)
+[![Docs](https://img.shields.io/badge/docs-backlog--cli.simochee.net-blue)](https://backlog-cli.simochee.net)
 [![Open in Visual Studio Code](https://img.shields.io/badge/Open_in-VSCode-007ACC?logo=visualstudiocode)](https://vscode.dev/github/simochee/backlog-cli)
 
 **Backlog をコマンドラインから。**
