@@ -61,7 +61,7 @@ jobs:
 
       - name: Prepare package for publishing
         working-directory: packages/cli
-        run: npm pkg delete dependencies devDependencies peerDependencies imports
+        run: npm pkg delete dependencies devDependencies peerDependencies imports scripts.prepublishOnly
 
       - name: Publish to npm
         working-directory: packages/cli
