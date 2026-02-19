@@ -7,23 +7,19 @@
 		},
 		"packages/api": {
 			"release-type": "node",
-			"component": "backlog-api",
-			"skip-github-release": true
+			"component": "backlog-api"
 		},
 		"packages/config": {
 			"release-type": "node",
-			"component": "backlog-config",
-			"skip-github-release": true
+			"component": "backlog-config"
 		},
 		"packages/openapi-client": {
 			"release-type": "node",
-			"component": "backlog-openapi-client",
-			"skip-github-release": true
+			"component": "backlog-openapi-client"
 		},
 		"packages/tsconfigs": {
 			"release-type": "node",
-			"component": "backlog-tsconfigs",
-			"skip-github-release": true
+			"component": "backlog-tsconfigs"
 		}
 	},
 	"plugins": [
