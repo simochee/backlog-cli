@@ -3,7 +3,7 @@ import { type } from "arktype";
 import consola from "consola";
 import { readUser, writeUser } from "rc9";
 
-const APP_NAME = "backlog";
+const APP_NAME = ".backlogrc";
 
 /**
  * Loads and validates the user configuration from the rc file.
