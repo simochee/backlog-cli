@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/simochee/backlog-cli/compare/backlog-cli-v0.1.0...backlog-cli-v0.2.0) (2026-02-19)
+
+
+### Miscellaneous Chores
+
+* **backlog-cli:** Synchronize backlog-cli versions
+
 ## [0.1.0](https://github.com/simochee/backlog-cli/compare/v0.0.1...v0.1.0) (2026-02-12)
 
 
