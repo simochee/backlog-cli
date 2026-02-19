@@ -21,7 +21,7 @@ describe("completion", () => {
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "bash" } } as never);
 
-		expect(writeSpy).toHaveBeenCalledTimes(1);
+		expect(writeSpy).toHaveBeenCalledOnce();
 		const output = writeSpy.mock.calls[0]?.[0] as string;
 		expect(output).toContain("_bl");
 		expect(output).toContain("# bl CLI bash completion");
@@ -35,7 +35,7 @@ describe("completion", () => {
 		const mod = await import("#commands/completion.ts");
 		await mod.default.run?.({ args: { shell: "zsh" } } as never);
 
-		expect(writeSpy).toHaveBeenCalledTimes(1);
+		expect(writeSpy).toHaveBeenCalledOnce();
 		const output = writeSpy.mock.calls[0]?.[0] as string;
 		expect(output).toContain("#compdef bl backlog");
 

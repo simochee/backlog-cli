@@ -10,7 +10,7 @@ import consola from "consola";
 describe("notification read", () => {
 	it("通知を既読にする", async () => {
 		const mockClient = setupMockClient(getClient);
-		mockClient.mockResolvedValue(undefined);
+		mockClient.mockResolvedValue();
 
 		const mod = await import("#commands/notification/read.ts");
 		await mod.default.run?.({ args: { id: "123" } } as never);

@@ -3,7 +3,7 @@ import { describe, expect, it } from "bun:test";
 import { expectSuccess } from "../../helpers/assertions.ts";
 import { runCli } from "../../helpers/cli.ts";
 
-// config get/set operates on global settings (not space-specific).
+// Config get/set operates on global settings (not space-specific).
 // BACKLOG_SPACE must be unset to avoid space-specific config lookup/rejection.
 const envWithoutSpace = { BACKLOG_SPACE: "" };
 
