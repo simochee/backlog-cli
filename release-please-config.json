@@ -5,6 +5,33 @@
 		"packages/cli": {
 			"release-type": "node",
 			"component": "backlog-cli"
+		},
+		"packages/api": {
+			"release-type": "node",
+			"component": "backlog-api",
+			"skip-github-release": true
+		},
+		"packages/config": {
+			"release-type": "node",
+			"component": "backlog-config",
+			"skip-github-release": true
+		},
+		"packages/openapi-client": {
+			"release-type": "node",
+			"component": "backlog-openapi-client",
+			"skip-github-release": true
+		},
+		"packages/tsconfigs": {
+			"release-type": "node",
+			"component": "backlog-tsconfigs",
+			"skip-github-release": true
 		}
-	}
+	},
+	"plugins": [
+		{
+			"type": "linked-versions",
+			"groupName": "backlog-cli",
+			"components": ["backlog-cli", "backlog-api", "backlog-config", "backlog-openapi-client", "backlog-tsconfigs"]
+		}
+	]
 }
