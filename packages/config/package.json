@@ -18,5 +18,6 @@
 	"devDependencies": {
 		"@repo/test-utils": "workspace:*",
 		"@repo/tsconfigs": "workspace:*"
-	}
+	},
+	"version": "0.1.1"
 }
