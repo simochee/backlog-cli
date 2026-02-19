@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/simochee/backlog-cli/compare/backlog-cli-v0.1.0...backlog-cli-v0.1.1) (2026-02-19)
+
+
+### Bug Fixes
+
+* **test:** pass undefined to mockResolvedValue for void endpoints ([7af331f](https://github.com/simochee/backlog-cli/commit/7af331f947a6ec6aa2e3aff9d04e76e583fcdc8a))
+
 ## [0.1.0](https://github.com/simochee/backlog-cli/compare/v0.0.1...v0.1.0) (2026-02-12)
 
 
