@@ -23,6 +23,7 @@ describe("loadConfig", () => {
 
 		const config = await loadConfig();
 
+		expect(readUser).toHaveBeenCalledWith({ name: ".backlogrc" });
 		expect(config.defaultSpace).toBe("example.backlog.com");
 		expect(config.spaces).toHaveLength(1);
 		expect(config.spaces[0]?.host).toBe("example.backlog.com");
@@ -70,6 +71,6 @@ describe("writeConfig", () => {
 
 		await writeConfig(config);
 
-		expect(writeUser).toHaveBeenCalledWith(config, { name: "backlog" });
+		expect(writeUser).toHaveBeenCalledWith(config, { name: ".backlogrc" });
 	});
 });
