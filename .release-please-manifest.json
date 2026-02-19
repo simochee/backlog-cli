@@ -1,7 +1,7 @@
 {
-	"packages/cli": "0.1.0",
-	"packages/api": "0.1.0",
-	"packages/config": "0.1.0",
-	"packages/openapi-client": "0.1.0",
-	"packages/tsconfigs": "0.1.0"
+	"packages/cli": "0.1.1",
+	"packages/api": "0.1.1",
+	"packages/config": "0.1.1",
+	"packages/openapi-client": "0.1.1",
+	"packages/tsconfigs": "0.1.1"
 }
