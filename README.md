@@ -41,7 +41,7 @@ $ backlog browse MYAPP-142
 
 ## ハイライト
 
-- **99 コマンド** — 課題、PR、Wiki、通知、Webhook、チーム管理などBacklog APIの主要な機能をカバー
+- **108 コマンド** — 課題、PR、Wiki、ドキュメント、通知、Webhook、チーム管理などBacklog APIの主要な機能をカバー
 - **gh CLI ベース** — `list`・`view`・`create`・`edit` を基本としたコマンド体系
 - **柔軟な出力** — テーブル / `--json` でパイプラインに組み込める
 - **対話 & 非対話** — 引数を省略すればプロンプト、CIではフラグ指定で動作

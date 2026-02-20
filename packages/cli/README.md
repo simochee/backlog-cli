@@ -37,7 +37,7 @@ $ backlog browse MYAPP-142
 
 ## Highlights
 
-- **99 commands** — Issues, PRs, wikis, notifications, webhooks, teams, and more
+- **108 commands** — Issues, PRs, wikis, documents, notifications, webhooks, teams, and more
 - **gh CLI-based** — `list` / `view` / `create` / `edit` command structure inspired by GitHub CLI
 - **Flexible output** — Table (default) or `--json` for pipeline integration
 - **Interactive & non-interactive** — Omit arguments for interactive prompts, or pass flags for CI/scripts

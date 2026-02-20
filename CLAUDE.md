@@ -487,7 +487,7 @@ describe("addSpace", () => {
 
 ## plans/ ディレクトリの運用
 
-**`plans/` ディレクトリにプロジェクトの計画・設計ドキュメントを管理。Phase 1〜4 の全 99 コマンド + `issue delete` は実装完了済み。**
+**`plans/` ディレクトリにプロジェクトの計画・設計ドキュメントを管理。Phase 1〜4 の全 99 コマンド + `issue delete` + `document` (list/view/create/delete/tree/attachments) の計 108 コマンドの実装が完了済み。**
 
 ### ドキュメント構成
 

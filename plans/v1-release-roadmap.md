@@ -2,7 +2,7 @@
 
 ## 概要
 
-Phase 1〜4 の全 99 コマンド + `issue delete` の実装が完了し、CI/CD・ドキュメント・テストも整備済み。
+Phase 1〜4 の全 99 コマンド + `issue delete` + `document` (list/view/create/delete/tree/attachments) の計 108 コマンドの実装が完了し、CI/CD・ドキュメント・テストも整備済み。
 本ドキュメントでは v1.0.0 リリースに向けて必要なタスクと推奨タスクを整理する。
 
 ---

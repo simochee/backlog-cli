@@ -215,6 +215,37 @@ export default defineConfig({
 							],
 						},
 						{
+							label: "backlog document",
+							collapsed: true,
+							items: [
+								{ label: "概要", link: "/commands/document/" },
+								{
+									label: "document list",
+									link: "/commands/document/list/",
+								},
+								{
+									label: "document view",
+									link: "/commands/document/view/",
+								},
+								{
+									label: "document create",
+									link: "/commands/document/create/",
+								},
+								{
+									label: "document delete",
+									link: "/commands/document/delete/",
+								},
+								{
+									label: "document tree",
+									link: "/commands/document/tree/",
+								},
+								{
+									label: "document attachments",
+									link: "/commands/document/attachments/",
+								},
+							],
+						},
+						{
 							label: "backlog user",
 							collapsed: true,
 							items: [

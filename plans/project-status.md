@@ -2,7 +2,7 @@
 
 ## 実装完了状況
 
-**Phase 1〜4 の全 99 コマンド + `issue delete` + `document` (create/delete) の実装が完了**
+**Phase 1〜4 の全 99 コマンド + `issue delete` + `document` (list/view/create/delete/tree/attachments) の計 108 コマンドの実装が完了**
 
 - 認証管理（auth）
 - 課題管理（issue）— delete 含む

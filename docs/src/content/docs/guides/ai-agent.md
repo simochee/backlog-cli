@@ -60,7 +60,7 @@ cp -r skills/backlog-cli/ .claude/skills/backlog-cli/
 | ファイル                 | 内容                                                     |
 | ------------------------ | -------------------------------------------------------- |
 | `SKILL.md`               | コマンドの使い方、認証、名前解決、主要ワークフローの説明 |
-| `references/commands.md` | 全 99 コマンドのフラグ・オプション一覧                   |
+| `references/commands.md` | 全 108 コマンドのフラグ・オプション一覧                  |
 | `references/schema.md`   | `--json` 出力のデータモデル定義（Issue、PR、Project 等） |
 
 ## 使い方の例
@@ -96,7 +96,7 @@ Backlog CLI + Agent SkillsもAIエージェントからBacklogを操作できま
 | **提供元**           | コミュニティ（[@simochee](https://github.com/simochee)） | Nulab 公式                                                                        |
 | **対応エージェント** | 35 以上（Claude Code、Cursor、Codex、Windsurf 等）       | MCP 対応クライアント（Claude Desktop、Cursor、Cline 等）                          |
 | **セットアップ**     | CLI インストール + スキルファイル配置                    | MCP サーバープロセスの起動（Docker / npx）                                        |
-| **API カバレッジ**   | 99 コマンド（19 カテゴリ）                               | 7 ツールセット（space / project / issue / wiki / git / notifications / document） |
+| **API カバレッジ**   | 108 コマンド（20 カテゴリ）                              | 7 ツールセット（space / project / issue / wiki / git / notifications / document） |
 | **人間の利用**       | CLI として直接利用可能                                   | AI エージェント専用                                                               |
 | **シェル連携**       | パイプ、`jq`、スクリプト、エイリアス等が利用可能         | 不可                                                                              |
 | **認証方式**         | API Key + OAuth 2.0（トークン自動更新）                  | API Key のみ                                                                      |
