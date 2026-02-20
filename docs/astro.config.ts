@@ -59,7 +59,6 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
-				...openAPISidebarGroups,
 				{
 					label: "はじめに",
 					items: [
@@ -424,6 +423,7 @@ export default defineConfig({
 						{ label: "backlog completion", link: "/commands/completion/" },
 					],
 				},
+				...openAPISidebarGroups,
 			],
 		}),
 	],
