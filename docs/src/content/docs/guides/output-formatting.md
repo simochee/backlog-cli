@@ -59,4 +59,4 @@ done
 | 一覧系（`list`）    | 配列                                           | `backlog issue list`         |
 | 詳細表示（`view`）  | オブジェクト                                   | `backlog issue view PROJ-1`  |
 | カウント（`count`） | `{ count: number }`                            | `backlog notification count` |
-| ダッシュボード      | ユーザー情報・課題・通知をまとめたオブジェクト | `backlog status`             |
+| ダッシュボード      | ユーザー情報・課題・通知をまとめたオブジェクト | `backlog dashboard`          |
